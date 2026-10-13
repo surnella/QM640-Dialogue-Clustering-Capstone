@@ -70,3 +70,10 @@ outputs/figures/*
 !outputs/figures/.gitkeep
 outputs/tables/*
 !outputs/tables/.gitkeep
+
+# Draft documents and alternative synopsis files
+/*.docx
+/*.pdf
+synopsis/*
+!synopsis/QM_640_Capstone_Sandeep_Surnella_Synopsis.docx
+!synopsis/QM_640_Capstone_Sandeep_Surnella_Synopsis.pdf
