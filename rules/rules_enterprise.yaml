@@ -1,0 +1,46 @@
+# Declarative Enterprise Business Rules for Travel Advisory & Booking Agent
+# Evaluated in RQ3 (2x2 Ablation: Rules vs. Drift) and RQ4 (Turn Economy)
+
+version: "1.0"
+domain: "enterprise_outbound_leisure_travel"
+
+rules:
+  - id: "RULE_VISA_WINDOW"
+    name: "Visa Processing Lead Time"
+    description: "International departures require a minimum of 15 days lead time for visa processing."
+    condition: "departure_lead_days < 15 and is_international == true"
+    action: "BLOCK_AND_FLAG"
+    severity: "FATAL"
+    error_message: "Selected departure date violates minimum 15-day visa processing window for international travel."
+
+  - id: "RULE_PASSPORT_VALIDITY"
+    name: "Passport Validity Threshold"
+    description: "Travelers must possess a passport valid for at least 6 months beyond the departure date."
+    condition: "passport_expiry_months < 6 and is_international == true"
+    action: "BLOCK_AND_FLAG"
+    severity: "FATAL"
+    error_message: "Passport validity must exceed 6 months from the intended travel date."
+
+  - id: "RULE_PAX_CAPACITY"
+    name: "Maximum Adult Capacity per Single Booking"
+    description: "Standard FIT packages are capped at 8 adult travelers per single agent booking reference."
+    condition: "traveler_count_adults > 8 and package_type == 'FIT'"
+    action: "CONVERT_TO_GROUP"
+    severity: "WARNING"
+    error_message: "Bookings exceeding 8 adults require Group Travel desk authorization."
+
+  - id: "RULE_DISCOUNT_THRESHOLD"
+    name: "Maximum Discretionary Sales Discount"
+    description: "Conversational agents may not authorize promotional discounts exceeding 15% without supervisor escalation."
+    condition: "discount_applied_percentage > 15.0"
+    action: "CLAMP_DISCOUNT"
+    severity: "FATAL"
+    error_message: "Discount exceeds agent authorization limit of 15%."
+
+  - id: "RULE_BUDGET_MINIMUM"
+    name: "Minimum Feasible Per-Pax International Budget"
+    description: "International holiday packages require a minimum budget of $500 / INR 40,000 per passenger."
+    condition: "budget_amount is not None and budget_amount < 500 and is_international == true"
+    action: "PROMPT_REALISTIC_BUDGET"
+    severity: "WARNING"
+    error_message: "Stated budget is below operational threshold for destination."

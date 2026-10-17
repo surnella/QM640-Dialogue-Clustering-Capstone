@@ -65,15 +65,20 @@ data/embeddings/*
 data/enterprise_sample/*
 !data/enterprise_sample/.gitkeep
 
-# Evaluation output figures and tables
+# Evaluation output figures and tables (track generated artifacts)
 outputs/figures/*
 !outputs/figures/.gitkeep
+!outputs/figures/*.png
 outputs/tables/*
 !outputs/tables/.gitkeep
+!outputs/tables/*.csv
 
 # Draft documents and alternative synopsis files
 /*.docx
 /*.pdf
+!QM_640_Interim_Report_Sandeep_Surnella.docx
+!QM_640_Interim_Report_Sandeep_Surnella.pdf
 synopsis/*
 !synopsis/QM_640_Capstone_Sandeep_Surnella_Synopsis.docx
 !synopsis/QM_640_Capstone_Sandeep_Surnella_Synopsis.pdf
+

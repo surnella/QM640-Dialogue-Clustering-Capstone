@@ -1,0 +1,4 @@
+group1,group2,meandiff,p-adj,lower,upper,reject
+Cluster-Adaptive Few-Shot,Static Few-Shot,-0.1122,0.0,-0.152,-0.0724,True
+Cluster-Adaptive Few-Shot,Zero-Shot Baseline,-0.1793,0.0,-0.2191,-0.1395,True
+Static Few-Shot,Zero-Shot Baseline,-0.0671,0.0003,-0.1069,-0.0273,True
