@@ -1,0 +1,57 @@
+/Users/surnellas/atirath/TravBridge/gemini_env/lib/python3.11/site-packages/scipy/stats/_stats_py.py:3948: RuntimeWarning: divide by zero encountered in vecdot
+  sstot = xp.vecdot(alldata, alldata, axis=-1) - normalized_ss
+/Users/surnellas/atirath/TravBridge/gemini_env/lib/python3.11/site-packages/scipy/stats/_stats_py.py:3948: RuntimeWarning: overflow encountered in vecdot
+  sstot = xp.vecdot(alldata, alldata, axis=-1) - normalized_ss
+/Users/surnellas/atirath/TravBridge/gemini_env/lib/python3.11/site-packages/scipy/stats/_stats_py.py:3948: RuntimeWarning: invalid value encountered in vecdot
+  sstot = xp.vecdot(alldata, alldata, axis=-1) - normalized_ss
+/Users/surnellas/capstone/src/interim_pipeline/step4_rq3_rq4_groundwork.py:125: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  axes[0].boxplot([arch.loc[arch.archetype == a, "total_turns"] for a in order], labels=lab, showmeans=True)
+{
+  "rule_tests_passed": 14,
+  "rule_tests_total": 14,
+  "frames_n": 1334,
+  "levene_log_turns": {
+    "W": 24.81096433365784,
+    "p": 2.6347439959439974e-11
+  },
+  "anova_log_turns": {
+    "F": 240.3486135325052,
+    "p": 7.665068998256015e-90
+  },
+  "kruskal_turns": {
+    "H": 325.25046411364445,
+    "p": 2.3591692533037257e-71
+  },
+  "kruskal_rer": {
+    "H": 1.846911704693702,
+    "p": 0.39714419512174637
+  },
+  "pooled_turns_sd": 6.012004661369898,
+  "overall_turns_sd": 6.735249236285103,
+  "overall_rer_M": 0.015234396576765251
+}
+                                                  case                expected                   fired  passed
+                                                    {}                    none                    none    True
+                           {"departure_lead_days": 14}        RULE_VISA_WINDOW        RULE_VISA_WINDOW    True
+                           {"departure_lead_days": 15}                    none                    none    True
+ {"departure_lead_days": 5, "is_international": false}                    none                    none    True
+                         {"passport_expiry_months": 5}  RULE_PASSPORT_VALIDITY  RULE_PASSPORT_VALIDITY    True
+                         {"passport_expiry_months": 6}                    none                    none    True
+                          {"traveler_count_adults": 9}       RULE_PAX_CAPACITY       RULE_PAX_CAPACITY    True
+                          {"traveler_count_adults": 8}                    none                    none    True
+{"traveler_count_adults": 12, "package_type": "Group"}                    none                    none    True
+                 {"discount_applied_percentage": 15.5} RULE_DISCOUNT_THRESHOLD RULE_DISCOUNT_THRESHOLD    True
+                 {"discount_applied_percentage": 15.0}                    none                    none    True
+                                {"budget_amount": 499}     RULE_BUDGET_MINIMUM     RULE_BUDGET_MINIMUM    True
+                                {"budget_amount": 500}                    none                    none    True
+     {"budget_amount": 300, "is_international": false}                    none                    none    True
+                   rule               required_slot  slot_observed_pct  trigger_n  trigger_pct
+      RULE_PAX_CAPACITY       traveler_count_adults              24.14         54         4.05
+    RULE_BUDGET_MINIMUM               budget_amount              65.14        266        19.94
+       RULE_VISA_WINDOW visa_processing_window_days               0.00          0         0.00
+ RULE_PASSPORT_VALIDITY      passport_expiry_months               0.00          0         0.00
+RULE_DISCOUNT_THRESHOLD discount_applied_percentage               0.00          0         0.00
+            archetype   n  turns_M  turns_SD  rer_M  rer_SD  req_turns_M
+ Direct Transactional 358   10.025     5.050  0.021   0.071        1.285
+Constraint Negotiator 306   15.585     6.677  0.016   0.045        1.320
+      Guided Explorer 670   17.254     6.163  0.012   0.041        1.670

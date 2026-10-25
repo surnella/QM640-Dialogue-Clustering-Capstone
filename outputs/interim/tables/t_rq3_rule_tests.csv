@@ -1,0 +1,15 @@
+case,expected,fired,passed
+{},none,none,True
+"{""departure_lead_days"": 14}",RULE_VISA_WINDOW,RULE_VISA_WINDOW,True
+"{""departure_lead_days"": 15}",none,none,True
+"{""departure_lead_days"": 5, ""is_international"": false}",none,none,True
+"{""passport_expiry_months"": 5}",RULE_PASSPORT_VALIDITY,RULE_PASSPORT_VALIDITY,True
+"{""passport_expiry_months"": 6}",none,none,True
+"{""traveler_count_adults"": 9}",RULE_PAX_CAPACITY,RULE_PAX_CAPACITY,True
+"{""traveler_count_adults"": 8}",none,none,True
+"{""traveler_count_adults"": 12, ""package_type"": ""Group""}",none,none,True
+"{""discount_applied_percentage"": 15.5}",RULE_DISCOUNT_THRESHOLD,RULE_DISCOUNT_THRESHOLD,True
+"{""discount_applied_percentage"": 15.0}",none,none,True
+"{""budget_amount"": 499}",RULE_BUDGET_MINIMUM,RULE_BUDGET_MINIMUM,True
+"{""budget_amount"": 500}",none,none,True
+"{""budget_amount"": 300, ""is_international"": false}",none,none,True

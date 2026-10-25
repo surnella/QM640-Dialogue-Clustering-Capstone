@@ -1,0 +1,6 @@
+rule,required_slot,slot_observed_pct,trigger_n,trigger_pct
+RULE_PAX_CAPACITY,traveler_count_adults,24.137931034482758,54,4.0479760119940025
+RULE_BUDGET_MINIMUM,budget_amount,65.1424287856072,266,19.940029985007495
+RULE_VISA_WINDOW,visa_processing_window_days,0.0,0,0.0
+RULE_PASSPORT_VALIDITY,passport_expiry_months,0.0,0,0.0
+RULE_DISCOUNT_THRESHOLD,discount_applied_percentage,0.0,0,0.0

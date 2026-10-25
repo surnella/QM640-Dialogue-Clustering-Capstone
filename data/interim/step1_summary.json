@@ -1,0 +1,31 @@
+{
+  "audits": [
+    {
+      "corpus": "Microsoft Frames",
+      "n_raw": 1369,
+      "duplicate_ids": 0,
+      "duplicate_text": 0,
+      "dialogues_with_empty_utterance": 0,
+      "excluded_lt_min_turns": 35,
+      "turn_outliers_iqr": 22,
+      "outlier_threshold": 32.5,
+      "missing_task_success_label": 0,
+      "missing_user_rating": 3,
+      "n_analytic": 1334
+    },
+    {
+      "corpus": "MultiWOZ 2.2 (travel-service sample)",
+      "n_raw": 1500,
+      "duplicate_ids": 0,
+      "duplicate_text": 1,
+      "dialogues_with_empty_utterance": 0,
+      "excluded_lt_min_turns": 0,
+      "turn_outliers_iqr": 13,
+      "outlier_threshold": 27.0,
+      "n_analytic": 1499
+    }
+  ],
+  "n_gold": 933,
+  "n_test": 401,
+  "n_retrieval_pool": 879
+}

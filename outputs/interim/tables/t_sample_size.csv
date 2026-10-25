@@ -1,0 +1,5 @@
+RQ,Design,f,alpha,df1,df2_at_Nmin,lambda_at_Nmin,F_crit,N_min,power_at_Nmin,buffer,N_final,per_group,power_final,unit
+RQ1,One-way ANOVA (3 algorithms),0.25,0.05,2.0,155.0,9.875,3.054,158,0.8022,0.0,159,53,0.8049,bootstrap clustering runs
+RQ2,One-way repeated-measures ANOVA (3 conditions),0.25,0.05,2.0,54.0,10.5,3.168,28,0.8125,0.1,33,11,0.8776,test dialogues (each scored under all 3 conditions)
+RQ3,2 x 2 factorial ANOVA,0.25,0.05,1.0,124.0,8.0,3.918,128,0.8014,0.1,144,36,0.846,test dialogues
+RQ4,2 x 3 factorial ANOVA,0.25,0.05,2.0,152.0,9.875,3.056,158,0.802,0.1,180,30,0.8545,test dialogues

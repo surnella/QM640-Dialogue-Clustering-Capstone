@@ -1,0 +1,48 @@
+{
+  "names": {
+    "1": "Open Explorer",
+    "2": "Decisive Booker",
+    "0": "Rigid-Constraint Seeker"
+  },
+  "order": [
+    "Decisive Booker",
+    "Open Explorer",
+    "Rigid-Constraint Seeker"
+  ],
+  "ari_vs_primary": 0.19766750585719733,
+  "cramers_v_vs_primary": 0.44281918104646895,
+  "cramers_v_task_success": 0.07542249161505213,
+  "gold_counts": {
+    "Decisive Booker": 420,
+    "Open Explorer": 238,
+    "Rigid-Constraint Seeker": 275
+  },
+  "test_counts": {
+    "Decisive Booker": 175,
+    "Open Explorer": 99,
+    "Rigid-Constraint Seeker": 127
+  },
+  "chi_gold_test": {
+    "chi2": 0.9304623658577027,
+    "p": 0.6279899078605273,
+    "df": 2,
+    "N": 401
+  },
+  "rq4": {
+    "n": 1334,
+    "levene_log_turns": {
+      "W": 38.006880503486,
+      "p": 8.870484315345934e-17
+    },
+    "kruskal_turns": {
+      "H": 433.2181022131049,
+      "p": 8.470018796796721e-95
+    },
+    "kruskal_rer": {
+      "H": 4.11862765593092,
+      "p": 0.12754145525622532
+    },
+    "pooled_turns_sd": 5.579829285691058,
+    "overall_rer_M": 0.015234396576765251
+  }
+}

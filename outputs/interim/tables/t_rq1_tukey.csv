@@ -1,0 +1,4 @@
+group1,group2,meandiff,p-adj,lower,upper,reject
+Agglomerative,HDBSCAN,0.093,0.0,0.0763,0.1096,True
+Agglomerative,K-Means,0.0295,0.0001,0.0129,0.0462,True
+HDBSCAN,K-Means,-0.0634,0.0,-0.0801,-0.0468,True

@@ -1,0 +1,6 @@
+rule_id,name,condition,action,severity
+RULE_VISA_WINDOW,Visa Processing Lead Time,departure_lead_days < 15 and is_international == true,BLOCK_AND_FLAG,FATAL
+RULE_PASSPORT_VALIDITY,Passport Validity Threshold,passport_expiry_months < 6 and is_international == true,BLOCK_AND_FLAG,FATAL
+RULE_PAX_CAPACITY,Maximum Adult Capacity per Single Booking,traveler_count_adults > 8 and package_type == 'FIT',CONVERT_TO_GROUP,WARNING
+RULE_DISCOUNT_THRESHOLD,Maximum Discretionary Sales Discount,discount_applied_percentage > 15.0,CLAMP_DISCOUNT,FATAL
+RULE_BUDGET_MINIMUM,Minimum Feasible Per-Pax International Budget,budget_amount is not None and budget_amount < 500 and is_international == true,PROMPT_REALISTIC_BUDGET,WARNING

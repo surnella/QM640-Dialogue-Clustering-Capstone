@@ -1,0 +1,31 @@
+{
+  "embedding": "gemini",
+  "turn_alignment_mismatches": 0,
+  "r0_reproduction_cosine": null,
+  "rule": {
+    "min_cluster_pct": 10.0,
+    "min_ari": 0.6,
+    "route_N": 5
+  },
+  "winner": {
+    "rep": "D1",
+    "k": 2,
+    "stability_ari": 0.9218479059628997,
+    "kappa_N3": 0.32449961457696497,
+    "kappa_N5": 0.37557734139873056,
+    "kappa_N7": 0.4676768391984706,
+    "calibrated_silhouette": 0.2124005958205089,
+    "roleplayer_v": 0.14597532687481146,
+    "min_cluster_pct": 35.58413719185423
+  },
+  "r0_k3": {
+    "stability_ari": 0.9379950010371235,
+    "kappa_N3": 0.10689474236541086,
+    "kappa_N5": 0.07115124153498864,
+    "kappa_N7": 0.18966330283881916,
+    "calibrated_silhouette": 0.14855770995684772,
+    "roleplayer_v": 0.19023020937194382
+  },
+  "ari_winner_vs_r0k3": 0.17383872120286326,
+  "n_eligible": 14
+}

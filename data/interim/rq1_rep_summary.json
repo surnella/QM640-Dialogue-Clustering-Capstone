@@ -1,0 +1,30 @@
+{
+  "turn_alignment_mismatches": 0,
+  "r0_reproduction_cosine": 0.9999999999317541,
+  "rule": {
+    "min_cluster_pct": 10.0,
+    "min_ari": 0.6,
+    "route_N": 5
+  },
+  "winner": {
+    "rep": "R3",
+    "k": 2,
+    "stability_ari": 0.8954136881955422,
+    "kappa_N3": 0.21629391903185913,
+    "kappa_N5": 0.2931092062785261,
+    "kappa_N7": 0.34479064369252754,
+    "calibrated_silhouette": 0.0580234370675313,
+    "roleplayer_v": 0.13245524899581812,
+    "min_cluster_pct": 34.72668810289389
+  },
+  "r0_k3": {
+    "stability_ari": 0.7203086407763328,
+    "kappa_N3": 0.09613328489126483,
+    "kappa_N5": 0.10839090029477283,
+    "kappa_N7": 0.19828612851447214,
+    "calibrated_silhouette": 0.13495005115053416,
+    "roleplayer_v": 0.18643499344372813
+  },
+  "ari_winner_vs_r0k3": 0.31645511882526356,
+  "n_eligible": 10
+}

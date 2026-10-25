@@ -1,0 +1,126 @@
+{
+  "n_dialogues": 1334,
+  "n_missing_annotation": 0,
+  "rule": {
+    "k_range": [
+      3,
+      8
+    ],
+    "min_ari": 0.6,
+    "min_cluster_pct": 5.0,
+    "route_N": 5
+  },
+  "winner": {
+    "rep": "H",
+    "k": 4,
+    "stability_ari": 0.6573089930995093,
+    "calibrated_silhouette": 0.016689055459382388,
+    "silhouette": 0.06641709054404044,
+    "kappa_N3": 0.23177898610424563,
+    "kappa_N5": 0.25537951765394495,
+    "kappa_N7": 0.3020010261672653,
+    "kappa_N10": 0.35404937596793296,
+    "roleplayer_v": 0.16516739245407283,
+    "min_cluster_pct": 7.609860664523044,
+    "eta2_turns": 0.33560373032874996
+  },
+  "unusual": {
+    "n": 47,
+    "pct": 5.037513397642015,
+    "turns_M": 12.702127659574469,
+    "llm_flag_pct": 6.382978723404255,
+    "llm_flag_pct_rest": 2.708803611738149,
+    "hdbscan_noise_overlap_pct": 87.2340425531915,
+    "hdbscan_noise_share": 7.717041800643088,
+    "goal_mix": {
+      "specific_trip_booking": 40.4,
+      "information_only": 31.9,
+      "price_shopping": 14.9,
+      "compare_options": 6.4,
+      "explore_destinations": 6.4
+    },
+    "tone_mix": {
+      "neutral": 42.6,
+      "impatient": 29.8,
+      "positive": 17.0,
+      "frustrated": 10.6
+    }
+  },
+  "reliability": {
+    "price_sensitivity": 0.9484004127966976,
+    "destination_flexibility": 0.9571428571428572,
+    "date_flexibility": 0.8862861041619285,
+    "exploration_breadth": 0.9471249173826835,
+    "decisiveness": 0.9147588894301023,
+    "detail_orientation": 0.89067055393586,
+    "information_upfront": 0.8652835780681665,
+    "revision_tendency": 0.8920863309352518,
+    "question_asking": 0.8994974874371859,
+    "politeness": 0.906054279749478,
+    "primary_goal": 0.7760358342665173,
+    "emotional_tone": 0.8792895326780479,
+    "outcome": 0.9796830556684275,
+    "party_type": 0.9348873551243652,
+    "n": 100
+  },
+  "criterion_validity": {
+    "revision_tendency~user_revisions": {
+      "rho": 0.7265974473861673,
+      "p": 2.2792880448694353e-219
+    },
+    "question_asking~request_rate": {
+      "rho": 0.6530734665156244,
+      "p": 5.0695463403899293e-163
+    },
+    "exploration_breadth~switch_rate": {
+      "rho": 0.30456392235066027,
+      "p": 4.966370373130747e-30
+    },
+    "exploration_breadth~compare_rate": {
+      "rho": 0.26304148830537827,
+      "p": 1.5014273423345546e-22
+    },
+    "information_upfront~front_loading": {
+      "rho": 0.32115095219559703,
+      "p": 2.2151202550435903e-33
+    },
+    "price_sensitivity~budget_stated": {
+      "rho": 0.28143272276130316,
+      "p": 1.045316659971081e-25
+    },
+    "detail_orientation~preference_keys": {
+      "rho": 0.45354759560406654,
+      "p": 1.173491333699348e-68
+    }
+  },
+  "llm_distributions": {
+    "primary_goal": {
+      "specific_trip_booking": 90.6,
+      "explore_destinations": 5.2,
+      "price_shopping": 2.5,
+      "information_only": 1.3,
+      "compare_options": 0.4
+    },
+    "emotional_tone": {
+      "neutral": 47.4,
+      "positive": 40.0,
+      "frustrated": 10.6,
+      "impatient": 2.0
+    },
+    "outcome": {
+      "booked": 65.6,
+      "no_suitable_option": 28.1,
+      "undecided_or_left": 6.2,
+      "unclear": 0.1
+    },
+    "party_type": {
+      "solo": 28.4,
+      "unknown": 25.0,
+      "group": 18.7,
+      "family": 17.5,
+      "couple": 9.7,
+      "business": 0.8
+    }
+  },
+  "llm_unusual_pct": 2.623688155922039
+}

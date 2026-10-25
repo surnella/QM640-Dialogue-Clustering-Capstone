@@ -1,0 +1,107 @@
+dialogue_id,target_archetype,routed_archetype,routing_correct,sim_static,sim_global,sim_cluster,arch_match_static,arch_match_global,arch_match_cluster,gold_style_own,gold_style_other,gold_style_argmax_correct,prefix,gold
+frames_57b06806-b646-4e54-b7ef-e3bbdcb5b55e,Direct Transactional,Guided Explorer,False,0.5650926232337952,0.8031026721000671,0.8031026721000671,0.3333333333333333,0.0,0.0,0.5608944892883301,0.4599597752094269,True,"USER: Hello! I've been put in charge of [INTENT]ing a little work retreat As a reward for our recent success!
+AGENT: Hello sir/madam. How may I help you?
+USER: I just wanna go from [[KEY]] to [[KEY]] [STR_DATE] to [NUM] Whatcha got","Nothing I'm afraid. However, I can check other destinations for you."
+frames_e23b9454-9640-4483-85e7-b88aea46b289,Direct Transactional,Direct Transactional,True,0.6378996968269348,0.8748127818107605,0.8495380282402039,0.3333333333333333,0.3333333333333333,1.0,0.6579834222793579,0.617951512336731,True,"USER: I have [NUM] dollars
+AGENT: Where would you like to go?
+USER: i dont care i just need to leave from [OR_CITY]",I can offer you [DURATION] in [DST_CITY] for [[KEY]]
+frames_c63fe1b8-715d-4a05-bc37-47e71c4e7824,Direct Transactional,Constraint Negotiator,False,0.5623869299888611,0.7953974604606628,0.7801024317741394,0.3333333333333333,0.0,0.0,0.35546034574508667,0.3257875442504883,True,"USER: I need to impress some clients with an extravagant trip
+AGENT: Of course! Where would you like to go?
+USER: I was thinking I'd wine and dine them in [DST_CITY]. Do you have flights there from [[KEY]]?",Do you have a budget?
+frames_0ce82cd5-15fd-4fc1-8c14-f09c825685f3,Direct Transactional,Constraint Negotiator,False,0.7183579802513123,0.9313210844993591,0.9109905362129211,0.3333333333333333,0.0,0.0,0.6036150455474854,0.5569952130317688,True,"USER: Hello bot. I want to go to [DST_CITY] from [OR_CITY] on [STR_DATE]
+AGENT: Do you have a budget?
+USER: [BUDGET]",Will you be travelling [N_ADULTS]?
+frames_7f940d0a-ac14-4c38-a3ec-a9918bcef985,Direct Transactional,Direct Transactional,True,0.4886944591999054,0.9268648028373718,0.9237222671508789,0.3333333333333333,0.6666666666666666,1.0,0.7165201902389526,0.6295672655105591,True,"USER: I want to take a trip from [[KEY]] to [DST_CITY].
+AGENT: Unfortunately I do not have any flights from [[KEY]]. Are there any other nearby city?
+USER: nope. is there anything to [DST_CITY] from [[KEY]]?","No, sorry, I have no flights from [[KEY]] in my database."
+frames_144db3ac-8162-4271-8b6d-b992a71ade4b,Direct Transactional,Direct Transactional,True,0.6140629053115845,0.8955729007720947,0.8813702464103699,0.3333333333333333,0.3333333333333333,1.0,0.2542954683303833,0.19638118147850037,True,"USER: need to get out of town asap. like [[KEY]]
+AGENT: where would you like to go?
+USER: get me to [DST_CITY]",From where?
+frames_72b8e77d-6c07-466a-a110-b1baede838ee,Direct Transactional,Constraint Negotiator,False,0.5885564684867859,0.8154821991920471,0.7889983057975769,0.3333333333333333,0.0,0.0,0.5641418099403381,0.5265921354293823,True,"USER: i'm going abroad to check out my options for my internship
+AGENT: Hi there! Do you have some destinations in mind?
+USER: what can you [INTENT] me from [OR_CITY] to [DST_CITY] under [NUM]? (they aren't paying me so that is a TIGHT budget)",It appears I have a flight from [OR_CITY] to [DST_CITY]. The cheapest available flight is [PRICE]. You would be flying out on the [STR_DATE]. Would you like to hear more about this package?
+frames_8b046a07-a866-4cc0-949d-8291c29d2a9a,Direct Transactional,Direct Transactional,True,0.5653761625289917,0.902716875076294,0.8839302062988281,0.3333333333333333,0.3333333333333333,1.0,0.6340649127960205,0.5249117612838745,True,"USER: Hi! I'd like to go to [[KEY]] from [[KEY]]
+AGENT: I have no packages available for [[KEY]] to [[KEY]]
+USER: What about to [DST_CITY]?",Nothing for [[KEY]] to [DST_CITY] either
+frames_c9e34506-06b9-482b-8fee-014a4b149023,Direct Transactional,Direct Transactional,True,0.4900530278682709,0.8997392654418945,0.8946213722229004,0.3333333333333333,0.6666666666666666,1.0,0.732630729675293,0.6407473683357239,True,"USER: I want to leave [[KEY]] on or after [STR_DATE]
+AGENT: I'm afraid we do not have any flights operating out of [[KEY]]. Would you like to leave from somewhere else?
+USER: I can leave from [[KEY]] and I want to go to [DST_CITY] with [NUM] adults for [NUM]",I'm afraid we do not operate flights out of [[KEY]] either. Would you like to leave from somewhere else?
+frames_e9bb8580-7d8a-40d7-a84b-b039daad4ceb,Direct Transactional,Direct Transactional,True,0.5978962779045105,0.8984659314155579,0.8469014167785645,0.3333333333333333,0.0,1.0,0.6341284513473511,0.5291469693183899,True,"USER: I'm so excited, I get to take my entire [N_ADULTS] anywhere I want! Money is no object. Just gotta make it fit into out busy schedule. We can only go between [STR_DATE] and [END_DATE].
+AGENT: Where are you leaving from?
+USER: [OR_CITY] will be our point of departure","Sorry, we do not offer flights from [OR_CITY]."
+frames_0faf3e37-1ccb-4329-9934-2c97fa862354,Direct Transactional,Direct Transactional,True,0.5356975793838501,0.8383493423461914,0.8293573260307312,0.3333333333333333,0.3333333333333333,1.0,0.3171841502189636,0.4018518328666687,False,"USER: stuck in [OR_CITY], but I need the first flight back to [DST_CITY] alright?
+AGENT: no results were found for this query. Could you be so kind so as to supply an alternate destination?
+USER: fine I can hope over to [OR_CITY] and take off outta there
+whatcha got?",Would you fancy a [DURATION] stay at the [NAME]?
+frames_f20b09e1-2df4-4403-bcc4-7b3fdb63e2ee,Constraint Negotiator,Direct Transactional,False,0.5579242706298828,0.8631013035774231,0.8276217579841614,0.3333333333333333,0.0,0.0,0.6927804350852966,0.71178138256073,False,"USER: Do you do flights out of [[KEY]]?
+AGENT: Sure do! Where to?
+USER: I had [DST_CITY] in mind, but I’m not sure if there are actually flights there?",There actually are [COUNT_DST_CITY] flights between [[KEY]] and [DST_CITY]! Can you tell me more about your travel dates and budget?
+frames_c4d6513c-b781-412c-a2e2-027520d16d96,Constraint Negotiator,Constraint Negotiator,True,0.5007762312889099,0.746966540813446,0.7357956767082214,0.3333333333333333,0.6666666666666666,1.0,0.5368964672088623,0.42351198196411133,True,"USER: [OR_CITY] to [DST_CITY], [STR_DATE] for [NUM], [BUDGET] budget. I want the [CATEGORY] hotel in [DST_CITY]
+AGENT: The most upscale hotel I can offer you is [[KEY]]. Have you heard of it?
+USER: How many stars does it have","It has [NUM] stars, user reviews of [NUM], its close to a park and it offers free wifi and free breakfast to its guests."
+frames_11eeb42a-1061-4bcf-987a-ef31c34cfdc9,Constraint Negotiator,Direct Transactional,False,0.6357460618019104,0.7430160045623779,0.7335293889045715,0.3333333333333333,0.0,0.0,0.4488813281059265,0.39688968658447266,True,"USER: hi there, wayward daydreamer on the line...so i live and work in [OR_CITY], but if i were to go to, say, [DST_CITY]…..could you tell me about it??
+AGENT: Do you have a budget?
+USER: well i do, but in theory i would like to know whats out there first",I will tell you our [NUM] [CATEGORY] packages!
+frames_0fa476d9-e4b0-4f17-96f4-0017a1807945,Constraint Negotiator,Constraint Negotiator,True,0.6171817183494568,0.9089608192443848,0.8647399544715881,0.3333333333333333,0.0,1.0,0.3208182156085968,0.3431086242198944,False,"USER: Hi. i need to get to [DST_CITY] on the low
+keep it [CATEGORY] in terms of luxe
+but no spreading the word about it..
+we’re leaving from [OR_CITY]
+AGENT: How many people?
+USER: [NUM]",Do you have a budget?
+frames_28fea5ef-82ef-4960-b1b4-502092760cb2,Constraint Negotiator,Direct Transactional,False,0.5146840810775757,0.8370804786682129,0.8370804786682129,0.3333333333333333,0.0,0.0,0.5928382873535156,0.5972458124160767,False,"USER: Ever been to [DST_CITY]? Can you tell me what it is like?
+AGENT: I have [NUM] star [NUM] day packages available in [DST_CITY] for only [PRICE] if you travel from [OR_CITY].
+USER: I'm in [OR_CITY]. Ever been to [DST_CITY]?",Would you like to stay at [NAME] for [PRICE] and leave [OR_CITY] on [STR_DATE]?
+frames_a418cbad-65b1-4ffe-a631-69f22826ba24,Constraint Negotiator,Constraint Negotiator,True,0.4835059940814972,0.7537631988525391,0.6842050552368164,0.3333333333333333,0.3333333333333333,1.0,0.5179563760757446,0.41355180740356445,True,"USER: i want to dream of a better life in [DST_CITY] rather than [OR_CITY].
+AGENT: You could spend [DURATION] at [NAME] for only [PRICE]!
+USER: What is [VAL] rating?",[NUM] stars with [NUM] from users.
+frames_acdf12da-7afb-425c-97fb-6604a8449dde,Constraint Negotiator,Constraint Negotiator,True,0.6243308186531067,0.8453074097633362,0.8438735008239746,0.3333333333333333,0.6666666666666666,1.0,0.33807748556137085,0.3497350811958313,False,"USER: HI I NEED TO GO ON VACATION I LIVE IN [OR_CITY] WHERE CAN I GO
+AGENT: How much would you like to spend on this vacation?
+USER: [BUDGET]",For [N_ADULTS] person?
+frames_b3d12fdf-4584-4dee-aae9-3eecc3f648d7,Constraint Negotiator,Constraint Negotiator,True,0.6010113954544067,0.8074731826782227,0.7600412368774414,0.3333333333333333,0.0,1.0,0.48385089635849,0.526142418384552,False,"USER: Hi I'm from [OR_CITY] and I am looking for a [MAX_DURATION] get away for the upcoming long weekend
+AGENT: Is this a trip for [N_ADULTS] adult?
+USER: yes just [VAL]",Can you please give me the dates you will be free to travel?
+frames_41064ab6-e58f-45d7-a10e-0199ce8cfaab,Constraint Negotiator,Direct Transactional,False,0.4662662744522095,0.7895920872688293,0.7806654572486877,0.3333333333333333,0.3333333333333333,0.0,0.4853730797767639,0.5495548248291016,False,"USER: um so i am getting married in [[KEY]] next week congrats to me and am trying to maybe [INTENT] a honeymoon to [[KEY]] [N_ADULTS] for hmmm some time [STR_DATE] cause thats when we're hitchin
+AGENT: If I understand correctly, [[KEY]] is the destination and the date is [STR_DATE]. Can you please provide the departure city and confirm that my understanding of what you are searching for is correct?
+USER: Yea! youre so spot on lol i love it on we're leaving from [[KEY]] ok, [[KEY]] Canada","We have no more packages available from [[KEY]] to [[KEY]], do you have any other dream destinations?"
+frames_a3602b85-ba8f-4fbd-aa2c-8a559860c9ae,Constraint Negotiator,Direct Transactional,False,0.5942035913467407,0.8144922852516174,0.7368261814117432,0.3333333333333333,0.6666666666666666,0.0,0.5870596170425415,0.5690482258796692,False,"USER: I wan to go to [DST_CITY] from [OR_CITY]
+AGENT: Do you have a date range or a budget?
+USER: [BUDGET] and no date range","I have [DURATION] and [DURATION] trips,"
+frames_0ff1681d-3e0f-4a86-8787-a238628a2543,Constraint Negotiator,Direct Transactional,False,0.5427626967430115,0.8273507952690125,0.8029289841651917,0.3333333333333333,0.3333333333333333,0.0,0.509087324142456,0.4818839430809021,False,"USER: I need to get to [[KEY]] for [MAX_DURATION] from [OR_CITY]. I only got [BUDGET] and need to get [VAL] [[KEY]]. 
+AGENT: Unfortunately I don't have any [VAL] packages to [[KEY]]. I could [INTENT] you a stay in the [NAME] from the [STR_DATE] to the [END_DATE] for [PRICE].
+USER:  try going to [DST_CITY] instead",I can [INTENT] you an [DURATION] package in the [NAME]  for [PRICE].
+frames_9f54fcfb-9b81-4c4c-aba5-7ceecbf6e374,Guided Explorer,Constraint Negotiator,False,0.6007707715034485,0.8404502868652344,0.7876442074775696,0.3333333333333333,0.6666666666666666,0.0,0.3764037787914276,0.42032569646835327,False,"USER: We are a large family wanting to travel together to [DST_CITY], what can you do for us?
+AGENT: How many people?
+USER: [NUM] adults and [NUM] little itty bitty ones",Okay. Where are you leaving from/
+frames_8eb628b6-a0a9-4ea5-8908-05698463e39f,Guided Explorer,Constraint Negotiator,False,0.5202617645263672,0.8117267489433289,0.7701168656349182,0.3333333333333333,1.0,0.0,0.4929441809654236,0.4884924590587616,False,"USER: [OR_CITY] to anywhere, stat. 
+AGENT: I have a few possibilities.  Are you looking for a certain departure date, something special in a hotel, do you have a set budget?
+USER: between [STR_DATE] and [END_DATE] for under [NUM]",Would [[KEY]] be of interest?
+frames_5ecbe3a9-74f6-4341-9835-45bab52bd671,Guided Explorer,Direct Transactional,False,0.6538826823234558,0.8207716941833496,0.8125622272491455,0.3333333333333333,0.3333333333333333,0.0,0.43824952840805054,0.43580400943756104,False,"USER: hey i wanna go to [DST_CITY] w my fam
+AGENT: Can you tell me where you are departing from? do you have a budget?
+USER: yeah im from [OR_CITY] trying to spending [NUM] max",When are you planning on departing?
+frames_7cb6f213-d442-4dd6-8654-f38237fbd3d2,Guided Explorer,Direct Transactional,False,0.5861499905586243,0.8840469717979431,0.859821617603302,0.3333333333333333,0.6666666666666666,0.0,0.3220226764678955,0.2880518436431885,True,"USER: Hey, I need to take [N_ADULTS] for a few days on a [SEAT] trip. We have to leave [STR_DATE]
+AGENT: I can help with that, where are you leaving from and where do you plan on going?
+USER: We'll be leaving from [OR_CITY]. Can you check for trips to [DST_CITY] first?","Certainly, this is for [N_ADULTS] adults?"
+frames_d0f75ca4-3a7a-479e-9b20-a194bfd2bbf5,Guided Explorer,Direct Transactional,False,0.5802049040794373,0.9099023938179016,0.9053146839141846,0.3333333333333333,0.3333333333333333,0.0,0.5856876373291016,0.6057329177856445,False,"USER: I need to get out of [OR_CITY] on [STR_DATE]. Can you get me to [DST_CITY] for [NUM]
+AGENT: We do not offer any flights that leave from [OR_CITY]. Would you like to leave from somewhere else?
+USER: [OR_CITY]",Will you be the only one travelling? And is there number of days you would like to spend in [DST_CITY]?
+frames_ba9b1b1f-23c3-4d2b-a418-11aec025c7af,Guided Explorer,Constraint Negotiator,False,0.6086177229881287,0.8146194815635681,0.7883040308952332,0.3333333333333333,0.3333333333333333,0.0,0.5384098291397095,0.4845559597015381,True,"USER: I would like to take my [N_CHILDREN] [N_ADULTS] on a lovely family vacation. We were thinking about going to [DST_CITY].
+AGENT: Hi! How many children total and where from?
+USER: [NUM]! Big family, I know HAHA. We will be leaving from [OR_CITY] and I should probably mention we can only afford trips under [NUM]. Do you have anything between [STR_DATE] and [END_DATE]?",Yeah of course! You can have a [DURATION] stay at a beachside hotel!
+frames_179b0349-fbdd-434c-9e64-a14745f1a01e,Guided Explorer,Constraint Negotiator,False,0.5984655022621155,0.749228298664093,0.6970836520195007,0.3333333333333333,0.3333333333333333,0.0,0.4593830406665802,0.41334953904151917,False,"USER: hello. im getting married [STR_DATE] in [OR_CITY] and need to [INTENT] a honeymoon after that
+looking at going to [DST_CITY] for [MAX_DURATION]
+[BUDGET] max please
+AGENT: I have a [DURATION] trip at [NUM] star hotel
+USER: tell me more","[NAME] , [DURATION] @ [PRICE]"
+frames_1d1e1364-d50f-41eb-8217-372263bcee02,Guided Explorer,Direct Transactional,False,0.5592960715293884,0.8480984568595886,0.8214296698570251,0.3333333333333333,0.3333333333333333,0.0,0.5160463452339172,0.5786367058753967,False,"USER: Hello you may know me as the best Pokemon Hunter in the world
+AGENT: Hello.
+USER: i need to get to [[KEY]]",You can leave [DST_CITY] [[KEY]]
+frames_65eaf400-deb9-4a47-a0a1-828813c45a20,Guided Explorer,Direct Transactional,False,0.6639783382415771,0.8785257339477539,0.8566164970397949,0.3333333333333333,0.6666666666666666,0.0,0.5616808533668518,0.5618070363998413,False,"USER: hello
+AGENT: hello
+USER: i live in [OR_CITY]. i have [BUDGET] to spend. i can travel between [STR_DATE] and [END_DATE].
+what can you find me in [DST_CITY]","We can send you to [DST_CITY] during those dates either for [DURATION] or [DURATION], which do you prefer?"
+frames_a8d2ddb6-2a38-46f4-b7e2-58901676bde6,Guided Explorer,Direct Transactional,False,0.5941382050514221,0.7850019335746765,0.7738263010978699,0.3333333333333333,1.0,0.0,0.33075690269470215,0.33813929557800293,False,"USER: Hi, I need to get to [DST_CITY] for a [SEAT] meeting.
+AGENT: Where from?
+USER: I can leave from SL.",Do you have a budget?
+frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db,Guided Explorer,Direct Transactional,False,0.6019455790519714,0.843883216381073,0.8274183869361877,0.3333333333333333,0.6666666666666666,0.0,0.5839548110961914,0.5540472865104675,True,"USER: Get me out of LA asap!
+AGENT: Ok! Do you have a destination in mind?
+USER: Heard [DST_CITY] is nice. Maybe I'll have better luck there..",I have a [DURATION] stay at [NAME] for [PRICE] leaving [OR_CITY] [STR_DATE]!

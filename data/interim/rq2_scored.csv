@@ -1,0 +1,2443 @@
+dialogue_id,condition,target_archetype,prompt,gold,response,model,finish_reason,error,style_cos,gold_cos,words
+frames_57b06806-b646-4e54-b7ef-e3bbdcb5b55e,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hello! I've been put in charge of [INTENT]ing a little work retreat As a reward for our recent success!
+AGENT: Hello sir/madam. How may I help you?
+USER: I just wanna go from [[KEY]] to [[KEY]] [STR_DATE] to [NUM] Whatcha got
+AGENT:","Nothing I'm afraid. However, I can check other destinations for you.","To help you find the best options for your work retreat, could you please tell me your departure city and your desired destination? I'll also need the full departure date and the number of nights you plan to stay.",gemini-2.5-flash,FinishReason.STOP,,0.45174023509025574,0.33538443,39
+frames_57b06806-b646-4e54-b7ef-e3bbdcb5b55e,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hello! I've been put in charge of [INTENT]ing a little work retreat As a reward for our recent success!
+AGENT: Hello sir/madam. How may I help you?
+USER: I just wanna go from [[KEY]] to [[KEY]] [STR_DATE] to [NUM] Whatcha got
+AGENT:","Nothing I'm afraid. However, I can check other destinations for you.",What is your destination city?,gemini-2.5-flash,FinishReason.STOP,,0.541974663734436,0.49657762,5
+frames_57b06806-b646-4e54-b7ef-e3bbdcb5b55e,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: [STR_DATE]-[END_DATE]
+AGENT: Hi, how can I help you today?
+USER: [[KEY]] to [[KEY]]
+AGENT: Certainly, how many adults and children will be on this trip?
+USER: [N_ADULTS]
+AGENT: Unfortunately, we do not have a trip fitting your exact description. However, we do have a trip from [[KEY]] to [[KEY]], from [STR_DATE] to [END_DATE]. Would this still be of interest to you?
+
+Example 2:
+USER: hello
+AGENT: Hi! How can I help you?
+USER: i would like tto go from [[KEY]] to [[KEY]]. on [STR_DATE]
+for at most [BUDGET] with [NUM] adult
+AGENT: Unfortunately we only have flights from [[KEY]], [[KEY]], and [[KEY]].
+USER: ok. leaving from [[KEY]] and arriving at [[KEY]]
+AGENT: I have [NUM] packages from [[KEY]] to [[KEY]] but they are [[KEY]].
+
+Example 3:
+USER: hello!
+AGENT: I am here to help
+USER: i have between [STR_DATE] to [NUM] to take my team somewhere nice. can you please [INTENT] [N_ADULTS] adults from [OR_CITY] to [[KEY]]
+AGENT: will that be [NUM] adults?
+USER: yes
+AGENT: I can definitely help you with your request. Are you on a certain budget for [VAL] trip?
+
+Current conversation:
+USER: Hello! I've been put in charge of [INTENT]ing a little work retreat As a reward for our recent success!
+AGENT: Hello sir/madam. How may I help you?
+USER: I just wanna go from [[KEY]] to [[KEY]] [STR_DATE] to [NUM] Whatcha got
+AGENT:","Nothing I'm afraid. However, I can check other destinations for you.","Certainly! To help me find the best options for your work retreat, could you please tell me how many adults will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.39382031559944153,0.38023788,23
+frames_e23b9454-9640-4483-85e7-b88aea46b289,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I have [NUM] dollars
+AGENT: Where would you like to go?
+USER: i dont care i just need to leave from [OR_CITY]
+AGENT:",I can offer you [DURATION] in [DST_CITY] for [[KEY]],"Okay, so you're looking for a vacation package (flights and hotel) departing from [OR_CITY], and you have [NUM] dollars to spend, but you're open on the destination. To help me narrow down some options, could you tell me how many people will be traveling and for how many nights you'd like to be away?",gemini-2.5-flash,FinishReason.STOP,,0.54201740026474,0.27420366,54
+frames_e23b9454-9640-4483-85e7-b88aea46b289,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I have [NUM] dollars
+AGENT: Where would you like to go?
+USER: i dont care i just need to leave from [OR_CITY]
+AGENT:",I can offer you [DURATION] in [DST_CITY] for [[KEY]],What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.4930537939071655,0.21263523,6
+frames_e23b9454-9640-4483-85e7-b88aea46b289,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: i want to go somewhere
+AGENT: I want to help you go somewhere. But where did you have in mind?
+USER: idk. i will leave from [OR_CITY]
+AGENT: How does [DURATION] in [DST_CITY] sound?
+USER: i can travel between [STR_DATE] and [END_DATE]. [BUDGET] budget
+AGENT: Perfect, then you might enjoy a stay at the [NAME] between [STR_DATE] and [NUM] for [PRICE].
+
+Example 2:
+USER: I need a break BADLY. Can I please [INTENT] a trip to [DST_CITY] where hopefully no one will know me?
+AGENT: Sure. Where would you need to leave from?
+USER: [OR_CITY]
+AGENT: Will you be travelling [N_ADULTS]?
+USER: Nooooo....but who I'm going with is a secret.
+AGENT: Will there be [NUM] adults totally?
+
+Example 3:
+USER: ahhhh hey bud. I need to get the heck outta [OR_CITY] ASAP
+can ya get me to [DST_CITY] for, say, [NUM]? and [STR_DATE] please
+AGENT: There are no results. Is there a different destination you'd like to visit?
+USER: ahhh I can leave from [OR_CITY]
+AGENT: We only have packages from [OR_CITY] to [DST_CITY], [DST_CITY], [DST_CITY], [DST_CITY], and [DST_CITY].
+
+Current conversation:
+USER: I have [NUM] dollars
+AGENT: Where would you like to go?
+USER: i dont care i just need to leave from [OR_CITY]
+AGENT:",I can offer you [DURATION] in [DST_CITY] for [[KEY]],How many adults will be traveling?,gemini-2.5-flash,FinishReason.STOP,,0.4305480122566223,0.09238495,6
+frames_c63fe1b8-715d-4a05-bc37-47e71c4e7824,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I need to impress some clients with an extravagant trip
+AGENT: Of course! Where would you like to go?
+USER: I was thinking I'd wine and dine them in [DST_CITY]. Do you have flights there from [[KEY]]?
+AGENT:",Do you have a budget?,"Yes, I can certainly help you find flights to [DST_CITY] from [[KEY]]. To start, what are your desired travel dates?",gemini-2.5-flash,FinishReason.STOP,,0.6903293132781982,0.10158664,20
+frames_c63fe1b8-715d-4a05-bc37-47e71c4e7824,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I need to impress some clients with an extravagant trip
+AGENT: Of course! Where would you like to go?
+USER: I was thinking I'd wine and dine them in [DST_CITY]. Do you have flights there from [[KEY]]?
+AGENT:",Do you have a budget?,"Yes, I can certainly look for flights to [DST_CITY] from [[KEY]]. What are your desired travel dates?",gemini-2.5-flash,FinishReason.STOP,,0.7317277789115906,0.10623968,17
+frames_c63fe1b8-715d-4a05-bc37-47e71c4e7824,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hello there, I'd like to [INTENT] a vacation for my best friends and myself. I live and work in [OR_CITY], and I've been wanting to get out of the city with my buddies for a long time now :slightly_smiling_face:
+AGENT: Ok! How many of you will be travelling? Any destination in mind?
+USER: Do you have any flights departing for [[KEY]] on [[KEY]]?
+AGENT: You’re in luck! I can [INTENT] you [STR_DATE]-[NUM] in [[KEY]] for [COUNT_NAME] [PRICE].
+USER: And how about [[KEY]], departing on the same day?
+AGENT: I can [INTENT] [STR_DATE]-[NUM] in [[KEY]] for [NUM].
+
+Example 2:
+USER: Hi im from [OR_CITY] looking to go on a trip
+AGENT: Where would you like to travel to?
+USER: Im thinking to [DST_CITY]
+AGENT: Did you have any specific dates in mind?
+USER: maybe the [[KEY]] until the [END_DATE]
+AGENT: How many people will be travelling with you?
+
+Example 3:
+USER: Hi! I’ve got a little duty to take care of - family vacation time :smile:
+AGENT: Where would you like to go?
+USER: Me and the gang are looking to get out of [OR_CITY] from [[KEY]] until the [END_DATE]. We’ve got a few destinations in mind - hows about [[KEY]]?
+AGENT: How many people will be traveling?
+USER: [NUM] adults and [NUM] kids
+AGENT: We have a great package at a [NUM] star hotel near the [KEY], [KEY], [KEY], and [KEY]. The hotel has a [NUM] guest rating and offers free [KEY] and [KEY]. This package is from [[KEY]] to [END_DATE]. The [SEAT] flights included put the [KEY] to [NUM] and is all inclusive. If you are looking for a cheaper option, the [VAL] package available is [NUM].
+
+Current conversation:
+USER: I need to impress some clients with an extravagant trip
+AGENT: Of course! Where would you like to go?
+USER: I was thinking I'd wine and dine them in [DST_CITY]. Do you have flights there from [[KEY]]?
+AGENT:",Do you have a budget?,What dates are you considering for this trip?,gemini-2.5-flash,FinishReason.STOP,,0.4161760210990906,0.2102094,8
+frames_0ce82cd5-15fd-4fc1-8c14-f09c825685f3,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hello bot. I want to go to [DST_CITY] from [OR_CITY] on [STR_DATE]
+AGENT: Do you have a budget?
+USER: [BUDGET]
+AGENT:",Will you be travelling [N_ADULTS]?,"Great! To help me find the best options, could you please tell me how many nights you plan to stay at your destination?",gemini-2.5-flash,FinishReason.STOP,,0.4827061891555786,0.42889616,23
+frames_0ce82cd5-15fd-4fc1-8c14-f09c825685f3,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hello bot. I want to go to [DST_CITY] from [OR_CITY] on [STR_DATE]
+AGENT: Do you have a budget?
+USER: [BUDGET]
+AGENT:",Will you be travelling [N_ADULTS]?,And for how many nights will you be staying?,gemini-2.5-flash,FinishReason.STOP,,0.4206056594848633,0.46579683,9
+frames_0ce82cd5-15fd-4fc1-8c14-f09c825685f3,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: so im following a special someone around the globe... I need to get form [OR_CITY] to [DST_CITY]
+AGENT: Do you have a budget?
+USER: yes [BUDGET]
+AGENT: we have [NUM] star and [NUM] star hotels ranging from [DURATION] to [DURATION]
+USER:  well how about for [NUM]
+AGENT: I am sorry, thats all I have
+
+Example 2:
+USER: hi there. need to [INTENT] a trip to [DST_CITY]
+i live in [OR_CITY]
+[STR_DATE] to [NUM]
+AGENT: Ok! I can help you with that. Do you have a budget?
+USER: budget is [BUDGET]
+AGENT: Sadly I have nothing available for your date range. Are you flexible on when you travel?
+
+Example 3:
+USER: I need to [INTENT] a flight to find my last Pokemon. I would need to leave from [OR_CITY] and go to [DST_CITY]. I will also need to leave on [STR_DATE]. Im [N_ADULTS] as well.
+AGENT: Is there a budget for your trip?
+USER: Yes, [BUDGET].
+AGENT: I have a nice [NUM] star hotel for [DURATION] starting at [PRICE] for you, however it leaves on the [STR_DATE]. Are you flexible with your dates?
+USER: Look, just tell me, is there anything for [DST_CITY]?
+AGENT: There's a nice [DURATION] package for a [NUM] star hotel with a departure flight on the [STR_DATE].
+
+Current conversation:
+USER: Hello bot. I want to go to [DST_CITY] from [OR_CITY] on [STR_DATE]
+AGENT: Do you have a budget?
+USER: [BUDGET]
+AGENT:",Will you be travelling [N_ADULTS]?,"I have a nice [NUM] star hotel for [DURATION] starting at [PRICE] for you, however it leaves on the [STR_DATE]. Are you flexible with your dates?",gemini-2.5-flash,FinishReason.STOP,,0.5140587091445923,0.23397782,26
+frames_7f940d0a-ac14-4c38-a3ec-a9918bcef985,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I want to take a trip from [[KEY]] to [DST_CITY].
+AGENT: Unfortunately I do not have any flights from [[KEY]]. Are there any other nearby city?
+USER: nope. is there anything to [DST_CITY] from [[KEY]]?
+AGENT:","No, sorry, I have no flights from [[KEY]] in my database.","I'm sorry, I still cannot find any flights from [[KEY]]. Would you like to try a different departure city?",gemini-2.5-flash,FinishReason.STOP,,0.7623066306114197,0.7900478,19
+frames_7f940d0a-ac14-4c38-a3ec-a9918bcef985,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I want to take a trip from [[KEY]] to [DST_CITY].
+AGENT: Unfortunately I do not have any flights from [[KEY]]. Are there any other nearby city?
+USER: nope. is there anything to [DST_CITY] from [[KEY]]?
+AGENT:","No, sorry, I have no flights from [[KEY]] in my database.","Unfortunately, I do not have any flights from [[KEY]] either.",gemini-2.5-flash,FinishReason.STOP,,0.7180678248405457,0.88065255,10
+frames_7f940d0a-ac14-4c38-a3ec-a9918bcef985,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to go to [DST_CITY] from [[KEY]]
+AGENT: I’m sorry, I can’t offer a flight from [DST_CITY] to [[KEY]] at this time. Could you perhaps leave from somewhere else?
+USER: Well good cuz i want to go to [DST_CITY] from [[KEY]].
+AGENT: Oh, I’m sorry, I misread. However I am still unable to accommodate any trips involving [DST_CITY].
+USER: well take me to [[KEY]] for [NUM] adults and [BUDGET]
+AGENT: Sorry, I cannot provide a trip for [NUM] adults at that price. Would you be able to increase your budget or reduce the size of your party?
+
+Example 2:
+USER: Hello! I recently won the internship lottery to [DST_CITY] where I will work for free! I'll be leaving from [[KEY]]. What can you offer?
+AGENT: I do not have any flights from [[KEY]] to [DST_CITY].
+USER: Do you have any flights from [[KEY]] to [DST_CITY]??
+AGENT: I do not.
+USER: What about [[KEY]] to [DST_CITY]?
+AGENT: Unfortunately those are not available either. I wish I could be of further assistance.
+
+Example 3:
+USER: [[KEY]] to [DST_CITY], got flights?
+AGENT: I’m sorry, I don’t have any flights available for you.
+USER: What would happen if i tried [[KEY]] to [DST_CITY] instead?
+AGENT: I’m sorry, I have nothing available out of [[KEY]].
+USER: cool, THANKS FOR NOTHING!!!!
+
+Current conversation:
+USER: I want to take a trip from [[KEY]] to [DST_CITY].
+AGENT: Unfortunately I do not have any flights from [[KEY]]. Are there any other nearby city?
+USER: nope. is there anything to [DST_CITY] from [[KEY]]?
+AGENT:","No, sorry, I have no flights from [[KEY]] in my database.",I do not have any flights from [[KEY]] to [DST_CITY].,gemini-2.5-flash,FinishReason.STOP,,0.7226208448410034,0.75738466,10
+frames_144db3ac-8162-4271-8b6d-b992a71ade4b,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: need to get out of town asap. like [[KEY]]
+AGENT: where would you like to go?
+USER: get me to [DST_CITY]
+AGENT:",From where?,"Great! To help you find the best flights and hotel, could you please tell me your desired departure date and how many nights you'd like to stay in [DST_CITY]?",gemini-2.5-flash,FinishReason.STOP,,0.6241479516029358,0.10962175,29
+frames_144db3ac-8162-4271-8b6d-b992a71ade4b,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: need to get out of town asap. like [[KEY]]
+AGENT: where would you like to go?
+USER: get me to [DST_CITY]
+AGENT:",From where?,And from where will you be departing?,gemini-2.5-flash,FinishReason.STOP,,0.4702361822128296,0.37334347,7
+frames_144db3ac-8162-4271-8b6d-b992a71ade4b,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: emergency flight out of [OR_CITY] please!! get me out on [STR_DATE]
+and to [DST_CITY]
+AGENT: Certainly. Where would you like to go?
+USER: [DST_CITY]
+AGENT: The earliest flight we have that departs from [OR_CITY] to [DST_CITY] is on Tuesday [STR_DATE], is that okay?
+USER: what about out of [OR_CITY]
+AGENT: From [OR_CITY] to [DST_CITY]?
+
+Example 2:
+USER: Hey, I really need to get out of [OR_CITY] for a while. Any chance to leave on [STR_DATE]?
+AGENT: Where would you like to go?
+USER: [DST_CITY] would be a cool place to go.
+AGENT: Do you have a budget?
+USER: I've only got [NUM] actually.
+AGENT: Are you travelling by [[KEY]]?
+
+Example 3:
+USER: I am SO done with my job right now. I wanna take a nice two week vacation and getting out of [OR_CITY]
+what could you get me in [[KEY]]?
+AGENT: [OR_CITY] to [[KEY]], let me see... nothing.
+USER: ok ..... well I'd settle on [DST_CITY]
+AGENT: [OR_CITY] to [DST_CITY], nothing available either.
+USER: you are a disgrace. what about in [[KEY]]?
+AGENT: I apologize for the inconvenience. I also do not have anything from [OR_CITY] to [[KEY]].
+
+Current conversation:
+USER: need to get out of town asap. like [[KEY]]
+AGENT: where would you like to go?
+USER: get me to [DST_CITY]
+AGENT:",From where?,And what dates are you looking to travel?,gemini-2.5-flash,FinishReason.STOP,,0.5074115991592407,0.2349341,8
+frames_72b8e77d-6c07-466a-a110-b1baede838ee,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: i'm going abroad to check out my options for my internship
+AGENT: Hi there! Do you have some destinations in mind?
+USER: what can you [INTENT] me from [OR_CITY] to [DST_CITY] under [NUM]? (they aren't paying me so that is a TIGHT budget)
+AGENT:",It appears I have a flight from [OR_CITY] to [DST_CITY]. The cheapest available flight is [PRICE]. You would be flying out on the [STR_DATE]. Would you like to hear more about this package?,"To help me find the best options for you, could you please tell me your desired departure and destination cities, as well as your budget?",gemini-2.5-flash,FinishReason.STOP,,0.5076473951339722,0.4170885,25
+frames_72b8e77d-6c07-466a-a110-b1baede838ee,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: i'm going abroad to check out my options for my internship
+AGENT: Hi there! Do you have some destinations in mind?
+USER: what can you [INTENT] me from [OR_CITY] to [DST_CITY] under [NUM]? (they aren't paying me so that is a TIGHT budget)
+AGENT:",It appears I have a flight from [OR_CITY] to [DST_CITY]. The cheapest available flight is [PRICE]. You would be flying out on the [STR_DATE]. Would you like to hear more about this package?,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.4930537939071655,0.3940158,6
+frames_72b8e77d-6c07-466a-a110-b1baede838ee,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi im from [OR_CITY] looking to go on a trip
+AGENT: Where would you like to travel to?
+USER: Im thinking to [DST_CITY]
+AGENT: Did you have any specific dates in mind?
+USER: maybe the [[KEY]] until the [END_DATE]
+AGENT: How many people will be travelling with you?
+
+Example 2:
+USER: Hi! I need to check out [COUNT_DST_CITY] destinations with you! Are you able to help me?
+AGENT: Of course :slightly_smiling_face: What is your point of departure and first potential destination?
+USER: [OR_CITY] is where I live. [[KEY]] is one of the destinations on my wishlist.
+AGENT: I can [INTENT] you in [[KEY]] from [[KEY]] until the [END_DATE] for a total of [PRICE].
+USER: The [VAL] to [END_DATE] would work, although I am off work until the [END_DATE]. Can you tell me the [KEY] of [VAL] & all the pertinent information so I can make a list?
+AGENT: [[KEY]] is a [NUM] star hotel, with an esteemed [NUM] from previous guests. Featured with your package are a daily breakfast buffet and access to wireless internet. This hotel is in the heart of the city located near lush green spaces to help you get the most of your getaway.
+
+Example 3:
+USER: Hi im from [OR_CITY] and looking to get away
+AGENT: Do you have a special destination in mind?
+USER: Maybe [DST_CITY]
+AGENT: Any specific dates in mind?
+USER: [STR_DATE]. until [END_DATE]
+AGENT: For [DST_CITY], I have a trip available departing on [STR_DATE] and returning on the [END_DATE]. For [DST_CITY], I have a trip departing on [STR_DATE] and returning on [END_DATE].
+
+Current conversation:
+USER: i'm going abroad to check out my options for my internship
+AGENT: Hi there! Do you have some destinations in mind?
+USER: what can you [INTENT] me from [OR_CITY] to [DST_CITY] under [NUM]? (they aren't paying me so that is a TIGHT budget)
+AGENT:",It appears I have a flight from [OR_CITY] to [DST_CITY]. The cheapest available flight is [PRICE]. You would be flying out on the [STR_DATE]. Would you like to hear more about this package?,"To help me find the best options for you, could you please provide your desired travel dates and the number of people traveling?",gemini-2.5-flash,FinishReason.STOP,,0.5112678408622742,0.39989716,23
+frames_8b046a07-a866-4cc0-949d-8291c29d2a9a,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hi! I'd like to go to [[KEY]] from [[KEY]]
+AGENT: I have no packages available for [[KEY]] to [[KEY]]
+USER: What about to [DST_CITY]?
+AGENT:",Nothing for [[KEY]] to [DST_CITY] either,To what departure city would you like to fly?,gemini-2.5-flash,FinishReason.STOP,,0.592216968536377,0.24472849,9
+frames_8b046a07-a866-4cc0-949d-8291c29d2a9a,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hi! I'd like to go to [[KEY]] from [[KEY]]
+AGENT: I have no packages available for [[KEY]] to [[KEY]]
+USER: What about to [DST_CITY]?
+AGENT:",Nothing for [[KEY]] to [DST_CITY] either,From where?,gemini-2.5-flash,FinishReason.STOP,,0.2542955279350281,0.019478997,2
+frames_8b046a07-a866-4cc0-949d-8291c29d2a9a,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to go to [DST_CITY] from [[KEY]]
+AGENT: I’m sorry, I can’t offer a flight from [DST_CITY] to [[KEY]] at this time. Could you perhaps leave from somewhere else?
+USER: Well good cuz i want to go to [DST_CITY] from [[KEY]].
+AGENT: Oh, I’m sorry, I misread. However I am still unable to accommodate any trips involving [DST_CITY].
+USER: well take me to [[KEY]] for [NUM] adults and [BUDGET]
+AGENT: Sorry, I cannot provide a trip for [NUM] adults at that price. Would you be able to increase your budget or reduce the size of your party?
+
+Example 2:
+USER: Hi. I’m working with a tight budget
+Turns out there’s not much pay for struggling, mildly alcoholic writers
+I know, right?
+Anyway
+Looking for a bit of a break
+Have [NUM] to spend on a trip for [N_ADULTS], and our [N_CHILDREN]
+Can you get us from [[KEY]] to [DST_CITY]?
+AGENT: Wish I could help, but there are no trips from [[KEY]] to [DST_CITY]. Is there somewhere else you want to go?
+USER: How about [[KEY]] to [[KEY]]?
+AGENT: Sorry, nothing that works for your budget.
+
+Example 3:
+USER: please get me from [[KEY]] to [DST_CITY]
+AGENT: I am sorry but we cannot fulfill that request
+USER: do you do [[KEY]] flights to [DST_CITY]??
+AGENT: I regret to inform you that we do not do [[KEY]] to [DST_CITY] flights
+
+Current conversation:
+USER: Hi! I'd like to go to [[KEY]] from [[KEY]]
+AGENT: I have no packages available for [[KEY]] to [[KEY]]
+USER: What about to [DST_CITY]?
+AGENT:",Nothing for [[KEY]] to [DST_CITY] either,I have no packages available for [[KEY]] to [DST_CITY].,gemini-2.5-flash,FinishReason.STOP,,0.5487669706344604,0.82453,9
+frames_c9e34506-06b9-482b-8fee-014a4b149023,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I want to leave [[KEY]] on or after [STR_DATE]
+AGENT: I'm afraid we do not have any flights operating out of [[KEY]]. Would you like to leave from somewhere else?
+USER: I can leave from [[KEY]] and I want to go to [DST_CITY] with [NUM] adults for [NUM]
+AGENT:",I'm afraid we do not operate flights out of [[KEY]] either. Would you like to leave from somewhere else?,"Great! To help me find the best options, could you please specify how many nights you'd like to stay in [DST_CITY]?",gemini-2.5-flash,FinishReason.STOP,,0.5780978798866272,0.37219375,21
+frames_c9e34506-06b9-482b-8fee-014a4b149023,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I want to leave [[KEY]] on or after [STR_DATE]
+AGENT: I'm afraid we do not have any flights operating out of [[KEY]]. Would you like to leave from somewhere else?
+USER: I can leave from [[KEY]] and I want to go to [DST_CITY] with [NUM] adults for [NUM]
+AGENT:",I'm afraid we do not operate flights out of [[KEY]] either. Would you like to leave from somewhere else?,What are your desired return dates?,gemini-2.5-flash,FinishReason.STOP,,0.35270389914512634,0.06820585,6
+frames_c9e34506-06b9-482b-8fee-014a4b149023,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: hey... i need to get out of [[KEY]] ok
+like now
+like now as in [STR_DATE]
+[NUM] max - can you get me to [DST_CITY]?
+AGENT: Can you leave from a different city? We don't offer flights to or from [[KEY]] yet, we are hoping to expand our options.
+USER: i can leave from [[KEY]]
+AGENT: There is nothing available within your budget
+USER: can you get me to [DST_CITY] then? from [[KEY]]
+AGENT: There is nothing showing for this either
+
+Example 2:
+USER: hi im from [[KEY]] looking to go to [[KEY]]
+AGENT: Hey there! I'm unable to come up with anything for those locations, how about a trip from [[KEY]] to [DST_CITY]?
+USER: i can leave from [[KEY]] does that work?
+AGENT: [[KEY]] eh? I'm having trouble finding that location. 
+USER: im gonna go now, thanks anyway
+AGENT: Thank you for using this service.
+
+Example 3:
+USER: [[KEY]] for [NUM], from [OR_CITY]
+AGENT: Unfortunately we currently do not serve flights out of [OR_CITY]. Would you be able to leave from another departure point?
+USER: well fix that I'll leave from [[KEY]]
+AGENT: When do you want to be in [[KEY]]?
+USER: whenever.. but should be back here by the [END_DATE]
+AGENT: Alright, I would like to recommend you our best package in [[KEY]]. It is a [DURATION] stay at a [NUM] star hotel near the museum. It flaunts a guest rating of [NUM] and offers free parking, free breakfast, and free wifi.
+
+Current conversation:
+USER: I want to leave [[KEY]] on or after [STR_DATE]
+AGENT: I'm afraid we do not have any flights operating out of [[KEY]]. Would you like to leave from somewhere else?
+USER: I can leave from [[KEY]] and I want to go to [DST_CITY] with [NUM] adults for [NUM]
+AGENT:",I'm afraid we do not operate flights out of [[KEY]] either. Would you like to leave from somewhere else?,What is your desired return date for your trip to [DST_CITY]?,gemini-2.5-flash,FinishReason.STOP,,0.5486862063407898,0.25481614,11
+frames_e9bb8580-7d8a-40d7-a84b-b039daad4ceb,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I'm so excited, I get to take my entire [N_ADULTS] anywhere I want! Money is no object. Just gotta make it fit into out busy schedule. We can only go between [STR_DATE] and [END_DATE].
+AGENT: Where are you leaving from?
+USER: [OR_CITY] will be our point of departure
+AGENT:","Sorry, we do not offer flights from [OR_CITY].",Great! And where would you like to go for your vacation?,gemini-2.5-flash,FinishReason.STOP,,0.4239276349544525,0.31587648,11
+frames_e9bb8580-7d8a-40d7-a84b-b039daad4ceb,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I'm so excited, I get to take my entire [N_ADULTS] anywhere I want! Money is no object. Just gotta make it fit into out busy schedule. We can only go between [STR_DATE] and [END_DATE].
+AGENT: Where are you leaving from?
+USER: [OR_CITY] will be our point of departure
+AGENT:","Sorry, we do not offer flights from [OR_CITY].",Where would you like to go?,gemini-2.5-flash,FinishReason.STOP,,0.46364814043045044,0.31526488,6
+frames_e9bb8580-7d8a-40d7-a84b-b039daad4ceb,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hey man! I just finished school!!!! Yes I know, I graduated, who would have ever imagined that? haha haters gonna hate, it took me [NUM] years but i'm done with uniiii. Anyways, I wanna go somewhere starting [STR_DATE]. I can be gone for [MAX_DURATION] before starting work
+AGENT: Where would you like to depart from?
+USER: [OR_CITY], ma home town
+AGENT: Great! How does [DST_CITY] sound?
+USER: Cool man, tell me more
+AGENT: From [STR_DATE]-[END_DATE] you can spend [DURATION] at a [NUM] star hotel in the heart of [DST_CITY] for only [PRICE] including round trip flights!
+
+Example 2:
+USER: I dream of a better life and I want to go to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]
+AGENT: Do you have a [KEY]?
+USER: [[KEY]]
+AGENT: Are you going to be travelling alone?
+
+Example 3:
+USER: Get me to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]. I can only spend [BUDGET] and travel between [STR_DATE] and [END_DATE]
+AGENT: Are you travelling [N_ADULTS]?
+USER: nope, [N_ADULTS]
+AGENT:  I found one result for [DST_CITY]. This is a [NUM] star hotel, [NUM] guest rating, free wifi, and it is in the heart of the city. The trip is from [STR_DATE] to [END_DATE] and is an [[KEY]] flight. Total price is [NUM].
+
+Current conversation:
+USER: I'm so excited, I get to take my entire [N_ADULTS] anywhere I want! Money is no object. Just gotta make it fit into out busy schedule. We can only go between [STR_DATE] and [END_DATE].
+AGENT: Where are you leaving from?
+USER: [OR_CITY] will be our point of departure
+AGENT:","Sorry, we do not offer flights from [OR_CITY].",Great! Where would you like to go?,gemini-2.5-flash,FinishReason.STOP,,0.4550369381904602,0.33513707,7
+frames_0faf3e37-1ccb-4329-9934-2c97fa862354,Zero-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: stuck in [OR_CITY], but I need the first flight back to [DST_CITY] alright?
+AGENT: no results were found for this query. Could you be so kind so as to supply an alternate destination?
+USER: fine I can hope over to [OR_CITY] and take off outta there
+whatcha got?
+AGENT:",Would you fancy a [DURATION] stay at the [NAME]?,"To help you find the best flight, could you please tell me your desired destination city?",gemini-2.5-flash,FinishReason.STOP,,0.4971712827682495,0.04063987,16
+frames_0faf3e37-1ccb-4329-9934-2c97fa862354,Static Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: stuck in [OR_CITY], but I need the first flight back to [DST_CITY] alright?
+AGENT: no results were found for this query. Could you be so kind so as to supply an alternate destination?
+USER: fine I can hope over to [OR_CITY] and take off outta there
+whatcha got?
+AGENT:",Would you fancy a [DURATION] stay at the [NAME]?,What are your desired dates of travel?,gemini-2.5-flash,FinishReason.STOP,,0.48372581601142883,0.15331855,7
+frames_0faf3e37-1ccb-4329-9934-2c97fa862354,Cluster-Adaptive Few-Shot,Direct Transactional,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: ahhhh hey bud. I need to get the heck outta [OR_CITY] ASAP
+can ya get me to [DST_CITY] for, say, [NUM]? and [STR_DATE] please
+AGENT: There are no results. Is there a different destination you'd like to visit?
+USER: ahhh I can leave from [OR_CITY]
+AGENT: We only have packages from [OR_CITY] to [DST_CITY], [DST_CITY], [DST_CITY], [DST_CITY], and [DST_CITY].
+
+Example 2:
+USER: Do you do any flights out of [OR_CITY]? I work for an exciting startup based there...
+AGENT: [OR_CITY] to where?
+USER: to [DST_CITY]?
+AGENT: will that be for [[KEY]] only?
+USER: No this would be for [NUM] adults
+AGENT: Not a thing. Others I can check?
+
+Example 3:
+USER: I dream of a better life and I want to go to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]
+AGENT: Do you have a [KEY]?
+USER: [[KEY]]
+AGENT: Are you going to be travelling alone?
+
+Current conversation:
+USER: stuck in [OR_CITY], but I need the first flight back to [DST_CITY] alright?
+AGENT: no results were found for this query. Could you be so kind so as to supply an alternate destination?
+USER: fine I can hope over to [OR_CITY] and take off outta there
+whatcha got?
+AGENT:",Would you fancy a [DURATION] stay at the [NAME]?,What is your desired destination?,gemini-2.5-flash,FinishReason.STOP,,0.4853169322013855,0.094202615,5
+frames_f20b09e1-2df4-4403-bcc4-7b3fdb63e2ee,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Do you do flights out of [[KEY]]?
+AGENT: Sure do! Where to?
+USER: I had [DST_CITY] in mind, but I’m not sure if there are actually flights there?
+AGENT:",There actually are [COUNT_DST_CITY] flights between [[KEY]] and [DST_CITY]! Can you tell me more about your travel dates and budget?,"Yes, there are flights from [[KEY]] to [DST_CITY]. To help you find the best options, could you please tell me your desired travel dates and how many people will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.658642053604126,0.85176444,31
+frames_f20b09e1-2df4-4403-bcc4-7b3fdb63e2ee,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Do you do flights out of [[KEY]]?
+AGENT: Sure do! Where to?
+USER: I had [DST_CITY] in mind, but I’m not sure if there are actually flights there?
+AGENT:",There actually are [COUNT_DST_CITY] flights between [[KEY]] and [DST_CITY]! Can you tell me more about your travel dates and budget?,"Yes, there are flights to [DST_CITY]! What are your desired travel dates?",gemini-2.5-flash,FinishReason.STOP,,0.5607119798660278,0.78220075,12
+frames_f20b09e1-2df4-4403-bcc4-7b3fdb63e2ee,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: [[KEY]] to [DST_CITY], got flights?
+AGENT: I’m sorry, I don’t have any flights available for you.
+USER: What would happen if i tried [[KEY]] to [DST_CITY] instead?
+AGENT: I’m sorry, I have nothing available out of [[KEY]].
+USER: cool, THANKS FOR NOTHING!!!!
+
+Example 2:
+USER: Hello! I recently won the internship lottery to [DST_CITY] where I will work for free! I'll be leaving from [[KEY]]. What can you offer?
+AGENT: I do not have any flights from [[KEY]] to [DST_CITY].
+USER: Do you have any flights from [[KEY]] to [DST_CITY]??
+AGENT: I do not.
+USER: What about [[KEY]] to [DST_CITY]?
+AGENT: Unfortunately those are not available either. I wish I could be of further assistance.
+
+Example 3:
+USER: Do you do any flights out of [OR_CITY]? I work for an exciting startup based there...
+AGENT: [OR_CITY] to where?
+USER: to [DST_CITY]?
+AGENT: will that be for [[KEY]] only?
+USER: No this would be for [NUM] adults
+AGENT: Not a thing. Others I can check?
+
+Current conversation:
+USER: Do you do flights out of [[KEY]]?
+AGENT: Sure do! Where to?
+USER: I had [DST_CITY] in mind, but I’m not sure if there are actually flights there?
+AGENT:",There actually are [COUNT_DST_CITY] flights between [[KEY]] and [DST_CITY]! Can you tell me more about your travel dates and budget?,"Yes, there are flights from [[KEY]] to [DST_CITY]. What dates are you looking to travel?",gemini-2.5-flash,FinishReason.STOP,,0.6462447643280029,0.821285,15
+frames_c4d6513c-b781-412c-a2e2-027520d16d96,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: [OR_CITY] to [DST_CITY], [STR_DATE] for [NUM], [BUDGET] budget. I want the [CATEGORY] hotel in [DST_CITY]
+AGENT: The most upscale hotel I can offer you is [[KEY]]. Have you heard of it?
+USER: How many stars does it have
+AGENT:","It has [NUM] stars, user reviews of [NUM], its close to a park and it offers free wifi and free breakfast to its guests.",It has a 5-star rating.,gemini-2.5-flash,FinishReason.STOP,,0.40574729442596436,0.65030336,5
+frames_c4d6513c-b781-412c-a2e2-027520d16d96,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: [OR_CITY] to [DST_CITY], [STR_DATE] for [NUM], [BUDGET] budget. I want the [CATEGORY] hotel in [DST_CITY]
+AGENT: The most upscale hotel I can offer you is [[KEY]]. Have you heard of it?
+USER: How many stars does it have
+AGENT:","It has [NUM] stars, user reviews of [NUM], its close to a park and it offers free wifi and free breakfast to its guests.",It is a [NUM] star hotel.,gemini-2.5-flash,FinishReason.STOP,,0.6577392816543579,0.6587454,6
+frames_c4d6513c-b781-412c-a2e2-027520d16d96,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need you to get me to [DST_CITY] from [OR_CITY], on the [STR_DATE]
+AGENT: I have [COUNT_[KEY]] options for you. What is your budget and what kind of hotel are you looking for?
+USER: The [CATEGORY] hotel. I've got [BUDGET]
+AGENT: The [CATEGORY] one I can offer you is [[KEY]] which has [NUM] stars and [GST_RATING] reviews from past guests.
+USER: Is [VAL] the [CATEGORY] one in [DST_CITY] at any price point?
+AGENT: With a higher budget I would have [COUNT_[KEY]] hotels for you to choose from but they also have [NUM] stars.
+
+Example 2:
+USER: They say that I’m a dreamer, but i’m not the only one. and today i am dreaming of a trip out of [OR_CITY]
+can you tell me if i can get to [[KEY]], if i had [NUM] to my name?
+AGENT: We are here to fulfill your travel dreams. I have to places in [[KEY]] that offer [DURATION] packages for [PRICE].
+USER: what kind of hotel is it?
+AGENT: I have a [NUM] star and a [NUM] star, both offering wifi, parking and breakfast at no extra charge
+USER: Is the [NUM] star hotel near anything cool?
+AGENT: It's on the beach!
+
+Example 3:
+USER: [OR_CITY] to [DST_CITY]. [STR_DATE] or later. [BUDGET] budget. [CATEGORY] hotel you got capisci?
+AGENT: You would like to [INTENT] a trip to [DST_CITY], from [OR_CITY] deparing on [[KEY]] (or later) under [BUDGET] dollars. I can help you with your request but you must tell me number of people in your group.
+USER: [NUM] person adult
+AGENT: The [CATEGORY] hotel I have available in [DST_CITY] during that time period is a [NUM] star hotel.
+USER: Is that the [CATEGORY] hotel in [DST_CITY], period?
+AGENT: During those travel dates, it [COUNT_NAME] that is presently open.
+
+Current conversation:
+USER: [OR_CITY] to [DST_CITY], [STR_DATE] for [NUM], [BUDGET] budget. I want the [CATEGORY] hotel in [DST_CITY]
+AGENT: The most upscale hotel I can offer you is [[KEY]]. Have you heard of it?
+USER: How many stars does it have
+AGENT:","It has [NUM] stars, user reviews of [NUM], its close to a park and it offers free wifi and free breakfast to its guests.",It has [NUM] stars.,gemini-2.5-flash,FinishReason.STOP,,0.4435117542743683,0.6627294,4
+frames_11eeb42a-1061-4bcf-987a-ef31c34cfdc9,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: hi there, wayward daydreamer on the line...so i live and work in [OR_CITY], but if i were to go to, say, [DST_CITY]…..could you tell me about it??
+AGENT: Do you have a budget?
+USER: well i do, but in theory i would like to know whats out there first
+AGENT:",I will tell you our [NUM] [CATEGORY] packages!,"Okay, I can certainly tell you more about vacation packages to [DST_CITY]. To give you the best overview, could you tell me how many people will be traveling and for how long you're considering staying?",gemini-2.5-flash,FinishReason.STOP,,0.504142701625824,0.31885248,35
+frames_11eeb42a-1061-4bcf-987a-ef31c34cfdc9,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: hi there, wayward daydreamer on the line...so i live and work in [OR_CITY], but if i were to go to, say, [DST_CITY]…..could you tell me about it??
+AGENT: Do you have a budget?
+USER: well i do, but in theory i would like to know whats out there first
+AGENT:",I will tell you our [NUM] [CATEGORY] packages!,What dates are you considering for your trip?,gemini-2.5-flash,FinishReason.STOP,,0.4054119884967804,0.14550951,8
+frames_11eeb42a-1061-4bcf-987a-ef31c34cfdc9,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: hello. please find me a vacation from [[KEY]] to [DST_CITY]!!!
+AGENT: Do you have a budget?
+USER: noooo
+AGENT: Yes, it's great! Are you travelling with anyone?
+USER: I LOVE travelling [N_ADULTS] without having to worry about any budgets!!
+AGENT: When would you like to leave?
+
+Example 2:
+USER: Hi do you have packages for [NUM] adults from [OR_CITY] to [DST_CITY]?
+AGENT: Hi! Do you have a budget?
+USER: No, I don't
+AGENT: When would you like to leave?
+USER: [STR_DATE], And return [END_DATE]
+AGENT: There are no flights from [OR_CITY] or to [DST_CITY].
+
+Example 3:
+USER: [STR_DATE]-[END_DATE] my [N_ADULTS] want to get out of [OR_CITY] and into [DST_CITY]. What's available?
+AGENT: Do you have a budget?
+USER: nah
+AGENT: How many people travelling altogether?
+USER: [NUM]
+AGENT: There are no results for this, sorry.
+
+Current conversation:
+USER: hi there, wayward daydreamer on the line...so i live and work in [OR_CITY], but if i were to go to, say, [DST_CITY]…..could you tell me about it??
+AGENT: Do you have a budget?
+USER: well i do, but in theory i would like to know whats out there first
+AGENT:",I will tell you our [NUM] [CATEGORY] packages!,When would you like to leave?,gemini-2.5-flash,FinishReason.STOP,,0.3524167537689209,0.08207634,6
+frames_0fa476d9-e4b0-4f17-96f4-0017a1807945,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hi. i need to get to [DST_CITY] on the low
+keep it [CATEGORY] in terms of luxe
+but no spreading the word about it..
+we’re leaving from [OR_CITY]
+AGENT: How many people?
+USER: [NUM]
+AGENT:",Do you have a budget?,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.4900085926055908,0.20257232,6
+frames_0fa476d9-e4b0-4f17-96f4-0017a1807945,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hi. i need to get to [DST_CITY] on the low
+keep it [CATEGORY] in terms of luxe
+but no spreading the word about it..
+we’re leaving from [OR_CITY]
+AGENT: How many people?
+USER: [NUM]
+AGENT:",Do you have a budget?,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.4900085926055908,0.20257232,6
+frames_0fa476d9-e4b0-4f17-96f4-0017a1807945,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to impress some clients. I'd like to take them on a [[KEY]] trip to [[KEY]] from [OR_CITY] [STR_DATE].
+AGENT: How many people total?
+USER: [NUM] of us
+AGENT: Do you have a budget for this trip?
+USER: Nope! The sky is the limit!
+AGENT: I have the [NAME], available for [NUM] days on [STR_DATE].  It is rated [NUM] stars and is located near the museum. We can fly everyone on [[KEY]] class.
+
+Example 2:
+USER: I need to [INTENT] a trip for [N_ADULTS] to [DST_CITY] from [OR_CITY].
+AGENT: How many passengers?
+USER: [NUM]
+AGENT: Desired dates for travel please
+USER: anytime but i should be back by the 25th or [END_DATE]
+AGENT: I have the  [NUM] star [NAME] right by the museum from [STR_DATE] to the [END_DATE]
+
+Example 3:
+USER: [OR_CITY] to [DST_CITY]
+AGENT: Do you have a  budget?
+USER: [NUM]
+AGENT: Are you travelling [[KEY]]?
+USER: no
+AGENT: When would you like to leave?
+
+Current conversation:
+USER: Hi. i need to get to [DST_CITY] on the low
+keep it [CATEGORY] in terms of luxe
+but no spreading the word about it..
+we’re leaving from [OR_CITY]
+AGENT: How many people?
+USER: [NUM]
+AGENT:",Do you have a budget?,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.4900085926055908,0.20257232,6
+frames_28fea5ef-82ef-4960-b1b4-502092760cb2,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Ever been to [DST_CITY]? Can you tell me what it is like?
+AGENT: I have [NUM] star [NUM] day packages available in [DST_CITY] for only [PRICE] if you travel from [OR_CITY].
+USER: I'm in [OR_CITY]. Ever been to [DST_CITY]?
+AGENT:",Would you like to stay at [NAME] for [PRICE] and leave [OR_CITY] on [STR_DATE]?,"I can help you plan a trip to [DST_CITY]! To start, what dates are you considering for your travel?",gemini-2.5-flash,FinishReason.STOP,,0.5372601747512817,0.44929695,19
+frames_28fea5ef-82ef-4960-b1b4-502092760cb2,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Ever been to [DST_CITY]? Can you tell me what it is like?
+AGENT: I have [NUM] star [NUM] day packages available in [DST_CITY] for only [PRICE] if you travel from [OR_CITY].
+USER: I'm in [OR_CITY]. Ever been to [DST_CITY]?
+AGENT:",Would you like to stay at [NAME] for [PRICE] and leave [OR_CITY] on [STR_DATE]?,I can help you find a great vacation package to [DST_CITY]! Do you have any specific dates in mind for your trip?,gemini-2.5-flash,FinishReason.STOP,,0.49686023592948914,0.36280578,22
+frames_28fea5ef-82ef-4960-b1b4-502092760cb2,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: [DST_CITY]
+AGENT: Would you like to travel to [DST_CITY] or are you travelling from [DST_CITY]?
+USER: I wan to go to [DST_CITY]
+AGENT: Great, where will you be leaving from?
+USER: [[KEY]]
+AGENT: When would you like to depart and do you have a budget for this trip?
+
+Example 2:
+USER: Hey there, I’m looking to check out a few destinations to see if they’ll be appropriate for me to accept an internship in. I want to travel from [[KEY]]-[NUM], just enough to get a taste of each location.
+I am leaving from [OR_CITY] and I would like to spend [NUM] at most, as my internship is unpaid.
+Is there anything available to [DST_CITY] for these dates and price?
+AGENT: Unfortunately the closest flight I can [INTENT] you for [DST_CITY] would be the [[KEY]].  Would you like to hear more about this package?
+USER: I was also looking at [DST_CITY]..
+AGENT: If you're interested in [DST_CITY], the closest I can give you to your requested dates would be the [[KEY]] to the [[KEY]]. However, this package falls well within your budget at [PRICE].
+USER: The last destination I am considering is [DST_CITY].
+AGENT: Unfortunately I can't seem to find anything in [DST_CITY] matching your required dates.
+
+Example 3:
+USER: Can I [N_ADULTS] and [N_CHILDREN] from [OR_CITY] to [DST_CITY] for [NUM]??
+AGENT: Let me check that for you! No flights from [OR_CITY] to [DST_CITY].
+USER: and [DST_CITY]?
+AGENT: No flights from [OR_CITY] to [DST_CITY].
+USER: wow
+
+Current conversation:
+USER: Ever been to [DST_CITY]? Can you tell me what it is like?
+AGENT: I have [NUM] star [NUM] day packages available in [DST_CITY] for only [PRICE] if you travel from [OR_CITY].
+USER: I'm in [OR_CITY]. Ever been to [DST_CITY]?
+AGENT:",Would you like to stay at [NAME] for [PRICE] and leave [OR_CITY] on [STR_DATE]?,I can help you find a package to [DST_CITY] from [OR_CITY]. When would you like to travel and for how many days?,gemini-2.5-flash,FinishReason.STOP,,0.5221050381660461,0.4534134,22
+frames_a418cbad-65b1-4ffe-a631-69f22826ba24,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: i want to dream of a better life in [DST_CITY] rather than [OR_CITY].
+AGENT: You could spend [DURATION] at [NAME] for only [PRICE]!
+USER: What is [VAL] rating?
+AGENT:",[NUM] stars with [NUM] from users.,"I'm sorry, I don't have information about a specific rating. Could you please tell me what kind of rating you're interested in, such as a star rating or a guest review score?",gemini-2.5-flash,FinishReason.STOP,,0.2769463062286377,0.2866243,32
+frames_a418cbad-65b1-4ffe-a631-69f22826ba24,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: i want to dream of a better life in [DST_CITY] rather than [OR_CITY].
+AGENT: You could spend [DURATION] at [NAME] for only [PRICE]!
+USER: What is [VAL] rating?
+AGENT:",[NUM] stars with [NUM] from users.,The guest rating for [NAME] is [NUM].,gemini-2.5-flash,FinishReason.STOP,,0.42852693796157837,0.6331874,7
+frames_a418cbad-65b1-4ffe-a631-69f22826ba24,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hello. I haven’t left [OR_CITY] in years, and I have [NUM] left.
+I don’t think I could even take a trip to [DST_CITY] for that price.. but would you let me know? I wish I could just go to [DST_CITY] but I have [MAX_DURATION] because I had to take them all to care for my sick dog
+AGENT: you could take an [DURATION] vacation to [DST_CITY], stay in a [NUM] star hotel, fly in [SEAT] class.
+USER: What would [VAL] be like
+AGENT: Its called [NAME]. It is close to the market and a palace and comes with free wifi. 
+USER: What if I went to [DST_CITY]? I’ve never seen the west coast of this country..
+AGENT: Right now we only have an [DURATION] package available. You would stay at a [NUM] star hotel close to the beach and you would get free breakfast, wifi and parking. With [SEAT] flights it would cost [NUM]86USD and [NUM]92USD with [SEAT] class tickets.
+
+Example 2:
+USER: I AM PAPARAZZI. [OR_CITY] to [DST_CITY]. How much
+AGENT: Our [DURATION] package to [DST_CITY] starts at [PRICE] and our [DURATION] one at [PRICE].
+USER: Ok but mind you, I need a nice hotel. [CATEGORY]
+AGENT: Both [VAL] are at the [NAME] , a [NUM] star hotel. It is the [COUNT_NAME] we have available at the moment.
+USER: Man I dont know. Are there [CATEGORY] hotels in [DST_CITY] in your database, if I change parameters?
+AGENT: That really is the [COUNT_NAME] we have available.
+
+Example 3:
+USER: GET ME A FLIGHT FROM [OR_CITY] TO [DST_CITY]. LEAVE THIS [STR_DATE]
+GET ME THE [CATEGORY] HOTEL M[COUNT]Y CAN BUY
+AGENT: we have [CATEGORY] star hotels for [DURATION] and [CATEGORY] star hotels for [DURATION]
+USER: HOW MUCH DOES IT COST FOR [DURATION]
+AGENT: between [NUM] to [NUM]
+USER: AND THIS LEAVES ON FRI [STR_DATE] YES?
+AGENT: yes
+
+Current conversation:
+USER: i want to dream of a better life in [DST_CITY] rather than [OR_CITY].
+AGENT: You could spend [DURATION] at [NAME] for only [PRICE]!
+USER: What is [VAL] rating?
+AGENT:",[NUM] stars with [NUM] from users.,It is a [NUM] star hotel.,gemini-2.5-flash,FinishReason.STOP,,0.6577392816543579,0.5706434,6
+frames_acdf12da-7afb-425c-97fb-6604a8449dde,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: HI I NEED TO GO ON VACATION I LIVE IN [OR_CITY] WHERE CAN I GO
+AGENT: How much would you like to spend on this vacation?
+USER: [BUDGET]
+AGENT:",For [N_ADULTS] person?,"To help me find the best options, could you please tell me your desired travel dates and how many people will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.4641030430793762,0.1224295,23
+frames_acdf12da-7afb-425c-97fb-6604a8449dde,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: HI I NEED TO GO ON VACATION I LIVE IN [OR_CITY] WHERE CAN I GO
+AGENT: How much would you like to spend on this vacation?
+USER: [BUDGET]
+AGENT:",For [N_ADULTS] person?,"Do you have any specific destinations in mind, or are you open to suggestions?",gemini-2.5-flash,FinishReason.STOP,,0.3883875012397766,0.076984026,14
+frames_acdf12da-7afb-425c-97fb-6604a8449dde,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to [INTENT] a flight to find my last Pokemon. I would need to leave from [OR_CITY] and go to [DST_CITY]. I will also need to leave on [STR_DATE]. Im [N_ADULTS] as well.
+AGENT: Is there a budget for your trip?
+USER: Yes, [BUDGET].
+AGENT: I have a nice [NUM] star hotel for [DURATION] starting at [PRICE] for you, however it leaves on the [STR_DATE]. Are you flexible with your dates?
+USER: Look, just tell me, is there anything for [DST_CITY]?
+AGENT: There's a nice [DURATION] package for a [NUM] star hotel with a departure flight on the [STR_DATE].
+
+Example 2:
+USER: I want to dream of the best vacations to [DST_CITY] from [OR_CITY].
+AGENT: That does sound very nice! Can you tell me a bit more about your travel dates or budget?
+USER: [NUM] budget and anytime
+AGENT: Are you traveling [N_ADULTS]?
+USER: ya
+AGENT: I would recommend to you our very best in [DST_CITY]: a [NUM] star hotel with [NUM] guest rating. It is close to the beach and shopping, and offers free parking, wifi, and breakfast. We offer [NUM] or [DURATION] packages, in [SEAT] or [SEAT]. Does [VAL] sound appealing to you?
+
+Example 3:
+USER: I want to dream of a better life and pretend I have money and vacation days left. Can you check packages from [OR_CITY] to LA?
+AGENT: What's your budget?
+USER: yeah try [BUDGET], that's all I have in my bank account anyway.
+AGENT: Ok! You could spend [DURATION] at [NAME], located near the university with a [NUM] star rating and free wifi, parking, and breakfast. Alternatively, the [NUM] star [NAME] would be available within your price parameters for a stay of [DURATION]. The Retro Inn is located near a park and university and features free wifi and parking with a breakfast included in your package.
+USER: Any flights to [DST_CITY]?
+AGENT: I've got [DURATION] on the beach, located near a park, the [NAME] would cost only [PRICE] with [SEAT] class flights!
+
+Current conversation:
+USER: HI I NEED TO GO ON VACATION I LIVE IN [OR_CITY] WHERE CAN I GO
+AGENT: How much would you like to spend on this vacation?
+USER: [BUDGET]
+AGENT:",For [N_ADULTS] person?,What dates are you considering for your trip?,gemini-2.5-flash,FinishReason.STOP,,0.4054119884967804,0.09707923,8
+frames_b3d12fdf-4584-4dee-aae9-3eecc3f648d7,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hi I'm from [OR_CITY] and I am looking for a [MAX_DURATION] get away for the upcoming long weekend
+AGENT: Is this a trip for [N_ADULTS] adult?
+USER: yes just [VAL]
+AGENT:",Can you please give me the dates you will be free to travel?,"Great! To help me find the perfect getaway, could you please tell me which long weekend you are referring to?",gemini-2.5-flash,FinishReason.STOP,,0.4355890154838562,0.4722879,20
+frames_b3d12fdf-4584-4dee-aae9-3eecc3f648d7,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hi I'm from [OR_CITY] and I am looking for a [MAX_DURATION] get away for the upcoming long weekend
+AGENT: Is this a trip for [N_ADULTS] adult?
+USER: yes just [VAL]
+AGENT:",Can you please give me the dates you will be free to travel?,What is your destination?,gemini-2.5-flash,FinishReason.STOP,,0.47304683923721313,0.44591475,4
+frames_b3d12fdf-4584-4dee-aae9-3eecc3f648d7,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi there I have a very important request to make today I need to get from [OR_CITY] to [[KEY]] on [[KEY]] or some point thereafter. But most importantly I need you to [INTENT] me the [CATEGORY] hotel in [VAL]
+AGENT: I can definitely help you with that. How many adults and children will be travelling?
+USER: I am a [N_ADULTS]
+AGENT: Do you have a budget and length of trip in mind?
+USER: I got 5G, want to stay as long as it will permit
+AGENT: I can offer you a [NUM] star hotel with outstanding guest reviews of [NUM]. The [[KEY]] is close to a park, beach, shopping and a mall and you will enjoy free wifi and breakfast. However, this trip is only [DURATION] long. I can offer you [DURATION] trips, but the hotel will [[KEY]]. What would you prefer?
+
+Example 2:
+USER: Hello. I haven’t left [OR_CITY] in years, and I have [NUM] left.
+I don’t think I could even take a trip to [DST_CITY] for that price.. but would you let me know? I wish I could just go to [DST_CITY] but I have [MAX_DURATION] because I had to take them all to care for my sick dog
+AGENT: you could take an [DURATION] vacation to [DST_CITY], stay in a [NUM] star hotel, fly in [SEAT] class.
+USER: What would [VAL] be like
+AGENT: Its called [NAME]. It is close to the market and a palace and comes with free wifi. 
+USER: What if I went to [DST_CITY]? I’ve never seen the west coast of this country..
+AGENT: Right now we only have an [DURATION] package available. You would stay at a [NUM] star hotel close to the beach and you would get free breakfast, wifi and parking. With [SEAT] flights it would cost [NUM]86USD and [NUM]92USD with [SEAT] class tickets.
+
+Example 3:
+USER: Hi, send me on a [MAX_DURATION] away from [OR_CITY]. I'd like to leave [STR_DATE]. Send me to [DST_CITY]. M[N_ADULTS]y is not object
+AGENT: How many adults and how many children will be travelling?
+USER: Just me, [N_ADULTS] adult
+AGENT: I have a trip to [DST_CITY] from [STR_DATE] at [DEP_TIME_OR] to [END_DATE] at [DEP_TIME_DST]  The guest rating is [NUM]. You'll be flying [SEAT]
+USER: Would you be able to tell me which airline I would be flying with?
+AGENT: No, but I can confirm that you will be flying [SEAT].
+
+Current conversation:
+USER: Hi I'm from [OR_CITY] and I am looking for a [MAX_DURATION] get away for the upcoming long weekend
+AGENT: Is this a trip for [N_ADULTS] adult?
+USER: yes just [VAL]
+AGENT:",Can you please give me the dates you will be free to travel?,What dates are you considering for your long weekend getaway?,gemini-2.5-flash,FinishReason.STOP,,0.39721783995628357,0.57679033,10
+frames_41064ab6-e58f-45d7-a10e-0199ce8cfaab,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: um so i am getting married in [[KEY]] next week congrats to me and am trying to maybe [INTENT] a honeymoon to [[KEY]] [N_ADULTS] for hmmm some time [STR_DATE] cause thats when we're hitchin
+AGENT: If I understand correctly, [[KEY]] is the destination and the date is [STR_DATE]. Can you please provide the departure city and confirm that my understanding of what you are searching for is correct?
+USER: Yea! youre so spot on lol i love it on we're leaving from [[KEY]] ok, [[KEY]] Canada
+AGENT:","We have no more packages available from [[KEY]] to [[KEY]], do you have any other dream destinations?","Great! So you're looking for a honeymoon package (flights and hotel) for two adults, departing from [[KEY]], Canada on [STR_DATE], with a destination of [[KEY]]. Is that all correct?",gemini-2.5-flash,FinishReason.STOP,,0.6075654625892639,0.3974247,29
+frames_41064ab6-e58f-45d7-a10e-0199ce8cfaab,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: um so i am getting married in [[KEY]] next week congrats to me and am trying to maybe [INTENT] a honeymoon to [[KEY]] [N_ADULTS] for hmmm some time [STR_DATE] cause thats when we're hitchin
+AGENT: If I understand correctly, [[KEY]] is the destination and the date is [STR_DATE]. Can you please provide the departure city and confirm that my understanding of what you are searching for is correct?
+USER: Yea! youre so spot on lol i love it on we're leaving from [[KEY]] ok, [[KEY]] Canada
+AGENT:","We have no more packages available from [[KEY]] to [[KEY]], do you have any other dream destinations?","Congratulations on your upcoming wedding! To help me find the perfect honeymoon package, could you please confirm the exact dates you plan to travel?",gemini-2.5-flash,FinishReason.STOP,,0.3429846167564392,0.20830345,24
+frames_41064ab6-e58f-45d7-a10e-0199ce8cfaab,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi there, I'm looking to go to [[KEY]] between [STR_DATE] and [END_DATE], could you help me?
+AGENT: Yes! Where are you leaving from?
+USER: [[KEY]]
+AGENT: Ok, and will you be travelling [N_ADULTS]?
+USER: yes!
+AGENT: And have you got a budget?
+
+Example 2:
+USER: Hi, my name is Harry Potter and I'd like to go to [[KEY]] leaving from [OR_CITY] on [STR_DATE] for [MAX_DURATION] [[KEY]].
+AGENT: I can [INTENT] [DURATION] at [NAME] in [[KEY]] for [PRICE]. Would you like to leave from [OR_CITY]?
+USER: What? No. I'm looking for a trip to [[KEY]] [VAL].
+AGENT: I can offer you a trip for [NUM] adults is [DURATION] at [NAME] in [[KEY]] for [PRICE]. Shall I go ahead and [INTENT] this?
+USER: I'll have to talk about it with my friends and get back to you. Thank you for your help.
+AGENT: Goodbye
+
+Example 3:
+USER: Hello, I'd like to [INTENT] a trip to [[KEY]] from [[KEY]] on [STR_DATE].
+AGENT: Hello, the origin and destination do not show up in our system. Are there any other destinations you are interested in?  When will you be travelling?
+USER: I'd consider travelling to [[KEY]] [N_ADULTS] on a budget of [BUDGET], leaving on [STR_DATE] from [[KEY]].
+AGENT: I apologize, but I cannot accommodate this request either.
+USER: That is very unfortunate. Thank you.
+AGENT: Thank you and sorry we let you down.
+
+Current conversation:
+USER: um so i am getting married in [[KEY]] next week congrats to me and am trying to maybe [INTENT] a honeymoon to [[KEY]] [N_ADULTS] for hmmm some time [STR_DATE] cause thats when we're hitchin
+AGENT: If I understand correctly, [[KEY]] is the destination and the date is [STR_DATE]. Can you please provide the departure city and confirm that my understanding of what you are searching for is correct?
+USER: Yea! youre so spot on lol i love it on we're leaving from [[KEY]] ok, [[KEY]] Canada
+AGENT:","We have no more packages available from [[KEY]] to [[KEY]], do you have any other dream destinations?","Congratulations on your upcoming wedding! To clarify, are you departing from [[KEY]], Canada?",gemini-2.5-flash,FinishReason.STOP,,0.4721366763114929,0.41649857,13
+frames_a3602b85-ba8f-4fbd-aa2c-8a559860c9ae,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I wan to go to [DST_CITY] from [OR_CITY]
+AGENT: Do you have a date range or a budget?
+USER: [BUDGET] and no date range
+AGENT:","I have [DURATION] and [DURATION] trips,","Okay, so you're looking for a vacation package from [OR_CITY] to [DST_CITY] with a budget of [BUDGET], but you don't have specific dates in mind. To help me find the best options, could you tell me how many nights you'd like to stay and how many people will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.5378085970878601,0.37336713,50
+frames_a3602b85-ba8f-4fbd-aa2c-8a559860c9ae,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I wan to go to [DST_CITY] from [OR_CITY]
+AGENT: Do you have a date range or a budget?
+USER: [BUDGET] and no date range
+AGENT:","I have [DURATION] and [DURATION] trips,",What dates are you considering for your trip?,gemini-2.5-flash,FinishReason.STOP,,0.4054119884967804,0.3463704,8
+frames_a3602b85-ba8f-4fbd-aa2c-8a559860c9ae,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: hey there, I'm doing some travelling for business soon. It needs to be around [STR_DATE]-[END_DATE]. What can you do for me?
+AGENT: Let’s see what we can find, can you tell me if you have a budget and who you will be travelling with?
+USER: no budget - work is paying :wink:
+AGENT: Where are you coming from?
+USER: [N_ADULTS] for now, but if we can find something that works out then I have [NUM] other colleagues who will be attending meetings with me
+AGENT: Any chance you can go to or from somewhere else?
+
+Example 2:
+USER: Get me to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]. I can only spend [BUDGET] and travel between [STR_DATE] and [END_DATE]
+AGENT: Are you travelling [N_ADULTS]?
+USER: nope, [N_ADULTS]
+AGENT:  I found one result for [DST_CITY]. This is a [NUM] star hotel, [NUM] guest rating, free wifi, and it is in the heart of the city. The trip is from [STR_DATE] to [END_DATE] and is an [[KEY]] flight. Total price is [NUM].
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I wan to go to [DST_CITY] from [OR_CITY]
+AGENT: Do you have a date range or a budget?
+USER: [BUDGET] and no date range
+AGENT:","I have [DURATION] and [DURATION] trips,",How many adults will be traveling?,gemini-2.5-flash,FinishReason.STOP,,0.4200479984283447,0.30928898,6
+frames_0ff1681d-3e0f-4a86-8787-a238628a2543,Zero-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I need to get to [[KEY]] for [MAX_DURATION] from [OR_CITY]. I only got [BUDGET] and need to get [VAL] [[KEY]]. 
+AGENT: Unfortunately I don't have any [VAL] packages to [[KEY]]. I could [INTENT] you a stay in the [NAME] from the [STR_DATE] to the [END_DATE] for [PRICE].
+USER:  try going to [DST_CITY] instead
+AGENT:",I can [INTENT] you an [DURATION] package in the [NAME]  for [PRICE].,"Okay, I can look into packages for [DST_CITY]. To help me find the best options, could you please tell me your desired travel dates and your budget for this trip?",gemini-2.5-flash,FinishReason.STOP,,0.5097322463989258,0.2213687,30
+frames_0ff1681d-3e0f-4a86-8787-a238628a2543,Static Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I need to get to [[KEY]] for [MAX_DURATION] from [OR_CITY]. I only got [BUDGET] and need to get [VAL] [[KEY]]. 
+AGENT: Unfortunately I don't have any [VAL] packages to [[KEY]]. I could [INTENT] you a stay in the [NAME] from the [STR_DATE] to the [END_DATE] for [PRICE].
+USER:  try going to [DST_CITY] instead
+AGENT:",I can [INTENT] you an [DURATION] package in the [NAME]  for [PRICE].,"Okay, I can look into packages for [DST_CITY]. What are your preferred travel dates for this trip?",gemini-2.5-flash,FinishReason.STOP,,0.5235005617141724,0.18191221,17
+frames_0ff1681d-3e0f-4a86-8787-a238628a2543,Cluster-Adaptive Few-Shot,Constraint Negotiator,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to go to [DST_CITY] from [[KEY]]
+AGENT: I’m sorry, I can’t offer a flight from [DST_CITY] to [[KEY]] at this time. Could you perhaps leave from somewhere else?
+USER: Well good cuz i want to go to [DST_CITY] from [[KEY]].
+AGENT: Oh, I’m sorry, I misread. However I am still unable to accommodate any trips involving [DST_CITY].
+USER: well take me to [[KEY]] for [NUM] adults and [BUDGET]
+AGENT: Sorry, I cannot provide a trip for [NUM] adults at that price. Would you be able to increase your budget or reduce the size of your party?
+
+Example 2:
+USER: Hi, my name is Harry Potter and I'd like to go to [[KEY]] leaving from [OR_CITY] on [STR_DATE] for [MAX_DURATION] [[KEY]].
+AGENT: I can [INTENT] [DURATION] at [NAME] in [[KEY]] for [PRICE]. Would you like to leave from [OR_CITY]?
+USER: What? No. I'm looking for a trip to [[KEY]] [VAL].
+AGENT: I can offer you a trip for [NUM] adults is [DURATION] at [NAME] in [[KEY]] for [PRICE]. Shall I go ahead and [INTENT] this?
+USER: I'll have to talk about it with my friends and get back to you. Thank you for your help.
+AGENT: Goodbye
+
+Example 3:
+USER: hey, I want to get myself to [DST_CITY] from [OR_CITY] for less than [BUDGET]
+AGENT: I can [INTENT] you [DURATION] in [DST_CITY] leaving from [OR_CITY] for [PRICE].
+USER: what about [DST_CITY]
+AGENT: [DURATION] in [DST_CITY] would cost you [PRICE].
+USER: ok and [DST_CITY]? [NUM] adults and [NUM] children.
+AGENT: Ok! In that case I can [INTENT] you [DURATION] in [DST_CITY] for [PRICE]
+
+Current conversation:
+USER: I need to get to [[KEY]] for [MAX_DURATION] from [OR_CITY]. I only got [BUDGET] and need to get [VAL] [[KEY]]. 
+AGENT: Unfortunately I don't have any [VAL] packages to [[KEY]]. I could [INTENT] you a stay in the [NAME] from the [STR_DATE] to the [END_DATE] for [PRICE].
+USER:  try going to [DST_CITY] instead
+AGENT:",I can [INTENT] you an [DURATION] package in the [NAME]  for [PRICE].,I can offer you a trip to [DST_CITY] for [PRICE].,gemini-2.5-flash,FinishReason.STOP,,0.6140196919441223,0.41482776,10
+frames_9f54fcfb-9b81-4c4c-aba5-7ceecbf6e374,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: We are a large family wanting to travel together to [DST_CITY], what can you do for us?
+AGENT: How many people?
+USER: [NUM] adults and [NUM] little itty bitty ones
+AGENT:",Okay. Where are you leaving from/,And how many of those little ones are under two years old?,gemini-2.5-flash,FinishReason.STOP,,0.05309411138296127,0.07542543,12
+frames_9f54fcfb-9b81-4c4c-aba5-7ceecbf6e374,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: We are a large family wanting to travel together to [DST_CITY], what can you do for us?
+AGENT: How many people?
+USER: [NUM] adults and [NUM] little itty bitty ones
+AGENT:",Okay. Where are you leaving from/,And from where will you all be departing?,gemini-2.5-flash,FinishReason.STOP,,0.3496015965938568,0.6433464,8
+frames_9f54fcfb-9b81-4c4c-aba5-7ceecbf6e374,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: im leaving from [OR_CITY]. send me to [DST_CITY]
+AGENT: How many people?
+USER: ahh. [N_ADULTS]
+AGENT: Nice! When would you like to leave and do you have a budget?
+USER: no budget darling. leave [STR_DATE]
+AGENT: The earliest package we have available leaves [STR_DATE] and returns [END_DATE]. This is at [NAME], a [NUM] star hotel in the heart of [DST_CITY] and near a museum. The hotel also offers free breakfast and wifi. The [SEAT] package costs [NUM].
+
+Example 2:
+USER: I need to [INTENT] a trip for [N_ADULTS] to [DST_CITY] from [OR_CITY].
+AGENT: How many passengers?
+USER: [NUM]
+AGENT: Desired dates for travel please
+USER: anytime but i should be back by the 25th or [END_DATE]
+AGENT: I have the  [NUM] star [NAME] right by the museum from [STR_DATE] to the [END_DATE]
+
+Example 3:
+USER: I need to impress some clients. I'd like to take them on a [[KEY]] trip to [[KEY]] from [OR_CITY] [STR_DATE].
+AGENT: How many people total?
+USER: [NUM] of us
+AGENT: Do you have a budget for this trip?
+USER: Nope! The sky is the limit!
+AGENT: I have the [NAME], available for [NUM] days on [STR_DATE].  It is rated [NUM] stars and is located near the museum. We can fly everyone on [[KEY]] class.
+
+Current conversation:
+USER: We are a large family wanting to travel together to [DST_CITY], what can you do for us?
+AGENT: How many people?
+USER: [NUM] adults and [NUM] little itty bitty ones
+AGENT:",Okay. Where are you leaving from/,What are your desired dates for travel?,gemini-2.5-flash,FinishReason.STOP,,0.4920032322406769,0.24223533,7
+frames_8eb628b6-a0a9-4ea5-8908-05698463e39f,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: [OR_CITY] to anywhere, stat. 
+AGENT: I have a few possibilities.  Are you looking for a certain departure date, something special in a hotel, do you have a set budget?
+USER: between [STR_DATE] and [END_DATE] for under [NUM]
+AGENT:",Would [[KEY]] be of interest?,"Okay, so you're looking for a vacation package departing between [STR_DATE] and [END_DATE] for under [NUM]. To help me narrow down the options, could you tell me which city you'd like to depart from?",gemini-2.5-flash,FinishReason.STOP,,0.5744043588638306,0.08159387,34
+frames_8eb628b6-a0a9-4ea5-8908-05698463e39f,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: [OR_CITY] to anywhere, stat. 
+AGENT: I have a few possibilities.  Are you looking for a certain departure date, something special in a hotel, do you have a set budget?
+USER: between [STR_DATE] and [END_DATE] for under [NUM]
+AGENT:",Would [[KEY]] be of interest?,"Okay, so you're looking for a trip between [STR_DATE] and [END_DATE] for under [NUM]. Do you have any preferences for the destination or hotel amenities?",gemini-2.5-flash,FinishReason.STOP,,0.6559328436851501,0.20415306,25
+frames_8eb628b6-a0a9-4ea5-8908-05698463e39f,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi there, I'm coming up on the 10th anniversary with my lady, and I thought I'd treat [N_ADULTS] to something special [VAL] year. [OR_CITY] is where I call home, and I thought it sure would be nice to get out of town for a change
+What destinations are on offer from my city?
+AGENT: [COUNT_DST_CITY] destinations are possible. Do you have a [KEY] or date of departure?
+USER: We can leave any time, though the [STR_DATE].
+AGENT: Do you have a [KEY]?
+USER: You think you can do me a little favour and get us [VAL] trip for [BUDGET]? I never forget a favour.
+AGENT: I cannot [INTENT] trips for [BUDGET].
+
+Example 2:
+USER: Are there [NUM] star hotels in [DST_CITY]?
+AGENT: Not that I can see from an initial search. Perhaps if you give me a budget, dates, number of travellers, or some other information I can take a closer look.
+USER: Well we can leave anytime. Need to back in [OR_CITY] by the [END_DATE] though	
+It'll be the [NUM] of us	
+AGENT: Unfortunately I’m only seeing [NUM] star hotels..
+USER: What about [DST_CITY]? I could also leave from [OR_CITY] too if that changes anything..
+AGENT: In [DST_CITY] I have a [NUM] star hotel with a [NUM] guest rating. This is the closest thing I can find to a [NUM] star hotel.
+
+Example 3:
+USER: Hi, I'm looking for a trip  from [STR_DATE] to [END_DATE] to [[KEY]]
+AGENT: I can look into your options for you. Where would you like to depart from?
+USER: [OR_CITY]
+AGENT: I can [INTENT] [DURATION] in [[KEY]] leaving from [OR_CITY] for [PRICE]. Or, if you're interested [DURATION] in [[KEY]] for [PRICE].
+USER: How many stars do the hotels have and what's included with the hotel?
+AGENT: The [[KEY]] hotel is [NUM] stars with free breakfast and free wifi, while the [[KEY]] hotel is [NUM] stars with free parking and free wifi.
+
+Current conversation:
+USER: [OR_CITY] to anywhere, stat. 
+AGENT: I have a few possibilities.  Are you looking for a certain departure date, something special in a hotel, do you have a set budget?
+USER: between [STR_DATE] and [END_DATE] for under [NUM]
+AGENT:",Would [[KEY]] be of interest?,I can look for trips between those dates for under [NUM]. How many travelers will there be?,gemini-2.5-flash,FinishReason.STOP,,0.5971205830574036,0.07775727,17
+frames_5ecbe3a9-74f6-4341-9835-45bab52bd671,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: hey i wanna go to [DST_CITY] w my fam
+AGENT: Can you tell me where you are departing from? do you have a budget?
+USER: yeah im from [OR_CITY] trying to spending [NUM] max
+AGENT:",When are you planning on departing?,"Okay, so you're looking for a flight and hotel package to [DST_CITY] from [OR_CITY], with a maximum budget of [NUM]. To help me find the best options, could you please tell me your desired travel dates and how many people will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.5898221731185913,0.2783571,43
+frames_5ecbe3a9-74f6-4341-9835-45bab52bd671,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: hey i wanna go to [DST_CITY] w my fam
+AGENT: Can you tell me where you are departing from? do you have a budget?
+USER: yeah im from [OR_CITY] trying to spending [NUM] max
+AGENT:",When are you planning on departing?,And what are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.5165270566940308,0.5216628,7
+frames_5ecbe3a9-74f6-4341-9835-45bab52bd671,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi there looking to go from SL to [DST_CITY] today
+i've got [NUM] budget, hoping to squeeze in a trip
+AGENT: Do you have a budget?
+USER: [NUM]
+AGENT: Are you bringing [[KEY]]?
+USER: nope
+AGENT: When would you like to travel?
+
+Example 2:
+USER: Get me to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]. I can only spend [BUDGET] and travel between [STR_DATE] and [END_DATE]
+AGENT: Are you travelling [N_ADULTS]?
+USER: nope, [N_ADULTS]
+AGENT:  I found one result for [DST_CITY]. This is a [NUM] star hotel, [NUM] guest rating, free wifi, and it is in the heart of the city. The trip is from [STR_DATE] to [END_DATE] and is an [[KEY]] flight. Total price is [NUM].
+
+Example 3:
+USER: Hello there. I’m trying to get to to [DST_CITY]
+from [OR_CITY]
+AGENT: Do you have a budget?
+USER: [NUM]
+AGENT: When do you want to leave?
+USER: [STR_DATE]
+AGENT: There are no results for this request.
+
+Current conversation:
+USER: hey i wanna go to [DST_CITY] w my fam
+AGENT: Can you tell me where you are departing from? do you have a budget?
+USER: yeah im from [OR_CITY] trying to spending [NUM] max
+AGENT:",When are you planning on departing?,When would you like to travel and how many people are in your family?,gemini-2.5-flash,FinishReason.STOP,,0.4237724244594574,0.4580899,14
+frames_7cb6f213-d442-4dd6-8654-f38237fbd3d2,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hey, I need to take [N_ADULTS] for a few days on a [SEAT] trip. We have to leave [STR_DATE]
+AGENT: I can help with that, where are you leaving from and where do you plan on going?
+USER: We'll be leaving from [OR_CITY]. Can you check for trips to [DST_CITY] first?
+AGENT:","Certainly, this is for [N_ADULTS] adults?","Certainly! To help me find the best flights and hotel for your trip to [DST_CITY], could you please tell me your desired return date?",gemini-2.5-flash,FinishReason.STOP,,0.5889008641242981,0.051411092,24
+frames_7cb6f213-d442-4dd6-8654-f38237fbd3d2,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hey, I need to take [N_ADULTS] for a few days on a [SEAT] trip. We have to leave [STR_DATE]
+AGENT: I can help with that, where are you leaving from and where do you plan on going?
+USER: We'll be leaving from [OR_CITY]. Can you check for trips to [DST_CITY] first?
+AGENT:","Certainly, this is for [N_ADULTS] adults?",Do you have a return date in mind for your trip to [DST_CITY]?,gemini-2.5-flash,FinishReason.STOP,,0.5218610167503357,0.061656535,13
+frames_7cb6f213-d442-4dd6-8654-f38237fbd3d2,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi! I want to [INTENT] a trip for [N_ADULTS] for spring break!
+AGENT: I can definitely assist you with that. What will your departure city be and do you have a destination in mind?
+USER: We are leaving from [OR_CITY]. Do you have any trips to [[KEY]]?
+AGENT: I have plenty of packages from [OR_CITY] to [[KEY]]. When is your Spring Break?
+USER: We have pretty flexible dates, we were hoping to fly out between [[KEY]] and [END_DATE]
+AGENT: Do you have a [KEY] for this trip?
+
+Example 2:
+USER: i have a modest and polite request for you to send me from [OR_CITY] to [DST_CITY]
+AGENT: Sorry, where will you be departing?
+USER: I would like to depart from [OR_CITY] and arrive at [DST_CITY]. Between [STR_DATE] and [END_DATE]
+This is a short trip for [NUM] adults
+AGENT: Great! Just [N_ADULTS] adult traveller?
+USER: And we have [NUM] to spare between us
+AGENT: Oh! ok, sorry. I’ll get right on that. Are your dates flexible at all?
+
+Example 3:
+USER: H, I need to go to [DST_CITY] pronto!
+AGENT: Sure thing! I can offer you a deal on a [DURATION] package to [DST_CITY]. Would you be able to leave from [OR_CITY]?
+USER: No, I need to leave from [OR_CITY]. I need to be there sometime between [[KEY]] and [END_DATE]. I'll be travelling [N_ADULTS] and I am super nervous :flushed:
+AGENT: In that case, I can [INTENT] you in the [[KEY]] from the [STR_DATE] to the [END_DATE] August. This package will cost you [PRICE]. Would you like to hear more about this package?
+USER: [VAL] is awesome man. My boss will be impressed. Is this a nice hotel?
+AGENT: The [[KEY]] is a [CATEGORY] resort with a [NUM] guest rating, free breakfast and free wifi. It is conveniently located in close proximity to the museum. You would be flying out on [DEP_TIME_OR] and returning on [DEP_TIME_DST] Would you like me to [INTENT] this package?
+
+Current conversation:
+USER: Hey, I need to take [N_ADULTS] for a few days on a [SEAT] trip. We have to leave [STR_DATE]
+AGENT: I can help with that, where are you leaving from and where do you plan on going?
+USER: We'll be leaving from [OR_CITY]. Can you check for trips to [DST_CITY] first?
+AGENT:","Certainly, this is for [N_ADULTS] adults?","I can definitely look for trips from [OR_CITY] to [DST_CITY] for you. Since you mentioned a ""few days,"" do you have a specific return date in mind, or a general duration for your trip?",gemini-2.5-flash,FinishReason.STOP,,0.4994109570980072,0.045198902,34
+frames_d0f75ca4-3a7a-479e-9b20-a194bfd2bbf5,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I need to get out of [OR_CITY] on [STR_DATE]. Can you get me to [DST_CITY] for [NUM]
+AGENT: We do not offer any flights that leave from [OR_CITY]. Would you like to leave from somewhere else?
+USER: [OR_CITY]
+AGENT:",Will you be the only one travelling? And is there number of days you would like to spend in [DST_CITY]?,"It looks like you've entered the same departure city again. To help me find flights, please provide a different departure city.",gemini-2.5-flash,FinishReason.STOP,,0.40371137857437134,0.4037252,21
+frames_d0f75ca4-3a7a-479e-9b20-a194bfd2bbf5,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I need to get out of [OR_CITY] on [STR_DATE]. Can you get me to [DST_CITY] for [NUM]
+AGENT: We do not offer any flights that leave from [OR_CITY]. Would you like to leave from somewhere else?
+USER: [OR_CITY]
+AGENT:",Will you be the only one travelling? And is there number of days you would like to spend in [DST_CITY]?,"I'm sorry, but we still do not offer any flights from [OR_CITY]. Would you like to depart from a different city?",gemini-2.5-flash,FinishReason.STOP,,0.5883470773696899,0.5186823,21
+frames_d0f75ca4-3a7a-479e-9b20-a194bfd2bbf5,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: ahhhh hey bud. I need to get the heck outta [OR_CITY] ASAP
+can ya get me to [DST_CITY] for, say, [NUM]? and [STR_DATE] please
+AGENT: There are no results. Is there a different destination you'd like to visit?
+USER: ahhh I can leave from [OR_CITY]
+AGENT: We only have packages from [OR_CITY] to [DST_CITY], [DST_CITY], [DST_CITY], [DST_CITY], and [DST_CITY].
+
+Example 2:
+USER: Get the [NUM] of us out of [OR_CITY] for [MAX_DURATION]! The majority of us want to go to [DST_CITY] so let's see deals for those!
+AGENT: I'm afraid we have no flights operating out of [OR_CITY]. Would you like to leave from somewhere else?
+USER: Ah no :disappointed: We're based in [OR_CITY]
+
+Example 3:
+USER: [NUM] [SEAT] class flights to [DST_CITY]
+AGENT: Where are you leaving from?
+USER: [OR_CITY]
+AGENT: When do you want to leave?
+USER: Anytime really
+AGENT: Do you have a budget?
+
+Current conversation:
+USER: I need to get out of [OR_CITY] on [STR_DATE]. Can you get me to [DST_CITY] for [NUM]
+AGENT: We do not offer any flights that leave from [OR_CITY]. Would you like to leave from somewhere else?
+USER: [OR_CITY]
+AGENT:",Will you be the only one travelling? And is there number of days you would like to spend in [DST_CITY]?,"I'm sorry, but we do not have any flights departing from [OR_CITY]. Would you like to explore other departure cities?",gemini-2.5-flash,FinishReason.STOP,,0.5604446530342102,0.5092592,20
+frames_ba9b1b1f-23c3-4d2b-a418-11aec025c7af,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: I would like to take my [N_CHILDREN] [N_ADULTS] on a lovely family vacation. We were thinking about going to [DST_CITY].
+AGENT: Hi! How many children total and where from?
+USER: [NUM]! Big family, I know HAHA. We will be leaving from [OR_CITY] and I should probably mention we can only afford trips under [NUM]. Do you have anything between [STR_DATE] and [END_DATE]?
+AGENT:",Yeah of course! You can have a [DURATION] stay at a beachside hotel!,"Okay, so you're looking for a family vacation to [DST_CITY] for [NUM] people, departing from [OR_CITY] between [STR_DATE] and [END_DATE], with a budget under [NUM]. To help me find the best options, could you please specify the exact number of adults and children traveling?",gemini-2.5-flash,FinishReason.STOP,,0.5537096261978149,0.32467994,44
+frames_ba9b1b1f-23c3-4d2b-a418-11aec025c7af,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: I would like to take my [N_CHILDREN] [N_ADULTS] on a lovely family vacation. We were thinking about going to [DST_CITY].
+AGENT: Hi! How many children total and where from?
+USER: [NUM]! Big family, I know HAHA. We will be leaving from [OR_CITY] and I should probably mention we can only afford trips under [NUM]. Do you have anything between [STR_DATE] and [END_DATE]?
+AGENT:",Yeah of course! You can have a [DURATION] stay at a beachside hotel!,"Thank you for the information! I'm looking for flights and hotels in [DST_CITY] from [OR_CITY] for [NUM] adults and [NUM] children, departing between [STR_DATE] and [END_DATE], with a budget under [NUM].",gemini-2.5-flash,FinishReason.STOP,,0.6694719791412354,0.35384935,31
+frames_ba9b1b1f-23c3-4d2b-a418-11aec025c7af,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hi there, I'd like to take my young'uns somewhere nice I also want to impress my wife with my good taste
+AGENT: I can help you with your request. Please specify the amount of adults and children that will be travelling together.
+USER: Yes I will be traveling with [N_CHILDREN] children and [N_ADULTS] adults including myself. Can you let me know if [NUM] is enough to get us to [DST_CITY]?
+AGENT: Where would you be departing from?
+USER: Departing from [OR_CITY]
+AGENT: Do you have certain dates in mind?
+
+Example 2:
+USER: I wanna go on a vacation with my [N_ADULTS] and [NUM] kids. our budget is [NUM] and we want to travel between [STR_DATE] and [END_DATE]. We were looking at going to [DST_CITY] from [OR_CITY].
+AGENT: So that will be [NUM] adults and [NUM] children under [NUM]?  I have only [DURATION] packages available during those dates. Does that work for you?
+USER: no, [NUM] adults and [NUM] children
+AGENT: The [[KEY]] is available for [DURATION] from [STR_DATE] to [END_DATE] at [PRICE] and for [DURATION] from [STR_DATE] to [END_DATE] at [PRICE]. These packages are only available on [SEAT] class flights. This is a [NUM] star hotel and includes wifi.
+USER: Are there any trips to [DST_CITY]?
+AGENT: [[KEY]] - [DURATION] from [STR_DATE] to [END_DATE] [NUM] star [PRICE]
+
+Example 3:
+USER: I need your help, gotta do some serious trip research for the wife S our travel dates are between [STR_DATE]-[NUM]. We live in [OR_CITY]. Its for [N_ADULTS] and [NUM] kids. Any other info you need?
+AGENT: So [VAL] will be for [NUM] adults and [NUM] children, travelling from [OR_CITY] between [STR_DATE] to [END_DATE]. I have some further questions: First, are your dates flexible? Secondly, do you have any destinations in mind? Thirdly, do you have a budget for this trip?
+USER: [NUM]) no, [VAL] is the only period of time I can be away from work [NUM]) a few, one is [DST_CITY] [NUM]) Our budget is [NUM]
+AGENT: Based on the information provided, I can provide you with [NUM], [NUM] and [DURATION] packages. Would you have any preference?
+USER: My wife was thinking of something about a week long so [NUM] or [NUM] would work
+AGENT: I have [COUNT_[KEY]] options. Are you looking for a specific star rating or location?
+
+Current conversation:
+USER: I would like to take my [N_CHILDREN] [N_ADULTS] on a lovely family vacation. We were thinking about going to [DST_CITY].
+AGENT: Hi! How many children total and where from?
+USER: [NUM]! Big family, I know HAHA. We will be leaving from [OR_CITY] and I should probably mention we can only afford trips under [NUM]. Do you have anything between [STR_DATE] and [END_DATE]?
+AGENT:",Yeah of course! You can have a [DURATION] stay at a beachside hotel!,"Thank you for the information. So, that's [NUM] adults and [N_CHILDREN] children traveling from [OR_CITY] to [DST_CITY] between [STR_DATE] and [END_DATE], with a budget under [NUM]. Do you have any flexibility with your travel dates?",gemini-2.5-flash,FinishReason.STOP,,0.5725231170654297,0.30192852,35
+frames_179b0349-fbdd-434c-9e64-a14745f1a01e,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: hello. im getting married [STR_DATE] in [OR_CITY] and need to [INTENT] a honeymoon after that
+looking at going to [DST_CITY] for [MAX_DURATION]
+[BUDGET] max please
+AGENT: I have a [DURATION] trip at [NUM] star hotel
+USER: tell me more
+AGENT:","[NAME] , [DURATION] @ [PRICE]","To tell you more about this trip, I need to know your desired departure date for your honeymoon.",gemini-2.5-flash,FinishReason.STOP,,0.434683620929718,0.08758128,18
+frames_179b0349-fbdd-434c-9e64-a14745f1a01e,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: hello. im getting married [STR_DATE] in [OR_CITY] and need to [INTENT] a honeymoon after that
+looking at going to [DST_CITY] for [MAX_DURATION]
+[BUDGET] max please
+AGENT: I have a [DURATION] trip at [NUM] star hotel
+USER: tell me more
+AGENT:","[NAME] , [DURATION] @ [PRICE]",What are your exact travel dates for the honeymoon?,gemini-2.5-flash,FinishReason.STOP,,0.4000706076622009,0.09530408,9
+frames_179b0349-fbdd-434c-9e64-a14745f1a01e,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I need to [INTENT] a trip for [N_ADULTS] to [DST_CITY] from [OR_CITY].
+AGENT: How many passengers?
+USER: [NUM]
+AGENT: Desired dates for travel please
+USER: anytime but i should be back by the 25th or [END_DATE]
+AGENT: I have the  [NUM] star [NAME] right by the museum from [STR_DATE] to the [END_DATE]
+
+Example 2:
+USER: Good afternoon, my man! I'd like to plan a honeymoon in [DST_CITY] for [MAX_DURATION] leaving from [OR_CITY] on [[KEY]]. What is available?
+AGENT: Hello, I can accommodate your request for a [DURATION] stay in [DST_CITY] for [NUM] adults flying from [OR_CITY] direct, but I only have availability from [VAL] to the [NUM] or from [[KEY]] to [END_DATE].  Are you able to work withing those dates?
+USER: [VAL] to the [VAL] would be perfect. Can you tell me about the hotel's amenities?
+AGENT: You would stay at the beautiful [NAME], which has a [CATEGORY] star rating. Breakfast and wifi are included. The price for this package is [PRICE] for your [DURATION] stay.
+USER: Wonderful! Can you provide me with the flight times?
+AGENT: [OR_CITY] to [DST_CITY] departing at [DEP_TIME_OR] - Friday, [[KEY]] [NUM] to [ARR_TIME_DST] - Friday, [[KEY]] [NUM] and your return flight would be at [DEP_TIME_DST] - [[KEY]] to [ARR_TIME_OR] - [[KEY]] from [DST_CITY] to [OR_CITY]. If these flight times are suitable, should we go ahead and [INTENT]?
+
+Example 3:
+USER: [OR_CITY] TO [DST_CITY], [STR_DATE]. [BUDGET] Budget GOOOO
+AGENT: Is this for [N_ADULTS] traveller?
+USER: YA
+AGENT: I have a package from [[KEY]] to [END_DATE] at the [NAME]. Do those dates work for you?
+USER: DATES ARE FINE BUT HOW IS HOTEL. ACTUALLY NO CAN U GET ME TO LEAVE [STR_DATE]
+AGENT: I do have a trip leaving [[KEY]], but it is not within your budget. Would you be willing to pay [PRICE]?
+
+Current conversation:
+USER: hello. im getting married [STR_DATE] in [OR_CITY] and need to [INTENT] a honeymoon after that
+looking at going to [DST_CITY] for [MAX_DURATION]
+[BUDGET] max please
+AGENT: I have a [DURATION] trip at [NUM] star hotel
+USER: tell me more
+AGENT:","[NAME] , [DURATION] @ [PRICE]",What dates are you looking to travel for your honeymoon?,gemini-2.5-flash,FinishReason.STOP,,0.416725218296051,0.09777298,10
+frames_1d1e1364-d50f-41eb-8217-372263bcee02,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hello you may know me as the best Pokemon Hunter in the world
+AGENT: Hello.
+USER: i need to get to [[KEY]]
+AGENT:",You can leave [DST_CITY] [[KEY]],"To help you book your trip to Key, could you please tell me which specific Key you're referring to, and what your desired travel dates are?",gemini-2.5-flash,FinishReason.STOP,,0.5476301312446594,0.3541544,26
+frames_1d1e1364-d50f-41eb-8217-372263bcee02,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hello you may know me as the best Pokemon Hunter in the world
+AGENT: Hello.
+USER: i need to get to [[KEY]]
+AGENT:",You can leave [DST_CITY] [[KEY]],From where will you be departing?,gemini-2.5-flash,FinishReason.STOP,,0.42290687561035156,0.16037339,6
+frames_1d1e1364-d50f-41eb-8217-372263bcee02,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: Hey!
+AGENT: Hello
+USER: So, I am travelling a family trip.. since I am in charge I wanna go to [[KEY]]! [VAL]'s my top destination..
+AGENT: From where?
+USER: Can you get [N_ADULTS], and [NUM] kids there from [OR_CITY] for [NUM]?
+AGENT: Can you depart on [STR_DATE]?
+
+Example 2:
+USER: Hello there!
+AGENT: Hello!
+USER: I’m in charge of [INTENT]ing a work trip. leaving from [[KEY]] around [[KEY]]
+and we are looking at possibly going to [[KEY]]
+AGENT: How many people?
+USER: Try for [NUM] for now
+AGENT: Nothing available from [[KEY]] to [VAL] for that many people on that date
+
+Example 3:
+USER: Heyaaa
+AGENT: Hi! How can I help you?
+USER: So  [N_ADULTS] need to take a little work trip from [[KEY]] until [[KEY]].
+AGENT: Where would you like to go?
+USER: Sadly it is not a uniform decision... [NUM] of us wanna go [DST_CITY]
+From [OR_CITY]
+AGENT: So [NUM] adults altogether?
+
+Current conversation:
+USER: Hello you may know me as the best Pokemon Hunter in the world
+AGENT: Hello.
+USER: i need to get to [[KEY]]
+AGENT:",You can leave [DST_CITY] [[KEY]],From where will you be departing?,gemini-2.5-flash,FinishReason.STOP,,0.42290687561035156,0.16037339,6
+frames_65eaf400-deb9-4a47-a0a1-828813c45a20,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: hello
+AGENT: hello
+USER: i live in [OR_CITY]. i have [BUDGET] to spend. i can travel between [STR_DATE] and [END_DATE].
+what can you find me in [DST_CITY]
+AGENT:","We can send you to [DST_CITY] during those dates either for [DURATION] or [DURATION], which do you prefer?","Great! To help me find the best flight and hotel package to [DST_CITY] for you, could you please tell me how many people will be traveling?",gemini-2.5-flash,FinishReason.STOP,,0.5686684846878052,0.44826198,26
+frames_65eaf400-deb9-4a47-a0a1-828813c45a20,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: hello
+AGENT: hello
+USER: i live in [OR_CITY]. i have [BUDGET] to spend. i can travel between [STR_DATE] and [END_DATE].
+what can you find me in [DST_CITY]
+AGENT:","We can send you to [DST_CITY] during those dates either for [DURATION] or [DURATION], which do you prefer?",What is your preferred star rating for the hotel?,gemini-2.5-flash,FinishReason.STOP,,0.45990851521492004,0.105174184,9
+frames_65eaf400-deb9-4a47-a0a1-828813c45a20,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I'd like to find a vacation from [OR_CITY] to [DST_CITY] for [NUM]. I dont care when i go and it's [N_ADULTS] traveling
+AGENT: Hello
+USER: Hey
+AGENT: I apologize, we do not fly out of [OR_CITY]
+USER: Is there anything from [OR_CITY] to [DST_CITY]? I can [[KEY]].
+AGENT: I apologize, we do not fly out of [OR_CITY], do you have any other departure city?
+
+Example 2:
+USER: hi
+AGENT: Hello
+USER: my name is Cosmos and I need to go to [DST_CITY] from [OR_CITY]
+AGENT: Do you have a budget?
+USER: lol ya [NUM] adults [NUM] children willing to pay [BUDGET]
+AGENT: Unfortunately there are no results for this request. Is there another destination you'd like me to check for you?
+
+Example 3:
+USER: Hi
+AGENT: Hi there
+USER: Can you help me find a vacation package from [[KEY]] to [DST_CITY] for [BUDGET] and between [STR_DATE] and [END_DATE] please?
+AGENT: I have no packages available within those parameters
+USER: Well how about to [DST_CITY]?
+AGENT: Neither unfortunately.
+
+Current conversation:
+USER: hello
+AGENT: hello
+USER: i live in [OR_CITY]. i have [BUDGET] to spend. i can travel between [STR_DATE] and [END_DATE].
+what can you find me in [DST_CITY]
+AGENT:","We can send you to [DST_CITY] during those dates either for [DURATION] or [DURATION], which do you prefer?",I have no packages available within those parameters.,gemini-2.5-flash,FinishReason.STOP,,0.2287987768650055,0.15718818,8
+frames_a8d2ddb6-2a38-46f4-b7e2-58901676bde6,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Hi, I need to get to [DST_CITY] for a [SEAT] meeting.
+AGENT: Where from?
+USER: I can leave from SL.
+AGENT:",Do you have a budget?,"Okay, and what dates are you looking to travel for your meeting in [DST_CITY]?",gemini-2.5-flash,FinishReason.STOP,,0.6235883831977844,0.18969259,14
+frames_a8d2ddb6-2a38-46f4-b7e2-58901676bde6,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Hi, I need to get to [DST_CITY] for a [SEAT] meeting.
+AGENT: Where from?
+USER: I can leave from SL.
+AGENT:",Do you have a budget?,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.5087090134620667,0.20257232,6
+frames_a8d2ddb6-2a38-46f4-b7e2-58901676bde6,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I HAVE to be in [DST_CITY] on the [STR_DATE]!
+AGENT: Hello! We'll get you there. Where are you leaving from?
+USER: [[KEY]]
+AGENT: Sorry, but I can't find any flights to [DST_CITY] from [[KEY]]. Is there anywhere else you'd like to go?
+USER: okay well its crucial i get there from [[KEY]] so I will call someone else
+
+Example 2:
+USER: [DST_CITY]
+AGENT: Is that your departure?
+USER: no i want to go. i leave [OR_CITY]
+AGENT: when?
+USER: [NUM] until [[KEY]]
+AGENT: Can your dates be flexible at all? I have earlier departures.
+
+Example 3:
+USER: Hello! I need to go to [DST_CITY] please.
+AGENT: Where are you coming from?
+USER: [OR_CITY]
+AGENT: I regret to inform you that we don't offer any trips out of [OR_CITY]. Is it possible to leave from another city?
+USER: No it's not
+AGENT: Very sorry I will not be able to help you then.
+
+Current conversation:
+USER: Hi, I need to get to [DST_CITY] for a [SEAT] meeting.
+AGENT: Where from?
+USER: I can leave from SL.
+AGENT:",Do you have a budget?,When would you like to travel?,gemini-2.5-flash,FinishReason.STOP,,0.5065673589706421,0.17177168,6
+frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db,Zero-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Current conversation:
+USER: Get me out of LA asap!
+AGENT: Ok! Do you have a destination in mind?
+USER: Heard [DST_CITY] is nice. Maybe I'll have better luck there..
+AGENT:",I have a [DURATION] stay at [NAME] for [PRICE] leaving [OR_CITY] [STR_DATE]!,"[DST_CITY] is a great choice! To help you find the perfect flight and hotel package, could you please tell me your desired travel dates?",gemini-2.5-flash,FinishReason.STOP,,0.6132794618606567,0.38007116,24
+frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db,Static Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: I am the happy father of [NUM] children
+AGENT: Hello!
+USER: And I would like to treat them with a family trip to [DST_CITY]!
+AGENT: From where?
+USER: [OR_CITY]
+AGENT: What is your budget?
+
+Example 2:
+USER: I want to go to [DST_CITY] from [OR_CITY] between the [STR_DATE] and [END_DATE].
+AGENT: Are you travelling with a budget?
+USER: no
+AGENT: I have a [NUM] star hotel available for you from [STR_DATE]-[END_DATE] for only [PRICE]. How does this sound?
+USER: That sounds amazing. Before I make up my mind can you check a few other places for me? I was thinking about [DST_CITY].
+AGENT: Of course! In [DST_CITY] I have two [NUM] star hotels and one [NUM] star hotel available.
+
+Example 3:
+USER: I need to go to [[KEY]] between [[KEY]] and [[KEY]]. Leaving from [OR_CITY]
+AGENT: Do you have a budget?
+USER: Yeah i got [BUDGET]
+AGENT: This is what I have for you: [NAME] - [DURATION], in [[KEY]], United States, a [NUM] star hotel, near par and  museum for [PRICE]. Guest Rated it [NUM]
+USER: Hmm ok what are the exact dates?
+AGENT: From [[KEY]] to [[KEY]]
+
+Current conversation:
+USER: Get me out of LA asap!
+AGENT: Ok! Do you have a destination in mind?
+USER: Heard [DST_CITY] is nice. Maybe I'll have better luck there..
+AGENT:",I have a [DURATION] stay at [NAME] for [PRICE] leaving [OR_CITY] [STR_DATE]!,What are your desired travel dates?,gemini-2.5-flash,FinishReason.STOP,,0.5087090134620667,0.32441905,6
+frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db,Cluster-Adaptive Few-Shot,Guided Explorer,"You are a travel agent helping a customer plan and book a vacation package (flights and hotel). Reply with the next single agent turn only, in one to three sentences. Do not invent prices, dates, or availability; if information is missing, ask for it.
+
+Here are example conversations showing how an agent responds to customers like this one (entity values are masked):
+
+Example 1:
+USER: emergency flight out of [OR_CITY] please!! get me out on [STR_DATE]
+and to [DST_CITY]
+AGENT: Certainly. Where would you like to go?
+USER: [DST_CITY]
+AGENT: The earliest flight we have that departs from [OR_CITY] to [DST_CITY] is on Tuesday [STR_DATE], is that okay?
+USER: what about out of [OR_CITY]
+AGENT: From [OR_CITY] to [DST_CITY]?
+
+Example 2:
+USER: Hey, I really need to get out of [OR_CITY] for a while. Any chance to leave on [STR_DATE]?
+AGENT: Where would you like to go?
+USER: [DST_CITY] would be a cool place to go.
+AGENT: Do you have a budget?
+USER: I've only got [NUM] actually.
+AGENT: Are you travelling by [[KEY]]?
+
+Example 3:
+USER: drop what you’re doing and [INTENT] me a flgith!
+AGENT: That's what I'm here for. Where would you like to go?
+USER: [OR_CITY] to [DST_CITY]! Now!
+AGENT: Sure, do you have a budget?
+USER: nope!
+AGENT: When would you like to leave and return?
+
+Current conversation:
+USER: Get me out of LA asap!
+AGENT: Ok! Do you have a destination in mind?
+USER: Heard [DST_CITY] is nice. Maybe I'll have better luck there..
+AGENT:",I have a [DURATION] stay at [NAME] for [PRICE] leaving [OR_CITY] [STR_DATE]!,When would you like to leave and return?,gemini-2.5-flash,FinishReason.STOP,,0.37029677629470825,0.34881127,8

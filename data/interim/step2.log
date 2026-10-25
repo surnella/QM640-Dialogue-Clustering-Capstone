@@ -1,0 +1,91 @@
+K-Means: 53 subsamples scored
+Agglomerative: 53 subsamples scored
+HDBSCAN: 53 subsamples scored
+{
+  "n_gold": 933,
+  "n_test": 401,
+  "n_multiwoz": 1499,
+  "hdbscan_redraws": 0,
+  "hdbscan_default_fail": 53,
+  "hdbscan_noise_M": 0.39124528301886796,
+  "hdbscan_noise_SD": 0.1271517726759242,
+  "hdbscan_k_found": {
+    "2": 21,
+    "3": 15,
+    "4": 11,
+    "5": 4,
+    "6": 2
+  },
+  "shapiro": {
+    "K-Means": {
+      "W": 0.9648675765370336,
+      "p": 0.12039409931338749
+    },
+    "Agglomerative": {
+      "W": 0.9791330524741829,
+      "p": 0.47679655391986875
+    },
+    "HDBSCAN": {
+      "W": 0.9802636802209361,
+      "p": 0.5243253680260345
+    }
+  },
+  "levene": {
+    "W": 12.74608796311859,
+    "p": 7.461083304741647e-06
+  },
+  "anova": {
+    "F": 91.32620577479835,
+    "df1": 2.0,
+    "df2": 156.0,
+    "p": 5.532140623246034e-27,
+    "eta2": 0.5393506891441305
+  },
+  "welch": {
+    "F": 66.98088801641536,
+    "df1": 2.0,
+    "df2": 89.14721342307772,
+    "p": 1.7436555681899147e-18
+  },
+  "kruskal": {
+    "H": 86.82212531149878,
+    "p": 1.4022163768756504e-19
+  },
+  "permutation_baseline": {
+    "M": -0.013319199518212732,
+    "SD": 0.0060763335547708176
+  },
+  "cross_corpus_t": {
+    "t": 38.290828704833984,
+    "df": 576.1915893554688,
+    "p": 0.0
+  },
+  "gold_vs_test_t": {
+    "t": 0.41867735981941223,
+    "df": 754.921875,
+    "p": 0.6755708456039429
+  },
+  "umap_method": "UMAP"
+}
+ k  silhouette  davies_bouldin  inertia  smallest_cluster_pct
+ 2      0.2058          3.1361 193.0940               35.4770
+ 3      0.1414          3.2439 184.5898               24.1158
+ 4      0.1421          2.9973 178.1374               17.6849
+ 5      0.1475          2.9501 173.6070                8.6817
+ 6      0.0770          3.1180 169.7443                8.3601
+    algorithm  n  sil_M  sil_SD   db_M  db_SD
+Agglomerative 53 0.1178  0.0404 3.5502 0.2694
+      HDBSCAN 53 0.2108  0.0442 2.6566 0.2412
+      K-Means 53 0.1474  0.0187 3.1285 0.1132
+       group1  group2  meandiff  p-adj   lower   upper  reject
+Agglomerative HDBSCAN    0.0930 0.0000  0.0763  0.1096    True
+Agglomerative K-Means    0.0295 0.0001  0.0129  0.0462    True
+      HDBSCAN K-Means   -0.0634 0.0000 -0.0801 -0.0468    True
+ cluster   n  turns_M  turns_SD  user_words  agent_words  revisions  hesitations  offers  budget_pct  success_pct  rer   pct             archetype
+       0 240     9.92      5.02       10.60        11.67       6.92         0.67    0.84       63.75        92.08 0.02 25.72  Direct Transactional
+       1 225    15.64      6.84       12.94        18.15      20.32         1.15    4.28       70.67        94.22 0.02 24.12 Constraint Negotiator
+       2 468    17.19      6.10        9.63        15.71      16.68         1.15    3.73       75.43        95.30 0.01 50.16       Guided Explorer
+          set    N  sim_M  sim_SD  Constraint Negotiator  Guided Explorer  Direct Transactional
+Frames D_gold  933  0.895   0.042                 24.116           50.161                25.723
+Frames D_test  401  0.894   0.042                 20.200           50.374                29.426
+ MultiWOZ 2.2 1499  0.805   0.037                 15.077           83.989                 0.934

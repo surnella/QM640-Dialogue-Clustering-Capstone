@@ -1,0 +1,13 @@
+slot,tier,frames_pct,multiwoz_pct
+origin_city,Tier 1,99.40029985007496,70.84723148765843
+destination_city,Tier 1,99.02548725637182,71.38092061374249
+departure_date,Tier 1,84.93253373313343,68.5790527018012
+return_date,Tier 1,70.76461769115441,0.0
+duration_nights,Tier 1,61.844077961019494,27.01801200800534
+traveler_count_adults,Tier 1,63.943028485757125,54.03602401601068
+traveler_count_children,Tier 1,18.4407796101949,0.0
+budget_amount,Tier 1,72.86356821589204,24.082721814543028
+accommodation_tier,Tier 1,72.71364317841079,19.746497665110073
+visa_processing_window_days,Tier 2,0.0,0.0
+passport_expiry_months,Tier 2,0.0,0.0
+discount_applied_percentage,Tier 2,0.0,0.0

@@ -1,0 +1,61 @@
+/Users/surnellas/capstone/src/interim_pipeline/step3_rq2_pipeline.py:225: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  axes[0].boxplot([Ysim[:, i] for i in range(3)], labels=labs, showmeans=True)
+{
+  "N": 33,
+  "routing_accuracy": 0.36363636363636365,
+  "retrieval_rm": {
+    "F": 386.64732852064014,
+    "df1": 2,
+    "df2": 64,
+    "p": 1.8435415532465175e-36,
+    "eta2_partial": 0.9235633483842418,
+    "mauchly_W": 0.19250982544581507,
+    "mauchly_chi2": 51.07585064367685,
+    "mauchly_df": 2.0,
+    "mauchly_p": 8.109983179575775e-12,
+    "eps_gg": 0.5532533532286827,
+    "df1_gg": 1.1065067064573655,
+    "df2_gg": 35.408214606635696,
+    "p_gg": 3.004647267527817e-21
+  },
+  "retrieval_pairs": [
+    {
+      "contrast": "Global k-NN vs. Static",
+      "mean_diff": 0.2616668442885081,
+      "t": 22.000312694896763,
+      "df": 32,
+      "p": 6.900061114183296e-21,
+      "d_z": 3.8297628642200103,
+      "p_holm": 2.0700183342549888e-20
+    },
+    {
+      "contrast": "Cluster-adaptive vs. Static",
+      "mean_diff": 0.23726975285645688,
+      "t": 18.178363956763565,
+      "df": 32,
+      "p": 1.991539717665108e-18,
+      "d_z": 3.1644469867029463,
+      "p_holm": 3.983079435330216e-18
+    },
+    {
+      "contrast": "Cluster-adaptive vs. Global k-NN",
+      "mean_diff": -0.024397091432051224,
+      "t": -6.9275920940393085,
+      "df": 32,
+      "p": 7.62870064892736e-08,
+      "d_z": -1.205938993147587,
+      "p_holm": 7.62870064892736e-08
+    }
+  ],
+  "style_metric_t": {
+    "t": 2.6013712712753168,
+    "p": 0.013944513674217326
+  },
+  "style_metric_dz": 0.4528406131741009,
+  "style_argmax_accuracy": 0.48484848484848486
+}
+                           strategy  sim_M  sim_SD  arch_match_M
+            Static few-shot (fixed) 0.5779  0.0569        0.3333
+          Global k-NN (unclustered) 0.8396  0.0535        0.3636
+Cluster-adaptive (routed sub-index) 0.8152  0.0604        0.3636
+Saved 99 prompts to data/interim/rq2_prompts.jsonl

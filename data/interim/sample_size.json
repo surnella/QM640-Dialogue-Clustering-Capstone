@@ -1,0 +1,62 @@
+{
+  "RQ1": {
+    "design": "One-way ANOVA (3 algorithms)",
+    "unit": "bootstrap clustering runs",
+    "N_min": 158,
+    "power_at_N_min": 0.8021998373584263,
+    "df1": 2,
+    "df2": 155,
+    "lambda_": 9.875,
+    "F_crit": 3.0543849969588295,
+    "N_balanced": 159,
+    "buffer": 0.0,
+    "N_final": 159,
+    "per_group": 53,
+    "power_final": 0.8048872853010693
+  },
+  "RQ2": {
+    "design": "One-way repeated-measures ANOVA (3 conditions)",
+    "unit": "test dialogues (each scored under all 3 conditions)",
+    "N_min": 28,
+    "power_at_N_min": 0.8124546105447639,
+    "df1": 2.0,
+    "df2": 54.0,
+    "lambda_": 10.5,
+    "F_crit": 3.168245967251338,
+    "N_balanced": 30,
+    "buffer": 0.1,
+    "N_final": 33,
+    "per_group": 11,
+    "power_final": 0.8776354792562983
+  },
+  "RQ3": {
+    "design": "2 x 2 factorial ANOVA",
+    "unit": "test dialogues",
+    "N_min": 128,
+    "power_at_N_min": 0.8013620710135141,
+    "df1": 1,
+    "df2": 124,
+    "lambda_": 8.0,
+    "F_crit": 3.9175497799873287,
+    "N_balanced": 128,
+    "buffer": 0.1,
+    "N_final": 144,
+    "per_group": 36,
+    "power_final": 0.8459926447781267
+  },
+  "RQ4": {
+    "design": "2 x 3 factorial ANOVA",
+    "unit": "test dialogues",
+    "N_min": 158,
+    "power_at_N_min": 0.8020389850982907,
+    "df1": 2,
+    "df2": 152,
+    "lambda_": 9.875,
+    "F_crit": 3.0555579278410643,
+    "N_balanced": 162,
+    "buffer": 0.1,
+    "N_final": 180,
+    "per_group": 30,
+    "power_final": 0.854529795996511
+  }
+}
