@@ -400,8 +400,8 @@ def build(toc_pages=None):
                          f"{s1['n_gold']}, held-out partition {s1['n_test']})",
               f"10,438 dialogues; seeded sample of {n2(mq.n_raw, 0)}; {n2(mq.n_analytic, 0)} analytic"],
              ["Variables used", "Utterance text, speaker, dialogue acts with slot–value arguments, task-success "
-                                "label, user rating, role-player codes (Table E1)",
-              "Utterance text, speaker, services, per-turn dialogue state (Table E1)"],
+                                "label, user rating, role-player codes (Table 3)",
+              "Utterance text, speaker, services, per-turn dialogue state (Table 3)"],
              ["Time period", "Released 2017; timestamps record collection time only and are not analyzed",
               "Released 2018 (version 2.2 in 2020); no timestamps"],
              ["Unit of analysis", "Dialogue; clustering run (RQ1 algorithm test); generated agent turn (RQ2)",
@@ -412,9 +412,53 @@ def build(toc_pages=None):
             widths=[1.3, 2.75, 2.45], align=["l", "l", "l"])
     D.heading("Data Dictionary", 2)
     D.para(
-        "Table 3 defines the analysis variables. The raw source fields read from each corpus and the canonical "
-        "schema produced by preprocessing are listed in Tables E1 and E2 in Appendix E.")
-    D.table("Data Dictionary of the Analysis Variables",
+        "The data dictionary has three parts: the raw source fields read from each corpus (Table 3), the canonical "
+        "schema produced by preprocessing (Table 4), and the analysis variables with their roles and operational "
+        "definitions (Table 5).")
+    D.table("Data Dictionary, Part A: Raw Source Fields Used",
+            ["Corpus", "Field", "Type", "Description", "Use"],
+            [["Frames", "id", "String", "Unique dialogue identifier", "Key"],
+             ["Frames", "user_id, wizard_id", "String", f"Role-player identifiers ({n_users} users, {n_wizards} wizards)",
+              "Confound check"],
+             ["Frames", "turns[].author", "Category", "user or wizard", "Speaker tag"],
+             ["Frames", "turns[].text", "String", "Utterance text", "Embedding"],
+             ["Frames", "turns[].timestamp", "Float", "Collection time (Unix ms)", "Not used"],
+             ["Frames", "turns[].labels.acts[].name", "Category", "Dialogue act (e.g., inform, request, offer, "
+              "switch_frame)", "Features, RER"],
+             ["Frames", "turns[].labels.acts[].args[].key/val", "String", "Slot name and value (e.g., dst_city, "
+              "budget)", "Tier 1 slots"],
+             ["Frames", "labels.wizardSurveyTaskSuccessful", "Boolean", "Wizard-reported task success", "Stratify, "
+              "pool"],
+             ["Frames", "labels.userSurveyRating", "Float", "User satisfaction rating (1–5)", "Descriptive"],
+             ["MultiWOZ", "dialogue_id", "String", "Unique dialogue identifier", "Key"],
+             ["MultiWOZ", "services", "List", "Services involved (hotel, train, taxi, ...)", "Inclusion"],
+             ["MultiWOZ", "turns[].speaker", "Category", "USER or SYSTEM", "Speaker tag"],
+             ["MultiWOZ", "turns[].utterance", "String", "Utterance text", "Embedding"],
+             ["MultiWOZ", "turns[].frames[].state.slot_values", "Map", "Cumulative dialogue state per service",
+              "Tier 1 slots"]],
+            note="RER = redundant elicitation rate. Only the fields listed were read; all other fields were ignored.",
+            widths=[0.8, 2.0, 0.7, 2.0, 1.0], align=["l", "l", "l", "l", "l"], split=True)
+    D.table("Data Dictionary, Part B: Canonical Schema Fields",
+            ["Field", "Type", "Description"],
+            [["dialogue_id, source_dataset", "String", "Identifier and corpus of origin (frames or multiwoz)"],
+             ["total_turns, user_turns, wizard_turns", "Integer", "Turn counts"],
+             ["turns[].turn_id, speaker, utterance", "Mixed", "Ordered turns with corpus-neutral speaker and text"],
+             ["turns[].acts, slots_mentioned, revisions", "List, map", "Acts, slots informed, and slots whose value "
+              "changed in the turn"],
+             ["Tier 1: origin_city, destination_city", "String", "Trip endpoints"],
+             ["Tier 1: departure_date, return_date, duration_nights", "String, integer", "Trip timing"],
+             ["Tier 1: traveler_count_adults, traveler_count_children", "Integer", "Party size"],
+             ["Tier 1: budget_amount, accommodation_tier", "Float, string", "Budget ceiling and hotel tier"],
+             ["Tier 2: visa_processing_window_days, passport_expiry_months", "Integer", "Policy timing (synthetic in "
+              "RQ3)"],
+             ["Tier 2: package_type, sharing_basis, discount_applied_percentage", "String, float", "Package, room, "
+              "and discount (synthetic in RQ3)"],
+             ["revisions_count", "Integer", "Number of slot-value changes across the dialogue"],
+             ["hesitation_markers_count", "Integer", "User hesitation phrases (e.g., \"maybe,\" \"not sure\")"],
+             ["budget_specified", "Boolean", "Whether a numeric budget was stated"]],
+            note="Schema implemented as Pydantic models in src/canonical_schema.py.",
+            widths=[2.9, 1.0, 2.6], align=["l", "l", "l"], split=True)
+    D.table("Data Dictionary, Part C: Analysis Variables",
             ["Variable", "Role", "Type", "Operational definition", "RQ"],
             [["Clustering algorithm", "IV", "Nominal (3)", "K-Means, Ward agglomerative, HDBSCAN", "1"],
              ["Silhouette coefficient", "DV", "Continuous [−1, 1]", "Cosine Silhouette of a clustering run", "1"],
@@ -455,7 +499,7 @@ def build(toc_pages=None):
         f"Frames dialogues were produced by {n_users} user role-players and {n_wizards} wizards following written "
         "scenarios, so archetypes may partly reflect individual habits, and its cities and prices are fictional. "
         "MultiWOZ covers one city without flights or package negotiation and records price only as a category. "
-        "Several slots are often absent (Table E3): Frames mentions children in only "
+        "Several slots are often absent (Table E1): Frames mentions children in only "
         f"{pct(cmp_.loc['traveler_count_children', 'frames_pct'])} of dialogues and trip duration in "
         f"{pct(cmp_.loc['duration_nights', 'frames_pct'])}, MultiWOZ never records a return date, and neither corpus "
         "contains visa, passport, or discount information, so RQ3 must inject these conditions. Neither corpus "
@@ -467,7 +511,7 @@ def build(toc_pages=None):
     D.heading("Analysis", 1)
     D.heading("Data Cleaning", 2)
     D.para(
-        "Table 4 is the cleaning log. Missing slot values are not imputed, because a slot that is never mentioned is "
+        "Table 6 is the cleaning log. Missing slot values are not imputed, because a slot that is never mentioned is "
         "correctly unobserved for a dialogue-state tracker, and turn-count outliers are retained because long "
         "negotiations are genuine behavior of interest.")
     D.para(
@@ -506,7 +550,7 @@ def build(toc_pages=None):
             widths=[1.25, 1.0, 1.15, 0.6, 0.7, 1.8], align=["l", "l", "l", "c", "c", "l"], split=True)
     D.heading("Exploratory Data Analysis Results", 2)
     D.para(
-        "Table 5 describes the analytic samples. Frames and MultiWOZ dialogues have similar mean lengths "
+        "Table 7 describes the analytic samples. Frames and MultiWOZ dialogues have similar mean lengths "
         f"(<i>M</i> = {n2(fd.turns_M)} and {n2(md.turns_M)} turns), but Frames lengths vary more "
         f"(<i>SD</i> = {n2(fd.turns_SD)} vs. {n2(md.turns_SD)}) and have a longer right tail (Figure 1). The golden and "
         "held-out partitions are nearly identical in length, utterance length, and success rate, which confirms that "
@@ -525,18 +569,15 @@ def build(toc_pages=None):
             widths=[2.0, 0.5, 0.95, 0.45, 0.6, 0.6, 0.6, 0.8], align=["l", "c", "c", "c", "c", "c", "c", "c"])
     D.figure("Distribution of Dialogue Length by Corpus", os.path.join(FIG, "fig_eda_turns.png"),
              note="Turn counts after cleaning. Frames <i>N</i> = "
-                  f"{n2(fq.n_analytic, 0)}; MultiWOZ <i>N</i> = {n2(mq.n_analytic, 0)}.", width=5.6)
+                  f"{n2(fq.n_analytic, 0)}; MultiWOZ <i>N</i> = {n2(mq.n_analytic, 0)}.", width=5.0)
     D.para(
-        "Figure 2 compares slot completeness (exact percentages in Table E3). Frames users state origin and "
-        "destination in almost every dialogue and a budget in most, whereas MultiWOZ dialogues mention travel slots "
-        "far less often and never mention return dates. Three insights shape the analysis. First, Frames is the only "
-        "corpus with enough budget and package information for the negotiation behavior that the archetypes are "
-        "meant to capture. Second, length differences between the corpora mean that any archetype tied to dialogue "
-        "length will be distributed differently across corpora, which motivates treating MultiWOZ only as a "
-        "descriptive check. Third, the absence of policy slots in both corpora confirms that RQ3 requires injected "
-        "scenarios.")
+        "Figure 2 compares slot completeness (exact percentages in Table E1). Frames users state origin, destination, "
+        "and usually a budget; MultiWOZ dialogues mention travel slots far less often and never return dates. "
+        "Thus only Frames carries the budget and package information that negotiation archetypes need; any "
+        "length-linked archetype will be distributed differently across corpora, so MultiWOZ serves only as a "
+        "descriptive check; and neither corpus has policy slots, so RQ3 requires injected scenarios.")
     D.figure("Slot Completeness by Corpus", os.path.join(FIG, "fig_eda_slots.png"),
-             note="Percentage of dialogues that mention each canonical slot at least once.", width=5.6)
+             note="Percentage of dialogues that mention each canonical slot at least once.", width=4.8)
 
     # ================================================================== MODELING
     D.heading("Modeling", 1)
@@ -559,10 +600,8 @@ def build(toc_pages=None):
         "where <i>F</i><sub>nc</sub> is the cumulative noncentral <i>F</i> distribution and λ = "
         "<i>f</i><sup>2</sup><i>N</i> for between-subjects designs. The smallest <i>N</i> with power ≥ .80 "
         "(<i>N</i><sub>min</sub>) was rounded up to a balanced design and, for LLM experiments, increased by 10% for "
-        f"failed generations. For RQ1, for example, <i>N</i> = {int(r.N_min)} gives λ = .0625 × {int(r.N_min)} = "
-        f"{n2(r.lambda_at_Nmin, 3)}, <i>F</i><sub>crit</sub>(2, {int(r.df2_at_Nmin)}) = {n2(r.F_crit, 3)}, and power "
-        f"= {nz(r.power_at_Nmin, 3)}, so {int(r.N_final)} clustering runs ({int(r.per_group)} per algorithm) are "
-        "used. Table 6 gives the computation for every research question. The experiments draw from the held-out "
+        "failed generations. Table 8 gives the computation (degrees of freedom, λ, <i>F</i><sub>crit</sub>, "
+        "<i>N</i><sub>min</sub>, and power) for every research question. The experiments draw from the held-out "
         f"partition, so the binding requirement is the largest experimental sample, {int(ss.loc['RQ4', 'N_final'])} "
         f"dialogues, which is smaller than |<i>D</i><sub>test</sub>| = {s1['n_test']}.", indent=False)
     rows = []
@@ -607,7 +646,7 @@ def build(toc_pages=None):
                 "ANOVA, Games–Howell comparisons, and the Kruskal–Wallis test are reported as well.")
     D.lead_para("Meaningful embedding geometry",
                 "Cosine distance is assumed to reflect conversational behavior; this was checked with behavioral "
-                "features not used in clustering (Table 10).")
+                "features not used in clustering (Table 12).")
     D.lead_para("Cross-corpus invariance",
                 "The synopsis assumed that Frames archetypes would apply to MultiWOZ; projection onto the frozen "
                 "centroids did not support this.")
@@ -617,10 +656,8 @@ def build(toc_pages=None):
         "7, or 9 user messages, or all), under a selection rule fixed before results were inspected. "
         "Stability was the mean adjusted Rand index (ARI) between K-Means fits on two random 80% subsamples, "
         "repeated 50 times (Hennig, 2007). Eligible solutions had three to eight clusters, ARI ≥ .60, and a smallest "
-        "cluster ≥ 5%; for each length, the eligible solution that a router could predict best from the first five "
-        "turns (Cohen's κ) was retained, and the most stable retained solution was adopted. Two-cluster solutions "
-        "were excluded in advance as too coarse for archetype-specific prompting. The confirmatory RQ1 test is "
-        "unchanged; this analysis only selects the archetype labels used later.")
+        "cluster ≥ 5%; per length, the solution best predicted from the first five turns (Cohen's κ) was retained, "
+        "and the most stable of these was adopted. The confirmatory RQ1 test is unchanged.")
     D.lead_para("Valid behavior ratings",
                 "LLM ratings are assumed to measure user behavior; this was tested by re-annotation and by "
                 "correlation with behaviors counted from the corpus annotations (see Features).")
@@ -629,13 +666,12 @@ def build(toc_pages=None):
     D.para(
         f"The experiment sampled {int(ss.loc['RQ2', 'N_final'])} held-out dialogues, "
         f"{int(ss.loc['RQ2', 'per_group'])} per primary archetype (it was run before the sensitivity analysis). The "
-        "first three turns form the prefix, and Gemini 2.5 Flash (temperature 0.2, reasoning disabled) generated the "
-        "next agent turn under three conditions: zero-shot, static few-shot (the same three random golden exemplars "
-        "for every dialogue), and cluster-adaptive few-shot, in which the prefix is routed to the nearest archetype "
-        "centroid and the three most similar golden dialogues are retrieved from that archetype's FAISS index. "
-        "Zero-shot and static few-shot are the baselines, and unclustered global nearest-neighbor retrieval (Liu et "
-        "al., 2022) was compared in the pilot. A one-way repeated-measures ANOVA with Holm-adjusted contrasts tests "
-        f"the conditions; all {r2x['n_calls']} generations completed (<i>N</i> = {r2x['N']}).")
+        "first three turns form the prefix, and Gemini 2.5 Flash (temperature 0.2) generated the next agent turn "
+        "under three conditions: zero-shot and static few-shot (three fixed random golden exemplars) as baselines, "
+        "and cluster-adaptive few-shot, which routes the prefix to the nearest archetype centroid and retrieves the "
+        "three most similar golden dialogues from that archetype's FAISS index; global nearest-neighbor retrieval "
+        "(Liu et al., 2022) was compared in the pilot. A one-way repeated-measures ANOVA with Holm-adjusted "
+        f"contrasts tests the conditions; all {r2x['n_calls']} generations completed (<i>N</i> = {r2x['N']}).")
     D.lead_para("Sphericity",
                 f"Mauchly's test was not significant for style convergence, <i>W</i> = {nz(sc_a['mauchly_W'])}, "
                 f"χ<sup>2</sup>(2) = {n2(sc_a['mauchly_chi2'])}, <i>p</i> {pv(sc_a['mauchly_p'])}, or gold "
@@ -656,8 +692,14 @@ def build(toc_pages=None):
         "(rule engine active or off × zero-shot or cluster-adaptive prompting with the refined archetypes). Each "
         "dialogue state is augmented with seeded synthetic Tier 2 values, half of which violate at least one rule. "
         "When active, the engine evaluates the state before generation and adds violations to the prompt as "
-        "required actions. The baseline cell is zero-shot prompting with rules off. Table 7 lists the five "
+        "required actions. The baseline cell is zero-shot prompting with rules off. Table 9 lists the five "
         "author-defined rules, which do not represent any company's policy.")
+    D.table("Declarative Policy Rules Used in RQ3",
+            ["Rule", "Condition", "Action", "Severity"],
+            [[r["name"], r["condition"].replace("budget_amount is not None and ", "budget stated; ").replace("==", "=").replace(" and ", "; "),
+              r["action"].replace("_", " ").lower(), r["severity"].lower()] for _, r in rules.iterrows()],
+            note="Rules are stored in a YAML file and evaluated outside the LLM by src/rule_engine.py.",
+            widths=[1.9, 2.5, 1.3, 0.8], align=["l", "l", "l", "l"])
     D.lead_para("Deterministic rule evaluation",
                 f"All {r34['rule_tests_passed']} of {r34['rule_tests_total']} boundary tests passed, including "
                 "values exactly at each threshold and the domestic and group-package exemptions.")
@@ -670,12 +712,6 @@ def build(toc_pages=None):
     D.lead_para("International travel",
                 "Frames cities are fictional, so all trips are treated as international for the visa, passport, "
                 "and budget rules.")
-    D.table("Declarative Policy Rules Used in RQ3",
-            ["Rule", "Condition", "Action", "Severity"],
-            [[r["name"], r["condition"].replace("budget_amount is not None and ", "budget stated; ").replace("==", "=").replace(" and ", "; "),
-              r["action"].replace("_", " ").lower(), r["severity"].lower()] for _, r in rules.iterrows()],
-            note="Rules are stored in a YAML file and evaluated outside the LLM by src/rule_engine.py.",
-            widths=[1.9, 2.5, 1.3, 0.8], align=["l", "l", "l", "l"])
 
     D.heading("RQ4: Turn-Economy Simulation", 3)
     D.para(
@@ -683,7 +719,7 @@ def build(toc_pages=None):
         "a 2 × 3 design (zero-shot or cluster-adaptive prompting × the three refined archetypes; the held-out "
         f"partition contains {r1r['test_counts'][ARCH2[0]]}, {r1r['test_counts'][ARCH2[1]]}, and "
         f"{r1r['test_counts'][ARCH2[2]]} dialogues of these archetypes). An LLM user simulator receives the "
-        "dialogue's user goal and its archetype profile (Table 12) and converses with the agent until the goal is "
+        "dialogue's user goal and its archetype profile (Table 14) and converses with the agent until the goal is "
         "met or 30 turns elapse. The zero-shot agent is the baseline, and the human dialogues give a reference "
         "level. A 2 × 3 factorial ANOVA on log turns tests the interaction.")
     D.lead_para("Log-normal turn counts",
@@ -715,13 +751,11 @@ def build(toc_pages=None):
         "Structural features (turns, revisions, hesitations, offers) are excluded from the vector and used only to "
         "interpret clusters.", indent=False)
     D.para(
-        "<i>Hybrid features (refined archetypes).</i> Two equally weighted blocks were combined: the first 20 "
-        "principal components of the Gemini embedding (gemini-embedding-001, 3,072 dimensions; Lee et al., 2025) of "
-        "the user's messages, and an LLM behavior profile. For the profile, Gemini 2.5 Flash (temperature 0, output "
-        "constrained to a JSON schema) rated each user against a 16-field codebook (Table D1): ten 1–5 ratings such "
-        "as price sensitivity, destination flexibility, decisiveness, and revision tendency, plus goal and tone "
-        "indicators; outcome and party type were annotated but not used. Both blocks were computed on the same first "
-        "<i>M</i> user messages. Re-annotating 100 random dialogues at temperature 0.7 gave quadratic-weighted κ from "
+        "<i>Hybrid features (refined archetypes).</i> Two equally weighted blocks were combined, both computed on "
+        "the same first <i>M</i> user messages: the first 20 principal components of the Gemini embedding "
+        "(gemini-embedding-001; Lee et al., 2025), and an LLM behavior profile in which Gemini 2.5 Flash "
+        "(temperature 0, JSON schema) rated each user on a 16-field codebook (Table D1) of ten 1–5 ratings, such as "
+        "price sensitivity and revision tendency, plus goal and tone indicators. Re-annotating 100 random dialogues at temperature 0.7 gave quadratic-weighted κ from "
         f"{nz(min(r1h['reliability'][x] for x in ORDS))} to {nz(max(r1h['reliability'][x] for x in ORDS))} for the "
         f"ratings, and the ratings correlated with behaviors counted from the Frames acts, for example revision "
         f"tendency with slot revisions (ρ = {nz(cv_['revision_tendency~user_revisions']['rho'])}) and question "
@@ -731,7 +765,7 @@ def build(toc_pages=None):
         "prefix, so neither side uses future turns; exemplars are de-lexicalized and truncated to six turns.")
 
     D.heading("Evaluation Metrics", 2)
-    D.para("Table 8 defines every outcome metric with its formula.")
+    D.para("Table 10 defines every outcome metric with its formula.")
     D.table("Evaluation Metrics and Formulae",
             ["Metric", "Formula", "RQ", "Interpretation"],
             [["Silhouette", "<i>s</i>(<i>i</i>) = [<i>b</i>(<i>i</i>) − <i>a</i>(<i>i</i>)] / max{<i>a</i>(<i>i</i>), "
@@ -772,14 +806,11 @@ def build(toc_pages=None):
     best_k = int(k_sel.loc[k_sel.silhouette.idxmax(), "k"])
     ks = k_sel.set_index("k")
     D.para(
-        f"On the full golden partition, Silhouette was highest at <i>k</i> = {best_k} "
-        f"({nz(ks.loc[best_k, 'silhouette'], 3)}) and nearly flat from <i>k</i> = 3 to 5 "
-        f"({nz(ks.loc[3, 'silhouette'], 3)} to {nz(ks.loc[5, 'silhouette'], 3)}), with no clear Davies–Bouldin or "
-        "inertia elbow, so the pre-specified <i>k</i> = 3 was retained to give interpretable archetypes with enough "
-        f"exemplars (smallest cluster {pct(ks.loc[3, 'smallest_cluster_pct'])}; see Table E4 and Figure E1 in "
-        "Appendix E for the diagnostics).")
+        f"On the golden partition, Silhouette was nearly flat from <i>k</i> = 3 to 5 "
+        f"({nz(ks.loc[3, 'silhouette'], 3)} to {nz(ks.loc[5, 'silhouette'], 3)}), so the pre-specified <i>k</i> = 3 "
+        "was retained (Table E2 and Figure E1).")
     D.para(
-        f"Table 9 compares the algorithms. HDBSCAN produced the highest mean Silhouette (<i>M</i> = "
+        f"Table 11 compares the algorithms. HDBSCAN produced the highest mean Silhouette (<i>M</i> = "
         f"{nz(hd.sil_M, 3)}, <i>SD</i> = {nz(hd.sil_SD, 3)}), followed by K-Means (<i>M</i> = {nz(km.sil_M, 3)}, "
         f"<i>SD</i> = {nz(km.sil_SD, 3)}) and agglomerative clustering (<i>M</i> = {nz(ag.sil_M, 3)}, <i>SD</i> = "
         f"{nz(ag.sil_SD, 3)}), and all three far exceeded the permutation baseline (<i>M</i> = {nz(perm['M'], 3)}). "
@@ -787,7 +818,7 @@ def build(toc_pages=None):
         f"<i>p</i> {pv(an['p'])}, η<sup>2</sup> = {nz(eta)}, and held under Welch's correction, "
         f"<i>F</i>({int(we['df1'])}, {n2(we['df2'])}) = {n2(we['F'])}, <i>p</i> {pv(we['p'])}, and the "
         f"Kruskal–Wallis test, <i>H</i>(2) = {n2(kw['H'])}, <i>p</i> {pv(kw['p'])}. Every pairwise difference was "
-        "significant under Tukey and Games–Howell comparisons (Table E5; runs plotted in Figure E2). The null "
+        "significant under Tukey and Games–Howell comparisons (Table E3; runs plotted in Figure E2). The null "
         "hypothesis is rejected.")
     kf = r1["hdbscan_k_found"]
     k_mode = max(kf, key=kf.get)
@@ -812,7 +843,7 @@ def build(toc_pages=None):
     pr = prof.reindex(ARCH)
     dt_, cn_, ge_ = (pr.loc[a] for a in ["Direct Transactional", "Constraint Negotiator", "Guided Explorer"])
     D.para(
-        "Table 10 profiles the archetypes on features not used for clustering; names follow a fixed rule (most "
+        "Table 12 profiles the archetypes on features not used for clustering; names follow a fixed rule (most "
         "revisions = Constraint Negotiator; longer of the other two = Guided Explorer). Direct Transactional "
         f"dialogues are short ({n2(dt_.turns_M, 1)} turns) with almost no offers ({n2(dt_.offers)}). Constraint "
         f"Negotiators write the longest utterances and revise slot values most often ({n2(cn_.revisions, 1)}). Guided "
@@ -829,7 +860,7 @@ def build(toc_pages=None):
         f"<i>p</i> {pv(chi_gt.pvalue)}. They did not transfer to MultiWOZ: MultiWOZ dialogues were far less similar to "
         f"their nearest Frames centroid (<i>M</i> = {nz(cr.loc['MultiWOZ 2.2', 'sim_M'], 3)} vs. "
         f"{nz(cr.loc['Frames D_test', 'sim_M'], 3)}), <i>t</i>({n2(cc['df'], 1)}) = {n2(cc['t'])}, <i>p</i> "
-        f"{pv(cc['p'])}, and {pct(cr.loc['MultiWOZ 2.2', 'Guided Explorer'])} fell into one archetype (Table E6 and "
+        f"{pv(cc['p'])}, and {pct(cr.loc['MultiWOZ 2.2', 'Guided Explorer'])} fell into one archetype (Table E4 and "
         "the UMAP projection in Figure E3), which supports keeping MultiWOZ descriptive.")
     D.table("Behavioral Profiles of the Three Primary Archetypes (Golden Partition)",
             ["Feature", *ARCH],
@@ -868,7 +899,7 @@ def build(toc_pages=None):
         "On whole conversations the hybrid representation was unstable (best eligible solution <i>k</i> = "
         f"{int(wk.k)}, ARI = {nz(wk.stability_ari)}) and largely reproduced how the dialogue ended (three-cluster "
         f"association with the rated outcome <i>V</i> = {nz(tr3.loc['whole', 'outcome_v'])}), because late messages "
-        "record the result of the search rather than the user's approach. Table 11 shows that truncating to the first "
+        "record the result of the search rather than the user's approach. Table 13 shows that truncating to the first "
         "<i>M</i> user messages solved this: three-cluster solutions were stable at every cut-off (ARI = "
         f"{nz(tr3.drop(index='whole').stability_ari.min())} to {nz(tr3.drop(index='whole').stability_ari.max())}), no "
         f"solution with four or more clusters exceeded ARI = {nz(tr_hi.max())}, and the outcome association rose with "
@@ -894,7 +925,7 @@ def build(toc_pages=None):
     rp = rprof.reindex(ARCH2)
     db_, oe_, rc_ = (rp.loc[a] for a in ARCH2)
     D.para(
-        "Table 12 profiles the refined archetypes; names follow a fixed rule (highest destination flexibility = Open "
+        "Table 14 profiles the refined archetypes; names follow a fixed rule (highest destination flexibility = Open "
         "Explorer; more decisive of the other two = Decisive Booker). Decisive Bookers "
         f"({pct(db_.pct)}) are polite and decisive, pursue one specific trip ({pct(db_.goal_booking_pct, 0)}), and "
         f"book in {pct(db_.booked_pct, 0)} of dialogues. Open Explorers ({pct(oe_.pct)}) are flexible about the "
@@ -922,7 +953,7 @@ def build(toc_pages=None):
         "dialogues the refined archetypes reproduced the golden proportions, "
         f"χ<sup>2</sup>({r1r['chi_gold_test']['df']}, <i>N</i> = {r1r['chi_gold_test']['N']}) = "
         f"{n2(r1r['chi_gold_test']['chi2'])}, <i>p</i> {pv(r1r['chi_gold_test']['p'])}, and routing after five turns "
-        f"improved from κ = {nz(kap_prim)} to {nz(win['kappa_N5'])}, which is still only fair. An ablation (Table E7) "
+        f"improved from κ = {nz(kap_prim)} to {nz(win['kappa_N5'])}, which is still only fair. An ablation (Table E5) "
         "showed that truncation is the main driver of the gain: with the behavior profile, stability rose from ARI = "
         f"{nz(aw.loc[[1, 2, 3]].stability_ari.min())} to {nz(aw.loc[[1, 2, 3]].stability_ari.max())} on whole "
         f"conversations to {nz(a9.loc[[1, 2, 3]].stability_ari.min())} to {nz(a9.loc[[1, 2, 3]].stability_ari.max())} "
@@ -938,22 +969,20 @@ def build(toc_pages=None):
     # ------------------------------------------------------------------ RQ2
     D.heading("RQ2: Cluster-Adaptive Few-Shot Prompting (Complete)", 2)
     D.para(
-        "The pilot ran every step except the LLM call on the experimental sample (Tables E8 and E9; Figure E5). "
+        "The pilot ran every step except the LLM call on the experimental sample (Tables E6 and E7; Figure E5). "
         f"Routing from a three-turn prefix was correct for {n_route} of {r2p['N']} dialogues "
-        f"({pct(100 * r2p['routing_accuracy'])}), close to the 33.3% expected by chance. Exemplar relevance differed by "
-        f"strategy, <i>F</i>({n2(rm['df1_gg'])}, {n2(rm['df2_gg'])}) = {n2(rm['F'])}, <i>p</i> {pv(rm['p_gg'])}, "
-        f"partial η<sup>2</sup> = {nz(rm['eta2_partial'])}: both similarity-based strategies retrieved far more "
-        "relevant exemplars than the static set, and global retrieval was slightly more relevant than "
-        "cluster-adaptive retrieval. The style metric was valid but modest: human replies were closer to their own "
+        f"({pct(100 * r2p['routing_accuracy'])}), close to the 33.3% expected by chance. Similarity-based retrieval "
+        f"found far more relevant exemplars than the static set (partial η<sup>2</sup> = {nz(rm['eta2_partial'])}), "
+        "with global retrieval slightly ahead of cluster-adaptive retrieval. The style metric was valid but modest: human replies were closer to their own "
         f"archetype's centroid than to the others, <i>t</i>({r2p['N'] - 1}) = {n2(r2p['style_metric_t']['t'])}, "
         f"<i>p</i> {pv(r2p['style_metric_t']['p'])}, <i>d</i><sub><i>z</i></sub> = {nz(r2p['style_metric_dz'])}.")
     D.para(
-        "Table 13 shows the experimental results. Style convergence did not differ by condition, "
+        "Table 15 shows the experimental results. Style convergence did not differ by condition, "
         f"<i>F</i>({n2(sc_a['df1_gg'])}, {n2(sc_a['df2_gg'])}) = {n2(sc_a['F'])}, <i>p</i> {pv(sc_a['p_gg'])}, "
         f"partial η<sup>2</sup> = {nz(sc_a['eta2_partial'])}, and the Friedman test agreed, χ<sup>2</sup>(2, "
         f"<i>N</i> = {r2x['N']}) = {n2(sc_r['friedman']['chi2'])}, <i>p</i> {pv(sc_r['friedman']['p'])}. Zero-shot "
         f"responses were descriptively closest to the target centroid (<i>M</i> = {nz(sc_d['Zero-Shot'][0], 3)}), the "
-        "opposite of the hypothesized order, no Holm-adjusted contrast was significant (Table E10; Figure E6), and "
+        "opposite of the hypothesized order, no Holm-adjusted contrast was significant (Table E8; Figure E6), and "
         "similarity to the human reply did not differ either. The null hypothesis for RQ2 is not rejected.")
     D.para(
         "The exploratory length measure showed a large effect: zero-shot responses averaged "
@@ -990,7 +1019,7 @@ def build(toc_pages=None):
     D.heading("RQ3: Rules Versus Prompting (Groundwork Complete)", 2)
     pax, bud = audit.loc["RULE_PAX_CAPACITY"], audit.loc["RULE_BUDGET_MINIMUM"]
     D.para(
-        f"The rule engine passed all {r34['rule_tests_passed']} boundary tests. The corpus audit (Table E11) shows "
+        f"The rule engine passed all {r34['rule_tests_passed']} boundary tests. The corpus audit (Table E9) shows "
         f"that only two rules can be checked from Frames annotations: a user-stated number of adults appears in "
         f"{pct(pax.slot_observed_pct)} of dialogues and triggers the capacity rule in {int(pax.trigger_n)}, and a "
         f"numeric budget appears in {pct(bud.slot_observed_pct)} and triggers the minimum-budget rule in "
@@ -999,7 +1028,7 @@ def build(toc_pages=None):
     D.heading("RQ4: Turn Economy Across Archetypes (Groundwork Complete)", 2)
     b = base4r.reindex(ARCH2)
     D.para(
-        f"Table 14 gives the human baseline for all {n2(r4r['n'], 0)} Frames dialogues by refined archetype. Turn "
+        f"Table 16 gives the human baseline for all {n2(r4r['n'], 0)} Frames dialogues by refined archetype. Turn "
         f"counts differed by archetype, <i>H</i>(2) = {n2(r4r['kruskal_turns']['H'])}, <i>p</i> "
         f"{pv(r4r['kruskal_turns']['p'])}, as expected by construction (distributions in Figure E7). Redundant "
         f"elicitation was rare among human agents (<i>M</i> = {nz(r4r['overall_rer_M'], 3)}, about one request in "
@@ -1068,21 +1097,21 @@ def build(toc_pages=None):
             widths=[3.0, 3.5], align=["l", "l"], label="A1")
     D.table("Replication Commands",
             ["Step", "Command (run from src/interim_pipeline/)", "Produces"],
-            [["0", "python step0_sample_size.py", "Table 6"],
-             ["1", "python step1_prepare_data.py", "Tables 4, 5, and E3; Figures 1 and 2"],
-             ["2", "python step2_rq1_clustering.py", "Tables 9, 10, and E4 to E6; Figures E1 to E3"],
+            [["0", "python step0_sample_size.py", "Table 8"],
+             ["1", "python step1_prepare_data.py", "Tables 6, 7, and E1; Figures 1 and 2"],
+             ["2", "python step2_rq1_clustering.py", "Tables 11, 12, and E2 to E4; Figures E1 to E3"],
              ["2b", "python step2b_rq1_representation.py --emb minilm", "User-turn and dialogue-act representations"],
              ["2c", "python step2c_gemini_embeddings.py", "Gemini embeddings (requires GEMINI_API_KEY)"],
              ["2d", "python step2d_rq1_gemini_algorithms.py", "Table D3"],
              ["2e", "python step2e_llm_user_annotation.py (also --retest and --max-user-msgs 3, 5, 7, 9)",
               "LLM behavior annotations (requires GEMINI_API_KEY)"],
              ["2f", "python step2f_rq1_llm_hybrid.py", "Table D2; whole-conversation hybrid"],
-             ["2g", "python step2g_rq1_truncation.py", "Table 11; Figure E4; refined labels"],
-             ["2h", "python step2h_rq1_ablation.py", "Table E7"],
-             ["2i", "python step2i_rq1_refined_archetypes.py", "Tables 12 and 14; Figure E7"],
-             ["3", "python step3_rq2_pipeline.py", "Tables E8 and E9; Figure E5; saved prompts"],
-             ["3 (execution)", "python step3_rq2_pipeline.py --execute", "Tables 13 and E10; Figure E6 (requires GEMINI_API_KEY)"],
-             ["4", "python step4_rq3_rq4_groundwork.py", "Tables 7 and E11"],
+             ["2g", "python step2g_rq1_truncation.py", "Table 13; Figure E4; refined labels"],
+             ["2h", "python step2h_rq1_ablation.py", "Table E5"],
+             ["2i", "python step2i_rq1_refined_archetypes.py", "Tables 14 and 16; Figure E7"],
+             ["3", "python step3_rq2_pipeline.py", "Tables E6 and E7; Figure E5; saved prompts"],
+             ["3 (execution)", "python step3_rq2_pipeline.py --execute", "Tables 15 and E8; Figure E6 (requires GEMINI_API_KEY)"],
+             ["4", "python step4_rq3_rq4_groundwork.py", "Tables 9 and E9"],
              ["Report", "python src/build_interim_submission.py (from the repository root)", "This document"]],
             note="Python 3.11; all random steps use seed 42. LLM and embedding responses are cached, so steps 2c and "
                  "2e only call the API for missing items.",
@@ -1211,7 +1240,7 @@ def build(toc_pages=None):
             ["Representation", "Algorithm", "Silhouette <i>M</i> (<i>SD</i>)", "ANOVA", "η<sup>2</sup>"],
             rows,
             note=f"Each algorithm was run on {int(ss.loc['RQ1', 'per_group'])} random subsamples of 500 golden "
-                 "dialogues, as in Table 9, using gemini-embedding-001 vectors (3,072 dimensions). All "
+                 "dialogues, as in Table 11, using gemini-embedding-001 vectors (3,072 dimensions). All "
                  "ANOVAs <i>p</i> < .001; Welch and Kruskal–Wallis tests agreed.",
             widths=[1.9, 1.4, 1.2, 1.4, 0.6], align=["l", "l", "c", "c", "c"], label="D3")
 
@@ -1221,49 +1250,6 @@ def build(toc_pages=None):
     D.para("This appendix holds second-level material that supports the conclusions stated in the body. Each table "
            "and figure is summarized where it is cited in the body.")
     D.heading("Data Description", 2, toc=False)
-    D.table("Data Dictionary, Raw Source Fields Used",
-            ["Corpus", "Field", "Type", "Description", "Use"],
-            [["Frames", "id", "String", "Unique dialogue identifier", "Key"],
-             ["Frames", "user_id, wizard_id", "String", f"Role-player identifiers ({n_users} users, {n_wizards} wizards)",
-              "Confound check"],
-             ["Frames", "turns[].author", "Category", "user or wizard", "Speaker tag"],
-             ["Frames", "turns[].text", "String", "Utterance text", "Embedding"],
-             ["Frames", "turns[].timestamp", "Float", "Collection time (Unix ms)", "Not used"],
-             ["Frames", "turns[].labels.acts[].name", "Category", "Dialogue act (e.g., inform, request, offer, "
-              "switch_frame)", "Features, RER"],
-             ["Frames", "turns[].labels.acts[].args[].key/val", "String", "Slot name and value (e.g., dst_city, "
-              "budget)", "Tier 1 slots"],
-             ["Frames", "labels.wizardSurveyTaskSuccessful", "Boolean", "Wizard-reported task success", "Stratify, "
-              "pool"],
-             ["Frames", "labels.userSurveyRating", "Float", "User satisfaction rating (1–5)", "Descriptive"],
-             ["MultiWOZ", "dialogue_id", "String", "Unique dialogue identifier", "Key"],
-             ["MultiWOZ", "services", "List", "Services involved (hotel, train, taxi, ...)", "Inclusion"],
-             ["MultiWOZ", "turns[].speaker", "Category", "USER or SYSTEM", "Speaker tag"],
-             ["MultiWOZ", "turns[].utterance", "String", "Utterance text", "Embedding"],
-             ["MultiWOZ", "turns[].frames[].state.slot_values", "Map", "Cumulative dialogue state per service",
-              "Tier 1 slots"]],
-            note="RER = redundant elicitation rate. Only the fields listed were read; all other fields were ignored.",
-            widths=[0.8, 2.0, 0.7, 2.0, 1.0], align=["l", "l", "l", "l", "l"], label="E1")
-    D.table("Data Dictionary, Canonical Schema Fields",
-            ["Field", "Type", "Description"],
-            [["dialogue_id, source_dataset", "String", "Identifier and corpus of origin (frames or multiwoz)"],
-             ["total_turns, user_turns, wizard_turns", "Integer", "Turn counts"],
-             ["turns[].turn_id, speaker, utterance", "Mixed", "Ordered turns with corpus-neutral speaker and text"],
-             ["turns[].acts, slots_mentioned, revisions", "List, map", "Acts, slots informed, and slots whose value "
-              "changed in the turn"],
-             ["Tier 1: origin_city, destination_city", "String", "Trip endpoints"],
-             ["Tier 1: departure_date, return_date, duration_nights", "String, integer", "Trip timing"],
-             ["Tier 1: traveler_count_adults, traveler_count_children", "Integer", "Party size"],
-             ["Tier 1: budget_amount, accommodation_tier", "Float, string", "Budget ceiling and hotel tier"],
-             ["Tier 2: visa_processing_window_days, passport_expiry_months", "Integer", "Policy timing (synthetic in "
-              "RQ3)"],
-             ["Tier 2: package_type, sharing_basis, discount_applied_percentage", "String, float", "Package, room, "
-              "and discount (synthetic in RQ3)"],
-             ["revisions_count", "Integer", "Number of slot-value changes across the dialogue"],
-             ["hesitation_markers_count", "Integer", "User hesitation phrases (e.g., \"maybe,\" \"not sure\")"],
-             ["budget_specified", "Boolean", "Whether a numeric budget was stated"]],
-            note="Schema implemented as Pydantic models in src/canonical_schema.py.",
-            widths=[2.9, 1.0, 2.6], align=["l", "l", "l"], label="E2")
     D.table("Observed Slot Completeness by Corpus",
             ["Slot", "Tier", "Frames (%)", "MultiWOZ 2.2 (%)"],
             [[s.replace("_", " "), t, n2(f, 1), n2(m, 1)] for s, t, f, m in comp.itertuples(index=False)],
@@ -1271,7 +1257,7 @@ def build(toc_pages=None):
                  "or dialogue-state (MultiWOZ) annotations. MultiWOZ budget is the categorical price range. "
                  f"Frames <i>N</i> = {n2(fq.n_analytic, 0)}; MultiWOZ <i>N</i> = {n2(mq.n_analytic, 0)}. Figure 2 "
                  "in the body plots these values.",
-            widths=[2.6, 1.0, 1.4, 1.5], align=["l", "c", "c", "c"], label="E3")
+            widths=[2.6, 1.0, 1.4, 1.5], align=["l", "c", "c", "c"], label="E1")
 
     D.heading("RQ1: Clustering Diagnostics", 2, toc=False)
     D.table("Choice of the Number of Clusters (K-Means on the Golden Partition)",
@@ -1279,7 +1265,7 @@ def build(toc_pages=None):
             [[str(int(r.k)), nz(r.silhouette, 3), n2(r.davies_bouldin, 3), n2(r.inertia, 1),
               n2(r.smallest_cluster_pct, 1)] for r in k_sel.itertuples()],
             note=f"<i>N</i> = {s1['n_gold']} golden dialogues; cosine Silhouette.",
-            widths=[0.6, 1.3, 1.4, 1.3, 1.6], align=["c"] * 5, label="E4")
+            widths=[0.6, 1.3, 1.4, 1.3, 1.6], align=["c"] * 5, label="E2")
     D.figure("Cluster-Number Diagnostics", os.path.join(FIG, "fig_rq1_k_selection.png"),
              note="The dashed line marks the pre-specified <i>k</i> = 3.", width=6.3, label="E1")
     D.figure("Silhouette Coefficients by Algorithm", os.path.join(FIG, "fig_rq1_silhouette.png"),
@@ -1294,7 +1280,7 @@ def build(toc_pages=None):
     D.table("Pairwise Comparisons of Mean Silhouette",
             ["Comparison", "Mean difference", "95% CI (Tukey)", "<i>p</i> (Tukey)", "<i>p</i> (Games–Howell)"],
             rows, note="CI = confidence interval. Games–Howell comparisons do not assume equal variances.",
-            widths=[2.0, 1.1, 1.4, 0.9, 1.1], align=["l", "c", "c", "c", "c"], label="E5")
+            widths=[2.0, 1.1, 1.4, 0.9, 1.1], align=["l", "c", "c", "c", "c"], label="E3")
     D.table("Archetype Assignment and Centroid Similarity Across Samples",
             ["Sample", "<i>N</i>", "Centroid similarity <i>M</i> (<i>SD</i>)", *[f"{a} (%)" for a in ARCH]],
             [[s.replace("D_gold", "golden").replace("D_test", "held-out"), n2(r.N, 0),
@@ -1302,7 +1288,7 @@ def build(toc_pages=None):
              for s, r in cross.rename(columns={a: a.replace(" ", "_") for a in ARCH}).set_index("set").iterrows()],
             note="Centroid similarity is the cosine between a dialogue vector and its nearest frozen centroid. "
                  "Centroids were fitted on the golden partition only.",
-            widths=[1.5, 0.6, 1.4, 1.0, 1.0, 1.0], align=["l", "c", "c", "c", "c", "c"], label="E6")
+            widths=[1.5, 0.6, 1.4, 1.0, 1.0, 1.0], align=["l", "c", "c", "c", "c", "c"], label="E4")
     D.figure("Archetypes in the Frames Embedding Space and Projection of MultiWOZ 2.2",
              os.path.join(FIG, "fig_rq1_umap.png"),
              note="Two-dimensional UMAP projection (McInnes et al., 2018) fitted on the golden partition; MultiWOZ "
@@ -1323,8 +1309,8 @@ def build(toc_pages=None):
             note="Core members, outcome <i>V</i>, routing κ, and agreement with the adopted labels refer to the "
                  "nine-message version. Behavior profile = LLM ratings with goal and tone indicators; dialogue-act "
                  "features are counted from the Frames annotations without an LLM. Bootstrap stability varies by "
-                 "about .03 between runs, which explains small differences from Table 11. ARI = adjusted Rand index.",
-            widths=[2.0, 0.75, 0.8, 0.75, 0.75, 0.65, 0.8], align=["l"] + ["c"] * 6, label="E7")
+                 "about .03 between runs, which explains small differences from Table 13. ARI = adjusted Rand index.",
+            widths=[2.0, 0.75, 0.8, 0.75, 0.75, 0.65, 0.8], align=["l"] + ["c"] * 6, label="E5")
 
     D.heading("RQ2: Pilot and Experimental Details", 2, toc=False)
     D.table("Pilot Exemplar Relevance by Retrieval Strategy",
@@ -1332,7 +1318,7 @@ def build(toc_pages=None):
             [[s, nz(r.sim_M, 3), nz(r.sim_SD, 3), n2(100 * r.arch_match_M, 1)] for s, r in ret.iterrows()],
             note=f"<i>N</i> = {r2p['N']} held-out dialogue prefixes; three exemplars per prefix. Relevance is the mean "
                  "cosine between the prefix and the retrieval keys of the selected exemplars.",
-            widths=[2.4, 1.3, 0.8, 2.0], align=["l", "c", "c", "c"], label="E8")
+            widths=[2.4, 1.3, 0.8, 2.0], align=["l", "c", "c", "c"], label="E6")
     rows = []
     for c, p in pairs.items():
         rows.append([c, nz(p["mean_diff"], 3), f"{n2(p['t'])}", str(int(p["df"])),
@@ -1341,7 +1327,7 @@ def build(toc_pages=None):
             ["Contrast", "Mean difference", "<i>t</i>", "<i>df</i>", "<i>p</i> (Holm)",
              "<i>d</i><sub><i>z</i></sub>"],
             rows, note="Positive differences favor the first-named strategy.",
-            widths=[2.5, 1.0, 0.8, 0.5, 0.9, 0.8], align=["l", "c", "c", "c", "c", "c"], label="E9")
+            widths=[2.5, 1.0, 0.8, 0.5, 0.9, 0.8], align=["l", "c", "c", "c", "c", "c"], label="E7")
     D.figure("RQ2 Pilot: Exemplar Relevance and Style-Metric Validity", os.path.join(FIG, "fig_rq2_pilot.png"),
              note="Panel A: lines connect the three strategies for the same prefix. Panel B: cosine similarity of the "
                   "human agent reply to its own versus the other archetype centroids; error bars show 1 <i>SD</i>. "
@@ -1359,7 +1345,7 @@ def build(toc_pages=None):
             ["Outcome", "Contrast", "Mean difference", "<i>t</i>", "<i>df</i>", "<i>p</i> (Holm)",
              "<i>d</i><sub><i>z</i></sub>"],
             rows, note="Positive differences favor the first-named condition.",
-            widths=[1.5, 2.0, 0.8, 0.6, 0.4, 0.7, 0.5], align=["l", "l", "c", "c", "c", "c", "c"], label="E10")
+            widths=[1.5, 2.0, 0.8, 0.6, 0.4, 0.7, 0.5], align=["l", "l", "c", "c", "c", "c", "c"], label="E8")
     D.figure("RQ2 Results: Style Convergence and Response Length by Prompting Condition",
              os.path.join(FIG, "fig_rq2_results.png"),
              note="Lines connect the three conditions for the same dialogue; triangles mark means. The dashed line "
@@ -1371,8 +1357,8 @@ def build(toc_pages=None):
             [[r.replace("RULE_", "").replace("_", " ").lower(), a.required_slot.replace("_", " "),
               n2(a.slot_observed_pct, 1), str(int(a.trigger_n)), n2(a.trigger_pct, 2)] for r, a in audit.iterrows()],
             note=f"<i>N</i> = {n2(r34['frames_n'], 0)} Frames dialogues. Only numeric values stated by the user were "
-                 "counted, so the adult and budget percentages are lower than the any-mention rates in Table E3.",
-            widths=[1.6, 1.9, 1.0, 1.1, 0.9], align=["l", "l", "c", "c", "c"], label="E11")
+                 "counted, so the adult and budget percentages are lower than the any-mention rates in Table E1.",
+            widths=[1.6, 1.9, 1.0, 1.1, 0.9], align=["l", "l", "c", "c", "c"], label="E9")
     D.figure("Human Baseline of Turn Economy and Redundant Elicitation by Refined Archetype",
              os.path.join(FIG, "fig_rq4_baseline_refined.png"),
              note="Panel A: triangles mark means. Panel B: error bars show 95% confidence intervals.", width=6.3,
