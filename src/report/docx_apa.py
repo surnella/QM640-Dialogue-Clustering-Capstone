@@ -24,6 +24,111 @@ BODY_PT = 12
 TABLE_PT = 10
 _TAG = re.compile(r"(</?(?:i|b|sub|sup)>)")
 _URL = re.compile(r"(https?://[^\s<>]+[^\s<>.,;:)\]])")
+# In-text table/figure citations: "Table 3", "Tables 6 and 7", "Tables 3, 4, and 5", "Figure E5", "Tables D1–D3"
+_NUM = r"[A-E]?\d+"
+_XREF = re.compile(rf"\b(Tables?|Figures?)\s+({_NUM}(?:(?:,\s+and\s+|,\s+|\s+and\s+|–){_NUM})*)(?!\w)")
+_BM_ID = [0]
+
+
+def _bm_names(kind, label):
+    """Hidden bookmark names (Word convention: leading underscore) for a caption label."""
+    k = "Tab" if kind.startswith("Table") else "Fig"
+    return f"_Ref{k}{label}", f"_Ref{k}N{label}"  # whole label ("Table 3"), number only ("3")
+
+
+def _bookmark(par, name, start=True):
+    """Open or close a bookmark at the current end of the paragraph."""
+    el = OxmlElement("w:bookmarkStart" if start else "w:bookmarkEnd")
+    if start:
+        _BM_ID[0] += 1
+        _BM_OPEN[name] = _BM_ID[0]
+        el.set(qn("w:name"), name)
+    el.set(qn("w:id"), str(_BM_ID[0] if start else _BM_OPEN.pop(name)))
+    par._p.append(el)
+
+
+def _caption_label(par, kind, label):
+    """Bold caption label ("Table 3") wrapped in the bookmarks that cross-references point to."""
+    whole, num = _bm_names(kind, label)
+    _bookmark(par, whole)
+    _set_font(par.add_run(f"{kind} "), bold=True)
+    _bookmark(par, num)
+    _set_font(par.add_run(str(label)), bold=True)
+    _bookmark(par, num, start=False)
+    _bookmark(par, whole, start=False)
+    _registry(par)["targets"].update((whole, num))
+
+
+def _registry(par):
+    part = par.part
+    if not hasattr(part, "_xref_registry"):
+        part._xref_registry = {"targets": set(), "refs": {}}
+    return part._xref_registry
+
+
+_BM_OPEN = {}
+
+
+def _ref_field(par, bookmark, text, size, bold, italic, sub, sup):
+    """Insert a Word cross-reference (REF field with \\h = clickable) whose cached result is `text`."""
+    def fld(kind):
+        r = OxmlElement("w:r")
+        f = OxmlElement("w:fldChar")
+        f.set(qn("w:fldCharType"), kind)
+        r.append(f)
+        par._p.append(r)
+    fld("begin")
+    r = OxmlElement("w:r")
+    it = OxmlElement("w:instrText")
+    it.set(qn("xml:space"), "preserve")
+    it.text = f" REF {bookmark} \\h \\* MERGEFORMAT "
+    r.append(it)
+    par._p.append(r)
+    fld("separate")
+    run = par.add_run(text)
+    _set_font(run, size, bold=bold, italic=italic)
+    if sub:
+        run.font.subscript = True
+    if sup:
+        run.font.superscript = True
+    fld("end")
+    refs = _registry(par)["refs"]
+    refs[bookmark] = refs.get(bookmark, 0) + 1
+
+
+def _plain_run(par, text, size, st):
+    r = par.add_run(text)
+    _set_font(r, size, bold=st["b"], italic=st["i"])
+    if st["sub"]:
+        r.font.subscript = True
+    if st["sup"]:
+        r.font.superscript = True
+
+
+def _xref_runs(par, text, size, st):
+    """Write text, turning every table/figure citation into a clickable cross-reference."""
+    pos = 0
+    args = (size, st["b"], st["i"], st["sub"], st["sup"])
+    for m in _XREF.finditer(text):
+        if m.start() > pos:
+            _plain_run(par, text[pos:m.start()], size, st)
+        word, nums = m.group(1), m.group(2)
+        labels = re.findall(_NUM, nums)
+        if len(labels) == 1 and not word.endswith("s"):
+            whole, _ = _bm_names(word, labels[0])
+            _ref_field(par, whole, m.group(0), *args)
+        else:
+            _plain_run(par, text[m.start():m.start(2)], size, st)
+            p = 0
+            for nm in re.finditer(_NUM, nums):
+                if nm.start() > p:
+                    _plain_run(par, nums[p:nm.start()], size, st)
+                _, num_bm = _bm_names(word, nm.group(0))
+                _ref_field(par, num_bm, nm.group(0), *args)
+                p = nm.end()
+        pos = m.end()
+    if pos < len(text):
+        _plain_run(par, text[pos:], size, st)
 
 
 def _hyperlink_run(par, url, text, size, bold, italic, sub, sup):
@@ -61,8 +166,12 @@ def _set_font(run, size=BODY_PT, bold=None, italic=None):
         run.italic = italic
 
 
-def add_runs(par, text, size=BODY_PT, bold=False, italic=False):
-    """Add text with inline <i>/<b>/<sub>/<sup> markup to a paragraph."""
+def add_runs(par, text, size=BODY_PT, bold=False, italic=False, xref=True):
+    """Add text with inline <i>/<b>/<sub>/<sup> markup to a paragraph.
+
+    URLs become external hyperlinks; with xref=True, "Table N"/"Figure N" citations become clickable
+    cross-references to the caption bookmarks.
+    """
     state = dict(i=italic, b=bold, sub=False, sup=False)
     for tok in _TAG.split(text):
         if not tok:
@@ -77,12 +186,10 @@ def add_runs(par, text, size=BODY_PT, bold=False, italic=False):
             if j % 2 == 1:
                 _hyperlink_run(par, piece, piece, size, state["b"], state["i"], state["sub"], state["sup"])
                 continue
-            r = par.add_run(piece)
-            _set_font(r, size, bold=state["b"], italic=state["i"])
-            if state["sub"]:
-                r.font.subscript = True
-            if state["sup"]:
-                r.font.superscript = True
+            if xref:
+                _xref_runs(par, piece, size, state)
+            else:
+                _plain_run(par, piece, size, state)
     return par
 
 
@@ -165,17 +272,17 @@ class APADoc:
         for _ in range(3):
             self.blank()
         for t in title_lines:
-            add_runs(_fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER), t, bold=True)
+            add_runs(_fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER), t, bold=True, xref=False)
         self.blank()
         for t in info_lines:
-            add_runs(_fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER), t)
+            add_runs(_fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER), t, xref=False)
         self.page_break()
 
     def heading(self, text, level=1, toc=True, new_page=False):
         p = self.doc.add_paragraph(style=f"Heading {level}")
         _fmt(p, align=WD_ALIGN_PARAGRAPH.CENTER if level == 1 else WD_ALIGN_PARAGRAPH.LEFT, keep_next=True)
         p.paragraph_format.page_break_before = new_page
-        add_runs(p, text, bold=True, italic=(level == 3))
+        add_runs(p, text, bold=True, italic=(level == 3), xref=False)
         if toc:
             self.headings.append((level, re.sub(r"</?\w+>", "", text)))
         return p
@@ -202,19 +309,19 @@ class APADoc:
 
     def reference(self, text):
         p = _fmt(self.doc.add_paragraph(), first=-0.5, left=0.5)
-        add_runs(p, text)
+        add_runs(p, text, xref=False)
 
     # ------------------------------------------------------------------ TOC
     def toc(self, entries=None, pages=None):
         p = _fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER)
-        add_runs(p, "Contents", bold=True)
+        add_runs(p, "Contents", bold=True, xref=False)
         for idx, (lvl, txt) in enumerate(entries or []):
             if lvl > 2:
                 continue
             q = _fmt(self.doc.add_paragraph(), left=0.5 * (lvl - 1))
             q.paragraph_format.tab_stops.add_tab_stop(Inches(6.5), WD_TAB_ALIGNMENT.RIGHT, WD_TAB_LEADER.DOTS)
             pg = (pages or {}).get(idx, "")
-            add_runs(q, f"{txt}\t{pg}")
+            add_runs(q, f"{txt}\t{pg}", xref=False)
         self.page_break()
 
     # ------------------------------------------------------------------ tables & figures
@@ -244,8 +351,8 @@ class APADoc:
         if label is None:
             self.tab_n += 1
             label = str(self.tab_n)
-        add_runs(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), f"Table {label}", bold=True)
-        add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True)
+        _caption_label(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), "Table", label)
+        add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True, xref=False)
         ncol = len(header)
         widths = widths or [6.5 / ncol] * ncol
         align = align or (["l"] + ["c"] * (ncol - 1))
@@ -282,13 +389,22 @@ class APADoc:
         if label is None:
             self.fig_n += 1
             label = str(self.fig_n)
-        add_runs(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), f"Figure {label}", bold=True)
-        add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True)
+        _caption_label(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), "Figure", label)
+        add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True, xref=False)
         p = _fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER, spacing=1.0, keep_next=True)
         p.add_run().add_picture(image_path, width=Inches(width))
         if note:
             add_runs(_fmt(self.doc.add_paragraph(), after=12), f"<i>Note.</i> {note}")
         return label
 
+    def xref_summary(self):
+        """(number of cross-reference fields, number of caption targets, references without a target)."""
+        reg = getattr(self.doc.part, "_xref_registry", {"targets": set(), "refs": {}})
+        missing = sorted(set(reg["refs"]) - reg["targets"])
+        return sum(reg["refs"].values()), len(reg["targets"]) // 2, missing
+
     def save(self, path):
+        n_refs, n_targets, missing = self.xref_summary()
+        if missing:
+            raise ValueError(f"Cross-references without a matching caption: {missing}")
         self.doc.save(path)
