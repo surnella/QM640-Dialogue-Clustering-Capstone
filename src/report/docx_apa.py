@@ -351,7 +351,7 @@ class APADoc:
         if label is None:
             self.tab_n += 1
             label = str(self.tab_n)
-        _caption_label(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), "Table", label)
+        _caption_label(_fmt(self.doc.add_paragraph(), before=6, keep_next=True), "Table", label)
         add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True, xref=False)
         ncol = len(header)
         widths = widths or [6.5 / ncol] * ncol
@@ -375,26 +375,26 @@ class APADoc:
                 cell.width = Inches(widths[c_i])
                 p = cell.paragraphs[0]
                 _fmt(p, align=WD_ALIGN_PARAGRAPH.CENTER if r_i == 0 else amap[align[c_i]], spacing=1.0,
-                     before=2, after=2, keep_next=keep)
+                     before=1.5, after=1.5, keep_next=keep)
                 add_runs(p, str(val), size=TABLE_PT)
                 if r_i == 0:
                     self._cell_border_bottom(cell)
         if note:
-            add_runs(_fmt(self.doc.add_paragraph(), after=12), f"<i>Note.</i> {note}")
+            add_runs(_fmt(self.doc.add_paragraph(), after=6), f"<i>Note.</i> {note}")
         else:
-            _fmt(self.doc.add_paragraph(), spacing=1.0, after=6)
+            _fmt(self.doc.add_paragraph(), spacing=1.0, after=4)
         return label
 
     def figure(self, title, image_path, note=None, width=6.0, label=None):
         if label is None:
             self.fig_n += 1
             label = str(self.fig_n)
-        _caption_label(_fmt(self.doc.add_paragraph(), before=12, keep_next=True), "Figure", label)
+        _caption_label(_fmt(self.doc.add_paragraph(), before=6, keep_next=True), "Figure", label)
         add_runs(_fmt(self.doc.add_paragraph(), keep_next=True), title, italic=True, xref=False)
         p = _fmt(self.doc.add_paragraph(), align=WD_ALIGN_PARAGRAPH.CENTER, spacing=1.0, keep_next=True)
         p.add_run().add_picture(image_path, width=Inches(width))
         if note:
-            add_runs(_fmt(self.doc.add_paragraph(), after=12), f"<i>Note.</i> {note}")
+            add_runs(_fmt(self.doc.add_paragraph(), after=6), f"<i>Note.</i> {note}")
         return label
 
     def xref_summary(self):

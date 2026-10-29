@@ -252,67 +252,6 @@ def parse_multiwoz_dataset(multiwoz_dir: str, max_records: int = 1500) -> List[C
     return trajectories
 
 
-def parse_enterprise_sample(enterprise_dir: str) -> List[CanonicalDialogueTrajectory]:
-    """
-    Parses PII-sanitized golden enterprise travel counseling dialogues from Excel files.
-    """
-    excel_files = glob.glob(os.path.join(enterprise_dir, '**', '*.xlsx'), recursive=True)
-    trajectories = []
-    
-    for ef in excel_files:
-        try:
-            xl = pd.ExcelFile(ef)
-            for sheet in xl.sheet_names:
-                # Look for sheets that contain transcripts
-                sheet_lower = sheet.lower()
-                if any(k in sheet_lower for k in ['transcript', 'call', '1_', '2_', '3_', '4_', '5_', '6_', '7_']):
-                    df = xl.parse(sheet)
-                    # Check if transcript columns exist
-                    text_cols = [c for c in df.columns if any(k in str(c).lower() for k in ['text', 'transcript', 'utterance', 'speaker', 'agent', 'customer'])]
-                    if len(df) > 3:
-                        # Extract turns
-                        turns = []
-                        user_turns = 0
-                        agent_turns = 0
-                        total_hesitations = 0
-                        for i, r in df.iterrows():
-                            # Determine speaker and text
-                            row_str = " ".join([str(v) for v in r.values if pd.notnull(v)])
-                            if not row_str.strip():
-                                continue
-                            speaker = "user" if any(k in row_str.lower()[:30] for k in ['cust', 'user', 'client']) else "wizard"
-                            if speaker == "user":
-                                user_turns += 1
-                                total_hesitations += extract_hesitation_count(row_str)
-                            else:
-                                agent_turns += 1
-                            turns.append(CanonicalTurn(
-                                turn_id=len(turns) + 1,
-                                speaker=speaker,
-                                utterance=row_str[:300]
-                            ))
-                        
-                        if len(turns) >= 4:
-                            traj = CanonicalDialogueTrajectory(
-                                dialogue_id=f"ent_{os.path.basename(ef).replace('.xlsx','')}_{sheet}",
-                                source_dataset="enterprise",
-                                total_turns=len(turns),
-                                user_turns=user_turns,
-                                wizard_turns=agent_turns,
-                                canonical_tier1=Tier1UniversalSlots(booking_status="inquiry"),
-                                canonical_tier2=Tier2EnterpriseSlots(package_type="FIT"),
-                                turns=turns,
-                                revisions_count=1,
-                                hesitation_markers_count=total_hesitations
-                            )
-                            trajectories.append(traj)
-        except Exception as e:
-            continue
-
-    print(f"Parsed {len(trajectories)} dialogues from Enterprise Sample.")
-    return trajectories
-
-
 def export_canonical_dataset(
     trajectories: List[CanonicalDialogueTrajectory],
     output_json_path: str = "data/canonical/canonical_dialogues.json",
@@ -358,7 +297,6 @@ def export_canonical_dataset(
 if __name__ == "__main__":
     frames_path = "data/raw/frames/Frames-dataset/frames.json"
     multiwoz_path = "data/raw/multiwoz22"
-    enterprise_path = "data/enterprise_sample/golden_conversations_102_records"
 
     all_trajectories = []
     if os.path.exists(frames_path):
@@ -366,9 +304,6 @@ if __name__ == "__main__":
     
     if os.path.exists(multiwoz_path):
         all_trajectories.extend(parse_multiwoz_dataset(multiwoz_path, max_records=1500))
-
-    if os.path.exists(enterprise_path):
-        all_trajectories.extend(parse_enterprise_sample(enterprise_path))
 
     df_summary = export_canonical_dataset(all_trajectories)
     print("Ingestion pipeline completed successfully.")

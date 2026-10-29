@@ -1,0 +1,8 @@
+pair_label,var_x,var_y,pearson_r,pearson_p,spearman_rho,spearman_p
+Total Turns vs. Slot Revisions,total_turns,revisions_count,0.7411607937477578,8.833657529366526e-233,0.7585551070456008,4.898546723737019e-250
+Total Turns vs. Agent Package Offers,total_turns,agent_offers,0.5606960117984209,2.6409525151619473e-111,0.6075621421939756,2.063540324343269e-135
+Total Turns vs. User Hesitation Markers,total_turns,hesitation_markers_count,0.33558717524896964,1.7893572715992087e-36,0.354958972992315,6.841929842751481e-41
+Slot Revisions vs. Exploration Breadth Rating,revisions_count,exploration_breadth,0.6026068848359332,1.1337924869874068e-132,0.6733685461683045,6.103784897746391e-177
+Total Turns vs. User Decisiveness Rating,total_turns,decisiveness,-0.3103814923777554,3.5086774484771185e-31,-0.28891000175779064,4.627547307918641e-27
+User Words/Turn vs. Information Up Front Rating,mean_user_words,information_upfront,0.15765274995898745,7.083100723068261e-09,0.20556754324171714,3.3968889329815087e-14
+Agent Offers vs. Destination Flexibility Rating,agent_offers,destination_flexibility,0.32412847829173497,5.261930736762903e-34,0.357516729486451,1.6919502420087853e-41

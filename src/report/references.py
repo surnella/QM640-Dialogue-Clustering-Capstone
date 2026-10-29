@@ -28,6 +28,10 @@ REFERENCES = [
     f"2018 Conference on Empirical Methods in Natural Language Processing</i> (pp. 5016–5026). {ACL}. "
     "https://doi.org/10.18653/v1/D18-1547",
 
+    "Buhalis, D., & Sinarta, Y. (2019). Real-time co-creation and nowness service: Lessons from tourism and "
+    "hospitality. <i>Journal of Travel & Tourism Marketing, 36</i>(5), 563–582. "
+    "https://doi.org/10.1080/10548408.2019.1592059",
+
     "Cohen, J. (1988). <i>Statistical power analysis for the behavioral sciences</i> (2nd ed.). Lawrence Erlbaum "
     "Associates. https://doi.org/10.4324/9780203771587",
 
@@ -60,6 +64,11 @@ REFERENCES = [
     "and Evaluation Conference</i> (pp. 5759–5767). European Language Resources Association. "
     "https://aclanthology.org/2022.lrec-1.619",
 
+    "Ivanov, S., & Webster, C. (2019). Conceptual framework of the use of robots, artificial intelligence and service "
+    "automation in travel, tourism, and hospitality companies. In <i>Robots, artificial intelligence, and service "
+    "automation in travel, tourism and hospitality</i> (pp. 7–37). Emerald Publishing Limited. "
+    "https://doi.org/10.1108/978-1-78756-687-320191001",
+
     "Jannach, D., Manzoor, A., Cai, W., & Chen, L. (2021). A survey on conversational recommender systems. <i>ACM "
     "Computing Surveys, 54</i>(5), Article 105. https://doi.org/10.1145/3453154",
 
@@ -81,6 +90,10 @@ REFERENCES = [
 
     "McInnes, L., Healy, J., & Melville, J. (2018). <i>UMAP: Uniform manifold approximation and projection for "
     "dimension reduction</i> (arXiv:1802.03426). arXiv. https://doi.org/10.48550/arXiv.1802.03426",
+
+    "Melián-González, S., Gutiérrez-Taño, D., & Bulchand-Gidumal, J. (2021). Predicting the intentions to use "
+    "chatbots for travel and tourism. <i>Current Issues in Tourism, 24</i>(2), 192–210. "
+    "https://doi.org/10.1080/13683500.2019.1706457",
 
     "Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., "
     "Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., & Duchesnay, É. "
@@ -104,6 +117,11 @@ REFERENCES = [
     "Seabold, S., & Perktold, J. (2010). Statsmodels: Econometric and statistical modeling with Python. In "
     "<i>Proceedings of the 9th Python in Science Conference</i> (pp. 92–96). SciPy. "
     "https://doi.org/10.25080/Majora-92bf1922-011",
+
+    "Wobbrock, J. O., Findlater, L., Gergle, D., & Higgins, J. J. (2011). The aligned rank transform for "
+    "nonparametric factorial analyses using only ANOVA procedures. In <i>Proceedings of the SIGCHI Conference on "
+    "Human Factors in Computing Systems</i> (pp. 143–146). Association for Computing Machinery. "
+    "https://doi.org/10.1145/1978942.1978963",
 
     "Yao, S., Shinn, N., Razavi, P., & Narasimhan, K. (2024). <i>τ-bench: A benchmark for tool-agent-user interaction "
     "in real-world domains</i> (arXiv:2406.12045). arXiv. https://doi.org/10.48550/arXiv.2406.12045",

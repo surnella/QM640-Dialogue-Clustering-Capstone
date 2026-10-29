@@ -217,7 +217,7 @@ def main():
     axes[0].legend(frameon=False)
     axes[1].boxplot([df_fr.mean_user_words.dropna(), df_fr.mean_agent_words.dropna(),
                      df_mw.mean_user_words.dropna(), df_mw.mean_agent_words.dropna()],
-                    labels=["Frames\nuser", "Frames\nagent", "MultiWOZ\nuser", "MultiWOZ\nagent"],
+                    tick_labels=["Frames\nuser", "Frames\nagent", "MultiWOZ\nuser", "MultiWOZ\nagent"],
                     showfliers=False)
     axes[1].set_ylabel("Mean words per utterance")
     axes[1].set_title("B. Utterance length by speaker")

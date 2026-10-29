@@ -6,6 +6,8 @@
 # (Everything in this folder is strictly local and NOT synced with Git)
 docs/
 docs/**
+archive/
+archive/**
 
 # macOS system and temporary files
 .DS_Store
@@ -55,15 +57,15 @@ secrets.yaml
 *.pem
 *.key
 
-# Data files (raw corpora and proprietary enterprise samples)
+# Data files (raw corpora and canonical cache)
 data/raw/*
 !data/raw/.gitkeep
 data/canonical/*
 !data/canonical/.gitkeep
 data/embeddings/*
 !data/embeddings/.gitkeep
-data/enterprise_sample/*
-!data/enterprise_sample/.gitkeep
+data/enterprise_sample/
+data/enterprise_sample/**
 
 # Evaluation output figures and tables (track generated artifacts)
 outputs/figures/*

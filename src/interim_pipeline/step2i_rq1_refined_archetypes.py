@@ -134,7 +134,7 @@ def main():
 
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.2), dpi=300)
     lab = [a.replace(" ", "\n").replace("Rigid-Constraint", "Rigid-\nConstraint") for a in ORDER]
-    axes[0].boxplot([df.loc[df.archetype_refined == a, "total_turns"] for a in ORDER], labels=lab, showmeans=True)
+    axes[0].boxplot([df.loc[df.archetype_refined == a, "total_turns"] for a in ORDER], tick_labels=lab, showmeans=True)
     axes[0].set_ylabel("Turns to dialogue end (human baseline)")
     axes[0].set_title("A. Turn economy by archetype")
     ci = 1.96 * base.rer_SD / np.sqrt(base.n)

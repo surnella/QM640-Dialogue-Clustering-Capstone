@@ -1,0 +1,83 @@
+{
+  "cells": [
+    {
+      "target_archetype": "Decisive Booker",
+      "prompt_mode": "Zero-Shot",
+      "n": 1,
+      "turns_M": 7.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 7.0,
+      "log_turns_M": 1.9459101490553132,
+      "log_turns_SD": NaN,
+      "rer_M": 0.3333333333333333,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    },
+    {
+      "target_archetype": "Decisive Booker",
+      "prompt_mode": "Cluster-Adaptive Few-Shot",
+      "n": 1,
+      "turns_M": 5.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 5.0,
+      "log_turns_M": 1.6094379124341003,
+      "log_turns_SD": NaN,
+      "rer_M": 0.0,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    },
+    {
+      "target_archetype": "Open Explorer",
+      "prompt_mode": "Zero-Shot",
+      "n": 1,
+      "turns_M": 9.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 9.0,
+      "log_turns_M": 2.1972245773362196,
+      "log_turns_SD": NaN,
+      "rer_M": 0.5,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    },
+    {
+      "target_archetype": "Open Explorer",
+      "prompt_mode": "Cluster-Adaptive Few-Shot",
+      "n": 1,
+      "turns_M": 7.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 7.0,
+      "log_turns_M": 1.9459101490553132,
+      "log_turns_SD": NaN,
+      "rer_M": 0.0,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    },
+    {
+      "target_archetype": "Rigid-Constraint Seeker",
+      "prompt_mode": "Zero-Shot",
+      "n": 1,
+      "turns_M": 11.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 11.0,
+      "log_turns_M": 2.3978952727983707,
+      "log_turns_SD": NaN,
+      "rer_M": 0.2,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    },
+    {
+      "target_archetype": "Rigid-Constraint Seeker",
+      "prompt_mode": "Cluster-Adaptive Few-Shot",
+      "n": 1,
+      "turns_M": 5.0,
+      "turns_SD": NaN,
+      "turns_Mdn": 5.0,
+      "log_turns_M": 1.6094379124341003,
+      "log_turns_SD": NaN,
+      "rer_M": 0.0,
+      "rer_SD": NaN,
+      "goal_completed_pct": 100.0
+    }
+  ],
+  "contrasts": []
+}

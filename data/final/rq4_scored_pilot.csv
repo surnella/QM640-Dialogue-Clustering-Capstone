@@ -1,0 +1,7 @@
+key_id,dialogue_id,target_archetype,routed_archetype,routing_correct,prompt_mode,total_turns,log_turns,agent_turns,redundant_turns,rer,goal_completed,error
+rq4__frames_4e968938-25f4-4c17-8c4c-72348a825576__Zero-Shot,frames_4e968938-25f4-4c17-8c4c-72348a825576,Decisive Booker,Decisive Booker,True,Zero-Shot,7,1.9459101490553132,3,1,0.3333333333333333,1,
+rq4__frames_c5cc6102-a883-4ed8-9c07-b01ff9979e7d__Cluster-Adaptive Few-Shot,frames_c5cc6102-a883-4ed8-9c07-b01ff9979e7d,Decisive Booker,Decisive Booker,True,Cluster-Adaptive Few-Shot,5,1.6094379124341003,2,0,0.0,1,
+rq4__frames_2a199a60-045d-4d84-b49f-ead43221546d__Zero-Shot,frames_2a199a60-045d-4d84-b49f-ead43221546d,Open Explorer,Open Explorer,True,Zero-Shot,9,2.1972245773362196,4,2,0.5,1,
+rq4__frames_49fa9188-2c1c-481e-ad47-146a0e9ce501__Cluster-Adaptive Few-Shot,frames_49fa9188-2c1c-481e-ad47-146a0e9ce501,Open Explorer,Open Explorer,True,Cluster-Adaptive Few-Shot,7,1.9459101490553132,3,0,0.0,1,
+rq4__frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db__Zero-Shot,frames_3610c65b-3fc3-40eb-b5b0-67eb152b44db,Rigid-Constraint Seeker,Rigid-Constraint Seeker,True,Zero-Shot,11,2.3978952727983707,5,1,0.2,1,
+rq4__frames_8a23b249-2d86-43f3-9c7c-119e4e5e9981__Cluster-Adaptive Few-Shot,frames_8a23b249-2d86-43f3-9c7c-119e4e5e9981,Rigid-Constraint Seeker,Rigid-Constraint Seeker,True,Cluster-Adaptive Few-Shot,5,1.6094379124341003,2,0,0.0,1,

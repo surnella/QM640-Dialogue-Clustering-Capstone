@@ -1,0 +1,74 @@
+{
+  "cells": [
+    {
+      "rules_mode": "Rules Off",
+      "prompt_mode": "Zero-Shot",
+      "n": 2,
+      "rule_adherence_M": 0.5,
+      "rule_adherence_SD": 0.7071067811865476,
+      "violating_adherence_M": 0.0,
+      "compliant_pass_M": 1.0,
+      "leakage_rate_M": 0.0,
+      "leakage_rate_SD": 0.0,
+      "leakage_incidence_pct": 0.0,
+      "slot_f1_M": 0.0,
+      "slot_f1_SD": 0.0,
+      "style_cos_M": 0.48744767904281616,
+      "style_cos_SD": 0.06756468561714699
+    },
+    {
+      "rules_mode": "Rules Off",
+      "prompt_mode": "Cluster-Adaptive Few-Shot",
+      "n": 2,
+      "rule_adherence_M": 0.5,
+      "rule_adherence_SD": 0.7071067811865476,
+      "violating_adherence_M": 0.0,
+      "compliant_pass_M": 1.0,
+      "leakage_rate_M": 0.16666666666666666,
+      "leakage_rate_SD": 0.23570226039551584,
+      "leakage_incidence_pct": 50.0,
+      "slot_f1_M": 0.33333333333333337,
+      "slot_f1_SD": 0.0,
+      "style_cos_M": 0.6381752490997314,
+      "style_cos_SD": 0.034138778706430124
+    },
+    {
+      "rules_mode": "Rules Active",
+      "prompt_mode": "Zero-Shot",
+      "n": 2,
+      "rule_adherence_M": 1.0,
+      "rule_adherence_SD": 0.0,
+      "violating_adherence_M": 1.0,
+      "compliant_pass_M": 1.0,
+      "leakage_rate_M": 0.0,
+      "leakage_rate_SD": 0.0,
+      "leakage_incidence_pct": 0.0,
+      "slot_f1_M": 1.0,
+      "slot_f1_SD": 0.0,
+      "style_cos_M": 0.4795404076576233,
+      "style_cos_SD": 0.21764421836783124
+    },
+    {
+      "rules_mode": "Rules Active",
+      "prompt_mode": "Cluster-Adaptive Few-Shot",
+      "n": 2,
+      "rule_adherence_M": 0.5,
+      "rule_adherence_SD": 0.7071067811865476,
+      "violating_adherence_M": 0.0,
+      "compliant_pass_M": 1.0,
+      "leakage_rate_M": 0.0,
+      "leakage_rate_SD": 0.0,
+      "leakage_incidence_pct": 0.0,
+      "slot_f1_M": 0.6666666666666667,
+      "slot_f1_SD": 0.4714045207910316,
+      "style_cos_M": 0.4532769024372101,
+      "style_cos_SD": 0.11179320912284259
+    }
+  ],
+  "judge_reliability_flash_vs_pro": {
+    "n": 8,
+    "raw_agreement": 1.0,
+    "cohen_kappa": 1.0,
+    "pabak": 1.0
+  }
+}

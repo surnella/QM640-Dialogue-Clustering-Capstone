@@ -1,0 +1,134 @@
+{
+  "bivariate": [
+    {
+      "pair_label": "Total Turns vs. Slot Revisions",
+      "var_x": "total_turns",
+      "var_y": "revisions_count",
+      "pearson_r": 0.7411607937477578,
+      "pearson_p": 8.833657529366526e-233,
+      "spearman_rho": 0.7585551070456008,
+      "spearman_p": 4.898546723737019e-250
+    },
+    {
+      "pair_label": "Total Turns vs. Agent Package Offers",
+      "var_x": "total_turns",
+      "var_y": "agent_offers",
+      "pearson_r": 0.5606960117984209,
+      "pearson_p": 2.6409525151619473e-111,
+      "spearman_rho": 0.6075621421939756,
+      "spearman_p": 2.063540324343269e-135
+    },
+    {
+      "pair_label": "Total Turns vs. User Hesitation Markers",
+      "var_x": "total_turns",
+      "var_y": "hesitation_markers_count",
+      "pearson_r": 0.33558717524896964,
+      "pearson_p": 1.7893572715992087e-36,
+      "spearman_rho": 0.354958972992315,
+      "spearman_p": 6.841929842751481e-41
+    },
+    {
+      "pair_label": "Slot Revisions vs. Exploration Breadth Rating",
+      "var_x": "revisions_count",
+      "var_y": "exploration_breadth",
+      "pearson_r": 0.6026068848359332,
+      "pearson_p": 1.1337924869874068e-132,
+      "spearman_rho": 0.6733685461683045,
+      "spearman_p": 6.103784897746391e-177
+    },
+    {
+      "pair_label": "Total Turns vs. User Decisiveness Rating",
+      "var_x": "total_turns",
+      "var_y": "decisiveness",
+      "pearson_r": -0.3103814923777554,
+      "pearson_p": 3.5086774484771185e-31,
+      "spearman_rho": -0.28891000175779064,
+      "spearman_p": 4.627547307918641e-27
+    },
+    {
+      "pair_label": "User Words/Turn vs. Information Up Front Rating",
+      "var_x": "mean_user_words",
+      "var_y": "information_upfront",
+      "pearson_r": 0.15765274995898745,
+      "pearson_p": 7.083100723068261e-09,
+      "spearman_rho": 0.20556754324171714,
+      "spearman_p": 3.3968889329815087e-14
+    },
+    {
+      "pair_label": "Agent Offers vs. Destination Flexibility Rating",
+      "var_x": "agent_offers",
+      "var_y": "destination_flexibility",
+      "pearson_r": 0.32412847829173497,
+      "pearson_p": 5.261930736762903e-34,
+      "spearman_rho": 0.357516729486451,
+      "spearman_p": 1.6919502420087853e-41
+    }
+  ],
+  "pca_var_explained": [
+    0.4077148074908914,
+    0.1722597676573423,
+    0.10615995241746538
+  ],
+  "loadings": [
+    {
+      "variable": "Total Turns",
+      "PC1_loading": 0.3927864452176157,
+      "PC2_loading": 0.16612821809993253,
+      "PC3_loading": -0.23396524118502318
+    },
+    {
+      "variable": "Slot Revisions",
+      "PC1_loading": 0.42442616137332856,
+      "PC2_loading": 0.1945454337724674,
+      "PC3_loading": -0.0640539764432236
+    },
+    {
+      "variable": "Agent Offers",
+      "PC1_loading": 0.36051251229128606,
+      "PC2_loading": 0.2916086072969447,
+      "PC3_loading": -0.07817405600918405
+    },
+    {
+      "variable": "User Words/Turn",
+      "PC1_loading": 0.025082429959650297,
+      "PC2_loading": -0.08691689715845208,
+      "PC3_loading": 0.8876971244001131
+    },
+    {
+      "variable": "Dest. Flexibility",
+      "PC1_loading": 0.3273356441133397,
+      "PC2_loading": -0.1815695978051174,
+      "PC3_loading": 0.13473898262213732
+    },
+    {
+      "variable": "Exploration Breadth",
+      "PC1_loading": 0.4172100591119533,
+      "PC2_loading": -0.10772948138634239,
+      "PC3_loading": 0.10129644983680115
+    },
+    {
+      "variable": "Decisiveness",
+      "PC1_loading": -0.2592710459067371,
+      "PC2_loading": 0.503138374603452,
+      "PC3_loading": 0.02778158606518911
+    },
+    {
+      "variable": "Revision Tendency",
+      "PC1_loading": 0.29690029743705937,
+      "PC2_loading": -0.46045694914447377,
+      "PC3_loading": 0.02515179485687768
+    },
+    {
+      "variable": "Question Asking",
+      "PC1_loading": 0.3009303953069638,
+      "PC2_loading": 0.24826322393765046,
+      "PC3_loading": 0.027085849487607064
+    },
+    {
+      "variable": "Politeness",
+      "PC1_loading": 0.08854162958330167,
+      "PC2_loading": 0.5201795344946484,
+      "PC3_loading": 0.3413009662731929
+    }
+  ]
+}

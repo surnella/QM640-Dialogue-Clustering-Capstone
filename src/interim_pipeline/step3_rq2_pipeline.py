@@ -222,7 +222,7 @@ def main(execute=False, model_name="gemini-2.5-flash"):
 
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.2), dpi=300)
     labs = ["Static\nfew-shot", "Global\nk-NN", "Cluster-\nadaptive"]
-    axes[0].boxplot([Ysim[:, i] for i in range(3)], labels=labs, showmeans=True)
+    axes[0].boxplot([Ysim[:, i] for i in range(3)], tick_labels=labs, showmeans=True)
     for i in range(len(dp)):
         axes[0].plot([1, 2, 3], Ysim[i], color="grey", alpha=0.25, lw=0.7)
     axes[0].set_ylabel("Mean cosine similarity: query prefix vs. exemplars")

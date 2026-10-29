@@ -122,7 +122,7 @@ def main():
 
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.2), dpi=300)
     lab = [a.replace(" ", "\n") for a in order]
-    axes[0].boxplot([arch.loc[arch.archetype == a, "total_turns"] for a in order], labels=lab, showmeans=True)
+    axes[0].boxplot([arch.loc[arch.archetype == a, "total_turns"] for a in order], tick_labels=lab, showmeans=True)
     axes[0].set_ylabel("Turns to dialogue end (human baseline)")
     axes[0].set_title("A. Turn economy by archetype")
     ci = 1.96 * base_tab.rer_SD / np.sqrt(base_tab.n)

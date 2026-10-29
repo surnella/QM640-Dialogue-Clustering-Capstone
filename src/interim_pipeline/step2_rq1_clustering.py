@@ -234,7 +234,7 @@ def main():
     fig, ax = plt.subplots(figsize=(7.5, 4.5), dpi=300)
     algos = ["K-Means", "Agglomerative", "HDBSCAN"]
     ax.boxplot([de.loc[de.algorithm == a, "silhouette"] for a in algos] + [perm],
-               labels=algos + ["Permutation\nbaseline"], showmeans=True)
+               tick_labels=algos + ["Permutation\nbaseline"], showmeans=True)
     for i, a in enumerate(algos):
         y = de.loc[de.algorithm == a, "silhouette"].values
         ax.scatter(np.random.default_rng(i).normal(i + 1, 0.05, len(y)), y, s=8, alpha=0.4, c="k")

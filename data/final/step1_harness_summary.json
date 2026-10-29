@@ -1,0 +1,33 @@
+{
+  "step1_tests_passed": true,
+  "routing_diagnostics": [
+    {
+      "user_messages_m": 3,
+      "approx_dialogue_turns": 5,
+      "test_n": 401,
+      "routing_accuracy": 0.5935162094763092,
+      "routing_kappa": 0.358645524658045
+    },
+    {
+      "user_messages_m": 5,
+      "approx_dialogue_turns": 9,
+      "test_n": 401,
+      "routing_accuracy": 0.7007481296758105,
+      "routing_kappa": 0.5345057751465552
+    },
+    {
+      "user_messages_m": 7,
+      "approx_dialogue_turns": 13,
+      "test_n": 401,
+      "routing_accuracy": 0.8204488778054863,
+      "routing_kappa": 0.7216083309227654
+    },
+    {
+      "user_messages_m": 9,
+      "approx_dialogue_turns": 17,
+      "test_n": 401,
+      "routing_accuracy": 0.972568578553616,
+      "routing_kappa": 0.9575301842829909
+    }
+  ]
+}
