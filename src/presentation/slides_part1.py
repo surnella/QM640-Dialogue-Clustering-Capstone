@@ -118,23 +118,23 @@ def build_slides_part1(D, ctx):
     )
     D.add_card(
         s, 6.75, 4.25, 3.05, 2.55,
-        title="7. Defense Q&A Bank (Slides 35–38)",
+        title="7. Defense Q&A Bank (Slides 35–42)",
         header_bg=CORAL,
         bullets=[
             "Direct answers to anticipated committee questions:",
-            "(1) Sample size assumptions; (2) Prior work used;",
-            "(3) Unique novelty; (4) Dataset authenticity & fit;",
-            "(5) Dual-LLM judge & simulator validity.",
+            "(1) Sample size, prior work, novelty & data fit;",
+            "(2) Quotation vs. Booking noise & 2–3 option exploration;",
+            "(3) 3 Archetypes vs. 500+ clusters; Cluster naming & Judge LLM.",
         ],
     )
     D.add_card(
         s, 9.95, 4.25, 3.03, 2.55,
-        title="8. Dissertation Roadmap (Slides 39–42)",
+        title="8. Dissertation Roadmap (Slides 43–46)",
         header_bg=BLUE,
         bullets=[
             "Unified causal story across all 4 RQs.",
             "Limitations that bound the master's capstone.",
-            "Doctoral Dissertation: 'Dialogue Clustering & Methodologies for Human-Like Conversations'.",
+            "5-Pillar Doctoral Dissertation Roadmap (incl. Context × Behavior Clustering).",
         ],
     )
     D.add_callout(
@@ -368,7 +368,7 @@ def build_slides_part1(D, ctx):
             "<b>What Failed When Applied Directly (Our Interim Discovery):</b>",
             (1, "When we clustered whole-dialogue embeddings directly (as standard papers do), clusters captured <i>end-of-dialogue outcomes</i> and <i>wizard identity</i> (Cramér's <i>V</i> = .45) rather than user behavior, giving terrible early-turn routing (<b>κ = .24</b>) and a null RQ2 prompting result (<b>p = .211</b>)!"),
             "<b>Our Unique Innovation (RQ1 Breakthrough):</b>",
-            (1, "We combined <b>truncated opening user prefixes (first M = 9 user messages)</b> with a <b>16-field LLM behavioral profile (`Blocks`)</b>, raising bootstrap stability to <b>ARI = .76</b> and out-of-sample routing to <b>κ = .535 (M=5) and κ = .958 (M=9)</b>."),
+            (1, "We combined <b>truncated opening user prefixes (first M = 9 user messages)</b> with a <b>16-field LLM behavioral profile (`Blocks`)</b>, raising bootstrap stability to <b>ARI = .89 (.87 in ablation)</b> and out-of-sample prefix routing to <b>κ = .535 (m=5) and κ = .958 (m=9 boundary consistency)</b>."),
         ],
         font_size=11,
     )
@@ -383,8 +383,8 @@ def build_slides_part1(D, ctx):
             "<b>Where Prior Papers Stopped:</b>",
             (1, "KATE retrieves from one <i>unpartitioned global pool</i> with raw unmasked entities. NeMo and τ-bench test safety rails in isolation without studying how rails interact with dynamic style prompting."),
             "<b>Our Unique Innovation (RQ2 & RQ3 Breakthrough):</b>",
-            (1, "We partition FAISS into <b>archetype-specific sub-indices with `[SLOT]` masking</b>, boosting style convergence over static few-shot by <b>+31.8% (.597 vs. .453, p < .001, d_z = 0.74)</b>."),
-            (1, "In RQ3, we prove a <b>significant 2 × 2 interaction (F = 34.82, p < .001)</b>: our declarative rule layer eliminates the <b>35.9% entity leakage</b> of unguarded few-shot prompting down to <b>0.0%</b>."),
+            (1, "We combine <b>archetype-partitioned FAISS sub-indices (`[SLOT]`-masked) + archetype pacing directives</b>, boosting de-lexicalized SBERT style convergence over static few-shot by <b>+31.8% (.597 vs. .453, p < .001, d_z = 0.74)</b>."),
+            (1, "In RQ3, we demonstrate a <b>significant 2 × 2 interaction (F = 34.82, p < .001)</b>: our declarative governance layer eliminates the <b>35.9% entity leakage</b> of unguarded few-shot prompting down to <b>0.0% detected</b>."),
         ],
         font_size=11,
     )
@@ -405,9 +405,9 @@ def build_slides_part1(D, ctx):
             [
                 "Whole-Text Embedding Clustering\n(Reimers & Gurevych, 2019;\nMcInnes et al., 2017)",
                 "Clustered full documents using SBERT / HDBSCAN.",
-                "HDBSCAN discards 71.7% of travel dialogues as noise; full-dialogue vectors leak end-of-session booking outcomes.",
-                "Prefix-truncated (M=9 user msgs) hybrid Blocks (PCA-20 Gemini + 16 LLM behavioral ratings) with K-Means (k=3).",
-                "RQ1: HDBSCAN failed in 53/53 default runs. Our M=9 Blocks router achieved ARI = .76 and raised held-out routing from κ = .24 (39.4%) to κ = .535 (70.1% at M=5) and κ = .958 (97.3% at M=9).",
+                "HDBSCAN discards 39.1% (MiniLM) / 35.8% (Gemini) of dialogues as noise; full-dialogue vectors leak end-of-session outcomes.",
+                "Prefix-truncated (M=9 user msgs) hybrid Blocks (PCA-20 Gemini + 16 LLM behavioral ratings) with K-Means (k=3, 100% coverage).",
+                "RQ1: HDBSCAN failed in 53/53 default runs. Our M=9 Blocks router achieved ARI = .89 (.87 ablation) and raised held-out routing from κ = .24 (39.4%) to κ = .535 (70.1% at m=5) and κ = .958 (97.3% at m=9).",
             ],
             [
                 "Global k-NN Few-Shot (KATE)\n(Liu et al., 2022;\nBrown et al., 2020)",
@@ -834,7 +834,7 @@ def build_slides_part1(D, ctx):
             [
                 "3. Right-Skewed Positive Count Data",
                 "Multi-turn dialogue length (Turns to Goal Completion in RQ4) is strictly positive and right-skewed.",
-                "<b>Natural Log Transformation:</b>\nPrimary DV pre-registered as Y = ln(Turns), plus raw Turns reported side-by-side.",
+                "<b>Natural Log Transformation:</b>\nPrimary DV specified a priori as Y = ln(Turns), plus raw Turns reported side-by-side.",
                 "<b>Mann–Whitney U & ART ANOVA on Both Raw and Log Turns:</b>\nRank-invariant to any monotone transformation.",
                 "100% agreement: RQ4 Interaction OLS F = 10.89 (p < .001), HC3 F = 8.58 (p < .001), ART F = 209.46 (p < .001).",
             ],
@@ -991,10 +991,10 @@ def build_slides_part1(D, ctx):
             "<b>Why We Must Truncate Before the End of the Conversation:</b>",
             (1, "If we cluster <i>whole conversations</i>, the final turns contain <i>'Great, book it!'</i> vs. <i>'Never mind, too expensive'</i>. The clusters then trivially reflect <b>session outcome</b> (Outcome Cramér's <i>V</i> = .29) rather than <b>how the customer shops</b>!"),
             "<b>What Happens Across Different Values of <i>M</i> (Table D5 Proof):</b>",
-            (1, "<b><i>M</i> = 3 user messages:</b> Stability ARI = .69, but many explorers haven't finished stating initial preferences (held-out routing accuracy = 59.4%, κ = .359)."),
-            (1, "<b><i>M</i> = 5 user messages:</b> Stability ARI = .57; held-out routing jumps to <b>70.1% (κ = .535)</b>—strong enough for mid-conversation RQ2 prompting!"),
-            (1, "<b><i>M</i> = 7 user messages:</b> Stability ARI = .69; held-out routing reaches <b>82.0% (κ = .722)</b>."),
-            (1, "<b><i>M</i> = 9 user messages (Adopted Golden Definition):</b> 38.6% of long dialogues are truncated (eliminating end-of-dialogue outcome leakage, <i>V</i> = .20), bootstrap stability peaks at <b>ARI = .76</b> (<b>74.8% core membership</b>), and held-out prefix routing reaches <b>97.3% (κ = .958)</b>!"),
+            (1, "<b><i>M</i> = 3 user messages:</b> Stability ARI = .57 (k=3); many explorers haven't finished stating initial preferences (held-out routing accuracy = 59.4%, κ = .359)."),
+            (1, "<b><i>M</i> = 5 user messages:</b> Stability ARI = .84; held-out routing jumps to <b>70.1% (κ = .535)</b>—strong enough for mid-conversation RQ2 prompting!"),
+            (1, "<b><i>M</i> = 7 user messages:</b> Stability ARI = .85; held-out routing reaches <b>82.0% (κ = .722)</b>."),
+            (1, "<b><i>M</i> = 9 user messages (Adopted Golden Definition):</b> 62.4% of long dialogues are truncated (reducing outcome confounding), bootstrap stability peaks at <b>ARI = .89 (.87 in ablation; 93.1% / 89.2% core membership)</b>, and held-out boundary consistency reaches <b>97.3% (κ = .958)</b>!"),
         ],
         font_size=10.5,
     )

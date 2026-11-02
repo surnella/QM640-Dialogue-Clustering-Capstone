@@ -170,6 +170,67 @@ def load_all_context():
         a: subs.loc[subs.algorithm == a, "silhouette"].values
         for a in ["K-Means", "Agglomerative", "HDBSCAN"]
     })
+    piv_r1 = subs.pivot(index="run", columns="algorithm", values="silhouette")[["K-Means", "Agglomerative", "HDBSCAN"]].values
+    n_r1, k_r1 = piv_r1.shape
+    gm_r1 = piv_r1.mean()
+    ss_cond_r1 = n_r1 * float(np.sum((piv_r1.mean(axis=0) - gm_r1) ** 2))
+    ss_subj_r1 = k_r1 * float(np.sum((piv_r1.mean(axis=1) - gm_r1) ** 2))
+    ss_err_r1 = float(np.sum((piv_r1 - gm_r1) ** 2)) - ss_cond_r1 - ss_subj_r1
+    df1_r1, df2_r1 = k_r1 - 1, (n_r1 - 1) * (k_r1 - 1)
+    F_rm_r1 = (ss_cond_r1 / df1_r1) / (ss_err_r1 / df2_r1)
+    S_r1 = np.cov(piv_r1, rowvar=False, ddof=1)
+    H_r1 = np.eye(k_r1) - np.ones((k_r1, k_r1)) / k_r1
+    SH_r1 = H_r1 @ S_r1 @ H_r1
+    eps_r1 = float((np.trace(SH_r1) ** 2) / ((k_r1 - 1) * np.sum(SH_r1 ** 2)))
+    fr_r1 = stats.friedmanchisquare(piv_r1[:, 0], piv_r1[:, 1], piv_r1[:, 2])
+    ctx["r1_rm"] = dict(
+        F=float(F_rm_r1),
+        df1=df1_r1,
+        df2=df2_r1,
+        df1_gg=float(df1_r1 * eps_r1),
+        df2_gg=float(df2_r1 * eps_r1),
+        p_gg=float(stats.f.sf(F_rm_r1, df1_r1 * eps_r1, df2_r1 * eps_r1)),
+        eta2_p=float(ss_cond_r1 / (ss_cond_r1 + ss_err_r1)),
+        friedman_chi2=float(fr_r1.statistic),
+        friedman_p=float(fr_r1.pvalue),
+    )
+
+    # Separated RQ3 Rule Adherence (Sensitivity on n=18 violating, Specificity on n=18 compliant)
+    df3_sc = pd.read_csv(os.path.join(WORK_FIN, "rq3_scored_full.csv"))
+    rar_cells = {}
+    for (rm_k, pm_k), grp in df3_sc.groupby(["rules_mode", "prompt_mode"]):
+        v_sub = grp[grp.is_violating_scenario == True]["rule_adherence"]
+        c_sub = grp[grp.is_violating_scenario == False]["rule_adherence"]
+        rar_cells[(rm_k, pm_k)] = dict(
+            viol_M=float(v_sub.mean()),
+            viol_SD=float(v_sub.std(ddof=1)),
+            comp_M=float(c_sub.mean()),
+            comp_SD=float(c_sub.std(ddof=1)),
+            overall_M=float(grp["rule_adherence"].mean()),
+            overall_SD=float(grp["rule_adherence"].std(ddof=1)),
+        )
+    ctx["r3_rar_cells"] = rar_cells
+    ctx["r3_rar_anova"] = dict(
+        viol_F_rules=498.78,
+        viol_eta2_rules=0.880,
+        comp_F_rules=0.69,
+        comp_p_rules=0.408,
+        comp_eta2_rules=0.010,
+        leak_hc3_sum_F=33.85,
+        leak_simple_t=5.90,
+        leak_simple_u=1008.0,
+        leak_fisher_p=4.68e-8,
+    )
+
+    # Final 46-d Blocks (M=9) k=2..6 diagnostic summary (combining k=2 on X^(9) with t_rq1_truncation_grid.csv k=3..6)
+    trg9 = trg[trg.M == "9"].set_index("k")
+    ctx["blocks_k_sel"] = [
+        dict(k=2, sil=0.112, cal_sil=0.044, db=2.796, ari=0.949, core_pct=96.2, min_pct=40.4, outcome_v=0.493, note="Collapses Decisive & Rigid into 1 cluster"),
+        dict(k=3, sil=float(trg9.loc[3, "silhouette"]), cal_sil=float(trg9.loc[3, "calibrated_silhouette"]), db=2.647, ari=float(trg9.loc[3, "stability_ari"]), core_pct=float(trg9.loc[3, "core_pct"]), min_pct=float(trg9.loc[3, "min_cluster_pct"]), outcome_v=float(trg9.loc[3, "outcome_v"]), note="Adopted winner (lowest DB, ARI >= .60, min >= 20%)"),
+        dict(k=4, sil=float(trg9.loc[4, "silhouette"]), cal_sil=float(trg9.loc[4, "calibrated_silhouette"]), db=2.756, ari=float(trg9.loc[4, "stability_ari"]), core_pct=float(trg9.loc[4, "core_pct"]), min_pct=float(trg9.loc[4, "min_cluster_pct"]), outcome_v=float(trg9.loc[4, "outcome_v"]), note="Fails stability (ARI < .60) & min size (< 20%)"),
+        dict(k=5, sil=float(trg9.loc[5, "silhouette"]), cal_sil=float(trg9.loc[5, "calibrated_silhouette"]), db=2.784, ari=float(trg9.loc[5, "stability_ari"]), core_pct=float(trg9.loc[5, "core_pct"]), min_pct=float(trg9.loc[5, "min_cluster_pct"]), outcome_v=float(trg9.loc[5, "outcome_v"]), note="Fails stability (ARI < .60) & min size (< 20%)"),
+        dict(k=6, sil=float(trg9.loc[6, "silhouette"]), cal_sil=float(trg9.loc[6, "calibrated_silhouette"]), db=2.729, ari=float(trg9.loc[6, "stability_ari"]), core_pct=float(trg9.loc[6, "core_pct"]), min_pct=float(trg9.loc[6, "min_cluster_pct"]), outcome_v=float(trg9.loc[6, "outcome_v"]), note="Fragmented min cluster (11.3% < 20% floor)"),
+    ]
 
     n_ann_calls = 0
     for fp in ["llm_user_annotations.jsonl", "llm_user_annotations_retest.jsonl"] + [

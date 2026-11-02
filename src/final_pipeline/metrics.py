@@ -234,9 +234,12 @@ def factorial_anova(
     ss_err = float(aov.loc["Residual", "sum_sq"])
     aov["eta2_partial"] = aov["sum_sq"] / (aov["sum_sq"] + ss_err)
 
-    # HC3 robust ANOVA
+    # HC3 robust ANOVA (plus Sum-coded HC3 fallback when a reference cell has zero variance)
     model_hc3 = ols(formula, data=df).fit(cov_type="HC3")
     aov_hc3 = sm.stats.anova_lm(model_hc3, typ=2)
+    formula_sum = f"{dv} ~ C({factor_a}, Sum) * C({factor_b}, Sum)"
+    model_hc3_sum = ols(formula_sum, data=df).fit(cov_type="HC3")
+    aov_hc3_sum = sm.stats.anova_lm(model_hc3_sum, typ=3)
 
     # Residual diagnostics
     shapiro_res = stats.shapiro(model.resid)

@@ -25,7 +25,7 @@ TABLE_PT = 10
 _TAG = re.compile(r"(</?(?:i|b|sub|sup)>)")
 _URL = re.compile(r"(https?://[^\s<>]+[^\s<>.,;:)\]])")
 # In-text table/figure citations: "Table 3", "Tables 6 and 7", "Tables 3, 4, and 5", "Figure E5", "Tables D1–D3"
-_NUM = r"[A-E]?\d+"
+_NUM = r"[A-G]?\d+"
 _XREF = re.compile(rf"\b(Tables?|Figures?)\s+({_NUM}(?:(?:,\s+and\s+|,\s+|\s+and\s+|–){_NUM})*)(?!\w)")
 _BM_ID = [0]
 

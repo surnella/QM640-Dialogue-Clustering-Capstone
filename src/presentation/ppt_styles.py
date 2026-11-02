@@ -45,11 +45,14 @@ FONT_BODY = "Calibri"
 
 def _add_formatted_runs(p, text, font_size=13, color=DARK, bold=False, italic=False, font_name=FONT_BODY):
     """
-    Parse lightweight inline tags `<b>...</b>` and `<i>...</i>` into pptx runs.
+    Parse lightweight inline tags `<b>...</b>`, `<i>...</i>`, `<sub>...</sub>`, and `<sup>...</sup>`
+    into native PowerPoint runs (including DrawingML subscript/superscript baseline offsets).
     """
-    tokens = re.split(r"(</?[bi]>)", str(text))
+    tokens = re.split(r"(</?(?:b|i|sub|sup)>)", str(text))
     b_state = bold
     i_state = italic
+    sub_state = False
+    sup_state = False
     for tok in tokens:
         if not tok:
             continue
@@ -65,6 +68,18 @@ def _add_formatted_runs(p, text, font_size=13, color=DARK, bold=False, italic=Fa
         elif tok == "</i>":
             i_state = italic
             continue
+        elif tok == "<sub>":
+            sub_state = True
+            continue
+        elif tok == "</sub>":
+            sub_state = False
+            continue
+        elif tok == "<sup>":
+            sup_state = True
+            continue
+        elif tok == "</sup>":
+            sup_state = False
+            continue
         run = p.add_run()
         run.text = tok
         run.font.name = font_name
@@ -72,6 +87,10 @@ def _add_formatted_runs(p, text, font_size=13, color=DARK, bold=False, italic=Fa
         run.font.bold = b_state
         run.font.italic = i_state
         run.font.color.rgb = color
+        if sub_state:
+            run._r.get_or_add_rPr().set("baseline", "-25000")
+        elif sup_state:
+            run._r.get_or_add_rPr().set("baseline", "30000")
 
 
 class DefenseDeck:

@@ -50,6 +50,10 @@ def build_part2(D, ctx):
     rt_diag = ctx["rt_diag"]
     t_mv = ctx["t_mv"]
     gh = ctx["gh"]
+    r1_rm = ctx["r1_rm"]
+    r3_rar_cells = ctx["r3_rar_cells"]
+    r3_rar_anova = ctx["r3_rar_anova"]
+    blocks_k_sel = ctx["blocks_k_sel"]
 
     an = r1["anova"]
     we = r1["welch"]
@@ -84,8 +88,8 @@ def build_part2(D, ctx):
     D.para(
         "Table 11 summarizes the empirical results, parametric test statistics, heteroscedasticity-robust (Welch/HC3) "
         "and non-parametric (Kruskal–Wallis, Friedman, Mann–Whitney, and Aligned Rank Transform [ART]) checks, effect "
-        "sizes, and hypothesis decisions across RQ1–RQ4. Every pre-registered null hypothesis (<i>H</i><sub>01</sub>–"
-        "<i>H</i><sub>04</sub>) is rejected at <i>p</i> < .001 on the refined user archetype pipeline."
+        "sizes, and hypothesis decisions across RQ1–RQ4. All four null hypotheses specified for the study "
+        "(<i>H</i><sub>01</sub>–<i>H</i><sub>04</sub>) are rejected at <i>p</i> < .001 on the refined user archetype pipeline."
     )
 
     r2_sc = r2_ref["results"]["sbert_style_cos"]
@@ -97,20 +101,20 @@ def build_part2(D, ctx):
 
     D.table(
         "Consolidated Summary of Empirical Results and Hypothesis Outcomes Across RQ1–RQ4",
-        ["RQ and outcome", "Sample & design", "Baseline vs. proposed performance", "Primary parametric test & effect size", "Robust / non-parametric check", "Decision"],
+        ["RQ and outcome", "Sample & design", "Baseline vs. proposed performance", "Primary parametric test & effect size", "Robust / non-parametric check", "Outcome"],
         [
             [
                 "RQ1: Algorithm separation & refined archetypes",
-                "<i>N</i> = 159 runs (<i>D</i><sub>gold</sub> = 933; <i>D</i><sub>test</sub> = 401)",
-                "Perm. Sil = −.001 vs. KM = .099, HDB = .170; Refined ARI = .76, routing κ = .535 (<i>M</i>=5) to .958 (<i>M</i>=9)",
-                f"<i>F</i>(2, 156) = {n2(an['F'])}, <i>p</i> < .001, η<sup>2</sup> = {nz(an['eta2'])} (Gemini: <i>F</i> = {n2(r1gm['G-doc']['anova']['F'])}, η<sup>2</sup> = {nz(r1gm['G-doc']['anova']['eta2'])})",
-                f"Welch <i>F</i> = {n2(we['F'])}, <i>p</i> < .001; Kruskal <i>H</i>(2) = {n2(kw['H'])}, <i>p</i> < .001",
+                "<i>N</i> = 159 runs (53 matched <i>n</i> = 500 draws from <i>D</i><sub>gold</sub> = 933; <i>D</i><sub>test</sub> = 401)",
+                f"MiniLM Sil: Perm = {nz(perm['M'], 3)} vs. KM = {nz(km.sil_M, 3)}, Ward = {nz(ag.sil_M, 3)}, HDB = {nz(hd.sil_M, 3)} (39.1% noise); Blocks ARI = .89 (.87 abl.); routing κ = .535 (<i>m</i>=5) to .958 (<i>m</i>=9)",
+                f"One-way <i>F</i>(2, 156) = {n2(an['F'])}, <i>p</i> < .001, η<sup>2</sup> = {nz(an['eta2'])}; Matched RM-ANOVA <i>F</i>(1.72, 89.30) = {n2(r1_rm['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r1_rm['eta2_p'], 3)}",
+                f"Friedman χ<sup>2</sup>(2) = {n2(r1_rm['friedman_chi2'])}, Welch <i>F</i> = {n2(we['F'])}, Kruskal <i>H</i>(2) = {n2(kw['H'])}, all <i>p</i> < .001",
                 "Reject <i>H</i><sub>01</sub>",
             ],
             [
-                "RQ2: Style convergence (Refined archetypes)",
-                "<i>N</i> = 33 dialogues × 3 conditions (99 calls)",
-                f"Static = {nz(r2_sc['desc']['Static Few-Shot'][0], 3)}, Zero-Shot = {nz(r2_sc['desc']['Zero-Shot'][0], 3)} vs. Cluster-Adaptive = {nz(r2_sc['desc']['Cluster-Adaptive Few-Shot'][0], 3)}",
+                "RQ2: De-lexicalized SBERT style cosine (Refined)",
+                "<i>N</i> = 33 dialogues × 3 conditions (99 calls; combined exemplars + directive)",
+                f"Static = {nz(r2_sc['desc']['Static Few-Shot'][0], 3)}, Zero-Shot = {nz(r2_sc['desc']['Zero-Shot'][0], 3)} vs. Cluster-Adaptive = {nz(r2_sc['desc']['Cluster-Adaptive Few-Shot'][0], 3)} (Gemini/BERTScore null, <i>p</i> ≥ .315)",
                 f"RM-ANOVA <i>F</i>({n2(r2_sa['df1_gg'])}, {n2(r2_sa['df2_gg'])}) = {n2(r2_sa['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r2_sa['eta2_partial'])}",
                 f"Friedman χ<sup>2</sup>(2) = {n2(r2_sc['friedman']['chi2'])}, <i>p</i> = {nz(r2_sc['friedman']['p'], 3)}; Holm <i>p</i> < .001 vs. Static",
                 "Reject <i>H</i><sub>02</sub>",
@@ -124,32 +128,32 @@ def build_part2(D, ctx):
                 "Reject <i>H</i><sub>02</sub>",
             ],
             [
-                "RQ3: Policy rule adherence rate (RAR)",
-                "<i>N</i> = 144 (2 × 2, <i>n</i> = 36/cell; κ<sub>judge</sub> = .917)",
-                "Rules Off = .500 (5.6% on violating) vs. Rules Active = .938 (98.6% on violating)",
-                f"Rules <i>F</i>(1, 140) = {n2(r3_a['rule_adherence']['effects']['rules_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r3_a['rule_adherence']['effects']['rules_mode']['eta2_partial'])}",
+                "RQ3: Policy rule adherence (Sens. / Spec. / Overall)",
+                "<i>N</i> = 144 (2 × 2 across 36 dialogues, <i>n</i> = 36/cell; κ<sub>judge</sub> = .917)",
+                "Viol. Sens. (<i>n</i>=18/cell): 5.6% → 98.6%; Comp. Spec. (<i>n</i>=18/cell): 94.4% vs. 88.9%; Overall (<i>n</i>=36/cell): .500 → .938",
+                f"Sens. <i>F</i>(1, 68) = 498.78, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = .880; Overall Rules <i>F</i>(1, 140) = {n2(r3_a['rule_adherence']['effects']['rules_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r3_a['rule_adherence']['effects']['rules_mode']['eta2_partial'])}",
                 f"HC3 <i>F</i> = {n2(r3_a['rule_adherence']['effects']['rules_mode']['F_hc3'])}, <i>p</i> < .001; ART <i>F</i> = {n2(r3_a['rule_adherence']['effects']['rules_mode']['F_art'])}, <i>p</i> < .001",
                 "Reject <i>H</i><sub>03</sub>",
             ],
             [
                 "RQ3: Exemplar entity leakage & Slot F<sub>1</sub>",
                 "<i>N</i> = 144 (2 × 2, <i>n</i> = 36/cell)",
-                "Leakage: Rules Off Cluster = .359 (55.6% cases) vs. Rules Active Cluster = .000; Slot F<sub>1</sub>: .485 → .952",
+                "Leakage: Rules Off Cluster = .359 (55.6% cases) vs. Rules Active Cluster = .000 (0.0%); Slot F<sub>1</sub>: .485 → .952",
                 f"Leakage Int. <i>F</i>(1, 140) = {n2(r3_a['leakage_rate']['effects']['interaction']['F'])}, <i>p</i> < .001; Slot F<sub>1</sub> Rules <i>F</i> = {n2(r3_a['slot_f1']['effects']['rules_mode']['F'])}, <i>p</i> < .001",
-                f"Leakage HC3 Int. <i>F</i> = {n2(r3_a['leakage_rate']['effects']['interaction']['F_hc3'])}, <i>p</i> < .001; ART <i>F</i> = {n2(r3_a['leakage_rate']['effects']['interaction']['F_art'])}, <i>p</i> < .001",
+                f"Leakage Sum-HC3 <i>F</i> = 33.85, ART Int. <i>F</i> = {n2(r3_a['leakage_rate']['effects']['interaction']['F_art'])}, Simple Welch <i>t</i>(35) = 5.90, all <i>p</i> < .001",
                 "Reject <i>H</i><sub>03</sub>",
             ],
             [
                 "RQ4: Log turns to goal completion & RER",
-                "<i>N</i> = 180 (2 × 3, <i>n</i> = 30/cell; κ<sub>persona</sub> = .933)",
-                "Turns reduced −34.2% (DB), −29.5% (OE), −42.7% (RCS); RER .109 → .000",
+                "<i>N</i> = 180 unique dialogues (2 × 3, <i>n</i> = 30/cell; κ<sub>persona</sub> = .933)",
+                "Total turns reduced −34.2% (DB), −29.5% (OE), −42.7% (RCS; 5.00-turn floor); RER .109 → .000",
                 f"Prompt <i>F</i>(1, 174) = {n2(r4_a['log_turns']['effects']['prompt_mode']['F'])}, <i>p</i> < .001; Int. <i>F</i>(2, 174) = {n2(r4_a['log_turns']['effects']['interaction']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r4_a['log_turns']['effects']['interaction']['eta2_partial'])}",
                 f"HC3 Int. <i>F</i> = {n2(r4_a['log_turns']['effects']['interaction']['F_hc3'])}, <i>p</i> < .001; ART Int. <i>F</i> = {n2(r4_a['log_turns']['effects']['interaction']['F_art'])}, <i>p</i> < .001",
                 "Reject <i>H</i><sub>04</sub>",
             ],
         ],
-        note="DB = Decisive Booker; OE = Open Explorer; RCS = Rigid-Constraint Seeker; Perm. = permutation baseline.",
-        widths=[1.15, 0.95, 1.45, 1.25, 1.1, 0.6],
+        note="DB = Decisive Booker; OE = Open Explorer; RCS = Rigid-Constraint Seeker; Perm = permutation baseline; Sens. = violation enforcement sensitivity; Spec. = compliant acceptance specificity.",
+        widths=[1.12, 0.93, 1.43, 1.25, 1.12, 0.65],
         align=["l", "l", "l", "l", "l", "c"],
         split=True,
     )
@@ -157,40 +161,60 @@ def build_part2(D, ctx):
     # ------------------------------------------------------------------ RQ1 Results
     D.heading("RQ1 Results: Trajectory Clustering, Refined Archetypes, and Prefix Routing", 2)
     D.para(
-        "<i>Primary algorithm benchmark and embedding invariance.</i> Table 12 summarizes the 159-run clustering "
-        "benchmark across <i>all-MiniLM-L6-v2</i> (384-d) and <i>gemini-embedding-001</i> (3,072-d) representations "
-        "(cluster-number diagnostics, Tukey/Games–Howell post hoc contrasts, and UMAP plots are in Appendix D, "
-        "Tables D1–D4 and Figures D1–D3). On MiniLM embeddings, HDBSCAN achieved the highest Silhouette "
-        f"(<i>M</i> = {nz(hd.sil_M, 3)}, <i>SD</i> = {nz(hd.sil_SD, 3)}), followed by <i>K</i>-Means (<i>M</i> = "
-        f"{nz(km.sil_M, 3)}, <i>SD</i> = {nz(km.sil_SD, 3)}) and Ward agglomerative clustering (<i>M</i> = "
-        f"{nz(ag.sil_M, 3)}, <i>SD</i> = {nz(ag.sil_SD, 3)}), all exceeding the label-shuffled permutation baseline "
-        f"(<i>M</i> = {nz(perm['M'], 3)}). The one-way ANOVA was significant, <i>F</i>({int(an['df1'])}, "
-        f"{int(an['df2'])}) = {n2(an['F'])}, <i>p</i> < .001, η<sup>2</sup> = {nz(an['eta2'])}, confirmed by Welch's "
-        f"test, <i>F</i>({int(we['df1'])}, {n2(we['df2'])}) = {n2(we['F'])}, <i>p</i> < .001, and Kruskal–Wallis "
+        "<i>Primary algorithm benchmark, resampling sensitivity, and embedding invariance.</i> Table 12 summarizes the "
+        "159-run clustering benchmark across <i>all-MiniLM-L6-v2</i> (384-d) and <i>gemini-embedding-001</i> (3,072-d) "
+        "representations (cluster-number diagnostics, Tukey/Games–Howell post hoc contrasts, and UMAP plots are in "
+        "Appendix D, Tables D1–D4 and Figures D1–D3). Because each of the 53 random seeds draws <i>n</i> = 500 dialogues "
+        f"without replacement from the finite golden partition (<i>D</i><sub>gold</sub>, <i>n</i> = {s1['n_gold']}, a "
+        "53.6% sampling fraction with ~268 overlapping dialogues between draws), the 159 evaluations represent a "
+        "finite-population resampling stability analysis rather than 159 independent samples; accordingly, we report both "
+        "matched-subsample repeated-measures tests across the 53 shared seeds and full-<i>D</i><sub>gold</sub> point "
+        "estimates alongside the standard one-way benchmark. On MiniLM embeddings, HDBSCAN achieved the highest "
+        f"Silhouette on its retained non-noise subset (<i>M</i> = {nz(hd.sil_M, 3)}, <i>SD</i> = {nz(hd.sil_SD, 3)}), "
+        f"followed by <i>K</i>-Means (<i>M</i> = {nz(km.sil_M, 3)}, <i>SD</i> = {nz(km.sil_SD, 3)}; full-<i>D</i><sub>gold</sub> "
+        f"point estimate = .141, Davies–Bouldin = 3.244) and Ward agglomerative clustering (<i>M</i> = {nz(ag.sil_M, 3)}, "
+        f"<i>SD</i> = {nz(ag.sil_SD, 3)}), all exceeding the label-shuffled permutation baseline (<i>M</i> = "
+        f"{nz(perm['M'], 3)}). Algorithm differences were highly significant under the matched-subsample repeated-measures "
+        f"ANOVA, <i>F</i>({n2(r1_rm['df1_gg'])}, {n2(r1_rm['df2_gg'])}) = {n2(r1_rm['F'])}, <i>p</i> < .001, "
+        f"η<sub><i>p</i></sub><sup>2</sup> = {nz(r1_rm['eta2_p'], 3)}, the non-parametric paired Friedman test, "
+        f"χ<sup>2</sup>(2) = {n2(r1_rm['friedman_chi2'])}, <i>p</i> < .001, the one-way ANOVA, <i>F</i>({int(an['df1'])}, "
+        f"{int(an['df2'])}) = {n2(an['F'])}, <i>p</i> < .001, η<sup>2</sup> = {nz(an['eta2'])}, Welch's test, "
+        f"<i>F</i>({int(we['df1'])}, {n2(we['df2'])}) = {n2(we['F'])}, <i>p</i> < .001, and Kruskal–Wallis "
         f"<i>H</i>(2) = {n2(kw['H'])}, <i>p</i> < .001. Replicating on 3,072-d Gemini embeddings reproduced the same "
-        f"ordering with stronger separation (η<sup>2</sup> = {nz(r1gm['G-pooled']['anova']['eta2'])} for turn-pooled "
-        f"and η<sup>2</sup> = {nz(r1gm['G-doc']['anova']['eta2'])} for document vectors, <i>p</i> < .001). Because "
-        f"HDBSCAN failed at default settings in {r1['hdbscan_default_fail']}/53 runs and discarded "
-        f"{pct(100 * r1['hdbscan_noise_M'])} of dialogues as noise when relaxed, <i>K</i>-Means (<i>k</i> = 3) was "
-        "selected for complete centroid routing. Golden centroids generalized to held-out Frames dialogues "
+        f"ordering with stronger separation: for turn-pooled vectors (<i>G-pooled</i>), <i>K</i>-Means = "
+        f"{nz(r1gm['G-pooled']['desc']['K-Means']['M'], 3)}, Ward = {nz(r1gm['G-pooled']['desc']['Agglomerative']['M'], 3)}, "
+        f"and HDBSCAN = {nz(r1gm['G-pooled']['desc']['HDBSCAN']['M'], 3)} (<i>F</i>(2, 156) = "
+        f"{n2(r1gm['G-pooled']['anova']['F'])}, η<sup>2</sup> = {nz(r1gm['G-pooled']['anova']['eta2'])}, <i>p</i> < .001); "
+        f"for document vectors (<i>G-doc</i>), <i>K</i>-Means = {nz(r1gm['G-doc']['desc']['K-Means']['M'], 3)}, Ward = "
+        f"{nz(r1gm['G-doc']['desc']['Agglomerative']['M'], 3)}, and HDBSCAN = "
+        f"{nz(r1gm['G-doc']['desc']['HDBSCAN']['M'], 3)} (<i>F</i>(2, 156) = {n2(r1gm['G-doc']['anova']['F'])}, "
+        f"η<sup>2</sup> = {nz(r1gm['G-doc']['anova']['eta2'])}, <i>p</i> < .001). Critically, however, HDBSCAN's higher "
+        "Silhouette is computed strictly after excluding unassigned noise points: HDBSCAN failed at default settings "
+        f"(<i>min_cluster_size</i> = 15) in {r1['hdbscan_default_fail']}/53 runs and discarded "
+        f"<b>{pct(100 * r1['hdbscan_noise_M'])}</b> (<i>SD</i> = {pct(100 * r1['hdbscan_noise_SD'])}) of MiniLM dialogues, "
+        f"<b>{pct(100 * r1gm['G-pooled']['hdbscan_noise_M'])}</b> of Gemini turn-pooled dialogues, and "
+        f"<b>{pct(100 * r1gm['G-doc']['hdbscan_noise_M'])}</b> of Gemini document dialogues as noise when relaxed. "
+        "Because a live travel assistant cannot refuse to route 26%–39% of incoming customer sessions, <i>K</i>-Means "
+        "(<i>k</i> = 3) was selected on operational grounds to guarantee <b>100% dialogue coverage</b> and deterministic "
+        "Voronoi centroid routing. Golden centroids generalized to held-out Frames dialogues "
         f"(<i>t</i>({n2(gt['df'], 1)}) = {n2(gt['t'])}, <i>p</i> {pv(gt['p'])}) but differed from MultiWOZ 2.2 "
         f"(<i>t</i>({n2(cc['df'], 1)}) = {n2(cc['t'])}, <i>p</i> < .001; Table D4)."
     )
     g_p = r1gm["G-pooled"]
     g_d = r1gm["G-doc"]
     D.table(
-        "Cluster Quality by Algorithm and Embedding Family Across 159 Subsample Runs",
-        ["Representation and algorithm", "<i>n</i> runs", "Silhouette <i>M</i> (<i>SD</i>)", "Davies–Bouldin <i>M</i> (<i>SD</i>)", "Omnibus ANOVA <i>F</i> (<i>p</i>)", "Effect size η<sup>2</sup>"],
+        "Cluster Quality by Algorithm and Embedding Family Across 53 Matched Subsample Seeds (159 Runs)",
+        ["Representation and algorithm", "<i>n</i> seeds", "Retained (%)", "Silhouette <i>M</i> (<i>SD</i>)", "Davies–Bouldin <i>M</i> (<i>SD</i>)", "Omnibus & matched RM tests (<i>p</i> < .001)"],
         [
-            ["MiniLM-L6-v2 (384-d) — K-Means (<i>k</i> = 3)", "53", f"{nz(km.sil_M, 3)} ({nz(km.sil_SD, 3)})", f"{n2(km.db_M, 3)} ({n2(km.db_SD, 3)})", f"<i>F</i>(2, 156) = {n2(an['F'])} (< .001)", nz(an["eta2"])],
-            ["MiniLM-L6-v2 (384-d) — Agglomerative (Ward)", "53", f"{nz(ag.sil_M, 3)} ({nz(ag.sil_SD, 3)})", f"{n2(ag.db_M, 3)} ({n2(ag.db_SD, 3)})", "", ""],
-            ["MiniLM-L6-v2 (384-d) — HDBSCAN (relaxed)", "53", f"{nz(hd.sil_M, 3)} ({nz(hd.sil_SD, 3)})", f"{n2(hd.db_M, 3)} ({n2(hd.db_SD, 3)})", "", ""],
-            ["MiniLM-L6-v2 (384-d) — Permutation baseline", "53", f"{nz(perm['M'], 3)} ({nz(perm['SD'], 3)})", "—", "", ""],
-            ["Gemini-001 (3,072-d turn pool) — K-Means / Ward / HDB", "159", f"{nz(g_p['desc']['K-Means']['M'], 3)} / {nz(g_p['desc']['Agglomerative']['M'], 3)} / {nz(g_p['desc']['HDBSCAN']['M'], 3)}", "—", f"<i>F</i>(2, 156) = {n2(g_p['anova']['F'])} (< .001)", nz(g_p["anova"]["eta2"])],
-            ["Gemini-001 (3,072-d document) — K-Means / Ward / HDB", "159", f"{nz(g_d['desc']['K-Means']['M'], 3)} / {nz(g_d['desc']['Agglomerative']['M'], 3)} / {nz(g_d['desc']['HDBSCAN']['M'], 3)}", "—", f"<i>F</i>(2, 156) = {n2(g_d['anova']['F'])} (< .001)", nz(g_d["anova"]["eta2"])],
+            ["MiniLM-L6-v2 (384-d) — K-Means (<i>k</i> = 3)", "53", "100.0%", f"{nz(km.sil_M, 3)} ({nz(km.sil_SD, 3)})", f"{n2(km.db_M, 3)} ({n2(km.db_SD, 3)})", f"One-way <i>F</i> = {n2(an['F'])}, η<sup>2</sup> = {nz(an['eta2'])}"],
+            ["MiniLM-L6-v2 (384-d) —Ward Agglomerative", "53", "100.0%", f"{nz(ag.sil_M, 3)} ({nz(ag.sil_SD, 3)})", f"{n2(ag.db_M, 3)} ({n2(ag.db_SD, 3)})", f"Matched RM <i>F</i> = {n2(r1_rm['F'])}, η<sub><i>p</i></sub><sup>2</sup> = {nz(r1_rm['eta2_p'], 3)}"],
+            ["MiniLM-L6-v2 (384-d) — HDBSCAN (non-noise)", "53", f"{pct(100 * (1 - r1['hdbscan_noise_M']))}", f"{nz(hd.sil_M, 3)} ({nz(hd.sil_SD, 3)})", f"{n2(hd.db_M, 3)} ({n2(hd.db_SD, 3)})", f"Friedman χ<sup>2</sup> = {n2(r1_rm['friedman_chi2'])}, Welch <i>F</i> = {n2(we['F'])}"],
+            ["MiniLM-L6-v2 (384-d) — Permutation baseline", "53", "100.0%", f"{nz(perm['M'], 3)} ({nz(perm['SD'], 3)})", "—", "Full <i>D</i><sub>gold</sub> KM Sil = .141, DB = 3.244"],
+            ["Gemini-001 (3,072-d turn pool) — KM / Ward / HDB", "53 × 3", f"100 / 100 / {pct(100 * (1 - g_p['hdbscan_noise_M']))}", f"{nz(g_p['desc']['K-Means']['M'], 3)} / {nz(g_p['desc']['Agglomerative']['M'], 3)} / {nz(g_p['desc']['HDBSCAN']['M'], 3)}", f"{n2(g_p['desc']['K-Means']['DB_M'], 2)} / {n2(g_p['desc']['Agglomerative']['DB_M'], 2)} / {n2(g_p['desc']['HDBSCAN']['DB_M'], 2)}", f"<i>F</i> = {n2(g_p['anova']['F'])}, η<sup>2</sup> = {nz(g_p['anova']['eta2'])}; Kruskal <i>H</i> = {n2(g_p['kruskal']['H'])}"],
+            ["Gemini-001 (3,072-d document) — KM / Ward / HDB", "53 × 3", f"100 / 100 / {pct(100 * (1 - g_d['hdbscan_noise_M']))}", f"{nz(g_d['desc']['K-Means']['M'], 3)} / {nz(g_d['desc']['Agglomerative']['M'], 3)} / {nz(g_d['desc']['HDBSCAN']['M'], 3)}", f"{n2(g_d['desc']['K-Means']['DB_M'], 2)} / {n2(g_d['desc']['Agglomerative']['DB_M'], 2)} / {n2(g_d['desc']['HDBSCAN']['DB_M'], 2)}", f"<i>F</i> = {n2(g_d['anova']['F'])}, η<sup>2</sup> = {nz(g_d['anova']['eta2'])}; Kruskal <i>H</i> = {n2(g_d['kruskal']['H'])}"],
         ],
-        note="Each run clusters an independent random subsample of 500 golden dialogues (<i>D</i><sub>gold</sub>).",
-        widths=[2.45, 0.55, 1.3, 0.9, 0.85, 0.45],
+        note="Each seed draws <i>n</i> = 500 dialogues without replacement from <i>D</i><sub>gold</sub> (<i>n</i> = 933; 53.6% finite-population fraction). HDBSCAN metrics apply only to retained non-noise dialogues (discarding 39.1% noise on MiniLM, 35.8% on Gemini turn pool, and 25.7% on Gemini document vectors).",
+        widths=[2.15, 0.55, 0.85, 1.05, 0.85, 1.05],
         align=["l", "c", "c", "c", "c", "c"],
         split=True,
     )
@@ -199,31 +223,56 @@ def build_part2(D, ctx):
     p16 = ctx["full_16_profile"]
     db_r, oe_r, rc_r = rp.loc["Decisive Booker"], rp.loc["Open Explorer"], rp.loc["Rigid-Constraint Seeker"]
     D.para(
-        "<i>Sensitivity analysis, refined user archetypes, and hybrid prefix routing breakthrough.</i> Auditing the "
-        "primary whole-dialogue archetypes (<i>Direct Transactional</i>, <i>Constraint Negotiator</i>, <i>Guided "
-        "Explorer</i>; Table D3) showed that whole-dialogue vectors conflate user and wizard turns, correlate with "
-        f"role-players (Cramér's <i>V</i> = {nz(ctx['cramer_v'])}), and yield low early-turn routing agreement "
-        f"(κ = {nz(kap_prim)}). Evaluating the hybrid <i>Blocks</i> representation (PCA-20 Gemini user prefix embedding "
-        "+ 16-field LLM behavioral schema: 10 ordinal 1–5 scales, 3 categorical goal/tone clustering fields, and 3 "
-        "audit-only fields) across truncation horizons <i>M</i> ∈ {3, 5, 7, 9, whole} (Appendix D, Tables D5–D6 and "
-        "Figure D4) proved that truncating to the first <i>M</i> = 9 user messages yields a stable three-cluster "
-        f"partition (bootstrap ARI = {nz(a9.loc[1, 'stability_ari'])}; {pct(a9.loc[1, 'core_pct'], 1)} core "
-        f"membership; smallest cluster {pct(rprof['pct'].min(), 1)}). Importantly, total dialogue turns "
-        "(<i>T</i>, user plus wizard turns, <i>M</i> = 14.93, <i>Mdn</i> = 14.0; 96.4% ≥ 5 turns and 83.2% ≥ 9 turns) "
-        "must be distinguished from user-only messages (<i>M</i>, customer turns only, <i>M</i> = 7.78, <i>Mdn</i> = 7.0; "
-        "83.2% ≥ 5 user messages and 37.6% ≥ 9 user messages). Offline cluster discovery applies an upper cap of "
-        "min(user_turns, 9) user messages so that late checkout/abandonment turns are stripped from the 38.6% of "
-        "long golden dialogues (> 9 user messages) while shorter dialogues retain all user messages. At runtime, "
-        "projecting held-out test prefixes (<i>D</i><sub>test</sub>, <i>n</i> = 401) into the golden-fitted "
-        "<i>Blocks</i> space via <i>RefinedArchetypeRouter</i> yields progressive out-of-sample routing accuracy "
-        f"(and Cohen's κ) of {pct(100 * rt_diag.loc[3, 'routing_accuracy'])} (κ = {nz(rt_diag.loc[3, 'cohen_kappa'], 3)}) "
-        f"at <i>M</i> = 3 user messages (≈ 5 total turns; 87.5% on dialogues with < 3 user messages), "
-        f"{pct(100 * rt_diag.loc[5, 'routing_accuracy'])} (κ = {nz(rt_diag.loc[5, 'cohen_kappa'], 3)}) at "
-        f"<i>M</i> = 5 user messages (≈ 9 total turns, the runtime cut-off used in RQ2; 81.8% on < 5 and 67.8% on ≥ 5 user messages), "
-        f"{pct(100 * rt_diag.loc[7, 'routing_accuracy'])} (κ = {nz(rt_diag.loc[7, 'cohen_kappa'], 3)}) at <i>M</i> = 7 "
-        f"(≈ 13 total turns; 93.2% on < 7 and 74.6% on ≥ 7 user messages), and {pct(100 * rt_diag.loc[9, 'routing_accuracy'])} "
-        f"(κ = {nz(rt_diag.loc[9, 'cohen_kappa'], 3)}) at <i>M</i> = 9 user messages (≈ 17 total turns; 96.0% on ≤ 9 and "
-        "99.3% on ≥ 9 user messages). Table 13 profiles the three refined user archetypes across all 16 schema fields: "
+        "<i>Sensitivity analysis, choice of k = 3 on Blocks, refined user archetypes, and hybrid prefix routing.</i> "
+        "Auditing the primary whole-dialogue archetypes (<i>Direct Transactional</i>, <i>Constraint Negotiator</i>, "
+        "<i>Guided Explorer</i>; Table D3) showed that whole-dialogue vectors conflate user and wizard turns, correlate "
+        f"with role-players (Cramér's <i>V</i> = {nz(ctx['cramer_v'])}), and yield low early-turn routing agreement "
+        f"(κ = {nz(kap_prim)}). Evaluating the 46-dimensional hybrid <i>Blocks</i> representation (PCA-20 Gemini user "
+        "prefix embedding + 26 encoded numeric columns from the 13 clustering fields of the 16-field LLM behavioral "
+        "schema) across truncation horizons <i>M</i> ∈ {3, 5, 7, 9, whole} and cluster counts <i>k</i> ∈ {2, ..., 8} "
+        "(Appendix D, Tables D1, D5, and D6; Figure D4) demonstrated that truncating to the first <i>M</i> = 9 user "
+        "messages at <b><i>k</i> = 3</b> is uniquely optimal. Specifically, on the final 46-d <i>Blocks</i> (<i>M</i> = 9) "
+        "representation (Table D1, Panel B), <i>k</i> = 3 achieves the <b>lowest (best) Davies–Bouldin index (2.647 vs. "
+        "2.796 at <i>k</i> = 2 and 2.729–2.784 at <i>k</i> = 4–6)</b>, highest eligible Silhouette (.094; null-calibrated "
+        ".033 vs. .002–.010 at <i>k</i> = 4–6), high bootstrap resampling stability across 50 pairs of 80% golden "
+        f"subsamples (<b>ARI = {nz(tr3.loc['9', 'stability_ari'])}</b> in the truncation grid [Table D5]; <b>ARI = "
+        f"{nz(a9.loc[1, 'stability_ari'])}</b> with {pct(a9.loc[1, 'core_pct'], 1)} core membership at ≥ 90% co-assignment "
+        f"under the independent random seed of the 6-configuration ablation [Table D6]), and balanced cluster sizes "
+        f"(smallest cluster = {pct(rprof['pct'].min(), 1)} ≥ 20% floor). In contrast, <i>k</i> = 2 (DB = 2.796) collapses "
+        "<i>Decisive Bookers</i> and <i>Rigid-Constraint Seekers</i> into a single undifferentiated bucket, while "
+        "<i>k</i> = 4, 5, and 6 suffer a sharp drop in bootstrap stability (ARI = .589, .593, and .631) and fragment into "
+        "small clusters (11.3%–12.5%, violating the 20% balanced-segment threshold). Since the Microsoft Frames dataset "
+        "does not provide predefined behavioral archetype labels, we generated reference archetypes (<i>y</i><sup>(9)</sup>) "
+        "through unsupervised <i>K</i>-Means (<i>k</i> = 3) clustering on the 46-dimensional hybrid <i>Blocks</i> "
+        "representation (<i>X</i><sup>(9)</sup>) of the first nine user messages (see Appendix F and Table F1 for the "
+        "deterministic centroid-naming protocol, and Appendix G and Table G1 for the distinct validation role of Judge "
+        "LLMs). Importantly, total dialogue turns (<i>T</i>, user plus wizard turns, <i>M</i> = 14.93, <i>Mdn</i> = "
+        "14.0; 96.4% ≥ 5 turns and 83.2% ≥ 9 turns) must be distinguished from user-only messages (<i>M</i>, customer "
+        "turns only, <i>M</i> = 7.78, <i>Mdn</i> = 7.0; 83.2% ≥ 5 user messages and 37.6% ≥ 9 user messages): offline "
+        "clustering caps input at min(user_turns, 9) to strip late checkout/abandonment turns from long sessions while "
+        "retaining all user messages for shorter sessions. We subsequently trained prefix-specific multinomial Logistic "
+        "Regression classifiers on <i>D</i><sub>gold</sub> (<i>n</i> = 933) to predict these nine-message reference "
+        "cluster assignments using only the first <i>m</i> ∈ {3, 5, 7, 9} user messages (<i>X</i><sup>(<i>m</i>)</sup>). "
+        "Because raw percentage agreement (<i>p<sub>o</sub></i>) includes expected chance agreement (<i>p<sub>e</sub></i> "
+        "≈ 35.4%–36.6% given uneven cluster shares) and compares against an unsupervised cluster target rather than "
+        "human labels, we report both <i>p<sub>o</sub></i> and chance-corrected Cohen's κ = (<i>p<sub>o</sub></i> − "
+        "<i>p<sub>e</sub></i>) / (1 − <i>p<sub>e</sub></i>). On the held-out test partition (<i>D</i><sub>test</sub>, "
+        "<i>n</i> = 401), chance-corrected prefix-to-cluster agreement increased from κ = "
+        f"{nz(rt_diag.loc[3, 'cohen_kappa'], 3)} (<i>p<sub>o</sub></i> = {pct(100 * rt_diag.loc[3, 'routing_accuracy'])}, "
+        "238/401, <i>p<sub>e</sub></i> = 36.6%; 87.5% on < 3 user messages) at <i>m</i> = 3 messages (≈ 5 total turns) "
+        f"to κ = {nz(rt_diag.loc[5, 'cohen_kappa'], 3)} (<i>p<sub>o</sub></i> = "
+        f"{pct(100 * rt_diag.loc[5, 'routing_accuracy'])}, 281/401, <i>p<sub>e</sub></i> = 35.7%; 81.8% on < 5 and "
+        "67.8% on ≥ 5 user messages) at <i>m</i> = 5 messages (≈ 9 total turns, the runtime cut-off used in RQ2) and "
+        f"κ = {nz(rt_diag.loc[7, 'cohen_kappa'], 3)} (<i>p<sub>o</sub></i> = "
+        f"{pct(100 * rt_diag.loc[7, 'routing_accuracy'])}, 329/401, <i>p<sub>e</sub></i> = 35.5%; 93.2% on < 7 and "
+        "74.6% on ≥ 7 user messages) at <i>m</i> = 7 messages (≈ 13 total turns). At <i>m</i> = 9 messages (≈ 17 total "
+        f"turns), agreement reached κ = {nz(rt_diag.loc[9, 'cohen_kappa'], 3)} (<i>p<sub>o</sub></i> = "
+        f"{pct(100 * rt_diag.loc[9, 'routing_accuracy'])}, 390/401, <i>p<sub>e</sub></i> = 35.4%; 96.0% on ≤ 9 and "
+        "99.3% on ≥ 9 user messages), representing a same-feature boundary-consistency check between the linear "
+        "Logistic Regression hyperplane and the <i>K</i>-Means Voronoi centroids on <i>X</i><sup>(9)</sup>. These "
+        "results demonstrate progressively stronger early-prefix agreement with the clustering-derived reference "
+        "archetypes; they do not, by themselves, establish independent human validation of the archetypes. Table 13 "
+        "profiles the three refined user archetypes across all 16 schema fields: "
         f"<i>Decisive Booker</i> ({pct(db_r.pct, 1)}; high decisiveness = {n2(db_r.decisiveness)}, politeness = "
         f"{n2(db_r.politeness)}, {pct(db_r.goal_booking_pct, 1)} booking goal), <i>Open Explorer</i> ({pct(oe_r.pct, 1)}; "
         f"high destination flexibility = {n2(oe_r.destination_flexibility)} and exploration breadth = "
@@ -253,9 +302,12 @@ def build_part2(D, ctx):
         t13_rows,
         note=f"Golden <i>N</i> = {s1['n_gold']}; held-out <i>N</i> = {s1['n_test']} (χ<sup>2</sup>(2) = "
              f"{n2(r1r['chi_gold_test']['chi2'])}, <i>p</i> = {nz(r1r['chi_gold_test']['p'], 3)}). Fields 1–13 are used "
-             "in clustering (<i>llm_matrix</i>); Fields 14–16 are audit-only (excluded from clustering to prevent outcome "
-             "leakage). Held-out <i>Blocks</i> prefix routing accuracy (κ): <i>M</i>=3: 59.4% (.359); <i>M</i>=5: 70.1% "
-             "(.535); <i>M</i>=7: 82.0% (.722); <i>M</i>=9: 97.3% (.958).",
+             "in clustering (<i>llm_matrix</i>: 10 ordinal + 6 primary_goal + 6 secondary_goals + 4 emotional_tone = 26 "
+             "numeric columns); Fields 14–16 are audit-only (excluded from clustering to prevent outcome "
+             "leakage). Held-out <i>Blocks</i> prefix-to-cluster raw agreement <i>p<sub>o</sub></i> (chance-corrected κ, "
+             "<i>p<sub>e</sub></i> ≈ 35.4%–36.6%) against the <i>M</i>=9 <i>K</i>-Means reference assignment: "
+             "<i>m</i>=3: 59.4% (.359); <i>m</i>=5: 70.1% (.535); <i>m</i>=7: 82.0% (.722); <i>m</i>=9 (same-feature "
+             "boundary consistency): 97.3% (.958).",
         widths=[2.55, 1.32, 1.32, 1.31],
         align=["l", "c", "c", "c"],
         split=True,
@@ -276,17 +328,21 @@ def build_part2(D, ctx):
     D.para(
         "Table 14 compares the repeated-measures prompting experiment (<i>N</i> = 33 held-out dialogues × 3 "
         "conditions = 99 Gemini 2.5 Flash generations) on the coarse primary archetypes versus the refined user "
-        "archetypes, and Figure 6 displays the refined distributions (Holm contrasts in Appendix E, Table E3). On "
-        "coarse primary archetypes with an unprojected 3-turn router (39.4% accuracy, κ = .24), style convergence "
-        f"was non-significant, <i>F</i>({n2(sc_p['anova']['df1_gg'])}, {n2(sc_p['anova']['df2_gg'])}) = "
+        "archetypes, and Figure 6 displays the refined distributions (Holm contrasts across all six outcomes are in "
+        "Appendix E, Table E3). Importantly, the <i>Cluster-Adaptive Few-Shot</i> condition evaluates a <b>combined "
+        "personalization package</b> that couples archetype-partitioned FAISS exemplar retrieval (<i>k</i> = 3 "
+        "slot-masked exemplars from the routed sub-index) with an explicit archetype pacing directive in the system "
+        "prompt. On coarse primary archetypes with an unprojected 3-turn router (39.4% accuracy, κ = .24), style "
+        f"convergence was non-significant, <i>F</i>({n2(sc_p['anova']['df1_gg'])}, {n2(sc_p['anova']['df2_gg'])}) = "
         f"{n2(sc_p['anova']['F'])}, <i>p</i> = {nz(sc_p['anova']['p_gg'], 3)}, η<sub><i>p</i></sub><sup>2</sup> = "
         f"{nz(sc_p['anova']['eta2_partial'])}, though few-shot prompting calibrated length (15.1–16.3 vs. 27.6 words, "
         f"<i>F</i> = {n2(wd_p['anova']['F'])}, <i>p</i> < .001; Figure E2). Re-running on the <b>Refined User "
-        "Archetypes</b> with the <i>Blocks</i> router (<i>M</i> = 5 user messages, 70.1% accuracy, κ = .535) "
-        "<b>decisively rejected <i>H</i><sub>02</sub> (<i>p</i> < .001)</b>: style convergence differed significantly "
-        f"under Greenhouse–Geisser correction (Greenhouse & Geisser, 1959), <i>F</i>({n2(sc_r['anova']['df1_gg'])}, "
-        f"{n2(sc_r['anova']['df2_gg'])}) = {n2(sc_r['anova']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> "
-        f"= {nz(sc_r['anova']['eta2_partial'])}, and Friedman testing, χ<sup>2</sup>(2) = "
+        "Archetypes</b> with the <i>Blocks</i> router (<i>M</i> = 5 user messages, 70.1% raw agreement, κ = .535) "
+        "<b>rejected <i>H</i><sub>02</sub> (<i>p</i> < .001) on structural style and pacing calibration</b>: "
+        "de-lexicalized SBERT style convergence differed significantly under Greenhouse–Geisser correction "
+        f"(Greenhouse & Geisser, 1959), <i>F</i>({n2(sc_r['anova']['df1_gg'])}, {n2(sc_r['anova']['df2_gg'])}) = "
+        f"{n2(sc_r['anova']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
+        f"{nz(sc_r['anova']['eta2_partial'])}, and Friedman testing, χ<sup>2</sup>(2) = "
         f"{n2(sc_r['friedman']['chi2'])}, <i>p</i> = {nz(sc_r['friedman']['p'], 3)}. Cluster-Adaptive Few-Shot "
         f"(<i>M</i> = {nz(sc_r['desc']['Cluster-Adaptive Few-Shot'][0], 3)}, <i>SD</i> = "
         f"{nz(sc_r['desc']['Cluster-Adaptive Few-Shot'][1], 3)}) significantly outperformed Static Few-Shot "
@@ -296,13 +352,19 @@ def build_part2(D, ctx):
         f"(<i>M</i> = {nz(sc_r['desc']['Zero-Shot'][0], 3)}, <i>t</i>(32) = "
         f"{n2(p_cs['Cluster-Adaptive Few-Shot vs. Zero-Shot']['t'])}, <i>p</i><sub>Holm</sub> = "
         f"{nz(p_cs['Cluster-Adaptive Few-Shot vs. Zero-Shot']['p_holm'], 3)}, <i>d<sub>z</sub></i> = "
-        f"{n2(p_cs['Cluster-Adaptive Few-Shot vs. Zero-Shot']['d_z'])}), led on Gemini 3,072-d cosine "
-        f"({nz(gc_r['desc']['Cluster-Adaptive Few-Shot'][0], 3)}) and BERTScore F<sub>1</sub> "
-        f"({nz(bf_r['desc']['Cluster-Adaptive Few-Shot'][0], 3)}), and cut archetype pacing error from "
+        f"{n2(p_cs['Cluster-Adaptive Few-Shot vs. Zero-Shot']['d_z'])}), and cut archetype pacing error from "
         f"{n2(we_r['desc']['Zero-Shot'][0])} (Zero-Shot) and {n2(we_r['desc']['Static Few-Shot'][0])} (Static) to "
         f"<b>{n2(we_r['desc']['Cluster-Adaptive Few-Shot'][0])} words</b> (<i>F</i> = {n2(we_r['anova']['F'])}, "
         f"<i>p</i> = {nz(we_r['anova']['p_gg'], 3)}; Friedman χ<sup>2</sup>(2) = {n2(we_r['friedman']['chi2'])}, "
-        "<i>p</i> < .001)."
+        "<i>p</i> < .001; Holm <i>p</i> = .004 vs. Zero-Shot, <i>p</i> = .024 vs. Static). By contrast, generic "
+        "semantic similarity metrics—including Gemini 3,072-d cosine ("
+        f"{nz(gc_r['desc']['Cluster-Adaptive Few-Shot'][0], 3)} vs. {nz(gc_r['desc']['Zero-Shot'][0], 3)}, "
+        f"<i>F</i> = {n2(gc_r['anova']['F'])}, <i>p</i> = {nz(gc_r['anova']['p_gg'], 3)}) and token-level BERTScore "
+        f"F<sub>1</sub> ({nz(bf_r['desc']['Cluster-Adaptive Few-Shot'][0], 3)} vs. "
+        f"{nz(bf_r['desc']['Zero-Shot'][0], 3)}, <i>F</i> = {n2(bf_r['anova']['F'])}, <i>p</i> = "
+        f"{nz(bf_r['anova']['p_gg'], 3)}; Table E3)—did not differ significantly across conditions, confirming that "
+        "archetype-adaptive prompting selectively calibrates discourse structure and turn pacing without distorting "
+        "underlying domain semantics."
     )
     D.table(
         "Repeated-Measures Comparison of Prompting Strategies on Primary Versus Refined User Archetypes (RQ2)",
@@ -372,7 +434,7 @@ def build_part2(D, ctx):
                 nz(wd_r["anova"]["eta2_partial"]),
             ],
         ],
-        note="<i>N</i> = 33 held-out dialogues per experiment (99 generations each; <i>gemini-2.5-flash</i>). GG = Greenhouse–Geisser correction.",
+        note="<i>N</i> = 33 held-out dialogues per experiment (99 generations each; <i>gemini-2.5-flash</i>). Cluster-Adaptive combines archetype-partitioned FAISS exemplars with an explicit archetype pacing directive. GG = Greenhouse–Geisser correction.",
         widths=[2.15, 0.95, 0.95, 0.95, 0.5, 0.5, 0.5],
         align=["l", "c", "c", "c", "c", "c", "c"],
         split=True,
@@ -389,28 +451,43 @@ def build_part2(D, ctx):
     jr = r3_fin["judge_reliability_flash_vs_pro"]
     c3 = r3_fin["cell_means"]
     D.para(
-        "Table 15 and Figure 7 present the 2 × 2 between-subjects factorial experiment across <i>N</i> = 144 held-out "
-        "units (<i>n</i> = 36/cell; 50% policy-violating, 50% compliant). Cross-model inter-rater reliability on a "
-        "stratified 48-unit subsample between <i>gemini-2.5-flash</i> and independent <i>gemini-2.5-pro</i> reached "
-        f"{pct(100 * jr['raw_agreement'], 1)} raw agreement and Cohen's κ = {nz(jr['cohen_kappa'], 3)} (PABAK = "
-        f"{nz(jr['pabak'], 3)}; Table C3). Four findings <b>reject <i>H</i><sub>03</sub> (<i>p</i> < .001)</b>: "
-        f"(1) <b>Rule Adherence Rate</b> showed a large main effect of rules mode, <i>F</i>(1, 140) = "
+        "Table 15 and Figure 7 present the 2 × 2 factorial experiment across <i>N</i> = 144 evaluations (36 stratified "
+        "held-out dialogues—18 policy-violating and 18 compliant—evaluated across all four conditions, <i>n</i> = "
+        "36/cell), where the <i>Rules Active</i> condition represents an integrated three-component governance package "
+        "(pre-generation declarative YAML rule checking, [SLOT] exemplar masking, and post-generation regex leakage "
+        "sanitization). Cross-model inter-rater reliability on a stratified 48-unit subsample between "
+        f"<i>gemini-2.5-flash</i> and independent <i>gemini-2.5-pro</i> reached {pct(100 * jr['raw_agreement'], 1)} raw "
+        f"agreement and Cohen's κ = {nz(jr['cohen_kappa'], 3)} (PABAK = {nz(jr['pabak'], 3)}; Table C3). Four findings "
+        "<b>reject <i>H</i><sub>03</sub> (<i>p</i> < .001)</b>: (1) separating <b>Rule Adherence</b> into its two "
+        "constituent scenario classes reveals that <b>Violation Enforcement Rate (Sensitivity, <i>n</i> = 18 violating "
+        "cases/cell)</b> rose from 5.6% (<i>SD</i> = 23.6%) under both <i>Rules Off</i> cells to <b>100.0%</b> "
+        "(<i>Rules Active × Zero-Shot</i>) and <b>97.2%</b> (<i>SD</i> = 11.8%, <i>Rules Active × Cluster-Adaptive</i>), "
+        f"yielding a massive rules main effect, <i>F</i>(1, 68) = {n2(r3_rar_anova['viol_F_rules'])}, <i>p</i> < .001, "
+        f"η<sub><i>p</i></sub><sup>2</sup> = {nz(r3_rar_anova['viol_eta2_rules'], 3)}, whereas <b>Compliant-Case "
+        "Acceptance Rate (Specificity, 1 − false_block, <i>n</i> = 18 compliant cases/cell)</b> remained statistically "
+        "indistinguishable between <i>Rules Off</i> (94.4%, 17/18) and <i>Rules Active</i> (88.9%, 16/18), "
+        f"<i>F</i>(1, 68) = {n2(r3_rar_anova['comp_F_rules'])}, <i>p</i> = {nz(r3_rar_anova['comp_p_rules'], 3)}, "
+        f"η<sub><i>p</i></sub><sup>2</sup> = {nz(r3_rar_anova['comp_eta2_rules'], 3)}, confirming that strict policy "
+        "enforcement does not induce significant false-positive blocking; pooled across all 36 cases per cell, "
+        f"<b>Overall Rule-Decision Accuracy</b> rose from .500 to .944/.931, rules main effect <i>F</i>(1, 140) = "
         f"{n2(r3_a['rule_adherence']['effects']['rules_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> "
         f"= {nz(r3_a['rule_adherence']['effects']['rules_mode']['eta2_partial'])} (HC3 <i>F</i> = "
         f"{n2(r3_a['rule_adherence']['effects']['rules_mode']['F_hc3'])}; ART <i>F</i> = "
-        f"{n2(r3_a['rule_adherence']['effects']['rules_mode']['F_art'])}, both <i>p</i> < .001), raising enforcement "
-        "on violating states from 5.6% (Rules Off) to 100.0% (Rules Active × Zero-Shot) and 97.2% (Rules Active × "
-        "Cluster-Adaptive), with zero prompting main effect (<i>F</i> = 0.01, <i>p</i> = .916); (2) <b>Exemplar "
-        "Entity Leakage Rate</b> showed a strong rules × prompting interaction, <i>F</i>(1, 140) = "
-        f"{n2(r3_a['leakage_rate']['effects']['interaction']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> "
-        f"= {nz(r3_a['leakage_rate']['effects']['interaction']['eta2_partial'])} (HC3 <i>F</i> = "
+        f"{n2(r3_a['rule_adherence']['effects']['rules_mode']['F_art'])}, both <i>p</i> < .001), with zero prompting "
+        "main effect (<i>F</i> = 0.01, <i>p</i> = .916); (2) <b>Exemplar Entity Leakage Rate</b> showed a strong "
+        f"rules × prompting interaction, <i>F</i>(1, 140) = {n2(r3_a['leakage_rate']['effects']['interaction']['F'])}, "
+        f"<i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
+        f"{nz(r3_a['leakage_rate']['effects']['interaction']['eta2_partial'])} (Sum-coded HC3 <i>F</i> = "
         f"{n2(r3_a['leakage_rate']['effects']['interaction']['F_hc3'])}; ART <i>F</i> = "
         f"{n2(r3_a['leakage_rate']['effects']['interaction']['F_art'])}, both <i>p</i> < .001), where unguarded "
-        "Cluster-Adaptive Few-Shot leaked stale exemplar entities at a .359 rate (55.6% incidence) but Rules Active "
-        "eliminated leakage to <b>0.0% (.000)</b>; (3) <b>Slot Coverage F<sub>1</sub></b> rose from .208/.485 to "
-        f"<b>.977/.952</b> under active rules, <i>F</i>(1, 140) = {n2(r3_a['slot_f1']['effects']['rules_mode']['F'])}, "
-        f"<i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r3_a['slot_f1']['effects']['rules_mode']['eta2_partial'])}; "
-        "and (4) <b>Style Alignment</b> was significantly boosted by Cluster-Adaptive Few-Shot, <i>F</i>(1, 140) = "
+        "<i>Cluster-Adaptive Few-Shot</i> leaked stale exemplar entities at a .359 rate (20/36 = 55.6% incidence) but "
+        "<i>Rules Active × Cluster-Adaptive</i> reduced detected leakage in the evaluated sample to <b>0.0% (.000, 0/36 "
+        "incidence; simple-effect Welch <i>t</i>(35) = 5.90, <i>p</i> < .001, Mann–Whitney <i>U</i> = 1008.0, "
+        "<i>p</i> < .001, Fisher's exact <i>p</i> = 4.68 × 10<sup>−8</sup>)</b>; (3) <b>Slot Coverage F<sub>1</sub></b> "
+        f"rose from .208/.485 to <b>.977/.952</b> under active rules, <i>F</i>(1, 140) = "
+        f"{n2(r3_a['slot_f1']['effects']['rules_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
+        f"{nz(r3_a['slot_f1']['effects']['rules_mode']['eta2_partial'])}; and (4) <b>Style Alignment</b> was "
+        f"significantly boosted by Cluster-Adaptive Few-Shot, <i>F</i>(1, 140) = "
         f"{n2(r3_a['style_cos']['effects']['prompt_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
         f"{nz(r3_a['style_cos']['effects']['prompt_mode']['eta2_partial'])}, making <b>Rules Active × Cluster-Adaptive "
         "Few-Shot</b> the unique Pareto-optimal cell."
@@ -418,10 +495,11 @@ def build_part2(D, ctx):
 
     r3_rows = []
     for row in c3:
+        rc_cell = r3_rar_cells[(row["rules_mode"], row["prompt_mode"])]
         r3_rows.append([
             f"{row['rules_mode']} × {row['prompt_mode'].replace(' Few-Shot', '')}",
             str(int(row["n"])),
-            f"{nz(row['rule_adherence_M'], 3)} ({nz(row['rule_adherence_SD'], 3)}) / {pct(100 * row['violating_adherence_M'], 1)}",
+            f"{nz(row['rule_adherence_M'], 3)} ({nz(row['rule_adherence_SD'], 3)}) | {pct(100 * rc_cell['viol_M'], 1)} / {pct(100 * rc_cell['comp_M'], 1)}",
             f"{nz(row['leakage_rate_M'], 3)} ({nz(row['leakage_rate_SD'], 3)}) / {pct(row['leakage_incidence_pct'], 1)}",
             f"{nz(row['slot_f1_M'], 3)} ({nz(row['slot_f1_SD'], 3)})",
             f"{nz(row['style_cos_M'], 3)} ({nz(row['style_cos_SD'], 3)})",
@@ -441,10 +519,10 @@ def build_part2(D, ctx):
         ])
     D.table(
         "Cell Means and 2 × 2 Factorial ANOVA Results for RQ3 Outcomes (N = 144)",
-        ["Experimental cell or ANOVA effect", "<i>n</i> or <i>df</i>", "Rule adherence <i>M</i> (<i>SD</i>) / Viol. %", "Exemplar leakage <i>M</i> (<i>SD</i>) / Inc. %", "Slot coverage F<sub>1</sub> <i>M</i> (<i>SD</i>)", "Style alignment <i>M</i> (<i>SD</i>)"],
+        ["Experimental cell or ANOVA effect", "<i>n</i> or <i>df</i>", "Rule Acc. <i>M</i> (<i>SD</i>) | Sens. / Spec.", "Exemplar leakage <i>M</i> (<i>SD</i>) / Inc. %", "Slot coverage F<sub>1</sub> <i>M</i> (<i>SD</i>)", "Style alignment <i>M</i> (<i>SD</i>)"],
         r3_rows,
-        note="Viol. % = enforcement rate on policy-violating scenarios (<i>n</i> = 18/cell); Inc. % = responses with ≥ 1 leaked entity. Dual-judge κ = .917.",
-        widths=[1.8, 0.55, 1.15, 1.15, 0.95, 0.9],
+        note="Rule Acc. = overall rule-decision accuracy (<i>n</i> = 36/cell); Sens. = violation enforcement sensitivity on violating scenarios (<i>n</i> = 18/cell; Rules <i>F</i>(1, 68) = 498.78, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = .880); Spec. = compliant-case acceptance specificity (1 − false_block, <i>n</i> = 18/cell; Rules <i>F</i>(1, 68) = 0.69, <i>p</i> = .408); Inc. % = responses with ≥ 1 leaked entity. Dual-judge κ = .917. For exemplar leakage, because three of the four balanced 2 × 2 cells (<i>n</i> = 36/cell) are identically .000 and only <i>Rules Off × Cluster-Adaptive</i> is non-zero (<i>M</i> = .35926), all three orthogonal +1/−1 Sum-coded contrasts <i>c<sub>A</sub></i> = (+1,+1,−1,−1), <i>c<sub>B</sub></i> = (−1,+1,−1,+1), and <i>c<sub>AB</sub></i> = (+1,−1,−1,+1) have identical contrast sum of squares <i>SS</i> = <i>n</i>(Σ<i>c<sub>j</sub>Ȳ<sub>j</sub></i>)<sup>2</sup> / Σ<i>c<sub>j</sub></i><sup>2</sup> = 36(.35926)<sup>2</sup> / 4 = 1.162 (equivalently, while the difference-of-differences interaction estimate −.359 is twice the marginal main-effect difference ±.180, its standard error √(4σ<sup>2</sup>/<i>n</i>) is also twice the marginal standard error √(σ<sup>2</sup>/<i>n</i>), yielding identical <i>t</i> = ±5.901, OLS <i>F</i>(1, 140) = <i>t</i><sup>2</sup> = 34.82, η<sub><i>p</i></sub><sup>2</sup> = .199, and Sum-coded HC3 <i>F</i> = 33.85, <i>p</i> < .001), whereas rank-based ART separates the main effects (<i>F</i> = 43.48) from the interaction (ART <i>F</i> = 2148.81, <i>p</i> < .001; simple-effect contrast within Cluster-Adaptive: Welch <i>t</i>(35) = 5.90, <i>p</i> < .001, Fisher's exact <i>p</i> = 4.68 × 10<sup>−8</sup>).",
+        widths=[1.75, 0.52, 1.25, 1.13, 0.95, 0.9],
         align=["l", "c", "c", "c", "c", "c"],
         split=True,
     )
@@ -461,15 +539,20 @@ def build_part2(D, ctx):
     c4 = r4_fin["cell_means"]
     con4 = {r["archetype"]: r for r in r4_fin["archetype_contrasts"]}
     D.para(
-        "Table 16 and Figure 8 report the 2 × 3 multi-turn simulation (<i>N</i> = 180 held-out dialogues, <i>n</i> = "
-        "30/cell across 2 prompting strategies × 3 refined archetypes; human baseline in Appendix E, Table E5 and "
-        "Figure E3). Blind evaluation of 45 simulated transcripts by <i>gemini-2.5-pro</i> confirmed 95.6% persona "
-        f"classification accuracy (43/45 vs. 33.3% chance, binomial <i>p</i> < .001, κ = {nz(pv4['cohen_kappa'], 3)}; "
-        "Table C3). On log-transformed turns to goal completion, the 2 × 3 ANOVA <b>rejected <i>H</i><sub>04</sub> "
-        f"(<i>p</i> < .001)</b>, with significant main effects of prompting, <i>F</i>(1, 174) = "
-        f"{n2(r4_a['log_turns']['effects']['prompt_mode']['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
-        f"{nz(r4_a['log_turns']['effects']['prompt_mode']['eta2_partial'])}, and archetype, <i>F</i>(2, 174) = "
-        f"{n2(r4_a['log_turns']['effects']['target_archetype']['F'])}, <i>p</i> = "
+        "Table 16 and Figure 8 report the 2 × 3 between-subjects multi-turn simulation across <b><i>N</i> = 180 unique, "
+        "independent held-out seed dialogues</b> (60 per archetype, partitioned into <i>n</i> = 30 distinct dialogues for "
+        "<i>Zero-Shot</i> and <i>n</i> = 30 distinct dialogues for <i>Cluster-Adaptive Few-Shot</i> with zero overlap; "
+        "human corpus baseline is in Appendix E, Table E5 and Figure E3). In this experiment, <i>total_turns</i> counts "
+        "total conversational turns (user plus assistant messages) until the simulated traveler issues "
+        "<code>[ACCEPT_BOOKING]</code>, and <i>Cluster-Adaptive Few-Shot</i> evaluates the combined package of the "
+        "<b>Verified Informed Slot Ledger</b> (forbidding re-asking any previously stated slot) and <b>archetype-specific "
+        "turn-economy policies</b>. Blind evaluation of 45 simulated transcripts by <i>gemini-2.5-pro</i> confirmed 95.6% "
+        f"within-simulation persona fidelity (43/45 vs. 33.3% chance, binomial <i>p</i> < .001, κ = "
+        f"{nz(pv4['cohen_kappa'], 3)}; Table C3). On log-transformed turns to goal completion, the 2 × 3 between-subjects "
+        f"ANOVA <b>rejected <i>H</i><sub>04</sub> (<i>p</i> < .001)</b>, with significant main effects of prompting, "
+        f"<i>F</i>(1, 174) = {n2(r4_a['log_turns']['effects']['prompt_mode']['F'])}, <i>p</i> < .001, "
+        f"η<sub><i>p</i></sub><sup>2</sup> = {nz(r4_a['log_turns']['effects']['prompt_mode']['eta2_partial'])}, and "
+        f"archetype, <i>F</i>(2, 174) = {n2(r4_a['log_turns']['effects']['target_archetype']['F'])}, <i>p</i> = "
         f"{nz(r4_a['log_turns']['effects']['target_archetype']['p'], 3)}, η<sub><i>p</i></sub><sup>2</sup> = "
         f"{nz(r4_a['log_turns']['effects']['target_archetype']['eta2_partial'])}, plus a <b>significant prompting × "
         f"archetype interaction</b>, <i>F</i>(2, 174) = {n2(r4_a['log_turns']['effects']['interaction']['F'])}, "
@@ -479,15 +562,23 @@ def build_part2(D, ctx):
         f"{n2(r4_a['log_turns']['effects']['interaction']['F_art'])}, both <i>p</i> < .001). Cluster-Adaptive Few-Shot "
         "compressed turns most strongly for <b>Rigid-Constraint Seekers</b> (−42.7%, 8.73 → 5.00 turns, Welch "
         f"<i>t</i><sub>log</sub> = {n2(con4['Rigid-Constraint Seeker']['t_welch_log'])}, <i>p</i> < .001, <i>d</i> = "
-        f"{n2(con4['Rigid-Constraint Seeker']['cohen_d'])}) by proactively presenting both 4-star and flexible-date "
-        "5-star trade-offs when the exact-date 5-star option exceeded budget, followed by <b>Decisive Bookers</b> "
-        f"(−34.2%, 7.60 → 5.00 turns, <i>t</i><sub>log</sub> = {n2(con4['Decisive Booker']['t_welch_log'])}, "
-        f"<i>d</i> = {n2(con4['Decisive Booker']['cohen_d'])}) and <b>Open Explorers</b> (−29.5%, 7.47 → 5.27 turns, "
-        f"<i>t</i><sub>log</sub> = {n2(con4['Open Explorer']['t_welch_log'])}, <i>d</i> = "
-        f"{n2(con4['Open Explorer']['cohen_d'])}). Redundant Elicitation Rate dropped from .194 (DB), .061 (OE), and "
-        ".072 (RCS) in Zero-Shot to <b>0.000</b> across all archetypes in Cluster-Adaptive Few-Shot, main effect "
-        f"<i>F</i>(1, 174) = {n2(r4_a['rer']['effects']['prompt_mode']['F'])}, <i>p</i> < .001, interaction "
-        f"<i>F</i>(2, 174) = {n2(r4_a['rer']['effects']['interaction']['F'])}, <i>p</i> < .001."
+        f"{n2(con4['Rigid-Constraint Seeker']['cohen_d'])}) by proactively presenting both 4-star exact-date (Option A) "
+        "and 5-star flexible-date (Option D) trade-offs when the exact-date 5-star option (Option C) exceeded budget, "
+        f"followed by <b>Decisive Bookers</b> (−34.2%, 7.60 → 5.00 turns, <i>t</i><sub>log</sub> = "
+        f"{n2(con4['Decisive Booker']['t_welch_log'])}, <i>d</i> = {n2(con4['Decisive Booker']['cohen_d'])}) and "
+        f"<b>Open Explorers</b> (−29.5%, 7.47 → 5.27 turns, <i>t</i><sub>log</sub> = "
+        f"{n2(con4['Open Explorer']['t_welch_log'])}, <i>d</i> = {n2(con4['Open Explorer']['cohen_d'])}). Notably, the "
+        "<i>M</i> = 5.00 (<i>SD</i> = 0.00) result for <i>Decisive Bookers</i> and <i>Rigid-Constraint Seekers</i> under "
+        "<i>Cluster-Adaptive Few-Shot</i> reflects a structural protocol floor effect: because every session requires "
+        "Turn 1 (user states core trip slots), Turn 2 (assistant asks for the single remaining unknown slot, budget), "
+        "Turn 3 (user states budget), Turn 4 (assistant presents tailored package offer[s]), and Turn 5 (user issues "
+        "<code>[ACCEPT_BOOKING]</code>, guarded by <code>ex_idx ≥ 1</code> and budget confirmation in "
+        "<i>step4_rq4_simulation.py</i>), 5 total conversational turns is the theoretical minimum completion length, "
+        "which 30/30 episodes in those two cells achieved on the first offer turn (motivating our paired HC3, ART, and "
+        "Mann–Whitney <i>U</i> checks). Redundant Elicitation Rate dropped from .194 (DB), .061 (OE), and .072 (RCS) in "
+        "Zero-Shot to <b>0.000</b> across all archetypes in Cluster-Adaptive Few-Shot, main effect <i>F</i>(1, 174) = "
+        f"{n2(r4_a['rer']['effects']['prompt_mode']['F'])}, <i>p</i> < .001, interaction <i>F</i>(2, 174) = "
+        f"{n2(r4_a['rer']['effects']['interaction']['F'])}, <i>p</i> < .001."
     )
 
     r4_rows = []
@@ -528,7 +619,7 @@ def build_part2(D, ctx):
         "Cell Means, Archetype Contrasts, and 2 × 3 Factorial ANOVA Results for Multi-Turn Turn Economy (N = 180)",
         ["Archetype × Prompting cell or ANOVA effect", "Total turns <i>M</i> (<i>SD</i>)", "Log turns <i>M</i> (<i>SD</i>)", "RER <i>M</i> (<i>SD</i>)", "Turn reduction / HC3 check", "Welch contrast / ART check"],
         r4_rows,
-        note="All 180 dialogues achieved 100.0% goal completion. Simulator persona fidelity validation (<i>gemini-2.5-pro</i>, <i>n</i> = 45): 95.6% accuracy, κ = .933.",
+        note="<i>N</i> = 180 distinct held-out seed dialogues (<i>n</i> = 30 unique dialogues/cell; 100.0% goal completion). Total turns = user + assistant messages (protocol minimum = 5.00 turns: U1 → A1 → U2 → A2 → U3). Within-simulation persona fidelity audit (<i>gemini-2.5-pro</i>, <i>n</i> = 45): 95.6% accuracy, κ = .933.",
         widths=[1.85, 0.9, 0.9, 0.85, 1.0, 1.0],
         align=["l", "c", "c", "c", "c", "c"],
         split=True,
@@ -543,28 +634,34 @@ def build_part2(D, ctx):
     # ------------------------------------------------------------------ Synthesis
     D.heading("Technical Interpretation, Business Significance, and Synthesis of Conclusions", 2)
     D.para(
-        "<i>Technical synthesis across RQ1–RQ4.</i> Together, the four experiments establish a unified causal chain. "
-        "First, RQ1 and RQ2 prove that <b>in-context style adaptation is bounded by upstream representation and "
-        "routing quality</b>: whole-dialogue primary archetypes suffered from outcome confounding and near-chance "
-        "early routing (39.4%, κ = .24), yielding a null RQ2 style effect (<i>p</i> = .211); truncating to opening "
-        "user behavior via the <i>Blocks</i> representation and routing in that exact space (70.1% accuracy at "
-        "<i>M</i> = 5; 97.3% at <i>M</i> = 9) unlocked significant style convergence (<i>p</i> < .001, "
-        "η<sub><i>p</i></sub><sup>2</sup> = .234) and reduced pacing error from 10.12 to 3.87 words (<i>p</i> = .007). "
-        "Second, RQ3 proves <b>functional orthogonality with protective interaction</b>: prompting governs style "
-        "(<i>F</i> = 24.00, <i>p</i> < .001), whereas declarative verification governs policy compliance (<i>F</i> = "
-        "43.92, <i>p</i> < .001) and slot grounding (<i>F</i> = 489.52, <i>p</i> < .001) while neutralizing the 35.9% "
-        "entity leakage of unguarded few-shot exemplars. Third, RQ4 proves that pairing archetype-tailored "
-        "recommendation policies with a Verified Informed Slot Ledger compresses multi-turn sessions by 29.5%–42.7% "
-        "and eliminates redundant slot questions."
+        "<i>Technical synthesis across RQ1–RQ4.</i> Together, the four experiments form an integrated four-stage "
+        "research progression. First, RQ1 and RQ2 demonstrate that <b>in-context style adaptation is bounded by upstream "
+        "representation and routing quality</b>: whole-dialogue primary archetypes suffered from outcome confounding and "
+        "near-chance early routing (39.4%, κ = .24), yielding a null RQ2 style effect (<i>p</i> = .211); truncating to "
+        "opening user behavior via the 46-d <i>Blocks</i> representation (bootstrap ARI = .89/.87) and routing in that "
+        "exact space (70.1% raw agreement, κ = .535 at <i>m</i> = 5; 97.3% same-feature boundary consistency, κ = .958 at "
+        "<i>m</i> = 9) unlocked significant structural style convergence on de-lexicalized SBERT cosine (<i>p</i> < .001, "
+        "η<sub><i>p</i></sub><sup>2</sup> = .234) and reduced pacing error from 10.12 to 3.87 words (<i>p</i> = .007) "
+        "while preserving semantic content (Gemini cosine and BERTScore F<sub>1</sub> <i>p</i> ≥ .315). Second, RQ3 "
+        "demonstrates <b>functional orthogonality with protective interaction</b>: adaptive prompting governs discourse "
+        "style (<i>F</i> = 24.00, <i>p</i> < .001), whereas the declarative governance layer governs policy violation "
+        "enforcement sensitivity (5.6% → 98.6%, <i>F</i> = 498.78, <i>p</i> < .001; overall accuracy <i>F</i> = 43.92, "
+        "<i>p</i> < .001) and slot grounding (<i>F</i> = 489.52, <i>p</i> < .001) while reducing the 35.9% entity "
+        "leakage (55.6% incidence) of unguarded few-shot exemplars to zero detected leakage in the evaluated sample. "
+        "Third, RQ4 demonstrates across 180 independent multi-turn simulations that pairing archetype-tailored "
+        "recommendation policies with a Verified Informed Slot Ledger compresses total conversational turns by "
+        "29.5%–42.7% and eliminates redundant slot questions."
     )
     D.para(
-        "<i>Practical business significance.</i> For an online travel agency or hospitality contact center handling "
-        "1,000,000 monthly sessions, reducing mean conversation length from 7.93 turns (Zero-Shot) to 5.09 turns "
-        "(Cluster-Adaptive)—a 35.8% reduction (2.84 turns)—saves 2.84 million LLM generation calls per month, cutting "
-        "inference cost and session latency by over one-third. Simultaneously, eliminating redundant slot questions "
-        "(10.9% → 0.0%), preventing exemplar price/promo hallucinations (55.6% incidence → 0.0%), and raising policy "
-        "enforcement on invalid bookings from 5.6% to 98.6% directly mitigates chargebacks, regulatory penalties, and "
-        "booking abandonment."
+        "<i>Practical business significance (illustrative operational projection).</i> As an illustrative operational "
+        "scenario, if an online travel agency or hospitality contact center handling 1,000,000 monthly sessions achieved "
+        "a comparable turn reduction to that observed in the RQ4 simulation—reducing mean conversation length from 7.93 "
+        "total turns (Zero-Shot) to 5.09 total turns (Cluster-Adaptive), a 35.8% reduction (2.84 turns per session)—it "
+        "would save approximately 2.84 million message-generation calls per month, lowering inference compute and "
+        "interaction latency by roughly one-third. Simultaneously, reducing redundant slot questions (10.9% → 0.0% in "
+        "simulation), preventing exemplar price/promo leakage (55.6% incidence → 0.0% detected), and raising policy "
+        "violation enforcement sensitivity from 5.6% to 98.6% (while maintaining 88.9% compliant-case acceptance) "
+        "directly targets key drivers of customer drop-off and compliance risk."
     )
 
     # ================================================================== 6. IMPLEMENTATION, LIMITATIONS, AND FUTURE SCOPE
@@ -599,21 +696,50 @@ def build_part2(D, ctx):
 
     D.heading("Study Limitations and Threats to Validity", 2)
     D.para(
-        "Four limitations bound this study: (1) <b>continuous archetype geometry</b>, as modest Silhouette scores "
-        "(.099–.268) indicate that traveler styles form a continuous behavioral manifold rather than discrete "
-        "clusters; (2) <b>early-turn routing latency</b>, since high-agreement <i>Blocks</i> routing (κ = .535–.958) "
-        "requires 5–9 user messages, leaving Turn 1 cold-start routing noisy; (3) <b>corpus and synthetic Tier-2 "
-        "scope</b>, because Frames uses role-players and Tier-2 rules (visa, passport, discount caps) required "
-        "synthetic injection in RQ3; and (4) <b>simulated users in RQ4</b>, where cooperative LLM personas (despite "
-        "95.6% fidelity, κ = .933) may yield larger turn reductions than noisy live consumer traffic."
+        "Five limitations bound this study: (1) <b>continuous archetype geometry and unsupervised reference labels</b>, "
+        "as modest <i>K</i>-Means Silhouette scores (.094 on 46-d <i>Blocks</i>; .147–.161 across MiniLM and Gemini "
+        "embeddings) indicate that traveler styles form a continuous behavioral manifold rather than discrete islands, "
+        "and prefix routing κ (.535 at <i>m</i> = 5; .958 same-feature boundary consistency at <i>m</i> = 9) is evaluated "
+        "against unsupervised <i>M</i> = 9 <i>K</i>-Means reference clusters rather than external human persona labels; "
+        "(2) <b>early-turn routing latency</b>, since moderate-to-high <i>Blocks</i> routing requires 5–9 user messages, "
+        "leaving Turn 1 cold-start routing noisy; (3) <b>bundled multi-component treatments in RQ2, RQ3, and RQ4</b>, "
+        "since RQ2 evaluated <i>Cluster-Adaptive Few-Shot</i> as a joint package (archetype-partitioned FAISS exemplars + "
+        "routed archetype pacing directive), RQ3 evaluated <i>Rules Active</i> as a joint governance package (declarative "
+        "<i>RuleEngine</i> + [SLOT] masking + post-generation regex sanitization), and RQ4 evaluated the <i>Verified "
+        "Informed Slot Ledger</i> jointly with archetype-specific turn-economy policies; (4) <b>corpus and synthetic "
+        "Tier-2 scope</b>, because Frames uses role-players and Tier-2 rules (visa, passport, discount caps) required "
+        "synthetic injection in RQ3; and (5) <b>simulated users and protocol floor in RQ4</b>, where cooperative LLM "
+        "user simulators (validated for within-simulation persona fidelity at 95.6%, κ = .933, rather than live human "
+        "traffic) and the 5-turn minimum protocol boundary (<i>M</i> = 5.00, <i>SD</i> = 0.00 for two cells) may "
+        "overstate turn reductions relative to noisy production sessions."
     )
 
     D.heading("Future Scope and Research Extensions", 2)
     D.para(
-        "Future work should pursue: (1) <b>soft-mixture routing</b> that blends exemplars using posterior cluster "
-        "probabilities for boundary travelers; (2) <b>turn-by-turn Bayesian re-routing</b> from Turn 1 onward; "
-        "(3) <b>cross-model and multilingual benchmarking</b> on open-weights LLMs (Llama 3, Qwen) and voice channels; "
-        "and (4) <b>live OTA A/B testing</b> to measure real-world conversion lift, abandonment, and CSAT."
+        "Future doctoral research on <i>Dialogue Clustering and Methodologies to be Adapted for Human-Like "
+        "Conversations</i> should pursue six extensions: (1) <b>orthogonal factorial ablations across RQ2, RQ3, and "
+        "RQ4</b>—first, expanding the 3-condition RQ2 design into a 5-condition experiment (<b>Condition A</b>: Examples "
+        "<i>None</i>, Directive <i>Off</i>; <b>Condition B</b>: Examples <i>Global/Static</i>, Directive <i>Off</i>; "
+        "<b>Condition C</b>: Examples <i>Archetype-Partitioned</i>, Directive <i>Off</i>; <b>Condition D</b>: Examples "
+        "<i>Global/Static</i>, Directive <i>On</i>; and <b>Condition E</b>: Examples <i>Archetype-Partitioned</i>, "
+        "Directive <i>On</i>) at <i>N</i> ≥ 60 dialogues to orthogonally isolate explicit pacing directives from "
+        "sub-index exemplars (preliminary <i>N</i> = 33 diagnostic testing shows that when directives are <i>Off</i>, "
+        "<i>Condition C</i> improves style convergence over <i>Condition B</i> from .453 to .511, <i>p</i> = .028, and "
+        "calibrates length to 15.03 words vs. the 14.85-word human benchmark, whereas when directives are <i>On</i>, the "
+        "explicit routed directive dominates single-turn style at .597–.610 while retrieved exemplars tighten pacing "
+        "variance); second, ablating pre-generation [SLOT] masking versus post-generation regex sanitization in RQ3; and "
+        "third, crossing the <i>Verified Informed Slot Ledger</i> (Off/On) with <i>Archetype Action Policy</i> "
+        "(Generic/Adaptive) in a 2 × 2 × 3 RQ4 design to separate ledger memory gains from persona policy gains; "
+        "(2) <b>hierarchical context × behavior clustering and influencing-factor attribution</b>, developing a two-tier "
+        "taxonomy (<i>C</i> × <i>K</i> = 24–36 micro-clusters over <i>N</i> > 50,000 enterprise dialogues) that "
+        "separates macro situational trip regimes (party composition, budget stakes, travel lead window, and destination "
+        "familiarity) from within-regime behavioral negotiation personas while avoiding the sample starvation and 35.9% "
+        "entity leakage of naive 500-bucket parameter clustering; (3) <b>soft-mixture manifold routing</b> that blends "
+        "exemplars using posterior probabilities for boundary travelers; (4) <b>turn-by-turn Bayesian persona tracking</b> "
+        "from Turn 1 onward to capture mid-session persona drift; (5) <b>two-stage quotation-to-conversion funnel "
+        "modeling</b> that decouples Stage 1 in-chat quotation agreement from Stage 2 post-quote purchase conversion "
+        "under exogenous competitor and lodging controls; and (6) <b>constrained neuro-symbolic reinforcement learning "
+        "and live OTA A/B testing</b> with human travelers and human domain raters across multilingual settings."
     )
 
     # ================================================================== REFERENCES
@@ -835,12 +961,20 @@ def build_part2(D, ctx):
         "Tables D1–D6 and Figures D1–D4 provide the complete diagnostic tables and visual plots supporting the RQ1 "
         "primary clustering benchmark and the representation × truncation sensitivity analysis."
     )
+    d1_rows = [
+        [f"Panel A (MiniLM-L6-v2 whole): <i>k</i> = {int(r.k)}", nz(r.silhouette, 3), n2(r.davies_bouldin, 3), f"Inertia = {n2(r.inertia, 1)}", f"{n2(r.smallest_cluster_pct, 1)}%"]
+        for r in k_sel.itertuples()
+    ] + [
+        [f"Panel B (46-d Blocks, <i>M</i> = 9): <i>k</i> = {b['k']}", f"{nz(b['sil'], 3)} (cal. {nz(b['cal_sil'], 3)})", n2(b["db"], 3), f"ARI = {nz(b['ari'], 3)} ({n2(b['core_pct'], 1)}% core)", f"{n2(b['min_pct'], 1)}% — {b['note']}"]
+        for b in blocks_k_sel
+    ]
     D.table(
-        "Choice of Number of Clusters k on the Golden Partition (MiniLM Trajectory Embeddings)",
-        ["<i>k</i>", "Cosine Silhouette", "Davies–Bouldin index", "Within-cluster inertia", "Smallest cluster (%)"],
-        [[str(int(r.k)), nz(r.silhouette, 3), n2(r.davies_bouldin, 3), n2(r.inertia, 1), n2(r.smallest_cluster_pct, 1)] for r in k_sel.itertuples()],
-        widths=[0.6, 1.4, 1.5, 1.5, 1.5],
-        align=["c"] * 5,
+        "Choice of Number of Clusters k on the Golden Partition Across Initial MiniLM and Final 46-d Blocks (M = 9) Representations",
+        ["Representation & <i>k</i>", "Cosine Silhouette", "Davies–Bouldin index", "Inertia / Bootstrap ARI", "Smallest cluster (%) & diagnostic"],
+        d1_rows,
+        note="On the final 46-d <i>Blocks</i> (<i>M</i> = 9) representation (Panel B), <i>k</i> = 3 achieves the lowest (best) Davies–Bouldin index (2.647), high bootstrap stability (ARI = .888 in the truncation grid; .869 in the 6-config ablation), and balanced cluster sizes (≥ 25.5%), whereas <i>k</i> = 2 collapses <i>Decisive Booker</i> and <i>Rigid-Constraint Seeker</i> and <i>k</i> ≥ 4 fails stability/size thresholds.",
+        widths=[1.85, 1.05, 0.95, 1.25, 1.4],
+        align=["l", "c", "c", "c", "l"],
         label="D1",
         split=True,
     )
@@ -1024,9 +1158,10 @@ def build_part2(D, ctx):
     b4_df = base4r.reindex(ARCH_REF)
     D.table(
         "Human Wizard Baseline of Turn Economy and Redundant Elicitation by Refined Archetype (Frames)",
-        ["Refined user archetype", "<i>n</i>", "Turns <i>M</i> (<i>SD</i>)", "RER <i>M</i> (<i>SD</i>)", "Wizard request turns <i>M</i>"],
+        ["Refined user archetype", "<i>n</i>", "Whole-dialogue turns <i>M</i> (<i>SD</i>)", "RER <i>M</i> (<i>SD</i>)", "Wizard request turns <i>M</i>"],
         [[a, str(int(r.n)), f"{n2(r.turns_M)} ({n2(r.turns_SD)})", f"{nz(r.rer_M, 3)} ({nz(r.rer_SD, 3)})", n2(r.req_turns_M)] for a, r in b4_df.iterrows()],
-        widths=[1.9, 0.6, 1.3, 1.3, 1.4],
+        note="Turns in Table E5 reflect total observed human-wizard turns (user + wizard messages) across complete archival Frames transcripts (including post-offer discussion and non-booking endings), whereas Table 16 (RQ4) measures total conversational turns until package agreement (<code>[ACCEPT_BOOKING]</code>) in closed-loop simulation.",
+        widths=[1.85, 0.55, 1.35, 1.3, 1.45],
         align=["l", "c", "c", "c", "c"],
         label="E5",
         split=True,
@@ -1034,3 +1169,142 @@ def build_part2(D, ctx):
     D.figure("Observed Slot Completeness by Corpus", os.path.join(FIG_INT, "fig_eda_slots.png"), width=4.6, label="E1")
     D.figure("Primary RQ2 Results on Unrefined Whole-Dialogue Archetypes", os.path.join(FIG_INT, "fig_rq2_results.png"), width=5.2, label="E2")
     D.figure("Human Wizard Baseline of Turn Economy and Redundant Elicitation by Refined Archetype", os.path.join(FIG_INT, "fig_rq4_baseline_refined.png"), width=5.2, label="E3")
+
+    # Appendix F
+    D.heading("Appendix F", 1, new_page=True)
+    D.heading("Derivation of User Archetype Cluster Names and Deterministic Centroid-Mapping Protocol", 1, toc=False)
+    D.para(
+        "Unsupervised clustering algorithms such as <i>K</i>-Means output anonymous integer cluster identifiers "
+        "(<code>0</code>, <code>1</code>, <code>2</code>) rather than semantic persona names, and those integer "
+        "identifiers are invariant up to permutation across random initializations (the <i>label-switching problem</i>). "
+        "To ensure that human-interpretable archetype labels are assigned reproducibly without manual post-hoc "
+        "cherry-picking, both the primary whole-dialogue clustering pipeline (<i>src/interim_pipeline/"
+        "step2_rq1_clustering.py</i>) and the refined opening-prefix clustering pipeline (<i>src/interim_pipeline/"
+        "step2i_rq1_refined_archetypes.py</i>) apply pre-declared, deterministic Python centroid-mapping rules to the "
+        "golden-partition cluster means. Table F1 documents the exact sequential decision rule, distinguishing "
+        "centroid criterion, and resulting golden-partition profile for each primary and refined archetype."
+    )
+    D.table(
+        "Deterministic Centroid-Mapping Rules for Primary and Refined User Archetypes",
+        [
+            "Clustering taxonomy & script",
+            "Step & deterministic Python rule on cluster centroid means",
+            "Assigned archetype name",
+            "Distinguishing golden-partition centroid signature (<i>N</i> = 933)",
+        ],
+        [
+            [
+                "Primary Whole-Dialogue Archetypes (<i>step2_rq1_clustering.py</i>)",
+                "Step 1: <code>idxmax(turns_M)</code> among the 3 clusters",
+                "Guided Explorer",
+                "Longest dialogues (<i>M</i> = 19.65 turns, <i>n</i> = 187, 20.0%); highest option exploration across whole transcripts",
+            ],
+            [
+                "Primary Whole-Dialogue Archetypes (<i>step2_rq1_clustering.py</i>)",
+                "Step 2: <code>idxmax(revisions)</code> among the remaining 2 clusters",
+                "Constraint Negotiator",
+                "Highest slot-revision count (<i>M</i> = 1.98 revisions, <i>M</i> = 15.80 turns, <i>n</i> = 351, 37.6%)",
+            ],
+            [
+                "Primary Whole-Dialogue Archetypes (<i>step2_rq1_clustering.py</i>)",
+                "Step 3: Remaining cluster ID",
+                "Direct Transactional",
+                "Shortest whole-dialogue sessions (<i>M</i> = 11.98 turns, <i>n</i> = 395, 42.3%); lowest revision count",
+            ],
+            [
+                "Refined Opening-Prefix Archetypes (<i>step2i_rq1_refined_archetypes.py</i>)",
+                "Step 1: <code>idxmax(destination_flexibility)</code> across the 3 <i>Blocks</i> clusters (<i>M</i> = 9)",
+                "Open Explorer",
+                f"Highest destination flexibility ({n2(oe_r.destination_flexibility)}/5.0) and exploration breadth ({n2(oe_r.exploration_breadth)}/5.0); longest dialogues ({n2(oe_r.turns_M)} turns; <i>n</i> = {int(oe_r.n)}, {n2(oe_r.pct, 1)}%)",
+            ],
+            [
+                "Refined Opening-Prefix Archetypes (<i>step2i_rq1_refined_archetypes.py</i>)",
+                "Step 2: <code>idxmax(decisiveness)</code> among the remaining 2 clusters",
+                "Decisive Booker",
+                f"Highest decisiveness ({n2(db_r.decisiveness)}/5.0), politeness ({n2(db_r.politeness)}/5.0), and specific trip booking goal ({n2(db_r.goal_booking_pct, 1)}%; <i>n</i> = {int(db_r.n)}, {n2(db_r.pct, 1)}%)",
+            ],
+            [
+                "Refined Opening-Prefix Archetypes (<i>step2i_rq1_refined_archetypes.py</i>)",
+                "Step 3: Remaining cluster ID",
+                "Rigid-Constraint Seeker",
+                f"Lowest destination/date flexibility ({n2(rc_r.destination_flexibility)}/{n2(rc_r.date_flexibility)}) and detail orientation ({n2(rc_r.detail_orientation)}/5.0); highest non-booking rate under rigid constraints ({n2(rc_r.no_option_pct, 1)}% no suitable option; <i>n</i> = {int(rc_r.n)}, {n2(rc_r.pct, 1)}%)",
+            ],
+        ],
+        note="All centroid-mapping rules are evaluated strictly on golden-partition means (<i>D</i><sub>gold</sub>, <i>n</i> = 933) after fitting <i>K</i>-Means (<i>k</i> = 3, seed = 42). Held-out test dialogues (<i>D</i><sub>test</sub>, <i>n</i> = 401) inherit the mapped archetype name of their nearest golden centroid.",
+        widths=[1.45, 1.85, 1.25, 1.95],
+        align=["l", "l", "l", "l"],
+        label="F1",
+        split=True,
+    )
+
+    # Appendix G
+    D.heading("Appendix G", 1, new_page=True)
+    D.heading("Role, Architecture, and Validation Scope of Judge and Annotator LLMs", 1, toc=False)
+    D.para(
+        "A critical methodological principle of this study is that <b>all primary hypothesis tests (<i>H</i><sub>01</sub> "
+        "through <i>H</i><sub>04</sub>) are anchored in deterministic mathematical and programmatic Python verification "
+        "metrics</b> rather than subjective LLM preference scores. Specifically, RQ1 cluster quality is evaluated via "
+        "mathematical Silhouette, Davies–Bouldin, Calinski–Harabasz, and Adjusted Rand Index formulas; RQ2 style "
+        "convergence and pacing calibration are evaluated via deterministic non-Gemini encoders (<i>all-MiniLM-L6-v2</i> "
+        "cosine, <i>roberta-large</i> BERTScore <i>F</i><sub>1</sub>, and exact word-count error); RQ3 exemplar entity "
+        "leakage (ELR) and slot grounding <i>F</i><sub>1</sub> are computed by deterministic Python string/set verifiers "
+        "(<i>src/final_pipeline/metrics.py</i>); and RQ4 turn economy (turns to agreed package quotation and Redundant "
+        "Elicitation Rate) is computed by deterministic turn counters and regex slot-ledger matching."
+    )
+    D.para(
+        "Within this architecture, LLMs serve two strictly bounded measurement and validation functions: (a) in RQ1, "
+        "<i>gemini-2.5-flash</i> (at temperature = 0) acts as a <b>structured behavioral codebook annotator</b> prior to "
+        "<i>K</i>-Means clustering, extracting the 16-field <i>UserBehaviour</i> schema (validated via test–retest "
+        "κ<sub><i>w</i></sub> = .87–.96 and ground-truth Frames dialogue-act correlations ρ = .30–.73; Table C2); and "
+        "(b) in RQ3 and RQ4, the larger <i>gemini-2.5-pro</i> model serves strictly as an <b>independent cross-verification "
+        "and quality-control validator</b> (Table C3). Importantly, the independent Judge LLM does not invent or "
+        "contribute any standalone performance metric to firm up the paper's statistical conclusions; rather, it acts "
+        "as an methodological gatekeeper. During the RQ3 pilot phase, cross-checking outputs against the deterministic "
+        "verifier identified a prompt-ordering sensitivity (<i>pilot_v1</i> → <i>pilot_v2</i>) that was resolved prior "
+        "to full execution. In the final experiments, because the independent <i>gemini-2.5-pro</i> validator strongly "
+        "corroborated both the RQ3 policy evaluations (95.8% agreement, κ = .917 with <i>gemini-2.5-flash</i>; 93.1% "
+        "agreement, κ = .861 with the deterministic regex verifier) and the RQ4 simulated customer personas (95.6% "
+        "blind classification accuracy, κ = .933), no manual re-annotation or rework was required. Table G1 summarizes "
+        "the exact role, deterministic counterpart, and gatekeeping outcome of every LLM annotator and judge in the "
+        "pipeline."
+    )
+    D.table(
+        "Functional Scope, Primary Deterministic Metrics, and Cross-Verification Role of Judge and Annotator LLMs Across RQ1–RQ4",
+        [
+            "Research question & pipeline stage",
+            "Primary hypothesis-test metrics (Deterministic / Mathematical)",
+            "LLM annotator / Judge model & role",
+            "Cross-verification agreement & gatekeeping outcome",
+        ],
+        [
+            [
+                "RQ1: Opening-Prefix Behavioral Annotation (<i>step2e_llm_user_annotation.py</i>)",
+                "Cosine Silhouette, Davies–Bouldin, Calinski–Harabasz, Bootstrap ARI (.89 truncation grid / .87 ablation), and <i>Blocks</i> prefix-to-cluster κ (.359–.958)",
+                "<b>Codebook Annotator (<i>gemini-2.5-flash</i>, temp = 0):</b> Extracts Fields 1–13 (clustering inputs) and Fields 14–16 (audit-only) before <i>K</i>-Means runs; does not name clusters.",
+                "Test–retest κ<sub><i>w</i></sub> = .87–.96 (mean .91) on ordinal Fields 1–10; κ = .75–.98 on Fields 11–16; significant Spearman ρ = .30–.73 (<i>p</i> < .001) against ground-truth Frames acts (Table C2).",
+            ],
+            [
+                "RQ2: Style Convergence & Pacing Calibration (<i>step2_rq2_refined.py</i>)",
+                "Hybrid & pure SBERT style cosine (<i>all-MiniLM-L6-v2</i>), BERTScore <i>F</i><sub>1</sub> (<i>roberta-large</i>), and absolute word-count error (|Words<sub>gen</sub> − Words<sub>human</sub>|)",
+                "<b>No Judge LLM used:</b> All evaluation encoders are deterministic, non-Gemini neural and lexical metrics.",
+                "Eliminates same-family LLM evaluation bias in RQ2; RM-ANOVA and Friedman tests confirm <i>p</i> < .001 on both hybrid and pure SBERT style convergence.",
+            ],
+            [
+                "RQ3: Policy Compliance Dual-Judge Audit (<i>step3_rq3_experiment.py</i>)",
+                "Deterministic regex rule verifier (<i>det_pass</i>), exact Exemplar Entity Leakage Rate (ELR), and deterministic Slot Grounding <i>F</i><sub>1</sub>",
+                "<b>Primary Judge (<i>gemini-2.5-flash</i>) + Independent Validator Judge (<i>gemini-2.5-pro</i>):</b> Cross-verifies natural-language enforcement of 5 enterprise policy rules on stratified audit subsample (<i>n</i> = 48).",
+                "Guided <i>pilot_v1</i> → <i>pilot_v2</i> prompt ordering fix; final dual-judge raw agreement = 95.8%, Cohen's κ = .917 (PABAK = .917), and 93.1% agreement (κ = .861) with deterministic regex verification (Table C3).",
+            ],
+            [
+                "RQ4: Blind Simulator Persona Fidelity Audit (<i>step4_rq4_simulation.py</i>)",
+                "Deterministic turn counter to agreed package quotation (<i>total_turns</i>, <i>log_turns</i>), regex Redundant Elicitation Rate (RER), and goal completion rate",
+                "<b>Independent Blind Validator (<i>gemini-2.5-pro</i>):</b> Reads simulated customer transcripts (<i>n</i> = 45, 15 per archetype) blinded to true labels to verify persona fidelity; contributes zero metrics to RQ4 ANOVA.",
+                "Classified 43/45 simulated users into their intended archetype (95.6% accuracy vs. 33.3% chance, Cohen's κ = .933, <i>p</i> < .001; Table C3), validating the multi-turn simulation environment.",
+            ],
+        ],
+        note="All LLM annotation and judge calls use deterministic decoding (temperature = 0.0, Pydantic JSON schema enforcement) and are cached in <i>data/interim/</i> and <i>data/final/</i> for 100% offline reproducibility.",
+        widths=[1.35, 1.65, 1.75, 1.75],
+        align=["l", "l", "l", "l"],
+        label="G1",
+        split=True,
+    )

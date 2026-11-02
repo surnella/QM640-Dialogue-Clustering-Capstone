@@ -81,39 +81,59 @@ def build_part1(D, ctx, toc_pages=None):
 
     # ================================================================== ABSTRACT
     D.heading("Abstract", 1)
-    abstract_text = (
-        "Online travel agencies increasingly deploy large language model (LLM) assistants for package booking, "
-        "yet static prompts ignore traveler decision-making heterogeneity, while naive few-shot prompting leaks stale "
-        "entities and violates booking policies. This study evaluates a neuro-symbolic, cluster-adaptive framework "
-        "coupling early-turn behavioral-semantic archetype routing and slot-masked FAISS retrieval with a declarative "
-        f"rule engine. Using {n2(ctx['n_frames_raw'], 0)} Microsoft Frames dialogues ({n2(fq.n_analytic, 0)} analytic: "
-        f"golden <i>n</i> = {s1['n_gold']}, test <i>n</i> = {s1['n_test']}) and {n2(mq.n_analytic, 0)} MultiWOZ 2.2 "
-        "dialogues, four hypotheses were tested with Sentence-BERT, Gemini 3,072-d embeddings, Gemini 2.5 Flash, "
-        "and Gemini 2.5 Pro. For RQ1, clustering algorithms differed across 159 runs, "
-        f"<i>F</i>(2, 156) = {n2(an1['F'])}, <i>p</i> < .001, η<sup>2</sup> = {nz(an1['eta2'])}, and combining Gemini "
-        "prefix embeddings with a 16-field behavioral profile on the first nine user messages yielded three stable "
-        "refined archetypes—<i>Decisive Booker</i>, <i>Open Explorer</i>, and <i>Rigid-Constraint Seeker</i> "
-        f"(ARI = .76; held-out routing κ = {nz(rt_diag.loc[5, 'cohen_kappa'], 3)} at "
-        f"<i>M</i> = 5 to {nz(rt_diag.loc[9, 'cohen_kappa'], 3)} at <i>M</i> = 9). For RQ2 (<i>N</i> = {r2_ref['N']} "
-        f"repeated-measures), cluster-adaptive prompting increased style convergence, <i>F</i>({n2(r2_sa['df1_gg'])}, "
-        f"{n2(r2_sa['df2_gg'])}) = {n2(r2_sa['F'])}, <i>p</i> < .001, η<sub><i>p</i></sub><sup>2</sup> = "
-        f"{nz(r2_sa['eta2_partial'])}, and cut pacing error to "
-        f"{n2(r2_ref['results']['word_abs_err']['desc']['Cluster-Adaptive Few-Shot'][0])} words, <i>F</i> = "
-        f"{n2(r2_we['F'])}, <i>p</i> {pv(r2_we['p_gg'])}. For RQ3 (<i>N</i> = {r3_fin['N']} 2 × 2 factorial; "
-        f"dual-judge κ = {nz(r3_fin['judge_reliability_flash_vs_pro']['cohen_kappa'], 3)}), active rules raised "
-        f"violation enforcement from 5.6% to 98.6%, <i>F</i>(1, 140) = {n2(r3_rar_a['F'])}, <i>p</i> < .001, "
-        f"eliminated 35.9% entity leakage to 0.0%, interaction <i>F</i>(1, 140) = {n2(r3_elr_i['F'])}, "
-        f"<i>p</i> < .001, and raised slot F<sub>1</sub> to .952, <i>F</i>(1, 140) = {n2(r3_sf1_a['F'])}, <i>p</i> < "
-        f".001. For RQ4 (<i>N</i> = {r4_fin['N']} 2 × 3 simulation; persona κ = "
-        f"{nz(r4_fin['persona_validation']['cohen_kappa'], 3)}), cluster-adaptive prompting cut turns by "
-        f"29.5%–42.7%, <i>F</i>(1, 174) = {n2(r4_lt_p['F'])}, <i>p</i> < .001, interaction "
-        f"<i>F</i>(2, 174) = {n2(r4_lt_i['F'])}, <i>p</i> < .001, and eliminated redundant slot elicitation, "
-        f"<i>F</i>(1, 174) = {n2(r4_rer_p['F'])}, <i>p</i> < .001."
-    )
-    D.para(abstract_text, indent=False)
     D.para(
-        "<i>Keywords:</i> conversational AI, travel chatbots, trajectory clustering, few-shot learning, guardrails",
-        indent=True,
+        "Online travel agencies increasingly deploy large language model (LLM) assistants for vacation-package "
+        "negotiation, yet one-size-fits-all prompts ignore customer decision-making heterogeneity while unguarded "
+        "few-shot prompting risks entity hallucinations and policy violations. This study proposes and evaluates an "
+        "integrated neuro-symbolic framework for archetype-aware, policy-governed, and turn-efficient conversational "
+        f"artificial intelligence (AI) in travel booking. Evaluated on {n2(fq.n_analytic, 0)} Microsoft Frames dialogues "
+        f"(70% golden discovery, <i>n</i> = {s1['n_gold']}; 30% held-out test, <i>n</i> = {s1['n_test']}) and "
+        f"{n2(mq.n_analytic, 0)} MultiWOZ 2.2 comparison dialogues, the research follows a four-stage progression: "
+        "<b>Identify (RQ1) → Personalize (RQ2) → Govern (RQ3) → Optimize (RQ4)</b>. First, to <b>identify</b> customer "
+        f"interaction styles early (<b>RQ1</b>), clustering algorithms differed significantly across 159 runs (53 matched "
+        f"<i>n</i> = 500 subsamples), one-way <i>F</i>(2, 156) = {n2(an1['F'])}, <i>p</i> < .001, η<sup>2</sup> = "
+        f"{nz(an1['eta2'])} (matched repeated-measures <i>F</i>(1.72, 89.30) = 83.04, Friedman χ<sup>2</sup>(2) = 56.30, "
+        "<i>p</i> < .001). Selecting <i>K</i>-Means (<i>k</i> = 3) for 100% routing coverage (versus HDBSCAN's 39.1% "
+        "MiniLM / 35.8% Gemini noise rejection) on a 46-dimensional hybrid <i>Blocks</i> representation over the first "
+        "nine user messages established three stable reference archetypes (bootstrap ARI = .89 in the truncation grid; "
+        ".87 in the 6-configuration ablation): <i>Decisive Booker</i>, <i>Open Explorer</i>, and <i>Rigid-Constraint "
+        "Seeker</i>. Prefix Logistic Regression routers achieved Cohen's κ = "
+        f"{nz(rt_diag.loc[5, 'cohen_kappa'], 3)} (70.1% agreement) after five user messages and κ = "
+        f"{nz(rt_diag.loc[9, 'cohen_kappa'], 3)} (97.3% same-feature consistency) after nine messages against the "
+        "nine-message reference labels. Second, to <b>personalize</b> assistant communication (<b>RQ2</b>, "
+        f"<i>N</i> = {r2_ref['N']} repeated-measures dialogues), routing via the five-message <i>Blocks</i> router into "
+        "a combined package of archetype-partitioned FAISS sub-indices and pacing directives improved de-lexicalized "
+        "SBERT style similarity from .453 (static few-shot) and .530 (zero-shot) to .597, "
+        f"<i>F</i>({n2(r2_sa['df1_gg'])}, {n2(r2_sa['df2_gg'])}) = {n2(r2_sa['F'])}, <i>p</i> < "
+        f".001, η<sub><i>p</i></sub><sup>2</sup> = {nz(r2_sa['eta2_partial'])}, and cut pacing error from "
+        "10.12 words (zero-shot) and 6.33 words (static) to "
+        f"{n2(r2_ref['results']['word_abs_err']['desc']['Cluster-Adaptive Few-Shot'][0])} words, <i>F</i> = "
+        f"{n2(r2_we['F'])}, <i>p</i> {pv(r2_we['p_gg'])}, whereas generic semantic metrics stayed invariant and coarse "
+        "whole-dialogue routing (κ = .24) had yielded null effects (<i>p</i> = .211). Third, to <b>govern</b> business "
+        f"and factual correctness (<b>RQ3</b>, 2 × 2 factorial, <i>N</i> = {r3_fin['N']} evaluations across 36 dialogues; "
+        f"dual-judge κ = {nz(r3_fin['judge_reliability_flash_vs_pro']['cohen_kappa'], 3)}), pairing cluster-adaptive "
+        "prompting with a declarative rule engine, [SLOT] masking, and leakage sanitization raised violation enforcement "
+        "sensitivity from 5.6% to 97.2% (<i>F</i>(1, 68) = 498.78, <i>p</i> < .001; compliant specificity = 88.9% vs. "
+        "94.4%, <i>p</i> = .408; overall rule accuracy = .931, <i>F</i>(1, 140) = "
+        f"{n2(r3_rar_a['F'])}, <i>p</i> < .001), boosted Slot F<sub>1</sub> to .952 (<i>F</i> = {n2(r3_sf1_a['F'])}, "
+        "<i>p</i> < .001), and eliminated the .359 (55.6% incidence) unguarded exemplar leakage rate to .000 "
+        f"(interaction <i>F</i>(1, 140) = {n2(r3_elr_i['F'])}, <i>p</i> < .001; Welch <i>t</i>(35) = 5.90, <i>p</i> < "
+        ".001) while retaining .506 style similarity. Fourth, to <b>optimize</b> multi-turn booking efficiency "
+        f"(<b>RQ4</b>, 2 × 3 simulation, <i>N</i> = {r4_fin['N']} unique seed dialogues, <i>n</i> = 30/cell; persona "
+        f"κ = {nz(r4_fin['persona_validation']['cohen_kappa'], 3)}), a <i>Verified Informed Slot Ledger</i> and "
+        "archetype-specific policies reduced total turns (user plus assistant messages) to package agreement by 42.7% "
+        "for <i>Rigid-Constraint Seekers</i> (8.73 → 5.00, reaching the 5-turn protocol floor), 34.2% for <i>Decisive "
+        "Bookers</i> (7.60 → 5.00), and 29.5% for <i>Open Explorers</i> (7.47 → 5.27; <i>F</i>(1, 174) = "
+        f"{n2(r4_lt_p['F'])}, interaction <i>F</i>(2, 174) = {n2(r4_lt_i['F'])}, both <i>p</i> < .001) while "
+        "eliminating redundant slot re-asking (.109 → .000). Combining behavioral routing, adaptive communication, "
+        "explicit policy controls, and state-aware dialogue management thus supports personalized, compliant, and "
+        "efficient travel-booking interactions.",
+        indent=False,
+    )
+    D.para(
+        "<i>Keywords:</i> conversational artificial intelligence, customer archetypes, large language models, "
+        "few-shot prompting, business-rule enforcement, slot filling, dialogue management, travel booking",
+        indent=False,
     )
 
     # ================================================================== 1. INTRODUCTION
@@ -192,8 +212,8 @@ def build_part1(D, ctx, toc_pages=None):
                 "and which stable, early-routable user archetypes emerge?",
                 "<i>H</i><sub>01</sub>: Equal mean Silhouette across algorithms. <i>H</i><sub>a1</sub>: At least one "
                 "differs, and truncated behavioral-semantic prefixes yield stable (ARI ≥ .60), routable archetypes.",
-                "One-way ANOVA across <i>N</i> = 159 runs (Welch & Kruskal–Wallis checks; Tukey & Games–Howell post "
-                "hoc) + representation × truncation grid",
+                "Resampling benchmark across <i>N</i> = 159 runs (53 matched <i>n</i> = 500 subsamples: one-way ANOVA, "
+                "matched RM-ANOVA, Friedman, Welch, Kruskal–Wallis, Tukey & Games–Howell) + truncation grid",
             ],
             [
                 "RQ2",
@@ -210,8 +230,8 @@ def build_part1(D, ctx, toc_pages=None):
                 "exemplar leakage, slot F<sub>1</sub>, and style alignment?",
                 "<i>H</i><sub>03</sub>: No main or interaction effects. <i>H</i><sub>a3</sub>: Active rules raise "
                 "adherence and slot F<sub>1</sub> and eliminate few-shot entity leakage.",
-                "2 × 2 factorial ANOVA (<i>N</i> = 144, <i>n</i> = 36/cell; OLS, HC3, and ART checks; dual-LLM judge "
-                "κ)",
+                "2 × 2 factorial ANOVA (<i>N</i> = 144 across 36 held-out dialogues, <i>n</i> = 36/cell; OLS, HC3, ART, "
+                "sensitivity/specificity split; dual-LLM judge κ)",
             ],
             [
                 "RQ4",
@@ -220,8 +240,8 @@ def build_part1(D, ctx, toc_pages=None):
                 "<i>H</i><sub>04</sub>: No prompting or prompting × archetype interaction effects. "
                 "<i>H</i><sub>a4</sub>: Cluster-adaptive prompting reduces log turns and RER with an archetype "
                 "interaction.",
-                "2 × 3 factorial ANOVA on log turns and RER (<i>N</i> = 180, <i>n</i> = 30/cell; OLS, HC3, ART, "
-                "Welch <i>t</i>, Mann–Whitney <i>U</i>; persona κ)",
+                "2 × 3 between-subjects ANOVA on log turns and RER (<i>N</i> = 180 unique held-out dialogues, "
+                "<i>n</i> = 30/cell; OLS, HC3, ART, Welch <i>t</i>, Mann–Whitney <i>U</i>; persona κ)",
             ],
         ],
         note="RQ = research question; ARI = adjusted Rand index; HC3 = heteroscedasticity-consistent SE; ART = aligned "
@@ -233,15 +253,22 @@ def build_part1(D, ctx, toc_pages=None):
 
     D.heading("Contributions and Expected Value", 2)
     D.para(
-        "This study delivers four contributions: (1) proving that truncating dialogues to the first nine user "
-        "messages and combining Gemini prefix embeddings with structured LLM behavioral ratings yields stable "
-        "user archetypes (ARI = .76) with high held-out prefix routing agreement (κ = .535 at five messages to .958 "
-        "at nine messages); (2) contrasting primary versus refined archetypes in RQ2 to demonstrate that "
-        "cluster-adaptive prompting succeeds significantly (<i>p</i> < .001) once upstream routing is coherent; "
-        "(3) demonstrating in RQ3 that external declarative verification eliminates the 35.9% entity leakage of "
-        "unguarded few-shot prompting while raising policy violation enforcement from 5.6% to 98.6%; and (4) showing "
-        "in RQ4 that archetype-adaptive turn-economy policies cut turns to booking completion by 29.5% to 42.7% and "
-        "eliminate redundant slot questions."
+        "This study delivers four contributions: (1) demonstrating that truncating dialogues to the first nine user "
+        "messages and combining Gemini prefix embeddings with structured LLM behavioral ratings (<i>Blocks</i>) yields "
+        "three stable reference archetypes (bootstrap ARI = .89 in the truncation grid; .87 in the 6-configuration "
+        "ablation) with chance-corrected held-out prefix routing agreement of κ = .535 (70.1% raw agreement) at five "
+        "user messages and κ = .958 (97.3% same-feature boundary consistency) at nine user messages against the "
+        "unsupervised nine-message <i>K</i>-Means reference clusters; (2) contrasting primary versus refined archetypes "
+        "in RQ2 to demonstrate that combining archetype-partitioned exemplar retrieval with routed archetype pacing "
+        "directives significantly improves de-lexicalized SBERT structural style similarity (<i>p</i> < .001) and "
+        "archetype pacing calibration (<i>p</i> = .007) once upstream routing is coherent, while generic semantic "
+        "similarity remains unchanged; (3) demonstrating in RQ3 that an integrated governance layer (declarative "
+        "rule engine, [SLOT] masking, and post-generation sanitization) eliminates the 35.9% entity leakage (55.6% "
+        "incidence) of unguarded few-shot prompting in the evaluated sample while raising policy violation enforcement "
+        "sensitivity from 5.6% to 98.6% and preserving 88.9% compliant-case acceptance specificity; and (4) showing "
+        "across 180 independent multi-turn simulations in RQ4 that coupling the <i>Verified Informed Slot Ledger</i> "
+        "with archetype-specific turn-economy policies reduces total conversational turns to booking agreement by "
+        "29.5% to 42.7% and eliminates redundant slot questions."
     )
 
     # ================================================================== 2. LITERATURE REVIEW
@@ -481,10 +508,10 @@ def build_part1(D, ctx, toc_pages=None):
     D.para(
         "Multivariate structure across ten structural and behavioral variables was examined via Spearman rank "
         "correlation and principal component analysis (PCA; Figure 3; full loadings in Appendix E, Table E2). The "
-        f"first three components explain {pct(100 * sum(pve), 1)} of total variance: PC1 ({pct(100 * pve[0], 1)}%) "
+        f"first three components explain {pct(100 * sum(pve), 1)} of total variance: PC1 ({pct(100 * pve[0], 1)}) "
         "captures <i>Exploration vs. Rigidity</i> (revisions .42, turns .39, exploration breadth .39), PC2 "
-        f"({pct(100 * pve[1], 1)}%) captures <i>Decisiveness & Politeness</i> (−.51, −.46), and PC3 "
-        f"({pct(100 * pve[2], 1)}%) isolates <i>User Verbosity</i> (.89), separating the three refined archetypes across "
+        f"({pct(100 * pve[1], 1)}) captures <i>Decisiveness & Politeness</i> (−.51, −.46), and PC3 "
+        f"({pct(100 * pve[2], 1)}) isolates <i>User Verbosity</i> (.89), separating the three refined archetypes across "
         "a continuous behavioral manifold."
     )
     D.figure(
@@ -510,7 +537,15 @@ def build_part1(D, ctx, toc_pages=None):
     D.para(
         "where λ = <i>f</i><sup>2</sup><i>N</i> for between-subjects designs (RQ1, RQ3, RQ4) and λ = "
         "<i>f</i><sup>2</sup><i>Nm</i>ε / (1 − ρ) for repeated-measures RQ2 (<i>m</i> = 3, ρ = .50, ε = 1). Minimum "
-        "sample sizes were rounded to balanced cells with a 10% buffer (Table 8), yielding final power of .835–.865.",
+        "sample sizes were rounded to balanced cells with a 10% buffer (Table 8), yielding final power of .805–.878. "
+        "In RQ1, because each of the 53 random seeds draws <i>n</i> = 500 dialogues without replacement from "
+        f"<i>D</i><sub>gold</sub> (<i>n</i> = {s1['n_gold']}, a 53.6% finite-population fraction), we pair the 159-run "
+        "one-way benchmark with a matched-subsample repeated-measures ANOVA and Friedman test across the 53 shared seeds "
+        "plus full-<i>D</i><sub>gold</sub> point estimates. In RQ3, 36 stratified held-out dialogues (18 policy-violating, "
+        "18 compliant; 12 per archetype) are evaluated across all four 2 × 2 cells (<i>N</i> = 144 evaluations). In RQ4, "
+        "<b>180 distinct, non-overlapping held-out seed dialogues</b> (60 per archetype, partitioned into <i>n</i> = 30 "
+        "unique dialogues for <i>Zero-Shot</i> and <i>n</i> = 30 unique dialogues for <i>Cluster-Adaptive Few-Shot</i>) "
+        "are allocated across the six 2 × 3 cells, ensuring strict between-subjects independence (<i>df</i><sub>error</sub> = 174).",
         indent=False,
     )
     ss_rows = [
@@ -549,16 +584,22 @@ def build_part1(D, ctx, toc_pages=None):
         "principal components (fitted on <i>D</i><sub>gold</sub>) of the 3,072-dimensional Gemini embedding "
         "(<i>gemini-embedding-001</i>; Lee et al., 2025), and (2) a standardized 16-field LLM behavioral schema "
         "comprising 13 clustering fields (ten 1–5 ordinal rating scales plus primary goal, secondary goals, and "
-        "emotional tone) and three audit-only fields (session outcome, party type, and unusual-conversation flag, "
-        "excluded from clustering input; Table C1; test–retest weighted κ = "
+        "emotional tone, encoded into 26 numeric columns) and three audit-only fields (session outcome, party type, and "
+        "unusual-conversation flag, excluded from clustering input; Table C1; test–retest weighted κ = "
         f"{nz(min(r1h['reliability'][x] for x in ORDS))}–{nz(max(r1h['reliability'][x] for x in ORDS))} across the 10 "
         "ordinal scales and κ = .75–.98 across the 6 categorical/boolean fields; revision correlation ρ = "
         f"{nz(cv_['revision_tendency~user_revisions']['rho'])}, Table C2). In RQ2–RQ4, "
         "<i>RefinedArchetypeRouter</i> projects each test dialogue's opening user prefix into this golden-fitted "
-        "<i>Blocks</i> space, predicts the user archetype via L1-regularized logistic regression, and retrieves "
-        "<i>k</i> = 3 slot-masked exemplars from that archetype's FAISS sub-index. In RQ3, the deterministic rule "
-        "engine (<i>src/rule_engine.py</i>, 14/14 boundary tests passed) evaluates five YAML policy rules (Table 9). "
-        "Table 10 defines all evaluation metrics."
+        "46-dimensional <i>Blocks</i> space, predicts the user archetype via L1-regularized logistic regression, and "
+        "applies a combined adaptation package (retrieving <i>k</i> = 3 slot-masked exemplars from that archetype's "
+        "FAISS sub-index alongside an explicit archetype pacing/action directive). In RQ3, the deterministic rule "
+        "engine (<i>src/rule_engine.py</i>, 14/14 boundary tests passed) evaluates five YAML policy rules (Table 9) "
+        "within an integrated governance pipeline combining pre-generation rule injection, [SLOT] exemplar masking, and "
+        "post-generation regex sanitization. In RQ4, each closed-loop simulation pairs the <i>Verified Informed Slot "
+        "Ledger</i> with archetype-specific turn-economy policies, counting total conversational turns (user plus "
+        "assistant messages) until the simulated traveler issues <code>[ACCEPT_BOOKING]</code> (subject to a protocol "
+        "minimum of 5 total turns: <code>U1 → A1 → U2 → A2 → U3</code> once budget is confirmed). Table 10 defines all "
+        "evaluation metrics."
     )
     D.table(
         "Declarative Policy Rules Used in RQ3",
@@ -581,12 +622,12 @@ def build_part1(D, ctx, toc_pages=None):
         ["Metric", "Formula", "RQ", "Interpretation"],
         [
             ["Silhouette & DB index", "<i>s</i>(<i>i</i>) = [<i>b</i>(<i>i</i>)−<i>a</i>(<i>i</i>)]/max{<i>a</i>,<i>b</i>}; <i>DB</i> = (1/<i>k</i>)Σ max(σ<sub><i>i</i></sub>+σ<sub><i>j</i></sub>)/<i>d</i>(<b>c</b><sub><i>i</i></sub>,<b>c</b><sub><i>j</i></sub>)", "1", "Higher Silhouette [−1, 1] and lower DB (≥ 0) indicate better separation"],
-            ["ARI & Cohen's κ", "<i>ARI</i> = (<i>RI</i>−E[<i>RI</i>])/(max <i>RI</i>−E[<i>RI</i>]); κ = (<i>p</i><sub>o</sub>−<i>p</i><sub>e</sub>)/(1−<i>p</i><sub>e</sub>)", "1, 3, 4", "Resampling stability (ARI ≥ .60) and routing/judge agreement"],
-            ["Style cosine & Pacing err.", "cos(<b>r</b>, <b>c</b><sub><i>a</i></sub>) = (<b>r</b>·<b>c</b><sub><i>a</i></sub>)/(‖<b>r</b>‖‖<b>c</b><sub><i>a</i></sub>‖); |<i>W</i><sub>gen</sub> − μ<sub><i>W</i>,<i>a</i></sub>|", "2, 3", "Higher cosine and lower word error indicate better style alignment"],
-            ["Rule adherence (RAR)", "|<i>R</i><sub>enforced</sub> ∩ <i>R</i><sub>violated</sub>| / |<i>R</i><sub>violated</sub>| (or 1 − false_block)", "3", "Proportion [0, 1] of active policy rules properly enforced"],
+            ["ARI & Cohen's κ", "<i>ARI</i> = (<i>RI</i>−E[<i>RI</i>])/(max <i>RI</i>−E[<i>RI</i>]); κ = (<i>p</i><sub>o</sub>−<i>p</i><sub>e</sub>)/(1−<i>p</i><sub>e</sub>)", "1, 3, 4", "Bootstrap 80%-subsample stability (ARI ≥ .60) and routing/judge agreement"],
+            ["Style cosine & Pacing err.", "cos(<b>r</b>, <b>c</b><sub><i>a</i></sub>) = (<b>r</b>·<b>c</b><sub><i>a</i></sub>)/(‖<b>r</b>‖‖<b>c</b><sub><i>a</i></sub>‖); |<i>W</i><sub>gen</sub> − μ<sub><i>W</i>,<i>a</i></sub>|", "2, 3", "De-lexicalized SBERT structural style cosine and word-count pacing error"],
+            ["Rule adherence (RAR)", "Sens. = |<i>R</i><sub>enf</sub> ∩ <i>R</i><sub>viol</sub>|/|<i>R</i><sub>viol</sub>| (<i>n</i>=18/cell); Spec. = 1 − false_block (<i>n</i>=18/cell); Overall (<i>n</i>=36/cell)", "3", "Separated into Violation Enforcement (Sensitivity), Compliant Acceptance (Specificity), and Overall Accuracy"],
             ["Exemplar leakage (ELR)", "|<i>E</i><sub>resp</sub> ∩ (<i>E</i><sub>ex</sub> \\ <i>E</i><sub>diag</sub>)| / max(1, |<i>E</i><sub>resp</sub>|)", "3", "Proportion [0, 1] of response entities leaked from prompt exemplars"],
             ["Slot coverage F<sub>1</sub>", "2 · Precision · Recall / (Precision + Recall) over active state slots", "3", "Proportion [0, 1] of active booking slots grounded in response"],
-            ["Turns to goal & RER", "TGC = turns to [ACCEPT_BOOKING]; RER = <i>A</i><sub>redundant</sub> / <i>A</i><sub>total</sub>", "4", "Lower log turns and lower RER indicate superior turn economy"],
+            ["Turns to goal & RER", "TGC = total turns (user + assistant messages) to [ACCEPT_BOOKING] (min = 5); RER = <i>A</i><sub>redundant</sub> / <i>A</i><sub>total</sub>", "4", "Lower total/log conversational turns and lower RER indicate superior turn economy"],
         ],
         note="Parametric ANOVAs are paired with Welch/HC3 and non-parametric (Kruskal–Wallis, Friedman, Mann–Whitney, ART; Wobbrock et al., 2011) checks.",
         widths=[1.45, 2.85, 0.5, 1.7],
