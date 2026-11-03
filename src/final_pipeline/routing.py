@@ -22,8 +22,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, cohen_kappa_score
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-if os.path.join(ROOT, "src", "interim_pipeline") not in sys.path:
-    sys.path.insert(0, os.path.join(ROOT, "src", "interim_pipeline"))
+if os.path.join(ROOT, "src", "final_pipeline") not in sys.path:
+    sys.path.insert(0, os.path.join(ROOT, "src", "final_pipeline"))
 
 from common import (  # noqa: E402
     SEED,

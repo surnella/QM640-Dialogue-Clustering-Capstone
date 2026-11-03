@@ -34,7 +34,7 @@ def build_slides_part1(D, ctx):
                  "Slot-Masked FAISS In-Context Learning, and Declarative Policy Verification",
         author_lines=[
             "<b>Author:</b> Surnella Sandeep  |  <b>Course:</b> QM640: Data Analytics Capstone (Department of Data Analytics, Walsh College)",
-            "<b>Instructor & Capstone Mentor:</b> Mr. Smitraj Raut  |  <b>Date:</b> October 2026",
+            "<b>Instructor & Capstone Mentor:</b> Mr. Smitraj Raut  |  <b>Date:</b> 10th Nov 2026",
             f"<b>Reproducible Code & Data Repository:</b> {REPO}",
             "<b>Empirical Scope:</b> 2,833 Analytic Human Dialogues (Microsoft Frames N = 1,334; MultiWOZ 2.2 N = 1,499) + ~8,900 Gemini 2.5 Flash/Pro Evaluations",
         ],

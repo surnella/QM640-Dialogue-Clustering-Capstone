@@ -767,8 +767,7 @@ def build_part2(D, ctx):
             ["data/final/", "Cached Gemini 2.5 Flash/Pro JSONL responses and scored CSV/JSON results for Refined RQ2, RQ3 (<i>N</i>=144), and RQ4 (<i>N</i>=180)"],
             ["src/canonical_schema.py, src/ingestion.py", "Pydantic two-tier data models and corpus parsers"],
             ["src/rule_engine.py, rules/rules_enterprise.yaml", "Deterministic declarative policy engine and YAML rule definitions"],
-            ["src/interim_pipeline/", "Reproducible scripts for Steps 0–4 and RQ1 sensitivity/truncation Steps 2b–2i"],
-            ["src/final_pipeline/", "Reproducible scripts for RefinedArchetypeRouter, Refined RQ2, RQ3 2×2 experiment, RQ4 2×3 simulation, and EDA/architecture figures"],
+            ["src/final_pipeline/", "Reproducible pipeline scripts for Steps 0–2i (power, cleaning, RQ1 clustering/sensitivity/refined archetypes), RefinedArchetypeRouter, Refined RQ2, RQ3 2×2 experiment, RQ4 2×3 simulation, and EDA/architecture figures"],
             ["src/report/, src/build_final_report.py", "APA 7 Word/PDF document generator with automated cross-reference and TOC pagination verification"],
             ["notebooks/01_.. to 05_..", "Five executed Jupyter notebooks covering EDA, RQ1, RQ2, RQ3, and RQ4"],
             ["outputs/interim/, outputs/final/", "All CSV summary tables and 300-DPI PNG figures"],
@@ -783,18 +782,16 @@ def build_part2(D, ctx):
         "End-to-End Replication Commands",
         ["Pipeline stage", "Command (run from repository root with .venv active)", "Outputs produced"],
         [
-            ["0. Power analysis", "python src/interim_pipeline/step0_sample_size.py", "Table 8"],
-            ["1. Cleaning & univariate EDA", "python src/interim_pipeline/step1_prepare_data.py", "Tables 5, 6, E1; Figures 1, E1"],
-            ["2. Primary RQ1 clustering", "python src/interim_pipeline/step2_rq1_clustering.py", "Table 12; Tables D1–D4; Figures D1–D3"],
-            ["2b–2i. RQ1 sensitivity & refined", "python src/interim_pipeline/step2g_rq1_truncation.py && python src/interim_pipeline/step2h_rq1_ablation.py && python src/interim_pipeline/step2i_rq1_refined_archetypes.py", "Table 13; Tables C1–C2, D5–D6, E5; Figures D4, E3"],
-            ["3. Primary RQ2 experiment", "python src/interim_pipeline/step3_rq2_pipeline.py --execute", "Table 14 (primary rows); Figure E2"],
-            ["4. Rule & baseline groundwork", "python src/interim_pipeline/step4_rq3_rq4_groundwork.py", "Table 9; Table E4"],
-            ["5. Final harness & routing test", "python src/final_pipeline/test_step1_harness.py", "Table 13 routing note (t_rq1_hybrid_routing_diagnostics.csv)"],
-            ["6. Refined RQ2 experiment", "python src/final_pipeline/step2_rq2_refined.py --execute", "Table 14 (refined rows); Table E3; Figure 6"],
-            ["7. RQ3 2×2 factorial experiment", "python src/final_pipeline/step3_rq3_experiment.py --execute", "Table 15; Table C3; Figure 7"],
-            ["8. RQ4 2×3 turn-economy sim.", "python src/final_pipeline/step4_rq4_simulation.py --execute", "Table 16; Table C3; Figure 8"],
-            ["9. Bivariate/multivariate EDA & arch.", "python src/final_pipeline/step5_figures_and_eda.py", "Table 7; Table E2; Figures 2, 3, 4, 5"],
-            ["10. Build Final Report (.docx/.pdf)", "python src/build_final_report.py", "final/QM_640_Final_Report_Sandeep_Surnella.docx & .pdf"],
+            ["0. Power analysis", "python src/final_pipeline/step0_sample_size.py", "Table 8"],
+            ["1. Cleaning & univariate EDA", "python src/final_pipeline/step1_prepare_data.py", "Tables 5, 6, E1; Figures 1, E1"],
+            ["2. Primary RQ1 clustering", "python src/final_pipeline/step2_rq1_clustering.py", "Table 12; Tables D1–D4; Figures D1–D3"],
+            ["2b–2i. RQ1 sensitivity & refined", "python src/final_pipeline/step2g_rq1_truncation.py && python src/final_pipeline/step2h_rq1_ablation.py && python src/final_pipeline/step2i_rq1_refined_archetypes.py", "Table 13; Tables C1–C2, D5–D6, E5; Figures D4, E3"],
+            ["3. Final harness & routing test", "python src/final_pipeline/test_step1_harness.py", "Table 13 routing note (t_rq1_hybrid_routing_diagnostics.csv)"],
+            ["4. Refined RQ2 experiment", "python src/final_pipeline/step2_rq2_refined.py --execute", "Table 14 (refined rows); Table E3; Figure 6"],
+            ["5. RQ3 2×2 factorial experiment", "python src/final_pipeline/step3_rq3_experiment.py --execute", "Table 15; Table C3; Figure 7"],
+            ["6. RQ4 2×3 turn-economy sim.", "python src/final_pipeline/step4_rq4_simulation.py --execute", "Table 16; Table C3; Figure 8"],
+            ["7. Bivariate/multivariate EDA & arch.", "python src/final_pipeline/step5_figures_and_eda.py", "Table 7; Table E2; Figures 2, 3, 4, 5"],
+            ["8. Build Final Report (.docx/.pdf)", "python src/build_final_report.py", "final/QM_640_Final_Report_Sandeep_Surnella.docx & .pdf"],
         ],
         note="All random seeds are fixed at 42. Cached JSONL responses allow offline execution without API calls.",
         widths=[1.45, 3.25, 1.8],
@@ -1178,8 +1175,8 @@ def build_part2(D, ctx):
         "(<code>0</code>, <code>1</code>, <code>2</code>) rather than semantic persona names, and those integer "
         "identifiers are invariant up to permutation across random initializations (the <i>label-switching problem</i>). "
         "To ensure that human-interpretable archetype labels are assigned reproducibly without manual post-hoc "
-        "cherry-picking, both the primary whole-dialogue clustering pipeline (<i>src/interim_pipeline/"
-        "step2_rq1_clustering.py</i>) and the refined opening-prefix clustering pipeline (<i>src/interim_pipeline/"
+        "cherry-picking, both the primary whole-dialogue clustering pipeline (<i>src/final_pipeline/"
+        "step2_rq1_clustering.py</i>) and the refined opening-prefix clustering pipeline (<i>src/final_pipeline/"
         "step2i_rq1_refined_archetypes.py</i>) apply pre-declared, deterministic Python centroid-mapping rules to the "
         "golden-partition cluster means. Table F1 documents the exact sequential decision rule, distinguishing "
         "centroid criterion, and resulting golden-partition profile for each primary and refined archetype."

@@ -71,12 +71,12 @@ def build_part1(D, ctx, toc_pages=None):
             "Department of Data Analytics, Walsh College",
             "QM640: Data Analytics Capstone",
             "Mr. Smitraj Raut",
-            "October 28, 2026",
+            "10th Nov 2026",
+            f"<b>GitHub repository:</b> {REPO}",
         ],
     )
 
-    # ------------------------------------------------------------------ Repository + TOC
-    D.para(f"<b>GitHub repository:</b> {REPO}", indent=False)
+    # ------------------------------------------------------------------ TOC
     D.toc(toc_pages[0] if toc_pages else [], toc_pages[1] if toc_pages else None)
 
     # ================================================================== ABSTRACT
@@ -667,7 +667,7 @@ def build_part1(D, ctx, toc_pages=None):
 
     D.heading("Pipeline Component Specifications and Technology Stack", 2)
     D.para(
-        "The software stack is implemented in Python 3.11 across <i>src/interim_pipeline/</i> and <i>src/final_pipeline/</i> "
+        "The software stack is implemented in Python 3.11 in <i>src/final_pipeline/</i> "
         "using <i>pandas</i> 2.2, <i>numpy</i> 1.26, and <i>pydantic</i> 2.9 for data validation; <i>sentence-transformers</i> "
         "(<i>all-MiniLM-L6-v2</i>), Google <i>genai</i> SDK (<i>gemini-embedding-001</i>, <i>gemini-2.5-flash</i>, "
         "<i>gemini-2.5-pro</i>), and <i>faiss-cpu</i> for vector indexing and generation; <i>scikit-learn</i> 1.5, <i>hdbscan</i>, "

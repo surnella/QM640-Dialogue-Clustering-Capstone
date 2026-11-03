@@ -25,7 +25,7 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-for p in (HERE, os.path.join(ROOT, "src"), os.path.join(ROOT, "src", "interim_pipeline")):
+for p in (HERE, os.path.join(ROOT, "src")):
     if p not in sys.path:
         sys.path.insert(0, p)
 

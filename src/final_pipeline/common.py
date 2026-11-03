@@ -1,8 +1,7 @@
 """
-Shared utilities for the interim-report analysis pipeline.
+Shared utilities for the analysis pipeline in ``src/final_pipeline``.
 
-All steps in ``src/interim_pipeline`` use only the two public corpora
-(Microsoft Frames and MultiWOZ 2.2). No enterprise or proprietary data is read.
+All steps use the public corpora (Microsoft Frames and MultiWOZ 2.2).
 """
 
 import json

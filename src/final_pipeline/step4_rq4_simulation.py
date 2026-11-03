@@ -48,7 +48,7 @@ from sentence_transformers import SentenceTransformer
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-for p in (os.path.join(ROOT, "src"), os.path.join(ROOT, "src", "interim_pipeline")):
+for p in (os.path.join(ROOT, "src"), os.path.join(ROOT, "src", "final_pipeline")):
     if p not in sys.path:
         sys.path.insert(0, p)
 
