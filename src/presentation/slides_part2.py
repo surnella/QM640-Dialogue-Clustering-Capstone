@@ -1061,117 +1061,147 @@ def build_slides_part2(D, ctx):
     )
 
     # =========================================================================
-    # SLIDE 40: WHERE THIS CAPSTONE ENDS — OPEN QUESTIONS FOR DOCTORAL RESEARCH
+    # SLIDE 44: WHERE THIS CAPSTONE ENDS — OPEN QUESTIONS FOR DOCTORAL RESEARCH
     # =========================================================================
     s = D.content_slide(
         "Module 8: Conclusive Story & Doctoral Dissertation Roadmap",
-        "Where This Capstone Ends: Four Scientific Frontiers Opened by Our Findings",
-        "Requirement #5b: Identifying the fundamental boundaries discovered in RQ1–RQ4 that motivate a full Doctoral Dissertation",
-        notes="Transition from the master's capstone findings to the bigger doctoral dissertation topic: 'Dialogue Clustering and Methodologies to be Adapted for Human-Like Conversations'.",
+        "Where This Capstone Ends: Six Scientific Frontiers Opened by Our Findings",
+        "Requirement #5b: Fundamental boundaries in RQ1–RQ4 and enterprise travel deployment that motivate a full Doctoral Dissertation",
+        notes="Transition from the master's capstone findings to the 6 frontiers motivating the doctoral dissertation, including Enterprise Call Stages (a-f) and 200-Package USP Narrowing.",
     )
     D.add_card(
-        s, 0.35, 1.50, 6.15, 2.65,
-        title="Frontier 1: Continuous Manifold vs. Hard K-Means Clusters",
+        s, 0.35, 1.48, 4.08, 2.68,
+        title="Frontier 1: Continuous Manifold vs. Hard K-Means",
         header_bg=NAVY,
         bullets=[
             "<b>What Our Capstone Data Revealed (RQ1):</b>",
-            (1, "While <i>K</i>-Means (<i>k</i> = 3) achieved high bootstrap stability (ARI = .89 / .87), raw cosine Silhouette scores (.094–.345) and our Multivariate PCA Biplot (Figure 3) showed that human conversational styles form a <b>continuous behavioral manifold</b> rather than isolated islands."),
+            (1, "While <i>K</i>-Means (<i>k</i> = 3) achieved high stability (ARI = .89/.87), raw Silhouette (.094–.345) and PCA Biplot (Fig. 3) show styles form a <b>continuous manifold</b>."),
             "<b>What Remains Unsolved for the Dissertation:</b>",
-            (1, "25.2% of speakers sit near cluster boundaries (e.g., a traveler who is 55% <i>Open Explorer</i> and 45% <i>Rigid-Constraint Seeker</i>). Hard argmax routing forces a binary choice rather than blending styles smoothly."),
+            (1, "25.2% of speakers sit near cluster boundaries (e.g., 55% <i>Explorer</i> / 45% <i>Rigid</i>). Hard argmax routing forces a binary choice rather than soft style blending."),
         ],
-        font_size=10,
+        font_size=8.8,
     )
     D.add_card(
-        s, 6.80, 1.50, 6.18, 2.65,
-        title="Frontier 2: Dynamic Mid-Session Persona Drift (Non-Stationarity)",
+        s, 4.62, 1.48, 4.08, 2.68,
+        title="Frontier 2: Dynamic Mid-Session Persona Drift",
         header_bg=TEAL,
         bullets=[
             "<b>What Our Capstone Data Revealed (RQ1 & RQ4):</b>",
-            (1, "Our prefix router assigns a static archetype after <i>M</i> = 5 to 9 messages. However, real humans <b>shift personas mid-conversation</b>: an <i>Open Explorer</i> in Turns 1–5 often becomes a <i>Rigid-Constraint Seeker</i> in Turn 7 once they experience sticker shock!"),
+            (1, "Our prefix router assigns a static persona after <i>M</i> = 5–9 messages. Yet real travelers <b>shift personas mid-chat</b> (e.g., <i>Open Explorer</i> → <i>Rigid Seeker</i> after sticker shock)."),
             "<b>What Remains Unsolved for the Dissertation:</b>",
-            (1, "How to model a user's conversational style as a <b>non-stationary stochastic trajectory</b> <b>z</b><sub><i>t</i></sub> that updates turn-by-turn from Turn 1 onward via Bayesian belief tracking."),
+            (1, "Modeling user style as a <b>non-stationary stochastic trajectory z<sub><i>t</i></sub></b> updated turn-by-turn from Turn 1 via Bayesian belief filtering."),
         ],
-        font_size=10,
+        font_size=8.8,
     )
     D.add_card(
-        s, 0.35, 4.30, 6.15, 2.75,
-        title="Frontier 3: Orthogonal Prompt Ablation (A–E) & Micro-Pragmatics",
+        s, 8.90, 1.48, 4.08, 2.68,
+        title="Frontier 3: Enterprise Call Stages (a–f) & Lead Propensity",
+        header_bg=GREEN,
+        bullets=[
+            "<b>Enterprise Call-Stage Reality:</b>",
+            (1, "Enterprise agent turns follow <b>6 Call Stages</b>: <b>(a)</b> Opening, <b>(b)</b> Mandatory Parameters, <b>(c)</b> Product Positioning, <b>(d)</b> Budget/Constraint Negotiation, <b>(e)</b> Urgency & Compliance, <b>(f)</b> Closure & Quotation."),
+            "<b>What Remains Unsolved for the Dissertation:</b>",
+            (1, "Conditioning prompts on <b>(Persona × Call Stage)</b> and scoring <b>Hot / Warm / Cold Lead Propensity</b> at Stage (f) closure before off-chat conversion noise."),
+        ],
+        font_size=8.7,
+    )
+    D.add_card(
+        s, 0.35, 4.32, 4.08, 2.68,
+        title="Frontier 4: 200-Package USP Catalog Narrowing",
+        header_bg=CORAL,
+        bullets=[
+            "<b>Enterprise Product Knowledge Reality:</b>",
+            (1, "After Stage (b) mandatory slots, <b>200+ regional packages</b> (e.g., Europe) still match! Narrowing requires micro-qualifiers (<i>seniors, children, breakfast, sightseeing tempo, honeymoon/occasion</i>)."),
+            "<b>What Remains Unsolved for the Dissertation:</b>",
+            (1, "Sequencing the <b>minimum persona-adapted questions</b> by combining <b>Information Gain</b> with pre-indexed <b>Package USPs</b> to pitch the best package when it fits."),
+        ],
+        font_size=8.7,
+    )
+    D.add_card(
+        s, 4.62, 4.32, 4.08, 2.68,
+        title="Frontier 5: Orthogonal Prompt Ablation (A–E)",
         header_bg=BLUE,
         bullets=[
             "<b>What Our Capstone Data Revealed (RQ2):</b>",
-            (1, "Refined RQ2 evaluated `Cluster-Adaptive Few-Shot` as a joint package combining the routed `Archetype Directive` with archetype-partitioned FAISS exemplars (`F = 9.79, p < .001`)."),
-            "<b>Future Scope — 5-Condition Orthogonal Ablation (Conditions A–E):</b>",
-            (1, "Cross `Examples` × `Directive` at <i>N</i> ≥ 60: <b>A</b> (<i>None, Off</i>), <b>B</b> (<i>Global/Static, Off</i>), <b>C</b> (<i>Archetype-Partitioned, Off</i>), <b>D</b> (<i>Global/Static, On</i>), <b>E</b> (<i>Archetype-Partitioned, On</i>). Diagnostic <i>N</i> = 33 testing shows <b>C beats B</b> when directives are <i>Off</i> (.511 vs. .453, <i>p</i> = .028; 15.03w vs. 14.85w human), while directives dominate single-turn style when <i>On</i> (.597–.610) and exemplars tighten pacing variance."),
+            (1, "Refined RQ2 evaluated `Cluster-Adaptive Few-Shot` as a joint package (routed `Archetype Directive` + archetype FAISS exemplars, <i>F</i> = 9.79, <i>p</i> < .001)."),
+            "<b>Future 5-Condition Ablation (Conditions A–E):</b>",
+            (1, "Cross `Examples` × `Directive` at <i>N</i> ≥ 60: <b>A</b> (<i>None/Off</i>), <b>B</b> (<i>Static/Off</i>), <b>C</b> (<i>Arch/Off</i>), <b>D</b> (<i>Static/On</i>), <b>E</b> (<i>Arch/On</i>). Diagnostic <i>N</i>=33 shows <b>C beats B</b> (.511 vs .453, <i>p</i>=.028)."),
         ],
-        font_size=9.5,
+        font_size=8.7,
     )
     D.add_card(
-        s, 6.80, 4.30, 6.18, 2.75,
-        title="Frontier 4: Moving Beyond Cooperative LLM Simulators to Live Humans",
+        s, 8.90, 4.32, 4.08, 2.68,
+        title="Frontier 6: Live Human Agents & RLHC Optimization",
         header_bg=GOLD,
         bullets=[
             "<b>What Our Capstone Data Revealed (RQ4):</b>",
-            (1, "Even though our persona simulator achieved κ = .933 fidelity, simulated users completed 100% of sessions in 5.00–5.27 turns—whereas real humans in Frames had a 25.8% non-completion rate and noisier multi-topic tangents."),
+            (1, "While our simulator achieved κ = .933 fidelity, simulated users completed 100% of chats in 5.00–5.27 turns vs. 25.8% human non-completion in Frames."),
             "<b>What Remains Unsolved for the Dissertation:</b>",
-            (1, "Training and evaluating adaptive dialogue policies with <b>offline-to-online Reinforcement Learning from Human Conversations (RLHC)</b> with live human participants across multiple domains."),
+            (1, "Training adaptive policies via <b>Offline-to-Online Reinforcement Learning from Human Conversations (RLHC)</b> with live human travelers and agents."),
         ],
-        font_size=10,
+        font_size=8.8,
     )
 
     # =========================================================================
-    # SLIDE 44: DOCTORAL DISSERTATION ROADMAP
+    # SLIDE 45: DOCTORAL DISSERTATION ROADMAP
     # =========================================================================
     s = D.content_slide(
         "Module 8: Conclusive Story & Doctoral Dissertation Roadmap",
         "Future Doctoral Dissertation Roadmap: 'Dialogue Clustering & Methodologies for Human-Like Conversations'",
-        "Requirement #5b: Five doctoral research pillars directly extending this capstone's findings and codebase",
-        notes="Present the concrete 5-pillar plan for your upcoming doctoral dissertation, including Hierarchical Context x Behavior Factor Attribution.",
+        "Requirement #5b: Six doctoral research pillars integrating customer archetypes, call stages (a–f), and 200-package USP narrowing",
+        notes="Present the concrete 6-pillar plan for your upcoming doctoral dissertation, including Call Stages (a-f) & Lead Propensity (Pillar 3) and 200-Package USP Narrowing (Pillar 4).",
     )
     D.add_table(
-        s, 0.35, 1.48, 12.63, 4.42,
+        s, 0.35, 1.45, 12.63, 4.48,
         headers=["Doctoral Dissertation Pillar", "Core Research Question for the Dissertation", "Proposed Methodology & Mathematical Framework", "How This Capstone's Findings Directly Aid & Seed This Pillar"],
         rows=[
             [
                 "Pillar 1:\nHierarchical Context × Behavior Factor Attribution",
-                "How do situational trip parameters (budget stakes, pax/party type, travel window, destination familiarity) interact with intrinsic persona to shape dialogue clusters?",
-                "Formulate a <b>Two-Tier Hierarchical Dirichlet / Product-Quantized Taxonomy (C × K = 24–36 micro-clusters)</b>: Tier 1 partitions macro trip regimes (<i>Solo Business, Family Group, High-Stakes Luxury</i>); Tier 2 clusters behavioral negotiation style within each regime.",
-                "Directly extends our Two-Tier Pydantic Schema (`Tier1UniversalSlots` + `Tier2EnterpriseSlots`) and 16-field `UserBehaviour` profile (`party_type`, `price_sensitivity`) to large enterprise corpora (N > 50,000).",
+                "How do situational trip parameters (budget stakes, pax/party type, lead window, familiarity) interact with persona to shape clusters?",
+                "Formulate a <b>Two-Tier Hierarchical Dirichlet / Product-Quantized Taxonomy (C × K = 24–36 micro-clusters)</b>: Tier 1 partitions macro trip regimes; Tier 2 clusters behavioral negotiation style within each regime.",
+                "Directly extends our Two-Tier Pydantic Schema (`Tier1UniversalSlots` + `Tier2EnterpriseSlots`) and 16-field `UserBehaviour` profile (`party_type`, `price_sensitivity`) to enterprise scale (N > 50,000).",
             ],
             [
-                "Pillar 2:\nSoft-Mixture & Variational Manifold Clustering",
-                "Can continuous Gaussian Mixture / Variational Autoencoder (VAE) latent spaces outperform hard K-Means partitioning for boundary speakers?",
-                "Replace hard centroid assignment with a Dirichlet / Von Mises–Fisher mixture over the `Blocks` manifold: retrieve a <b>convex combination of exemplars</b> weighted by posterior probabilities P(c_k | prefix_t).",
-                "Directly reuses our validated 46-d `Blocks` representation (PCA-20 Gemini + 26 encoded columns from the 13 clustering behavioral fields) and our 25.2% non-core boundary dialogue subset identified in `step2h/2i`.",
+                "Pillar 2:\nSoft-Mixture Manifold & Bayesian Persona Drift",
+                "How can an agent blend styles for boundary users and track mid-chat persona shifts (e.g., Explorer → Rigid) from Turn 1?",
+                "Combine a <b>Von Mises–Fisher / VAE Soft Mixture</b> over the `Blocks` manifold with a <b>Hidden Markov / Kalman State-Space Tracker</b> updating P(z_t | u_1..t) after every turn to detect constraint change-points.",
+                "Directly reuses our 46-d `Blocks` representation, our 25.2% boundary speaker diagnostics (`step2h/2i`), and our truncation horizon curve (M = 3, 5, 7, 9 in Table D5).",
             ],
             [
-                "Pillar 3:\nTurn-by-Turn Bayesian Persona Tracking & Drift",
-                "How can an agent detect mid-dialogue persona shifts (e.g., Explorer → Rigid Negotiator) starting from Turn 1?",
-                "Formulate a <b>Hidden Markov / Kalman State-Space Persona Tracker</b> that updates posterior persona beliefs P(z_t | u_1..t) after every user utterance and detects change-points in constraint rigidity.",
-                "Builds directly on our truncation horizon curve (M = 3, 5, 7, 9 in Table D5) and `RefinedArchetypeRouter`, extending static prefix routing into sequential filtering.",
+                "Pillar 3:\nStage-Gated Call Flow (a–f) & Lead Propensity Scoring",
+                "How do agent strategies adapt across the 6 enterprise call stages (a–f) and predict Hot, Warm, or Cold lead propensity at closure?",
+                "Build a <b>3 (Archetypes) × 6 (Call Stages: a. Opening → b. Mandatory Slots → c. Positioning → d. Negotiation → e. Compliance/Urgency → f. Closure) = 18-Cell FAISS Matrix</b> + ordinal <b>Hot/Warm/Cold Lead Propensity Classifier</b>.",
+                "Combines our RQ2/RQ4 archetype policies with RQ3 compliance checks at Stage (e) and extends our RQ1 outcome features (`Fields 14–16`) into Stage (f) lead scoring prior to off-chat conversion noise.",
             ],
             [
-                "Pillar 4:\nOrthogonal Prompting Ablation (A–E) & Funnel Modeling",
-                "How do explicit routed directives vs. sub-index exemplars orthogonally drive style, and how does Quotation Agreement link to booking conversion?",
-                "Run a powered (<i>N</i> ≥ 60) <b>5-Condition Ablation (A: None/Off, B: Global-Static/Off, C: Arch/Off, D: Global-Static/On, E: Arch/On)</b> + 30-dim pragmatic codebook + <b>Two-Stage Funnel Model</b> (Stage 1: In-Chat Quotation vs. Stage 2: Off-Chat Conversion).",
-                "Directly extends our RQ2 style/pacing metrics (`step2_rq2_refined.py`, where diagnostic C vs. B = .511 vs. .453, <i>p</i> = .028) and our RQ1/RQ4 separation of quotation agreement from booking (`Field 14`).",
+                "Pillar 4:\n200-Package USP Graph & Optimal Question Sequencing",
+                "When mandatory slots match 200+ packages, what is the optimal persona-adapted question sequence to narrow to 1 package and pitch its USP?",
+                "Formulate catalog narrowing as an <b>Archetype-Conditioned POMDP / Maximum Information-Gain Tree</b> over a 200-package USP Knowledge Graph (<i>seniors, children, breakfast, sightseeing, occasion</i>), selecting questions that maximize <b>Entropy Reduction × Persona Weight × USP Fit</b>.",
+                "Extends our RQ4 `Verified Informed Slot Ledger` and 4-option trade-off policy (`step4_rq4_simulation.py`) to large-scale enterprise product catalogs without inflating turn counts.",
             ],
             [
-                "Pillar 5:\nConstrained Neuro-Symbolic RL for Live Human Agents",
-                "Can we optimize multi-turn human-likeness, rapport, and turn economy simultaneously under zero-violation symbolic constraints?",
-                "Formulate a <b>Constrained Markov Decision Process (CMDP)</b> where our declarative `RuleEngine` acts as a hard safety shield while Offline RL (CQL / DPO) optimizes turn economy and rapport across Travel, Healthcare & Banking.",
-                "Uses our RQ3 `RuleEngine` (0.0% leakage, 98.6% adherence) as the deterministic safety shield and our RQ4 multi-turn simulator (`step4_rq4_simulation.py`) as the pre-deployment training gym.",
+                "Pillar 5:\nOrthogonal Prompting Ablation (A–E) & Funnel Isolation",
+                "How do explicit routed directives vs. sub-index exemplars orthogonally drive style, and how does Quotation Agreement decouple from conversion?",
+                "Run a powered (<i>N</i> ≥ 60) <b>5-Condition Ablation (A: None/Off, B: Static/Off, C: Arch/Off, D: Static/On, E: Arch/On)</b> + 30-dim pragmatic codebook + <b>Two-Stage Funnel Model</b> (Stage 1 In-Chat Quote vs. Stage 2 Off-Chat Booking).",
+                "Directly extends our RQ2 style/pacing metrics (`step2_rq2_refined.py`, where diagnostic C vs. B = .511 vs. .453, <i>p</i> = .028) and our separation of in-chat turn economy from exogenous conversion factors.",
+            ],
+            [
+                "Pillar 6:\nConstrained Neuro-Symbolic RL for Live Human Agents",
+                "Can we jointly optimize human-likeness, stage progression, and turn economy under zero-violation symbolic guardrails with live humans?",
+                "Formulate a <b>Constrained Markov Decision Process (CMDP)</b> where our declarative `RuleEngine` acts as a hard safety shield while Offline RL (CQL / DPO) optimizes turn economy and rapport in live Agent-Assist deployment.",
+                "Uses our RQ3 `RuleEngine` (0.0% leakage, 98.6% adherence) as the deterministic safety shield and our RQ4 multi-turn simulator as the pre-deployment training gym.",
             ],
         ],
-        col_widths=[2.25, 2.75, 4.05, 3.58],
-        font_size=8.6,
+        col_widths=[2.20, 2.70, 4.15, 3.58],
+        font_size=7.6,
         align_left_cols=(0, 1, 2, 3),
-        highlight_rows=(0, 1, 2, 3, 4),
+        highlight_rows=(0, 1, 2, 3, 4, 5),
     )
     D.add_callout(
         s, 0.35, 6.00, 12.63, 1.05,
         "<b>Why This Capstone Is the Ideal Foundation for the Doctoral Dissertation:</b>\n"
-        "This master's study established the <i>foundational architecture</i>—demonstrating that behavioral-semantic trajectory clustering (`Blocks`), slot-masked exemplar retrieval, and declarative symbolic guardrails work together with <i>p</i> < .001 across all four RQs. The doctoral dissertation elevates this static, episode-level travel framework into a <b>continuous, dynamic, cross-domain theory of human-like conversational adaptation</b>.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=11,
+        "This master's study established the <i>foundational 1D persona architecture</i>—proving that behavioral-semantic clustering (`Blocks`), slot-masked exemplar retrieval, and declarative symbolic guardrails succeed with <i>p</i> < .001 across RQ1–RQ4. The doctoral dissertation elevates this into a <b>3D Neuro-Symbolic Enterprise Framework (Customer Archetype × Call Stage a–f × 200-Package USP Question Sequencing)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=10.8,
     )
 
     # =========================================================================

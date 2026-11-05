@@ -1,5 +1,5 @@
 """
-Generate a standalone, 100% native editable 5-slide PowerPoint deck:
+Generate a standalone, 100% native editable 7-slide PowerPoint deck:
   final/QM_640_RQ_Text_to_ANOVA_Methodology_Reference.pptx
 
 Purpose:
@@ -7,14 +7,17 @@ Purpose:
   the exact step-by-step sequence of how chatbot text requests and responses
   are injected with experimental conditions, converted into numerical scores,
   shaped for normality vs. skewness, and analyzed via triangulated ("bulletproof")
-  ANOVA variations across RQ1–RQ4:
+  ANOVA variations across RQ1–RQ4, plus deep-dives on RQ1 (PCA + Named Behavioral
+  Columns + K-Means + Logistic Regression) and Judge LLM Methodology:
     - Slide 1: General 4-Stage Text-to-ANOVA Pipeline & Bulletproof Inference Architecture
     - Slide 2: RQ1 Step-by-Step Sequence (Clustering & Prefix Routing Text-to-ANOVA)
-    - Slide 3: RQ2 Step-by-Step Sequence (Repeated-Measures Prompt Injection & Style/Pacing ANOVA)
-    - Slide 4: RQ3 Step-by-Step Sequence (2x2 Factorial Rule/Prompt Injection & Bounded-Rate ANOVA)
-    - Slide 5: RQ4 Step-by-Step Sequence (2x3 Closed-Loop Multi-Turn Simulation & Turn-Economy ANOVA)
+    - Slide 3: RQ1 Deep-Dive (Why PCA-20? Who Names Clusters? Why K-Means + Logistic Regression?)
+    - Slide 4: RQ2 Step-by-Step Sequence (Repeated-Measures Prompt Injection & Style/Pacing ANOVA)
+    - Slide 5: RQ3 Step-by-Step Sequence (2x2 Factorial Rule/Prompt Injection & Bounded-Rate ANOVA)
+    - Slide 6: RQ4 Step-by-Step Sequence (2x3 Closed-Loop Multi-Turn Simulation & Turn-Economy ANOVA)
+    - Slide 7: Judge LLM Methodology (Why, When & How Judge LLMs Are Used Across RQ1–RQ4)
 
-Does NOT modify any existing report (.docx, .pdf) or existing .pptx files.
+Does NOT modify any existing report (.docx, .pdf) or other .pptx files.
 """
 
 import os
@@ -259,7 +262,7 @@ def build_deck():
     s1 = prs.slides.add_slide(blank)
     add_header(
         s1,
-        "REFERENCE SLIDE 1 OF 5",
+        "REFERENCE SLIDE 1 OF 7",
         "General Methodology: How Chatbot Text Requests & Responses Become ANOVA-Ready",
         "Universal 4-Stage Sequence across RQ1–RQ4: Separating Golden Training from Held-Out Testing, Text-to-Numeric Scoring, and 3-Tier 'Bulletproof' ANOVA",
     )
@@ -399,7 +402,7 @@ def build_deck():
     s2 = prs.slides.add_slide(blank)
     add_header(
         s2,
-        "RQ1 METHODOLOGY (SLIDE 2 OF 5)",
+        "RQ1 METHODOLOGY (SLIDE 2 OF 7)",
         "RQ1 Step-by-Step: From Raw Dialogue Text to Archetype Clustering & Routing ANOVA",
         "How customer utterances are annotated via LLM schema, embedded into 46-d 'Blocks' vectors, scored by Cosine Silhouette, and tested across N = 159 runs",
     )
@@ -508,12 +511,127 @@ def build_deck():
     )
 
     # =========================================================================
-    # SLIDE 3: RQ2 STEP-BY-STEP FLOWCHART
+    # SLIDE 3: RQ1 DEEP-DIVE (PCA vs. NAMED FEATURES vs. K-MEANS vs. LOG-REG)
+    # =========================================================================
+    s2b = prs.slides.add_slide(blank)
+    add_header(
+        s2b,
+        "RQ1 DEEP-DIVE (SLIDE 3 OF 7)",
+        "RQ1 Deep-Dive: Why PCA-20? Who Names the Clusters? Why K-Means + Logistic Regression?",
+        "Resolving the 3 Core Methodological Questions: Constructing the 46-d 'Blocks' Vector, Deterministic Cluster Naming, and Offline Discovery vs. Online Routing",
+    )
+
+    # Col 1: Why PCA is needed (and what is NOT passed through PCA)
+    add_stage_banner(s2b, xs[0], y_top, col_w, col_h, "PART 1", "Why PCA-20 Is Needed (And Where)", "#F0F4F8", "#1B365D")
+    add_card(
+        s2b, xs[0] + 0.10, y_top + 0.42, col_w - 0.20, 2.38,
+        "1A. Two Parallel Feature Blocks (46-d Total)",
+        [
+            ("• Block 1 (Gemini Embedding → PCA-20): ", "Raw gemini-embedding-001 has 3,072 dimensions. ONLY this text embedding is compressed via PCA(20) into 20 unnamed components (PC1..PC20).", "#1565C0"),
+            ("• Block 2 (26 Named Behavioral Cols — NO PCA!): ", "The 16 LLM behavioral fields (10 ordinal 1–5 scales + 16 one-hot goal/tone flags) are kept in their exact 26 human-named columns without PCA!", "#1B5E20"),
+            ("• Fused 46-d 'Blocks' Vector X: ", "20 PCA dims + 26 named behavioral cols = 46 dimensions.", "#1B365D"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#1B365D", font_size=7.3,
+    )
+    add_flow_arrow(s2b, xs[0] + 1.35, y_top + 2.84, width=0.28, height=0.20, color_hex="#1B365D", direction="down")
+    add_card(
+        s2b, xs[0] + 0.10, y_top + 3.08, col_w - 0.20, 2.24,
+        "1B. Why K-Means Needs PCA on the 3,072-d Block",
+        [
+            ("• Prevents 118× Dimension Swamping: ", "K-Means sums Euclidean distance across all columns. Without PCA, 3,072 embedding dims overwhelm 26 behavioral cols (3,072 / 26 = 118×).", "#C62828"),
+            ("• Curse of Dimensionality (D > 3·N_gold): ", "3,072 dims for N_gold = 933 dialogues makes pairwise Euclidean distances uniform; top 20 PCs strip 3,052 noise dims.", "#E65100"),
+            ("• Ablation Proof (Table D6): ", "Raw Embedding K-Means has Cal. Silhouette = .014 & Outcome V = .342; 46-d Blocks doubles Silhouette (.033) & lifts V to .454!", "#00695C"),
+        ],
+        bg_hex="#E3F2FD", border_hex="#1565C0", font_size=7.2,
+    )
+
+    add_flow_arrow(s2b, 3.23, 3.45, width=0.25, height=0.38, color_hex="#1B365D", direction="right")
+
+    # Col 2: Who names the features & clusters?
+    add_stage_banner(s2b, xs[1], y_top, col_w, col_h, "PART 2", "How Clusters Get Semantic Names", "#E0F2F1", "#00695C")
+    add_card(
+        s2b, xs[1] + 0.10, y_top + 0.42, col_w - 0.20, 2.15,
+        "2A. PCA Dimensions Are Never Named!",
+        [
+            ("• True Property of PCA: ", "PC1..PC20 are dense linear combinations of 3,072 floats—they have no human names.", "#C62828"),
+            ("• How K-Means Uses the 46-d Vector: ", "At M = 9 user messages on D_gold (n = 933), K-Means (k = 3) uses all 46 columns (20 PCs + 26 behavioral cols) to partition dialogues into anonymous IDs {0, 1, 2}.", "#00695C"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#00695C", font_size=7.4,
+    )
+    add_flow_arrow(s2b, xs[1] + 1.35, y_top + 2.61, width=0.28, height=0.20, color_hex="#00695C", direction="down")
+    add_card(
+        s2b, xs[1] + 0.10, y_top + 2.85, col_w - 0.20, 2.47,
+        "2B. Deterministic Naming via 26 Named Columns",
+        [
+            ("• Pre-Declared Rule (step2i_rq1_refined_archetypes.py): ", "Computes each cluster's mean on the 10 named ordinal behavioral columns (which were NEVER passed through PCA):", "#1B365D"),
+            ("  1. idxmax(destination_flexibility = 3.58/5): ", "→ Named 'Open Explorer' (25.5% of D_gold).", "#1565C0"),
+            ("  2. idxmax(decisiveness = 3.66/5 of rest): ", "→ Named 'Decisive Booker' (45.0% of D_gold).", "#1B5E20"),
+            ("  3. Remaining Cluster (highest price_sensitivity): ", "→ Named 'Rigid-Constraint Seeker' (29.5%).", "#E65100"),
+        ],
+        bg_hex="#E0F2F1", border_hex="#00695C", font_size=7.3,
+    )
+
+    add_flow_arrow(s2b, 6.53, 3.45, width=0.25, height=0.38, color_hex="#00695C", direction="right")
+
+    # Col 3: Why K-Means alone cannot route early turns (M=3, 5)
+    add_stage_banner(s2b, xs[2], y_top, col_w, col_h, "PART 3", "Why K-Means Alone Fails at M = 3, 5", "#F3E5F5", "#6A1B9A")
+    add_card(
+        s2b, xs[2] + 0.10, y_top + 0.42, col_w - 0.20, 2.48,
+        "3A. Offline Discovery (M=9) vs. Online Routing (M=5)",
+        [
+            ("• Reference Taxonomy Needs M = 9 User Msgs: ", "A traveler's true behavioral persona y^(9) (revisions, option comparison, trade-offs) only stabilizes after ~9 user messages (~17 total turns, bootstrap ARI = .89).", "#6A1B9A"),
+            ("• Runtime Chatbot Must Route Early (M = 3 or 5): ", "In RQ2–RQ4, the bot cannot wait until turn 17 to adapt its prompt—it must route the user by message M = 5!", "#C62828"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#6A1B9A", font_size=7.4,
+    )
+    add_flow_arrow(s2b, xs[2] + 1.35, y_top + 2.94, width=0.28, height=0.20, color_hex="#6A1B9A", direction="down")
+    add_card(
+        s2b, xs[2] + 0.10, y_top + 3.18, col_w - 0.20, 2.14,
+        "3B. Two Flaws of Using Unsupervised K-Means at M=5",
+        [
+            ("• Flaw 1 — Equal Coordinate Weighting: ", "At M = 3 or 5, features like revision_tendency are still unrevealed (0), yet K-Means Euclidean distance weights all 46 coordinates equally (1.0)!", "#C62828"),
+            ("• Flaw 2 — Moving-Target Instability if Refit: ", "Fitting separate K-Means at M = 3 or M = 5 drops cluster stability from ARI = .89 down to .55–.65 and shifts cluster definitions every turn.", "#E65100"),
+        ],
+        bg_hex="#EDE7F6", border_hex="#5E35B1", font_size=7.3,
+    )
+
+    add_flow_arrow(s2b, 9.83, 3.45, width=0.25, height=0.38, color_hex="#6A1B9A", direction="right")
+
+    # Col 4: How Logistic Regression complements K-Means
+    add_stage_banner(s2b, xs[3], y_top, col_w, col_h, "PART 4", "How Logistic Regression Solves Routing", "#E8F5E9", "#2E7D32")
+    add_card(
+        s2b, xs[3] + 0.10, y_top + 0.42, col_w - 0.20, 2.50,
+        "4A. Supervised Prefix-to-Archetype Mapping",
+        [
+            ("• Exact Input Features to Logistic Regression: ", "Takes the 46-d Blocks vector X^(m) at early prefix m ∈ {3, 5, 7, 9} (20 PCA prefix dims + 26 opening behavioral cols).", "#2E7D32"),
+            ("• Target Labels y^(9): ", "Trained on D_gold to predict the fixed M = 9 K-Means reference archetype y^(9).", "#1B365D"),
+            ("• Learns Discriminative Weights W^(m) (3 × 46): ", "Automatically up-weights early-revealed cues (information_upfront, primary_goal, opening phrasing) and down-weights unrevealed late-turn features!", "#1B5E20"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#2E7D32", font_size=7.3,
+    )
+    add_flow_arrow(s2b, xs[3] + 1.35, y_top + 2.96, width=0.28, height=0.20, color_hex="#2E7D32", direction="down")
+    add_card(
+        s2b, xs[3] + 0.10, y_top + 3.20, col_w - 0.20, 2.12,
+        "4B. Calibrated Probabilities & Held-Out Accuracy",
+        [
+            ("• Softmax Posterior Probabilities P(c | X^(m)): ", "Unlike hard K-Means IDs, outputs confidence scores (e.g., m=5: Open Explorer .48, Rigid .38 → m=9: Open Explorer .89).", "#1565C0"),
+            ("• Held-Out D_test (n = 401) Convergence: ", "m = 3 (59.4%, κ = .359) → m = 5 (70.1%, κ = .535) → m = 7 (82.0%, κ = .722) → m = 9 (97.3%, κ = .958).", "#1B5E20"),
+        ],
+        bg_hex="#C8E6C9", border_hex="#1B5E20", font_size=7.3,
+    )
+
+    add_bottom_banner(
+        s2b,
+        "RQ1 Deep-Dive Takeaway: (1) PCA-20 compresses only the 3,072-d embedding so it doesn't swamp the 26 behavioral cols; (2) Cluster names come deterministically from the 26 non-PCA behavioral cols; (3) K-Means discovers the ground-truth personas offline at M=9, while Logistic Regression learns discriminative weights to route incomplete early prefixes (M=3, 5) online.",
+    )
+
+    # =========================================================================
+    # SLIDE 4: RQ2 STEP-BY-STEP FLOWCHART
     # =========================================================================
     s3 = prs.slides.add_slide(blank)
     add_header(
         s3,
-        "RQ2 METHODOLOGY (SLIDE 3 OF 5)",
+        "RQ2 METHODOLOGY (SLIDE 4 OF 7)",
         "RQ2 Step-by-Step: Prompt Injection Across 3 Conditions & Repeated-Measures ANOVA",
         "How the exact same N = 33 held-out dialogues are fed through 3 prompting strategies (99 LLM calls), converted to style/pacing numbers, and tested via RM-ANOVA",
     )
@@ -626,12 +744,12 @@ def build_deck():
     )
 
     # =========================================================================
-    # SLIDE 4: RQ3 STEP-BY-STEP FLOWCHART
+    # SLIDE 5: RQ3 STEP-BY-STEP FLOWCHART
     # =========================================================================
     s4 = prs.slides.add_slide(blank)
     add_header(
         s4,
-        "RQ3 METHODOLOGY (SLIDE 4 OF 5)",
+        "RQ3 METHODOLOGY (SLIDE 5 OF 7)",
         "RQ3 Step-by-Step: 2 × 2 Factorial Rule/Prompt Injection & Bounded-Rate ANOVA",
         "How 36 held-out dialogues × 4 factorial cells (N = 144) are scored for Rule Adherence, Entity Leakage, and Slot F1, and analyzed via OLS, Sum-HC3, and ART ANOVA",
     )
@@ -733,12 +851,12 @@ def build_deck():
     )
 
     # =========================================================================
-    # SLIDE 5: RQ4 STEP-BY-STEP FLOWCHART
+    # SLIDE 6: RQ4 STEP-BY-STEP FLOWCHART
     # =========================================================================
     s5 = prs.slides.add_slide(blank)
     add_header(
         s5,
-        "RQ4 METHODOLOGY (SLIDE 5 OF 5)",
+        "RQ4 METHODOLOGY (SLIDE 6 OF 7)",
         "RQ4 Step-by-Step: 2 × 3 Multi-Turn Simulation & Turn-Economy Factorial ANOVA",
         "How 180 unique held-out seed dialogues run in closed-loop multi-turn simulation, convert to Log Turns & RER, and are tested via OLS, HC3, and ART ANOVA",
     )
@@ -841,9 +959,120 @@ def build_deck():
         "RQ4 Defense Summary: Because Cluster-Adaptive policies reach the deterministic 5.00-turn protocol floor (SD = 0.00) for Decisive and Rigid personas, we pair OLS ANOVA on log-transformed turns (F=664.43, Interaction F=10.89) with HC3 heteroscedasticity-robust F (8.58), ART Rank ANOVA (209.46), and Mann–Whitney U (p<.001).",
     )
 
+    # =========================================================================
+    # SLIDE 7: JUDGE LLM METHODOLOGY (WHY, WHEN & HOW JUDGE LLMs ARE USED)
+    # =========================================================================
+    s6 = prs.slides.add_slide(blank)
+    add_header(
+        s6,
+        "JUDGE LLM METHODOLOGY (SLIDE 7 OF 7)",
+        "Why, When & How 'Judge LLMs' Are Used Across RQ1–RQ4 (And How Bias Is Prevented)",
+        "Distinguishing Deterministic Python/Vector Scorers from Semantic LLM Judges, Cross-Tier Dual-Judge Verification, and Blind Persona Audits",
+    )
+
+    # Col 1: RQ1 Behavioral Codebook Annotator & Test-Retest Judge
+    add_stage_banner(s6, xs[0], y_top, col_w, col_h, "RQ1 ROLE", "Behavioral Codebook Judge (temp=0)", "#F0F4F8", "#1B365D")
+    add_card(
+        s6, xs[0] + 0.10, y_top + 0.42, col_w - 0.20, 2.38,
+        "1A. Why an LLM Judge/Annotator Is Needed in RQ1",
+        [
+            ("• Limitation of Raw Text Embeddings: ", "MiniLM/Gemini embeddings group dialogues by surface words (cities, dates) rather than latent decision style (Cal. Silhouette = .014).", "#C62828"),
+            ("• Structured 16-Field Rubric (UserBehaviour): ", "gemini-2.5-flash (temp = 0.0) evaluates customer prefixes against a strict Pydantic schema (10 ordinal 1–5 scales + 6 categorical fields).", "#1B365D"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#1B365D", font_size=7.4,
+    )
+    add_flow_arrow(s6, xs[0] + 1.35, y_top + 2.84, width=0.28, height=0.20, color_hex="#1B365D", direction="down")
+    add_card(
+        s6, xs[0] + 0.10, y_top + 3.08, col_w - 0.20, 2.24,
+        "1B. How RQ1 Annotator Reliability Is Verified",
+        [
+            ("• Blind Test–Retest Audit (n = 200): ", "Re-annotated independently to verify quadratic weighted kappa: κ_w = .87 to .96 across the 10 ordinal scales!", "#1B5E20"),
+            ("• Held-Out Criterion Audit (Fields 14–16): ", "Outcome fields (booked vs. stalled) are NEVER fed into clustering; held out strictly to test external validity (Cramér's V = .454, p < .001).", "#1565C0"),
+        ],
+        bg_hex="#E3F2FD", border_hex="#1565C0", font_size=7.4,
+    )
+
+    add_flow_arrow(s6, 3.23, 3.45, width=0.25, height=0.38, color_hex="#1B365D", direction="right")
+
+    # Col 2: RQ2 Why NO Judge LLM Is Used (Avoiding Self-Preference Bias)
+    add_stage_banner(s6, xs[1], y_top, col_w, col_h, "RQ2 ROLE", "Why RQ2 Uses ZERO LLM Judges", "#E0F2F1", "#00695C")
+    add_card(
+        s6, xs[1] + 0.10, y_top + 0.42, col_w - 0.20, 2.38,
+        "2A. The Danger of Judge Self-Preference Bias",
+        [
+            ("• Why We Do NOT Use an LLM Judge in RQ2: ", "Because gemini-2.5-flash generates the chatbot replies, asking an LLM to rate 'how natural or stylish' the reply sounds introduces severe LLM self-preference & verbosity bias!", "#C62828"),
+            ("• Ground-Truth Anchor Available (y_i*): ", "Every held-out Frames turn has the real human wizard's actual reply y_i*.", "#00695C"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#00695C", font_size=7.4,
+    )
+    add_flow_arrow(s6, xs[1] + 1.35, y_top + 2.84, width=0.28, height=0.20, color_hex="#00695C", direction="down")
+    add_card(
+        s6, xs[1] + 0.10, y_top + 3.08, col_w - 0.20, 2.24,
+        "2B. Deterministic Vector & Word Scorers Used Instead",
+        [
+            ("• De-Lexicalized Vector Cosine: ", "Masks all entities ([CITY], [DATE], [PRICE]) and computes exact dot-product cosine against human reply y_i* in MiniLM-384d (independent encoder!) and Gemini-3072d.", "#1B5E20"),
+            ("• Exact Word-Count Pacing Error: ", "|Words(ŷ_i,c) − μ_Words(Gold Archetype)|—100% deterministic Python math.", "#1B365D"),
+        ],
+        bg_hex="#E0F2F1", border_hex="#00695C", font_size=7.4,
+    )
+
+    add_flow_arrow(s6, 6.53, 3.45, width=0.25, height=0.38, color_hex="#00695C", direction="right")
+
+    # Col 3: RQ3 Dual-Model Policy Compliance Judges + Regex Triangulation
+    add_stage_banner(s6, xs[2], y_top, col_w, col_h, "RQ3 ROLE", "Dual-Judge + Regex Policy Audit", "#F3E5F5", "#6A1B9A")
+    add_card(
+        s6, xs[2] + 0.10, y_top + 0.42, col_w - 0.20, 2.38,
+        "3A. Why & When Judge LLMs Are Needed in RQ3",
+        [
+            ("• Why Regex Alone Is Not Enough for RAR: ", "A chatbot can enforce or violate a policy (e.g., 15% discount cap, 15-day visa lead time, >4 FIT pax) using hundreds of natural-language phrasings.", "#6A1B9A"),
+            ("• When Invoked: ", "Evaluates all N = 144 replies across the 2 × 2 design (18 violating + 18 compliant cases per cell) for semantic policy enforcement.", "#1B365D"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#6A1B9A", font_size=7.4,
+    )
+    add_flow_arrow(s6, xs[2] + 1.35, y_top + 2.84, width=0.28, height=0.20, color_hex="#6A1B9A", direction="down")
+    add_card(
+        s6, xs[2] + 0.10, y_top + 3.08, col_w - 0.20, 2.24,
+        "3B. 3-Way Triangulation (D + Judge J1 + Judge J2)",
+        [
+            ("• Auditor 1 (Deterministic Regex D): ", "Checks explicit numbers, discount caps, and refusal/remediation keywords.", "#455A64"),
+            ("• Auditor 2 (Judge J1 — gemini-2.5-flash, temp=0): ", "Structured Pydantic compliance verdict.", "#1565C0"),
+            ("• Auditor 3 (Judge J2 — gemini-2.5-pro, temp=0): ", "Higher-tier cross-model verification → Inter-Judge Cohen's κ(J1, J2) = .917 (95.8% raw agreement)!", "#1B5E20"),
+        ],
+        bg_hex="#EDE7F6", border_hex="#5E35B1", font_size=7.3,
+    )
+
+    add_flow_arrow(s6, 9.83, 3.45, width=0.25, height=0.38, color_hex="#6A1B9A", direction="right")
+
+    # Col 4: RQ4 Blind Persona Fidelity Judge & Summary Safeguards
+    add_stage_banner(s6, xs[3], y_top, col_w, col_h, "RQ4 ROLE", "Blind Persona Fidelity Judge", "#E8F5E9", "#2E7D32")
+    add_card(
+        s6, xs[3] + 0.10, y_top + 0.42, col_w - 0.20, 2.45,
+        "4A. Why & When a Judge LLM Is Used in RQ4",
+        [
+            ("• Primary RQ4 Metrics Are 100% Deterministic: ", "Total Turns (T), Log Turns ln(T), and Redundant Elicitation Rate (RER) are counted by exact Python state/regex trackers—zero LLM judge needed.", "#1B365D"),
+            ("• Why Judge LLM Is Needed for Simulator Audit: ", "To prove the Customer Simulator (gemini-2.5-flash) genuinely enactments the 3 personas without circularity or label leakage!", "#2E7D32"),
+        ],
+        bg_hex="#FFFFFF", border_hex="#2E7D32", font_size=7.3,
+    )
+    add_flow_arrow(s6, xs[3] + 1.35, y_top + 2.91, width=0.28, height=0.20, color_hex="#2E7D32", direction="down")
+    add_card(
+        s6, xs[3] + 0.10, y_top + 3.15, col_w - 0.20, 2.17,
+        "4B. Blind Gemini 2.5 Pro Audit & 4 Safeguards",
+        [
+            ("• Blind Persona Audit (n = 45 Transcripts): ", "Independent gemini-2.5-pro judge blindly classifies anonymized user turns into the 3 archetypes: 43/45 = 95.6% accuracy, κ = .933 (p = 1.37×10⁻¹⁸)!", "#1B5E20"),
+            ("• 4 Anti-Bias Safeguards: ", "(1) temp = 0.0; (2) Pydantic JSON schemas; (3) Cross-tier Pro vs. Flash audit; (4) Anchored to deterministic regex.", "#E65100"),
+        ],
+        bg_hex="#C8E6C9", border_hex="#1B5E20", font_size=7.3,
+    )
+
+    add_bottom_banner(
+        s6,
+        "Judge LLM Defense Summary: Judge LLMs are NEVER used where exact vector/Python math suffices (RQ2 style cosine & pacing; RQ3 leakage & Slot F1; RQ4 turn counts & RER). Where semantic evaluation is required (RQ1 codebook, RQ3 policy compliance, RQ4 simulator audit), we enforce temp=0, Pydantic schemas, regex triangulation, and cross-tier Gemini 2.5 Pro verification (κ = .917–.933).",
+    )
+
     os.makedirs(os.path.dirname(OUT_PPTX), exist_ok=True)
     prs.save(OUT_PPTX)
-    print(f"Saved standalone 5-slide RQ Text-to-ANOVA Methodology PPTX: {OUT_PPTX} (Total slides: {len(prs.slides)})")
+    print(f"Saved standalone 7-slide RQ Text-to-ANOVA Methodology PPTX: {OUT_PPTX} (Total slides: {len(prs.slides)})")
 
 
 if __name__ == "__main__":

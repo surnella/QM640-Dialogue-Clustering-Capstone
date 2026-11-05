@@ -717,7 +717,7 @@ def build_part2(D, ctx):
     D.heading("Future Scope and Research Extensions", 2)
     D.para(
         "Future doctoral research on <i>Dialogue Clustering and Methodologies to be Adapted for Human-Like "
-        "Conversations</i> should pursue six extensions: (1) <b>orthogonal factorial ablations across RQ2, RQ3, and "
+        "Conversations</i> should pursue eight extensions: (1) <b>orthogonal factorial ablations across RQ2, RQ3, and "
         "RQ4</b>—first, expanding the 3-condition RQ2 design into a 5-condition experiment (<b>Condition A</b>: Examples "
         "<i>None</i>, Directive <i>Off</i>; <b>Condition B</b>: Examples <i>Global/Static</i>, Directive <i>Off</i>; "
         "<b>Condition C</b>: Examples <i>Archetype-Partitioned</i>, Directive <i>Off</i>; <b>Condition D</b>: Examples "
@@ -736,10 +736,18 @@ def build_part2(D, ctx):
         "familiarity) from within-regime behavioral negotiation personas while avoiding the sample starvation and 35.9% "
         "entity leakage of naive 500-bucket parameter clustering; (3) <b>soft-mixture manifold routing</b> that blends "
         "exemplars using posterior probabilities for boundary travelers; (4) <b>turn-by-turn Bayesian persona tracking</b> "
-        "from Turn 1 onward to capture mid-session persona drift; (5) <b>two-stage quotation-to-conversion funnel "
-        "modeling</b> that decouples Stage 1 in-chat quotation agreement from Stage 2 post-quote purchase conversion "
-        "under exogenous competitor and lodging controls; and (6) <b>constrained neuro-symbolic reinforcement learning "
-        "and live OTA A/B testing</b> with human travelers and human domain raters across multilingual settings."
+        "from Turn 1 onward to capture mid-session persona drift; (5) <b>stage-gated enterprise call-flow progression "
+        "(Stages a–f) and lead propensity scoring</b>, partitioning the exemplar store into a 3 (Archetypes) × 6 "
+        "(Call Stages: <i>a. Opening, b. Mandatory Parameters, c. Product Positioning, d. Budget/Constraint Negotiation, "
+        "e. Sales Urgency & Compliance, f. Closure</i>) matrix and classifying <i>Hot, Warm, or Cold</i> lead propensity "
+        "at quotation handoff; (6) <b>information-theoretic product catalog narrowing (200 → 1) and USP-aligned question "
+        "sequencing</b>, formulating post-mandatory package narrowing across 200+ regional packages as an archetype-conditioned "
+        "maximum information-gain decision tree over micro-preferences (<i>senior-citizen pacing, child sensitivity, breakfast "
+        "inclusiveness, sightseeing tempo, honeymoon/occasion</i>) and pre-indexed package Unique Selling Propositions (USPs); "
+        "(7) <b>two-stage quotation-to-conversion funnel modeling</b> that decouples Stage 1 in-chat quotation agreement "
+        "from Stage 2 post-quote purchase conversion under exogenous competitor and lodging controls; and (8) "
+        "<b>constrained neuro-symbolic reinforcement learning and live OTA A/B testing</b> with human travelers and human "
+        "domain raters across multilingual settings."
     )
 
     # ================================================================== REFERENCES
