@@ -7,17 +7,24 @@ Part 2 of the QM640 Capstone Defense Presentation (Slides 22–42):
 """
 
 import os
+from pptx.dml.color import RGBColor
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+from pptx.util import Inches, Pt
 from presentation.ppt_styles import (
     BLUE,
     CALLOUT_BG,
     CARD_BG,
     CORAL,
+    DARK,
     GOLD,
     GREEN,
     GREEN_BG,
     NAVY,
     RED_BG,
     TEAL,
+    WHITE,
+    _add_formatted_runs,
 )
 from report.final_context import FIG_FIN, FIG_INT, REPO
 
@@ -1245,5 +1252,415 @@ def build_slides_part2(D, ctx):
         "<b>Thank You — Open Floor for Defense Committee Questions</b>\n"
         "<i>Surnella Sandeep  |  Department of Data Analytics, Walsh College  |  QM640: Data Analytics Capstone  |  Mentor: Mr. Smitraj Raut</i>",
         bg_color=CALLOUT_BG, border_color=GOLD, font_size=13,
+    )
+
+    # =========================================================================
+    # SLIDE 47: PICTORIAL SYNTHESIS OF SLIDES 44 & 45 (CAPSTONE vs. DISSERTATION)
+    # =========================================================================
+    s = D.content_slide(
+        "Module 8: Conclusive Story & Doctoral Dissertation Roadmap",
+        "Pictorial Synthesis: From Capstone (RQ1–RQ4) to Doctoral Human-Like Conversational AI",
+        "Visualizing Addressed Capstone Parameters (Teal/Navy) vs. Doctoral Exploration Blocks (Amber/Coral) & Labeled Output Flows",
+        notes=(
+            "This pictorial blueprint synthesizes Slides 44 (Six Scientific Frontiers) and 45 (Doctoral Dissertation Roadmap) "
+            "into a single end-to-end methodological architecture. Teal/Navy blocks show what is empirically completed in "
+            "this Master's Capstone (RQ1-RQ4), Amber/Gold blocks show the 6 Doctoral Dissertation extensions and their "
+            "probable parameters, and labeled connector arrows show how each module's output feeds the next toward the "
+            "common research goal of a reproducible human-like enterprise chatbot."
+        ),
+    )
+
+    # Color shades for Capstone vs. Doctoral vs. Goal
+    CAP_BG = RGBColor(224, 242, 241)       # Soft Teal/Cyan tint for Capstone (RQ1-RQ4)
+    CAP_HDR = TEAL                         # Deep Teal header for Capstone blocks
+    CAP_BORDER = NAVY                      # Solid Navy border
+
+    DOC_BG = RGBColor(255, 246, 224)       # Warm Amber/Gold tint for Doctoral Dissertation
+    DOC_HDR = RGBColor(184, 51, 42)        # Coral/Crimson header for Doctoral blocks
+    DOC_BORDER = GOLD                      # Warm Gold border
+
+    GOAL_BG = RGBColor(225, 245, 232)      # Soft Emerald tint for Common Goal Hub
+    GOAL_HDR = GREEN                       # Deep Emerald header
+    GOAL_BORDER = GREEN
+
+    # 1. Top Legend Bar (y = 1.43, h = 0.31)
+    def _add_legend_pill(left, width, bg_col, hdr_col, bdr_col, tag_txt, desc_txt):
+        box = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left), Inches(1.43), Inches(width), Inches(0.30))
+        box.adjustments[0] = 0.15
+        box.fill.solid()
+        box.fill.fore_color.rgb = bg_col
+        box.line.color.rgb = bdr_col
+        box.line.width = Pt(1.25)
+        badge = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left + 0.04), Inches(1.46), Inches(1.55), Inches(0.24))
+        badge.adjustments[0] = 0.2
+        badge.fill.solid()
+        badge.fill.fore_color.rgb = hdr_col
+        badge.line.fill.background()
+        p_b = badge.text_frame.paragraphs[0]
+        p_b.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p_b, tag_txt, font_size=7.8, color=WHITE, bold=True)
+        tb = s.shapes.add_textbox(Inches(left + 1.63), Inches(1.45), Inches(width - 1.68), Inches(0.26))
+        tb.text_frame.word_wrap = True
+        tb.text_frame.margin_left = tb.text_frame.margin_top = Inches(0)
+        p_t = tb.text_frame.paragraphs[0]
+        _add_formatted_runs(p_t, desc_txt, font_size=8.0, color=DARK, bold=True)
+
+    _add_legend_pill(
+        0.25, 4.15, CAP_BG, CAP_HDR, CAP_BORDER,
+        "CAPSTONE (RQ1–RQ4)",
+        "Currently Addressed Modules & Validated Parameters (p < .001)",
+    )
+    _add_legend_pill(
+        4.48, 4.55, DOC_BG, DOC_HDR, DOC_BORDER,
+        "DOCTORAL (PILLARS 1–6)",
+        "Future Dissertation Blocks & Probable Parameters to Explore",
+    )
+    _add_legend_pill(
+        9.11, 3.97, GOAL_BG, GOAL_HDR, GOAL_BORDER,
+        "CORE RESEARCH GOAL",
+        "Reproducible Methodology for Human-Like Chatbot AI",
+    )
+
+    # Helper to draw an analysis block
+    def _add_analysis_block(left, top, width, height, title, lines, is_capstone=True):
+        bg = CAP_BG if is_capstone else DOC_BG
+        hdr_c = CAP_HDR if is_capstone else DOC_HDR
+        bdr_c = CAP_BORDER if is_capstone else DOC_BORDER
+
+        card = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left), Inches(top), Inches(width), Inches(height))
+        card.adjustments[0] = 0.03
+        card.fill.solid()
+        card.fill.fore_color.rgb = bg
+        card.line.color.rgb = bdr_c
+        card.line.width = Pt(1.4)
+
+        hdr_h = 0.27
+        hdr = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left), Inches(top), Inches(width), Inches(hdr_h))
+        hdr.adjustments[0] = 0.03
+        hdr.fill.solid()
+        hdr.fill.fore_color.rgb = hdr_c
+        hdr.line.fill.background()
+        tf_h = hdr.text_frame
+        tf_h.word_wrap = True
+        tf_h.vertical_anchor = MSO_ANCHOR.MIDDLE
+        tf_h.margin_left = Inches(0.08)
+        p_h = tf_h.paragraphs[0]
+        _add_formatted_runs(p_h, title, font_size=8.6, color=WHITE, bold=True)
+
+        tb = s.shapes.add_textbox(
+            Inches(left + 0.06),
+            Inches(top + hdr_h + 0.02),
+            Inches(width - 0.12),
+            Inches(height - hdr_h - 0.04),
+        )
+        tf = tb.text_frame
+        tf.word_wrap = True
+        tf.margin_left = tf.margin_right = Inches(0.02)
+        tf.margin_top = tf.margin_bottom = Inches(0.01)
+        for idx, ln in enumerate(lines):
+            p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
+            p.space_after = Pt(1.5)
+            _add_formatted_runs(p, ln, font_size=7.4, color=DARK)
+
+    # Helper to draw a labeled horizontal connector arrow between columns
+    def _add_labeled_arrow(left, top, width, height, label_top, label_bottom, is_capstone=True):
+        arr_c = CAP_HDR if is_capstone else DOC_HDR
+        bdr_c = NAVY if is_capstone else GOLD
+        arr = s.shapes.add_shape(
+            MSO_SHAPE.RIGHT_ARROW,
+            Inches(left + 0.03),
+            Inches(top + height * 0.34),
+            Inches(width - 0.06),
+            Inches(0.24),
+        )
+        arr.fill.solid()
+        arr.fill.fore_color.rgb = arr_c
+        arr.line.color.rgb = bdr_c
+        arr.line.width = Pt(0.75)
+
+        # Callout tag above arrow
+        tb1 = s.shapes.add_textbox(Inches(left - 0.02), Inches(top + 0.02), Inches(width + 0.04), Inches(0.32))
+        tf1 = tb1.text_frame
+        tf1.word_wrap = True
+        tf1.margin_left = tf1.margin_right = tf1.margin_top = tf1.margin_bottom = Inches(0)
+        p1 = tf1.paragraphs[0]
+        p1.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p1, label_top, font_size=6.9, color=NAVY if is_capstone else DOC_HDR, bold=True)
+
+        # Parameter tag below arrow
+        tb2 = s.shapes.add_textbox(Inches(left - 0.02), Inches(top + height * 0.34 + 0.25), Inches(width + 0.04), Inches(0.45))
+        tf2 = tb2.text_frame
+        tf2.word_wrap = True
+        tf2.margin_left = tf2.margin_right = tf2.margin_top = tf2.margin_bottom = Inches(0)
+        p2 = tf2.paragraphs[0]
+        p2.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p2, label_bottom, font_size=6.6, color=DARK)
+
+    # Helper to draw small vertical flow arrow between stacked blocks inside a column
+    def _add_vert_connector(center_x, top_y, label_txt):
+        arr = s.shapes.add_shape(MSO_SHAPE.DOWN_ARROW, Inches(center_x - 0.11), Inches(top_y), Inches(0.22), Inches(0.14))
+        arr.fill.solid()
+        arr.fill.fore_color.rgb = GOLD
+        arr.line.color.rgb = DOC_HDR
+        arr.line.width = Pt(0.6)
+        tb = s.shapes.add_textbox(Inches(center_x + 0.13), Inches(top_y - 0.02), Inches(1.55), Inches(0.16))
+        tf = tb.text_frame
+        tf.margin_left = tf.margin_top = Inches(0)
+        p = tf.paragraphs[0]
+        _add_formatted_runs(p, label_txt, font_size=6.5, color=DOC_HDR, bold=True)
+
+    # Coordinates for 3 rows
+    R1_Y, R2_Y, R3_Y = 1.80, 3.44, 5.08
+    ROW_H = 1.50
+
+    # =========================================================================
+    # COLUMN 1: USER ARCHETYPE & HIERARCHICAL / MANIFOLD CLUSTERING (x=0.25, w=2.65)
+    # =========================================================================
+    C1_X, C1_W = 0.25, 2.65
+    _add_analysis_block(
+        C1_X, R1_Y, C1_W, ROW_H,
+        "[CAPSTONE RQ1] User Archetypes Analysis",
+        [
+            "• <b>Method:</b> Opening-turn (`M=9`) `K-Means (k=3)` + `L2 LogReg` Router on `46-d Blocks`.",
+            "• <b>Addressed Params (46-d):</b> `PCA-20` Gemini semantic prefix + `26` behavioral cols (<i>destination_flexibility, decisiveness, price_sensitivity, exploration_breadth, goals, tone</i>).",
+            "• <b>Validated Result:</b> `ARI = .89/.87`, `97.3%` prefix routing (`κ = .958`, `p < .001`).",
+        ],
+        is_capstone=True,
+    )
+    _add_vert_connector(C1_X + 0.85, R1_Y + ROW_H, "Expands 1D k=3 → 2D Hierarchy")
+
+    _add_analysis_block(
+        C1_X, R2_Y, C1_W, ROW_H,
+        "[DOCTORAL P1] Hierarchical Clustering (C × K)",
+        [
+            "• <b>Method:</b> Two-Tier Context × Behavior (`24–36` micro-personas) + Domain Transfer.",
+            "• <b>Probable Context Params (Tier 1):</b> `party_type` (solo / couple / family / group), `budget_stakes` (economy / luxury), `lead_window`, `trip_familiarity`.",
+            "• <b>Probable Behavioral Params (Tier 2):</b> Conditional pacing & decision latency within regime `C`.",
+        ],
+        is_capstone=False,
+    )
+    _add_vert_connector(C1_X + 0.85, R2_Y + ROW_H, "Replaces Hard k-Means w/ Soft Drift")
+
+    _add_analysis_block(
+        C1_X, R3_Y, C1_W, ROW_H,
+        "[DOCTORAL P2] Soft-Mixture & Bayesian Drift",
+        [
+            "• <b>Method:</b> Variational / vMF Manifold + Turn-by-Turn Posterior Update.",
+            "• <b>Probable Drift Params:</b> Continuous blend weights (`w_1..w_K`) for `25.2%` boundary speakers (`s < .05`) + mid-call shift `P(z_t | u_1..t)` (e.g., <i>Exploratory → Budget</i> after quote).",
+        ],
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # ARROWS 1 → 2 (x=2.91, w=0.77)
+    # =========================================================================
+    A1_X, A1_W = 2.91, 0.77
+    _add_labeled_arrow(
+        A1_X, R1_Y + 0.15, A1_W, ROW_H - 0.2,
+        "RQ1 Output → RQ2",
+        "3 Personas + Prefix Router (κ=.535→.958)",
+        is_capstone=True,
+    )
+    _add_labeled_arrow(
+        A1_X, R2_Y + 0.15, A1_W, ROW_H - 0.2,
+        "Pillar 1 Output",
+        "C×K Regime State + Party/Stakes Vector",
+        is_capstone=False,
+    )
+    _add_labeled_arrow(
+        A1_X, R3_Y + 0.15, A1_W, ROW_H - 0.2,
+        "Pillar 2 Output",
+        "Live Persona Posterior P(z_t | u_1..t)",
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # COLUMN 2: AGENT CLASSIFICATION, STYLE & 200-PACKAGE NARROWING (x=3.70, w=2.85)
+    # =========================================================================
+    C2_X, C2_W = 3.70, 2.85
+    _add_analysis_block(
+        C2_X, R1_Y, C2_W, ROW_H,
+        "[DOCTORAL P3] Agent Call-Stage Classification (a–f)",
+        [
+            "• <b>Method:</b> Supervised / HMM Stage Classifier (`3 × 6` Persona × Stage Policy).",
+            "• <b>Probable Call-Stage Params:</b> <b>(a)</b> Opening Call → <b>(b)</b> Mandatory Params → <b>(c)</b> Product Positioning → <b>(d)</b> Budget & Constraint Negotiation → <b>(e)</b> Sales Urgency & Compliance → <b>(f)</b> Closure & `Hot/Warm/Cold` Lead.",
+        ],
+        is_capstone=False,
+    )
+    _add_vert_connector(C2_X + 0.90, R1_Y + ROW_H, "Stage Gate Modulates Style & Pacing")
+
+    _add_analysis_block(
+        C2_X, R2_Y, C2_W, ROW_H,
+        "[CAPSTONE RQ2] Partitioned FAISS Style & Pacing",
+        [
+            "• <b>Method:</b> Archetype-Partitioned FAISS (`k=3`) + `[SLOT]` Masking + Directive.",
+            "• <b>Addressed Params:</b> Target word norms (`12.9w` / `18.6w` / `14.8w`), tone alignment, syntax templates, pacing calibration.",
+            "• <b>Validated Result:</b> Style `.597` (`+31.8%`, `p < .001`) & `3.87w` length error.",
+        ],
+        is_capstone=True,
+    )
+    _add_vert_connector(C2_X + 0.90, R2_Y + ROW_H, "Persona + Stage Drives Catalog Narrowing")
+
+    _add_analysis_block(
+        C2_X, R3_Y, C2_W, ROW_H,
+        "[DOCTORAL P4] 200-Package Knowledge & USP Tree",
+        [
+            "• <b>Method:</b> Max Info-Gain Question Sequencer (`200 → 1–2` Packages).",
+            "• <b>Probable Narrowing Params:</b> `Senior-citizen presence`, `Child sensitivity`, `Breakfast inclusiveness`, `Sightseeing tempo`, `Occasion (Honeymoon)`.",
+            "• <b>USP Pitching:</b> Matches customer signals to <b>pre-indexed Package USPs</b>.",
+        ],
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # ARROWS 2 → 3 (x=6.57, w=0.76)
+    # =========================================================================
+    A2_X, A2_W = 6.57, 0.76
+    _add_labeled_arrow(
+        A2_X, R1_Y + 0.15, A2_W, ROW_H - 0.2,
+        "Pillar 3 Output",
+        "Stage (a–f) Gate + Compliance Trigger",
+        is_capstone=False,
+    )
+    _add_labeled_arrow(
+        A2_X, R2_Y + 0.15, A2_W, ROW_H - 0.2,
+        "RQ2 Output → RQ3/4",
+        "Style (.597) + 3.87w Pacing + [SLOT] Mask",
+        is_capstone=True,
+    )
+    _add_labeled_arrow(
+        A2_X, R3_Y + 0.15, A2_W, ROW_H - 0.2,
+        "Pillar 4 Output",
+        "Optimal Q Sequence + Top 1–2 USP Fit",
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # COLUMN 3: SYMBOLIC GUARDRAILS, SLOT LEDGER & RL OPTIMIZATION (x=7.35, w=2.73)
+    # =========================================================================
+    C3_X, C3_W = 7.35, 2.73
+    _add_analysis_block(
+        C3_X, R1_Y, C3_W, ROW_H,
+        "[CAPSTONE RQ3] Symbolic Policy & Entity Guard",
+        [
+            "• <b>Method:</b> Declarative `YAML` Rule Engine + Post-Gen Entity Sanitizer.",
+            "• <b>Addressed Params:</b> `visa_lead ≥ 15d`, `passport ≥ 6m`, `FIT_pax ≤ 4`, `discount ≤ 15%`, `budget ≥ $500`, zero entity leakage.",
+            "• <b>Validated Result:</b> `0.0%` leakage (`F = 34.82`) & `98.6%` rule enforcement (`κ = .917`).",
+        ],
+        is_capstone=True,
+    )
+    _add_vert_connector(C3_X + 0.85, R1_Y + ROW_H, "Verified Slots Feed Turn Ledger")
+
+    _add_analysis_block(
+        C3_X, R2_Y, C3_W, ROW_H,
+        "[CAPSTONE RQ4] Verified Slot Ledger & Economy",
+        [
+            "• <b>Method:</b> Explicit Turn-State Memory + Trade-Off Package Framing.",
+            "• <b>Addressed Params:</b> `Informed` vs. `Missing` mandatory slots (`origin, dest, dates, duration, budget`) + `Option A/B/D` trade-off pitch.",
+            "• <b>Validated Result:</b> `−29.5%..−42.7%` turns (`F = 664.43`), `RER .109 → .000`.",
+        ],
+        is_capstone=True,
+    )
+    _add_vert_connector(C3_X + 0.85, R2_Y + ROW_H, "Decomposes Gains & Trains Live RLHC")
+
+    _add_analysis_block(
+        C3_X, R3_Y, C3_W, ROW_H,
+        "[DOCTORAL P5–6] 5-Arm Ablation & Constrained RLHC",
+        [
+            "• <b>Method:</b> Orthogonal `Arms A–E` + Offline `CMDP` + Live Human Field Trial.",
+            "• <b>Probable Params:</b> `Directive × Exemplar × Ledger` weights, `Stage 1` (Quote Acceptance) vs. `Stage 2` (Exogenous Booking), `Hot/Warm/Cold` Lead Propensity.",
+        ],
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # ARROWS 3 → 4 CONVERGING INTO GOAL HUB (x=10.10, w=0.68)
+    # =========================================================================
+    A3_X, A3_W = 10.10, 0.68
+    _add_labeled_arrow(
+        A3_X, R1_Y + 0.15, A3_W, ROW_H - 0.2,
+        "RQ3 Output",
+        "0.0% Leakage & 98.6% Guard",
+        is_capstone=True,
+    )
+    _add_labeled_arrow(
+        A3_X, R2_Y + 0.15, A3_W, ROW_H - 0.2,
+        "RQ4 Output",
+        "−30..43% Turns & .000 RER",
+        is_capstone=True,
+    )
+    _add_labeled_arrow(
+        A3_X, R3_Y + 0.15, A3_W, ROW_H - 0.2,
+        "P5–6 Output",
+        "CMDP Policy + Lead Score",
+        is_capstone=False,
+    )
+
+    # =========================================================================
+    # COLUMN 4: COMMON RESEARCH GOAL CONVERGENCE HUB (x=10.80, w=2.28, y=1.80..6.58)
+    # =========================================================================
+    G_X, G_Y, G_W, G_H = 10.80, 1.80, 2.28, 4.78
+    goal_card = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(G_X), Inches(G_Y), Inches(G_W), Inches(G_H))
+    goal_card.adjustments[0] = 0.03
+    goal_card.fill.solid()
+    goal_card.fill.fore_color.rgb = GOAL_BG
+    goal_card.line.color.rgb = GOAL_BORDER
+    goal_card.line.width = Pt(2.0)
+
+    goal_hdr = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(G_X), Inches(G_Y), Inches(G_W), Inches(0.54))
+    goal_hdr.adjustments[0] = 0.03
+    goal_hdr.fill.solid()
+    goal_hdr.fill.fore_color.rgb = GOAL_HDR
+    goal_hdr.line.fill.background()
+    tf_gh = goal_hdr.text_frame
+    tf_gh.word_wrap = True
+    tf_gh.vertical_anchor = MSO_ANCHOR.MIDDLE
+    p_gh = tf_gh.paragraphs[0]
+    p_gh.alignment = PP_ALIGN.CENTER
+    _add_formatted_runs(
+        p_gh,
+        "CORE DISSERTATION GOAL:\nHuman-Like Conversational AI",
+        font_size=9.2,
+        color=WHITE,
+        bold=True,
+    )
+
+    goal_items = [
+        ("1. Adaptive Persona Empathy", "Tracks `C × K` archetypes & live behavioral drift (`RQ1 + P1–P2`)."),
+        ("2. Enterprise Call-Stage Flow", "Executes stages `a → f` with calibrated style & word pacing (`RQ2 + P3`)."),
+        ("3. Intelligent USP Narrowing", "Narrows `200+` packages via optimal question trees & USPs (`P4`)."),
+        ("4. Zero-Leakage Governance", "Enforces `100%` grounded entities & business compliance (`RQ3`)."),
+        ("5. Frictionless Closure & Lead", "Zero redundant questions (`RQ4`) + `Hot/Warm/Cold` lead scoring (`P5–P6`)."),
+    ]
+    cur_gy = G_Y + 0.62
+    for g_title, g_desc in goal_items:
+        sub = s.shapes.add_shape(
+            MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(G_X + 0.08),
+            Inches(cur_gy),
+            Inches(G_W - 0.16),
+            Inches(0.76),
+        )
+        sub.adjustments[0] = 0.06
+        sub.fill.solid()
+        sub.fill.fore_color.rgb = WHITE
+        sub.line.color.rgb = GOAL_BORDER
+        sub.line.width = Pt(1.0)
+        tf_s = sub.text_frame
+        tf_s.word_wrap = True
+        tf_s.margin_left = tf_s.margin_right = Inches(0.06)
+        tf_s.margin_top = tf_s.margin_bottom = Inches(0.03)
+        p_st = tf_s.paragraphs[0]
+        _add_formatted_runs(p_st, g_title, font_size=7.8, color=GOAL_HDR, bold=True)
+        p_sd = tf_s.add_paragraph()
+        p_sd.space_before = Pt(1.5)
+        _add_formatted_runs(p_sd, g_desc, font_size=7.1, color=DARK)
+        cur_gy += 0.81
+
+    # Bottom Thesis Takeaway Bar (y = 6.64, h = 0.52)
+    D.add_callout(
+        s, 0.25, 6.64, 12.83, 0.52,
+        "<b>Core Methodological Thesis:</b> Creating a truly <b>human-like enterprise conversational AI</b> is not a single-prompt trick—it requires a <b>reproducible, modular neuro-symbolic methodology</b> where <b>Capstone Blocks (Teal: RQ1–RQ4)</b> provide validated persona routing, style conditioning, symbolic safety, and slot memory, and <b>Doctoral Blocks (Amber: Pillars 1–6)</b> add hierarchical context, Bayesian drift, stage-gated sales progression (`a–f`), `200 → 1` USP catalog narrowing, and constrained RLHC.",
+        bg_color=CALLOUT_BG, border_color=NAVY, font_size=8.3,
     )
 

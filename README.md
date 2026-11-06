@@ -35,19 +35,30 @@ QM640-Dialogue-Clustering-Capstone/
 │   ├── canonical_schema.py         # Pydantic data models for Tier-1 travel slots and Tier-2 policy slots
 │   ├── ingestion.py                # Corpus parsers for Microsoft Frames and MultiWOZ 2.2
 │   ├── rule_engine.py              # Deterministic declarative business rule evaluator (5 policy rules)
-│   ├── interim_pipeline/           # Steps 0–4 + Steps 2b–2i (power analysis, cleaning, RQ1 clustering,
-│   │                               # Gemini embeddings, LLM behavioral annotations, truncation & ablation grids)
-│   ├── final_pipeline/             # Final empirical pipeline:
+│   ├── final_pipeline/             # Unified end-to-end empirical pipeline (Steps 0–5 & 2b–2i):
+│   │   ├── common.py               # Shared corpus loaders, de-lexicalizer, and Sentence-BERT utilities
 │   │   ├── common_llm.py           # Thread-safe JSONL-cached Gemini client (gemini-2.5-flash & gemini-2.5-pro)
+│   │   ├── step0_sample_size.py    # Statistical power analysis & sample-size derivation (Table 8)
+│   │   ├── step1_prepare_data.py   # Data cleaning, quality audit, and univariate EDA (Tables 5–6, E1)
+│   │   ├── step2_rq1_clustering.py # Primary RQ1 clustering benchmark across 159 runs (Table 12)
+│   │   ├── step2b_rq1_representation.py # Representation & dimensionality grid (PCA/UMAP)
+│   │   ├── step2c_gemini_embeddings.py  # 3,072-d gemini-embedding-001 prefix & full-dialogue caching
+│   │   ├── step2d_rq1_gemini_algorithms.py # Algorithm benchmark on Gemini 3,072-d embeddings
+│   │   ├── step2e_llm_user_annotation.py# 16-field UserBehaviour extraction via gemini-2.5-flash (temp=0)
+│   │   ├── step2f_rq1_llm_hybrid.py     # 46-d 'Blocks' fusion (PCA-20 + 26 LLM behavioral cols) & reliability
+│   │   ├── step2g_rq1_truncation.py     # Opening prefix truncation grid (M in {3, 5, 7, 9, whole})
+│   │   ├── step2h_rq1_ablation.py       # 6-configuration representation ablation (Table D6)
+│   │   ├── step2i_rq1_refined_archetypes.py # Deterministic K=3 Refined Archetype naming & profiles (Table 13)
 │   │   ├── routing.py              # RefinedArchetypeRouter (Blocks prefix router + per-archetype FAISS indices)
 │   │   ├── metrics.py              # Slot F1, exemplar leakage, RM-ANOVA, 2x2/2x3 OLS+HC3+ART ANOVA, Cohen's kappa
 │   │   ├── test_step1_harness.py   # End-to-end verification tests for routing and statistical harness
 │   │   ├── step2_rq2_refined.py    # RQ2 repeated-measures experiment on Refined Archetypes (N=33, 99 calls)
 │   │   ├── step3_rq3_experiment.py # RQ3 2x2 factorial experiment (N=144) + dual-judge reliability (n=48)
 │   │   ├── step4_rq4_simulation.py # RQ4 2x3 multi-turn simulation (N=180) + persona validation (n=45)
-│   │   └── step5_figures_and_eda.py# Bivariate/multivariate EDA + system architecture & workflow diagrams
+│   │   ├── step5_figures_and_eda.py# Bivariate/multivariate EDA + system architecture & workflow diagrams
+│   │   └── demo_single_dialogue_rq1_to_rq4.py # Interactive single-dialogue trace across RQ1 -> RQ4
 │   ├── report/                     # APA 7 Word/PDF document engine (docx_apa.py) and verified reference list
-│   ├── build_interim_submission.py # Reproducible builder for the Interim Report
+│   ├── presentation/               # Defense presentation slide builders
 │   └── build_final_report.py       # Reproducible builder for the Final Report (.docx and .pdf)
 ├── rules/
 │   └── rules_enterprise.yaml       # Declarative policy rules (visa lead time, passport validity, FIT pax, discount, budget)
@@ -81,15 +92,18 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Run Foundations & RQ1 Pipeline (Steps 0–4 and Sensitivity Steps 2b–2i)
-python src/interim_pipeline/step0_sample_size.py
-python src/interim_pipeline/step1_prepare_data.py
-python src/interim_pipeline/step2_rq1_clustering.py
-python src/interim_pipeline/step2g_rq1_truncation.py
-python src/interim_pipeline/step2h_rq1_ablation.py
-python src/interim_pipeline/step2i_rq1_refined_archetypes.py
-python src/interim_pipeline/step3_rq2_pipeline.py --execute
-python src/interim_pipeline/step4_rq3_rq4_groundwork.py
+# 2. Run Foundations & RQ1 Pipeline (Steps 0–2i in src/final_pipeline/)
+python src/final_pipeline/step0_sample_size.py
+python src/final_pipeline/step1_prepare_data.py
+python src/final_pipeline/step2_rq1_clustering.py
+python src/final_pipeline/step2b_rq1_representation.py
+python src/final_pipeline/step2c_gemini_embeddings.py
+python src/final_pipeline/step2d_rq1_gemini_algorithms.py
+python src/final_pipeline/step2e_llm_user_annotation.py
+python src/final_pipeline/step2f_rq1_llm_hybrid.py
+python src/final_pipeline/step2g_rq1_truncation.py
+python src/final_pipeline/step2h_rq1_ablation.py
+python src/final_pipeline/step2i_rq1_refined_archetypes.py
 
 # 3. Run Final Empirical Pipeline (Refined RQ1 Routing, Refined RQ2, RQ3 2x2, RQ4 2x3, and EDA/Architecture Figures)
 python src/final_pipeline/test_step1_harness.py
