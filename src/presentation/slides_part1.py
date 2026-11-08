@@ -1,7 +1,7 @@
 """
 Part 1 of the QM640 Capstone Defense Presentation (Slides 1–21):
   - Module 1 (Slides 1–5): Foundations & The Real-World Story (Ground-Up Basics for AI & Non-AI Experts)
-  - Module 2 (Slides 6–9): Literature Analysis — What Others Tried, How We Use It, and What Is Uniquely New (With Data Examples)
+  - Module 2 (Slides 6–9): Literature Analysis — Prior Approaches, Methodological Foundations, and Novel Contributions (With Data Examples)
   - Module 3 (Slides 10–13): Dataset Authenticity, Two-Tier Schema, Data Cleaning & Exploratory Data Analysis
   - Module 4 (Slides 14–19): Ground-Up Statistical Methodology — Why Each Test & Parameter (α, 1−β, f, λ) Was Chosen & Counterfactuals
   - Module 5 (Slides 20–21): End-to-End Neuro-Symbolic System Architecture & Per-RQ Execution Workflows
@@ -39,10 +39,10 @@ def build_slides_part1(D, ctx):
             "<b>Empirical Scope:</b> 2,833 Analytic Human Dialogues (Microsoft Frames N = 1,334; MultiWOZ 2.2 N = 1,499) + ~8,900 Gemini 2.5 Flash/Pro Evaluations",
         ],
         notes=(
-            "Welcome to the defense presentation for my QM640 Data Analytics Capstone. "
+            "Welcome to the defense presentation for the QM640 Data Analytics Capstone. "
             "This presentation is structured from the ground up so both AI specialists and non-AI/mathematics "
             "committee members can follow every intuition, statistical test choice, sample-size derivation, "
-            "literature comparison, empirical result across RQ1 to RQ4, and the roadmap to my future doctoral dissertation."
+            "literature comparison, empirical result across RQ1 to RQ4, and the roadmap to the future doctoral dissertation."
         ),
     )
 
@@ -71,8 +71,8 @@ def build_slides_part1(D, ctx):
         header_bg=TEAL,
         bullets=[
             "26 peer-reviewed studies across 4 streams.",
-            "How we build on prior work & where prior papers stop.",
-            "Concrete data examples from RQ1–RQ4 proving our unique contributions.",
+            "Foundations from prior work & where prior studies stop.",
+            "Concrete data examples from RQ1–RQ4 proving novel contributions.",
         ],
     )
     D.add_card(
@@ -161,7 +161,7 @@ def build_slides_part1(D, ctx):
             (1, "<i>'I need a 5-night package from Dallas to Cancun departing Aug 12 for 2 adults under $2,400.'</i>"),
             "<b>What they want:</b> Immediate confirmation of the best matching package and direct booking.",
             "<b>How a Static Chatbot fails them:</b>",
-            (1, "Follows a slow 8-step intake script; re-asks slots already stated in Turn 1 (19.4% Redundant Elicitation Rate in our Zero-Shot baseline)."),
+            (1, "Follows a slow 8-step intake script; re-asks slots already stated in Turn 1 (19.4% Redundant Elicitation Rate in the Zero-Shot baseline)."),
             (1, "Writes verbose 35-word paragraphs instead of a crisp 16-word confirmation."),
             "<b>Business Impact:</b> Impatient high-intent buyers abandon the cart before checkout.",
         ],
@@ -172,7 +172,7 @@ def build_slides_part1(D, ctx):
         header_bg=TEAL,
         bullets=[
             "<b>How they talk (Frames ID b84f11c2):</b>",
-            (1, "<i>'We have a week off in September and $3,000—what beach or European cities could we compare?'</i>"),
+            (1, "<i>'Looking for a week off in September under a $3,000 budget—what beach or European cities can be compared?'</i>"),
             "<b>What they want:</b> Side-by-side comparison of 2–3 distinct options across price and hotel tiers.",
             "<b>How a Static Chatbot fails them:</b>",
             (1, "Presents only one option per turn, forcing the user to ask 'What about another city?' or 'What about 4-star vs 3-star?' across 18+ turns."),
@@ -206,7 +206,7 @@ def build_slides_part1(D, ctx):
         "Module 1: Foundations & Story",
         "The Technical Paradox: Why Naive Few-Shot AI Adaptation Fails",
         "Simply pasting retrieved past dialogues into an LLM prompt introduces two severe production hazards",
-        notes="Explain why we cannot just use standard Retrieval-Augmented Generation (RAG) or naive KATE few-shot prompting.",
+        notes="Explain why standard Retrieval-Augmented Generation (RAG) or naive KATE few-shot prompting is insufficient on its own.",
     )
     D.add_card(
         s, 0.35, 1.50, 6.15, 3.80,
@@ -216,9 +216,9 @@ def build_slides_part1(D, ctx):
         bullets=[
             "<b>What happens in standard few-shot prompting (Liu et al., 2022):</b>",
             (1, "To teach the LLM how to talk to an <i>Open Explorer</i>, the system retrieves 3 similar past transcripts from the database and puts them in the prompt."),
-            "<b>The Contamination Trap (Proven in our RQ3 Experiment):</b>",
+            "<b>The Contamination Trap (Proven in the RQ3 Experiment):</b>",
             (1, "If those retrieved examples mention <b>'Sapphire Bay Resort'</b>, <b>'SkyBridge Airways'</b>, <b>'$1,149'</b>, or promo code <b>'VIP25'</b>, the LLM copies those stale entities into the current customer's reply!"),
-            "<b>Empirical Proof from Our Data (RQ3 Table 15):</b>",
+            "<b>Empirical Proof (RQ3 Table 15):</b>",
             (1, "Unguarded Cluster-Adaptive Few-Shot leaked stale exemplar entities in <b>55.6% of all responses</b> (mean leakage rate = <b>0.359</b>, <i>p</i> < .001)."),
         ],
     )
@@ -232,13 +232,13 @@ def build_slides_part1(D, ctx):
             (1, "Travel bookings are governed by strict numeric constraints: e.g., international trips require ≥ 15 days visa lead time; passports need ≥ 6 months validity; FIT bookings allow ≤ 4 adults; promo discounts cap at 15%."),
             "<b>The Attention Competition Trap (Yao et al., 2024):</b>",
             (1, "When the LLM focuses on matching conversational style, it overlooks arithmetic thresholds buried in long text prompts."),
-            "<b>Empirical Proof from Our Data (RQ3 Table 15):</b>",
+            "<b>Empirical Proof (RQ3 Table 15):</b>",
             (1, "Without an external symbolic rule engine (<i>Rules Off</i>), Gemini 2.5 Flash enforced violated booking rules in only <b>5.6% of violating sessions</b> (missing <b>94.4%</b> of violations!)."),
         ],
     )
     D.add_card(
         s, 0.35, 5.45, 12.63, 1.65,
-        title="Our Solution: A Neuro-Symbolic Cluster-Adaptive Architecture",
+        title="Solution: A Neuro-Symbolic Cluster-Adaptive Architecture",
         header_bg=GREEN,
         bg_color=GREEN_BG,
         bullets=[
@@ -310,7 +310,7 @@ def build_slides_part1(D, ctx):
     s = D.content_slide(
         "Module 2: Literature Analysis & Uniqueness",
         "Literature Review (Part 1): Hospitality AI Value & Task-Oriented Corpora",
-        "What prior business and corpus studies discovered, how we use their foundations, and what they left unsolved",
+        "Prior business and corpus findings, methodological foundations, and remaining research gaps",
         notes="Directly addresses Committee Question 2 & 3 on prior literature in business hospitality and dialogue datasets.",
     )
     D.add_card(
@@ -323,10 +323,10 @@ def build_slides_part1(D, ctx):
             (1, "<b>Ivanov & Webster (2019)</b> established the ROI framework for hospitality automation: chatbots create net economic value only when they resolve complex consultative queries without human escalation."),
             (1, "<b>Melián-González et al. (2021)</b> surveyed <i>N</i> = 1,476 consumers and proved that perceived interaction efficiency and task fit drive chatbot adoption."),
             (1, "<b>Jannach et al. (2021) & Inaba et al. (2022)</b> showed qualitatively that travelers exhibit heterogeneous initiative and constraint rigidity."),
-            "<b>How We Use This Knowledge:</b>",
-            (1, "We operationalize their qualitative constructs—<i>decisiveness, exploration breadth, constraint rigidity, and interaction effort</i>—into 16 quantitative behavioral variables and multi-turn turn-economy metrics."),
-            "<b>What Is Uniquely New in Our Study (With Data Proof):</b>",
-            (1, "Prior tourism papers relied on <i>post-hoc user surveys</i>. We are the first to instrument actual LLM turn economy, proving a <b>35.8% reduction in turns (7.93 → 5.09 turns, p < .001)</b> and <b>0.0% redundant questions</b>."),
+            "<b>Application of Prior Foundations:</b>",
+            (1, "Operationalizes qualitative constructs—<i>decisiveness, exploration breadth, constraint rigidity, and interaction effort</i>—into 16 quantitative behavioral variables and multi-turn turn-economy metrics."),
+            "<b>Novel Contribution (With Empirical Proof):</b>",
+            (1, "Prior tourism papers relied on <i>post-hoc user surveys</i>. This study instruments actual LLM turn economy, proving a <b>35.8% reduction in turns (7.93 → 5.09 turns, p < .001)</b> and <b>0.0% redundant questions</b>."),
         ],
         font_size=11,
     )
@@ -338,11 +338,11 @@ def build_slides_part1(D, ctx):
             "<b>What Prior Papers Tried & Found:</b>",
             (1, "<b>El Asri et al. (2017) [Microsoft Frames]</b> collected 1,369 human–human Wizard-of-Oz vacation package negotiations to study non-linear <i>frame-switching</i> (comparing multiple flight+hotel packages under budget ceilings)."),
             (1, "<b>Budzianowski et al. (2018) & Zang et al. (2020) [MultiWOZ 2.2]</b> created a 10,438-dialogue benchmark for supervised slot-filling across city services (hotel, train, attraction, taxi, restaurant)."),
-            "<b>How We Use This Knowledge:</b>",
-            (1, "We use Frames (<i>N</i> = 1,334 analytic) as our primary consultative travel testbed and MultiWOZ 2.2 (<i>N</i> = 1,499) as an external structural transfer benchmark."),
-            "<b>What Is Uniquely New in Our Study (With Data Proof):</b>",
+            "<b>Application of Prior Foundations:</b>",
+            (1, "Uses Frames (<i>N</i> = 1,334 analytic) as the primary consultative travel testbed and MultiWOZ 2.2 (<i>N</i> = 1,499) as an external structural transfer benchmark."),
+            "<b>Novel Contribution (With Empirical Proof):</b>",
             (1, "Both corpora were built for <i>supervised slot state tracking</i>, treating all users as uniform. Neither clustered user decision-making archetypes nor audited policy compliance."),
-            (1, "Our cross-corpus test in RQ1 proves that Frames negotiation archetypes do not transfer trivially to simple MultiWOZ slot-filling (centroid cosine <b>.467 vs. .269, t = 28.08, p < .001</b>), proving consultative travel requires its own archetype taxonomy."),
+            (1, "Cross-corpus evaluation in RQ1 proves that Frames negotiation archetypes do not transfer trivially to simple MultiWOZ slot-filling (centroid cosine <b>.467 vs. .269, t = 28.08, p < .001</b>), demonstrating that consultative travel requires a dedicated archetype taxonomy."),
         ],
         font_size=11,
     )
@@ -353,7 +353,7 @@ def build_slides_part1(D, ctx):
     s = D.content_slide(
         "Module 2: Literature Analysis & Uniqueness",
         "Literature Review (Part 2): Representation Learning, FAISS ICL & Guardrails",
-        "How we integrate vector geometry, dynamic in-context learning, and programmable rails—and overcome their failure modes",
+        "Integrating vector geometry, dynamic in-context learning, and programmable rails while overcoming baseline failure modes",
         notes="Continue literature synthesis covering SBERT/Gemini embeddings, KATE k-NN prompting, and NeMo/Tau-bench guardrails.",
     )
     D.add_card(
@@ -365,10 +365,10 @@ def build_slides_part1(D, ctx):
             (1, "<b>Reimers & Gurevych (2019) [Sentence-BERT]</b> and <b>Lee et al. (2025) [Gemini Embeddings]</b> showed that bi-encoder transformers map text into cosine spaces suitable for clustering."),
             (1, "<b>McInnes et al. (2017, 2018) [HDBSCAN & UMAP]</b> and <b>Hennig (2007) [Bootstrap ARI]</b> established density clustering and resampling stability."),
             (1, "<b>Gilardi et al. (2023)</b> proved zero-temp LLMs achieve high annotation reliability."),
-            "<b>What Failed When Applied Directly (Our Interim Discovery):</b>",
-            (1, "When we clustered whole-dialogue embeddings directly (as standard papers do), clusters captured <i>end-of-dialogue outcomes</i> and <i>wizard identity</i> (Cramér's <i>V</i> = .45) rather than user behavior, giving terrible early-turn routing (<b>κ = .24</b>) and a null RQ2 prompting result (<b>p = .211</b>)!"),
-            "<b>Our Unique Innovation (RQ1 Breakthrough):</b>",
-            (1, "We combined <b>truncated opening user prefixes (first M = 9 user messages)</b> with a <b>16-field LLM behavioral profile (`Blocks`)</b>, raising bootstrap stability to <b>ARI = .89 (.87 in ablation)</b> and out-of-sample prefix routing to <b>κ = .535 (m=5) and κ = .958 (m=9 boundary consistency)</b>."),
+            "<b>What Failed When Applied Directly (Interim Diagnostic Finding):</b>",
+            (1, "Clustering whole-dialogue embeddings directly (as in standard studies) captured <i>end-of-dialogue outcomes</i> and <i>wizard identity</i> (Cramér's <i>V</i> = .45) rather than user behavior, yielding poor early-turn routing (<b>κ = .24</b>) and a null RQ2 prompting result (<b>p = .211</b>)!"),
+            "<b>Methodological Innovation (RQ1 Breakthrough):</b>",
+            (1, "Combining <b>truncated opening user prefixes (first M = 9 user messages)</b> with a <b>16-field LLM behavioral profile (`Blocks`)</b> raised bootstrap stability to <b>ARI = .89 (.87 in ablation)</b> and out-of-sample prefix routing to <b>κ = .535 (m=5) and κ = .958 (m=9 boundary consistency)</b>."),
         ],
         font_size=11,
     )
@@ -382,9 +382,9 @@ def build_slides_part1(D, ctx):
             (1, "<b>Rebedea et al. (2023) [NeMo Guardrails]</b> & <b>Yao et al. (2024) [τ-bench]</b> showed that prompt-only LLMs violate domain rules over 50% of the time."),
             "<b>Where Prior Papers Stopped:</b>",
             (1, "KATE retrieves from one <i>unpartitioned global pool</i> with raw unmasked entities. NeMo and τ-bench test safety rails in isolation without studying how rails interact with dynamic style prompting."),
-            "<b>Our Unique Innovation (RQ2 & RQ3 Breakthrough):</b>",
-            (1, "We combine <b>archetype-partitioned FAISS sub-indices (`[SLOT]`-masked) + archetype pacing directives</b>, boosting de-lexicalized SBERT style convergence over static few-shot by <b>+31.8% (.597 vs. .453, p < .001, d_z = 0.74)</b>."),
-            (1, "In RQ3, we demonstrate a <b>significant 2 × 2 interaction (F = 34.82, p < .001)</b>: our declarative governance layer eliminates the <b>35.9% entity leakage</b> of unguarded few-shot prompting down to <b>0.0% detected</b>."),
+            "<b>Methodological Innovation (RQ2 & RQ3 Breakthrough):</b>",
+            (1, "Combining <b>archetype-partitioned FAISS sub-indices (`[SLOT]`-masked) + archetype pacing directives</b> boosts de-lexicalized SBERT style convergence over static few-shot by <b>+31.8% (.597 vs. .453, p < .001, d_z = 0.74)</b>."),
+            (1, "In RQ3, a <b>significant 2 × 2 interaction (F = 34.82, p < .001)</b> demonstrates that the declarative governance layer eliminates the <b>35.9% entity leakage</b> of unguarded few-shot prompting down to <b>0.0% detected</b>."),
         ],
         font_size=11,
     )
@@ -394,20 +394,20 @@ def build_slides_part1(D, ctx):
     # =========================================================================
     s = D.content_slide(
         "Module 2: Literature Analysis & Uniqueness",
-        "Literature Synthesis Matrix: Prior Approaches vs. Our Empirical Findings",
-        "Concrete examples quoted directly from our RQ1–RQ4 data illustrating what prior methods miss and what our framework solves",
+        "Literature Synthesis Matrix: Prior Approaches vs. Empirical Findings",
+        "Concrete examples from RQ1–RQ4 data illustrating what prior methods miss and what the proposed framework resolves",
         notes="Walk through this table row-by-row during the defense to show mastery of the literature and concrete empirical evidence.",
     )
     D.add_table(
         s, 0.35, 1.50, 12.63, 5.55,
-        headers=["Prior Literature Benchmark", "What Prior Paper Did", "Limitation When Applied to Travel Dialogues", "Our Unique Methodological Addition", "Concrete Proof Quoted from Our Data (RQ1–RQ4)"],
+        headers=["Prior Literature Benchmark", "What Prior Paper Did", "Limitation When Applied to Travel Dialogues", "Methodological Addition", "Concrete Empirical Proof (RQ1–RQ4)"],
         rows=[
             [
                 "Whole-Text Embedding Clustering\n(Reimers & Gurevych, 2019;\nMcInnes et al., 2017)",
                 "Clustered full documents using SBERT / HDBSCAN.",
                 "HDBSCAN discards 39.1% (MiniLM) / 35.8% (Gemini) of dialogues as noise; full-dialogue vectors leak end-of-session outcomes.",
                 "Prefix-truncated (M=9 user msgs) hybrid Blocks (PCA-20 Gemini + 16 LLM behavioral ratings) with K-Means (k=3, 100% coverage).",
-                "RQ1: HDBSCAN failed in 53/53 default runs. Our M=9 Blocks router achieved ARI = .89 (.87 ablation) and raised held-out routing from κ = .24 (39.4%) to κ = .535 (70.1% at m=5) and κ = .958 (97.3% at m=9).",
+                "RQ1: HDBSCAN failed in 53/53 default runs. The M=9 Blocks router achieved ARI = .89 (.87 ablation) and raised held-out routing from κ = .24 (39.4%) to κ = .535 (70.1% at m=5) and κ = .958 (97.3% at m=9).",
             ],
             [
                 "Global k-NN Few-Shot (KATE)\n(Liu et al., 2022;\nBrown et al., 2020)",
@@ -496,7 +496,7 @@ def build_slides_part1(D, ctx):
     )
     D.add_callout(
         s, 0.35, 6.10, 12.63, 0.98,
-        "<b>Key Narrative Link:</b> RQ1 discovers <i>who</i> the traveler is in the first 5–9 messages → RQ2 proves we can match <i>how</i> to speak to them → RQ3 guarantees we never <i>hallucinate or break booking rules</i> while adapting style → RQ4 proves this closes bookings in <i>29.5% to 42.7% fewer turns</i>.",
+        "<b>Key Narrative Link:</b> RQ1 discovers <i>who</i> the traveler is in the first 5–9 messages → RQ2 proves the assistant can match <i>how</i> to speak to them → RQ3 guarantees the assistant never <i>hallucinates or breaks booking rules</i> while adapting style → RQ4 proves this closes bookings in <i>29.5% to 42.7% fewer turns</i>.",
         bg_color=GREEN_BG, border_color=GREEN, font_size=11.5,
     )
 
@@ -506,8 +506,8 @@ def build_slides_part1(D, ctx):
     s = D.content_slide(
         "Module 3: Data Authenticity, Schema & EDA",
         "Dataset Authenticity, Origin, and Fit for Purpose (Defense Question #4)",
-        "Why Microsoft Frames and MultiWOZ 2.2 were created, why they are gold-standard human corpora, and how they match our study",
-        notes="This slide directly answers Defense Question 4: What is the authenticity of the datasets, why were they created, and do they match our research?",
+        "Why Microsoft Frames and MultiWOZ 2.2 were created, why they are gold-standard human corpora, and how they fit the study",
+        notes="This slide directly answers Defense Question 4: What is the authenticity of the datasets, why were they created, and how do they fit the research?",
     )
     D.add_card(
         s, 0.35, 1.50, 6.15, 3.85,
@@ -516,7 +516,7 @@ def build_slides_part1(D, ctx):
         bullets=[
             "<b>Who Created It & How:</b> Created by Maluuba / Microsoft Research using 12 human participants (85 user–wizard pairs) over 20 days in a Wizard-of-Oz setup backed by a real database of flights and hotels.",
             "<b>Why It Was Created:</b> Existing datasets only handled simple slot-filling. Microsoft created Frames (1,369 human–human dialogues; 19,986 turns) to study <b>decision-making, budget trade-offs, and frame-switching</b> across multiple vacation packages.",
-            "<b>Why It Matches Our Research Perfectly:</b>",
+            "<b>Fit for Research Objectives:</b>",
             (1, "Contains genuine human behavioral diversity: decisive buyers, multi-city explorers, and rigid budget/star negotiators."),
             (1, "Rich ground-truth annotations: 20+ dialogue act types (`inform`, `offer`, `switch_frame`, `request_compare`), slot–value histories, wizard task success (74.2%), and user satisfaction ratings."),
         ],
@@ -529,20 +529,20 @@ def build_slides_part1(D, ctx):
         bullets=[
             "<b>Who Created It & How:</b> Collected at the University of Cambridge (Budzianowski et al., 2018) via crowd-sourced human tourists and clerks (10,438 dialogues), with schema-guided slot annotations cleaned by Google Research in v2.2 (Zang et al., 2020).",
             "<b>Why It Was Created:</b> Standard benchmark for multi-domain dialogue state tracking (hotel, train, attraction, taxi, restaurant).",
-            "<b>Why We Included a Seeded Sample (N = 1,500 raw; 1,499 analytic):</b>",
+            "<b>Purpose of the Seeded Sample (N = 1,500 raw; 1,499 analytic):</b>",
             (1, "Provides an external structural benchmark in EDA (comparing turn distributions and verbosity)."),
-            (1, "Tests <b>cross-corpus domain specificity</b> in RQ1: because MultiWOZ lacks flight routing and multi-package price negotiation, projecting MultiWOZ onto Frames centroids tests whether our archetypes are genuinely consultative vs. generic."),
+            (1, "Tests <b>cross-corpus domain specificity</b> in RQ1: because MultiWOZ lacks flight routing and multi-package price negotiation, projecting MultiWOZ onto Frames centroids tests whether the discovered archetypes are genuinely consultative vs. generic."),
         ],
         font_size=10.8,
     )
     D.add_card(
         s, 0.35, 5.50, 12.63, 1.60,
-        title="Where Public Datasets Had a Gap—and How We Solved It Rigorously Without Compromising Authenticity",
+        title="Bridging Public Dataset Boundaries Without Compromising Authenticity",
         header_bg=GOLD,
         bg_color=CALLOUT_BG,
         bullets=[
-            "<b>Gap 1 (Zero Tier-2 Enterprise Policy Slots in Public Corpora):</b> Our audit of all 1,334 Frames dialogues (Appendix Table E4) proved that 0.0% of public dialogues record visa windows, passport validity months, or promo discount caps (only `budget_amount` is observed in 78.5%). <b>Solution:</b> In RQ3, we took real held-out Frames dialogues (preserving authentic user language and Tier-1 trip constraints) and used a seeded (`seed=42`) experimental injector to attach controlled Tier-2 policy states (50% violating, 50% compliant).",
-            "<b>Gap 2 (Static Logs Cannot React to New Agent Replies in RQ4):</b> Static corpus transcripts have fixed wizard replies. <b>Solution:</b> In RQ4, we grounded a persona-conditioned user simulator in the exact Tier-1 constraints of 90 held-out Frames dialogues and verified its persona fidelity with an independent `gemini-2.5-pro` judge (<b>95.6% accuracy, κ = .933</b>).",
+            "<b>Gap 1 (Zero Tier-2 Enterprise Policy Slots in Public Corpora):</b> Auditing all 1,334 Frames dialogues (Appendix Table E4) proved that 0.0% of public dialogues record visa windows, passport validity months, or promo discount caps (only `budget_amount` is observed in 78.5%). <b>Solution:</b> In RQ3, real held-out Frames dialogues (preserving authentic user language and Tier-1 trip constraints) were paired with a seeded (`seed=42`) experimental injector to attach controlled Tier-2 policy states (50% violating, 50% compliant).",
+            "<b>Gap 2 (Static Logs Cannot React to New Agent Replies in RQ4):</b> Static corpus transcripts have fixed wizard replies. <b>Solution:</b> In RQ4, a persona-conditioned user simulator was grounded in the exact Tier-1 constraints of 90 held-out Frames dialogues and verified for persona fidelity via an independent `gemini-2.5-pro` judge (<b>95.6% accuracy, κ = .933</b>).",
         ],
         font_size=10.5,
     )
@@ -594,7 +594,7 @@ def build_slides_part1(D, ctx):
     )
     D.add_callout(
         s, 0.35, 5.28, 12.63, 1.80,
-        "<b>How We Guarantee Zero Data Leakage Between Discovery and Evaluation (Stratified 70/30 Split, Seed = 42):</b>\n"
+        "<b>Guaranteeing Zero Data Leakage Between Discovery and Evaluation (Stratified 70/30 Split, Seed = 42):</b>\n"
         "• The <b>1,334 analytic Frames dialogues</b> were partitioned once into a <b>70% Golden Discovery Set (D_gold, n = 933)</b> and a <b>30% Held-Out Test Set (D_test, n = 401)</b>, stratified on wizard task success (74.3% vs. 74.1%).\n"
         "• <b>Strict Firewall:</b> Every clustering model, PCA projection matrix, L1 logistic prefix router, and FAISS exemplar index is fitted <b>exclusively on D_gold (n = 933)</b>. All out-of-sample routing (RQ1), repeated-measures prompting (RQ2, N = 33), 2 × 2 factorial compliance testing (RQ3, N = 144), and 2 × 3 multi-turn simulations (RQ4, N = 180) are evaluated <b>strictly on D_test (n = 401)</b>.",
         bg_color=GREEN_BG, border_color=GREEN, font_size=11,
@@ -606,7 +606,7 @@ def build_slides_part1(D, ctx):
     s = D.content_slide(
         "Module 3: Data Authenticity, Schema & EDA",
         "Univariate and Bivariate Exploratory Data Analysis (Tables 6–7 & Figures 1–2)",
-        "Dialogue length is driven by slot revisions (r = .602) and package offers (r = .636), validating our negotiation constructs",
+        "Dialogue length is driven by slot revisions (r = .602) and package offers (r = .636), validating the negotiation constructs",
         notes="Explain the univariate comparison between Frames and MultiWOZ (Figure 1) and the bivariate parametric/non-parametric correlations (Figure 2 & Table 7).",
     )
     D.add_figure(
@@ -640,7 +640,7 @@ def build_slides_part1(D, ctx):
         title="Key Takeaways from Univariate & Bivariate EDA",
         header_bg=NAVY,
         bullets=[
-            "<b>Why We Report Both Pearson <i>r</i> and Spearman ρ:</b> Turn counts and revision counts are right-skewed; reporting linear Pearson <i>r</i> alongside rank-based Spearman ρ proves correlations are not artifacts of tail outliers.",
+            "<b>Reporting Both Pearson <i>r</i> and Spearman ρ:</b> Turn counts and revision counts are right-skewed; reporting linear Pearson <i>r</i> alongside rank-based Spearman ρ proves correlations are not artifacts of tail outliers.",
             "<b>Frames vs. MultiWOZ Dispersion:</b> Frames has 51% wider turn dispersion (<i>SD</i> = 6.74 vs. 4.46, range 3–47 turns) because consultative vacation negotiation involves iterative trade-offs.",
             "<b>Golden vs. Held-Out Balance:</b> Golden (<i>M</i> = 14.94 turns) and Held-Out (<i>M</i> = 14.81 turns) partitions are statistically indistinguishable, confirming an unbiased split.",
         ],
@@ -704,14 +704,14 @@ def build_slides_part1(D, ctx):
     )
     D.add_table(
         s, 0.35, 1.50, 12.63, 5.55,
-        headers=["RQ & Experimental Structure", "Chosen Statistical Test", "Why This Exact Test Is Mathematically Required", "Classic Real-World Analogy (Where This Test Is Standard)", "Why Our Chatbot Scenario Is Identical"],
+        headers=["RQ & Experimental Structure", "Chosen Statistical Test", "Why This Exact Test Is Mathematically Required", "Classic Real-World Analogy (Where This Test Is Standard)", "Alignment With the Chatbot Scenario"],
         rows=[
             [
                 "RQ1: Comparing 3 Clustering Algorithms across N = 159 independent runs\n(3 groups, 1 continuous DV: Silhouette)",
                 "One-Way Between-Subjects ANOVA\n+ Welch's ANOVA\n+ Kruskal–Wallis H\n+ Tukey HSD / Games–Howell",
                 "Comparing means of k = 3 independent groups at once. Running three separate t-tests would inflate Type I false-positive risk from 5% to 1 − (0.95)³ = 14.3%. Omnibus ANOVA controls α = .05 across all 3 algorithms.",
                 "<b>Clinical Trial Comparing 3 Blood-Pressure Drugs:</b>\n159 patients randomly assigned (53 per drug) to Drug A, Drug B, or Drug C; measure blood-pressure drop.",
-                "Each of our 159 subsample runs (53 K-Means, 53 Ward, 53 HDBSCAN) is an independent trial producing a continuous Silhouette score.",
+                "Each of the 159 subsample runs (53 K-Means, 53 Ward, 53 HDBSCAN) is an independent trial producing a continuous Silhouette score.",
             ],
             [
                 "RQ2: Testing 3 Prompting Strategies on the SAME N = 33 held-out dialogues\n(Within-subjects design, 99 calls)",
@@ -723,7 +723,7 @@ def build_slides_part1(D, ctx):
             [
                 "RQ3: Crossing Rules Mode (Off vs. Active) × Prompting (Zero-Shot vs. Cluster-Adaptive)\n(N = 144, n = 36/cell)",
                 "2 × 2 Between-Subjects Factorial ANOVA\n+ HC3 Robust SE\n+ Aligned Rank Transform (ART) ANOVA",
-                "We have TWO simultaneous independent variables (Rules Mode and Prompting Mode). Only a 2 × 2 Factorial ANOVA can test (1) Main Effect of Rules, (2) Main Effect of Prompting, and (3) their INTERACTION (Rules × Prompting).",
+                "Two simultaneous independent variables (Rules Mode and Prompting Mode) are crossed. Only a 2 × 2 Factorial ANOVA can test (1) Main Effect of Rules, (2) Main Effect of Prompting, and (3) their INTERACTION (Rules × Prompting).",
                 "<b>Agricultural Crop Yield Trial (Fertilizer × Irrigation):</b>\nTesting whether Fertilizer only boosts yield when Irrigation is ALSO active (synergistic / protective interaction).",
                 "Cluster-Adaptive prompting leaks entities when Rules are Off (.359), but Rules Active eliminates that leakage (.000)—a classic protective interaction!",
             ],
@@ -759,9 +759,9 @@ def build_slides_part1(D, ctx):
             "<b>Plain-English Intuition:</b>",
             (1, "<b>Numerator (Signal):</b> How far apart are the group means (e.g., Rules Active vs. Rules Off)?"),
             (1, "<b>Denominator (Noise):</b> How much random scatter exists <i>inside</i> each group?"),
-            "<b>How to Read <i>F</i> in Our Tables:</b>",
+            "<b>How to Read <i>F</i> in the Result Tables:</b>",
             (1, "If null hypothesis <i>H</i><sub>0</sub> is true (no real difference), <i>F</i> ≈ 1.0."),
-            (1, "In our study, we observe <b><i>F</i> = 91.33 (RQ1)</b>, <b><i>F</i> = 9.79 (RQ2)</b>, <b><i>F</i> = 43.92 & 489.52 (RQ3)</b>, and <b><i>F</i> = 664.43 (RQ4)</b>—meaning the treatment signal is 10 to 664 times larger than random noise (all <i>p</i> < .001)!"),
+            (1, "Across the experiments, observed values reach <b><i>F</i> = 91.33 (RQ1)</b>, <b><i>F</i> = 9.79 (RQ2)</b>, <b><i>F</i> = 43.92 & 489.52 (RQ3)</b>, and <b><i>F</i> = 664.43 (RQ4)</b>—meaning the treatment signal is 10 to 664 times larger than random noise (all <i>p</i> < .001)!"),
         ],
         font_size=10.8,
     )
@@ -772,12 +772,12 @@ def build_slides_part1(D, ctx):
         bullets=[
             "<b>Formula:</b>  η<sub><i>p</i></sub><sup>2</sup> = SS<sub>effect</sub> / (SS<sub>effect</sub> + SS<sub>error</sub>)",
             "<b>Why <i>p</i>-values Alone Are Not Enough:</b>",
-            (1, "A <i>p</i>-value (< .001) only tells us an effect is <i>not zero</i>; η<sub><i>p</i></sub><sup>2</sup> tells us <i>what percentage of outcome variance is explained</i> by our factor."),
+            (1, "A <i>p</i>-value (< .001) only indicates an effect is <i>not zero</i>; η<sub><i>p</i></sub><sup>2</sup> quantifies <i>what percentage of outcome variance is explained</i> by the experimental factor."),
             "<b>Cohen's (1988) Standard Benchmarks:</b>",
             (1, "Small: η<sup>2</sup> = .01 (1% variance)"),
             (1, "Medium: η<sup>2</sup> = .06 (6% variance; <i>f</i> = .25)"),
             (1, "Large: η<sup>2</sup> ≥ .14 (14%+ variance; <i>f</i> ≥ .40)"),
-            "<b>Our Observed Effect Sizes:</b>",
+            "<b>Observed Effect Sizes:</b>",
             (1, "Every primary effect in RQ1–RQ4 is <b>Large</b>: RQ1 η<sup>2</sup> = .54–.91; RQ2 η<sub><i>p</i></sub><sup>2</sup> = .234; RQ3 η<sub><i>p</i></sub><sup>2</sup> = .239–.778; RQ4 η<sub><i>p</i></sub><sup>2</sup> = .793."),
         ],
         font_size=10.8,
@@ -799,7 +799,7 @@ def build_slides_part1(D, ctx):
     )
     D.add_callout(
         s, 0.35, 5.38, 12.63, 1.68,
-        "<b>Why We Apply Greenhouse–Geisser (GG) Correction in RQ2 (Greenhouse & Geisser, 1959):</b>\n"
+        "<b>Applying Greenhouse–Geisser (GG) Correction in RQ2 (Greenhouse & Geisser, 1959):</b>\n"
         "In Repeated-Measures ANOVA (RQ2), standard <i>F</i>-tables assume <i>sphericity</i>—that the variance of differences between every pair of conditions (Zero-Shot vs. Static, Zero-Shot vs. Adaptive, Static vs. Adaptive) is equal. When sphericity is violated (ε < 1.0, e.g., ε = 0.94 in style cosine and ε = 0.65 in pacing error), unadjusted <i>F</i>-tests inflate false positives. Multiplying degrees of freedom by ε (e.g., <i>df</i> = 1.88, 60.29) yields an exact, conservative <i>p</i>-value.",
         bg_color=CALLOUT_BG, border_color=GOLD, font_size=11,
     )
@@ -809,13 +809,13 @@ def build_slides_part1(D, ctx):
     # =========================================================================
     s = D.content_slide(
         "Module 4: Ground-Up Statistical Methodology",
-        "Bulletproof Inference: Why We Pair Parametric, Robust, and Non-Parametric Tests",
+        "Bulletproof Inference: Pairing Parametric, Robust, and Non-Parametric Tests",
         "Ensuring no statistical objection can arise from non-normality, bounded [0, 1] rates, or unequal cell variances",
-        notes="Explain to statistics professors on the committee why we run THREE layers of tests on every single hypothesis.",
+        notes="Explain to statistics professors on the committee why THREE layers of tests are run on every single hypothesis.",
     )
     D.add_table(
         s, 0.35, 1.50, 12.63, 4.35,
-        headers=["Potential Statistical Objection", "Where It Occurs in Dialogue Data", "Our Robust Parametric Solution", "Our Distribution-Free Non-Parametric Solution", "Concordance Across All 4 RQs"],
+        headers=["Potential Statistical Objection", "Where It Occurs in Dialogue Data", "Robust Parametric Solution", "Distribution-Free Non-Parametric Solution", "Concordance Across All 4 RQs"],
         rows=[
             [
                 "1. Heteroscedasticity\n(Unequal variances across cells)",
@@ -852,7 +852,7 @@ def build_slides_part1(D, ctx):
     )
     D.add_callout(
         s, 0.35, 6.00, 12.63, 1.05,
-        "<b>Defense Takeaway for Methodology Reviewers:</b> Every single hypothesis test in this study is reported as a <b>triad</b>: (1) Classical Parametric ANOVA, (2) Heteroscedasticity-Consistent (`Welch` / `HC3`) ANOVA, and (3) Non-Parametric (`Kruskal–Wallis` / `Friedman` / `ART`) ANOVA. Because all three reach <i>p</i> < .001 on every RQ, our conclusions are mathematically invariant to distributional assumptions.",
+        "<b>Defense Takeaway for Methodology Reviewers:</b> Every single hypothesis test in this study is reported as a <b>triad</b>: (1) Classical Parametric ANOVA, (2) Heteroscedasticity-Consistent (`Welch` / `HC3`) ANOVA, and (3) Non-Parametric (`Kruskal–Wallis` / `Friedman` / `ART`) ANOVA. Because all three reach <i>p</i> < .001 on every RQ, the conclusions are mathematically invariant to distributional assumptions.",
         bg_color=GREEN_BG, border_color=GREEN, font_size=11,
     )
 
@@ -916,14 +916,14 @@ def build_slides_part1(D, ctx):
     )
     D.add_table(
         s, 0.35, 1.50, 12.63, 4.35,
-        headers=["Parameter Choice Scenario", "Altered Value vs. Standard", "Resulting Noncentrality λ & Sample Size N", "Statistical & Practical Consequence", "Concrete Example in Our Travel Chatbot Study"],
+        headers=["Parameter Choice Scenario", "Altered Value vs. Standard", "Resulting Noncentrality λ & Sample Size N", "Statistical & Practical Consequence", "Concrete Impact in the Travel Chatbot Study"],
         rows=[
             [
                 "Failure Mode 1:\nArbitrary Small Sample\n(Underpowered λ)",
                 "Pick N = 36 total (9 per cell in RQ3) instead of N = 144\n→ λ drops from 9.00 to 2.25!",
                 "λ = 0.0625 × 36 = 2.25\nPower 1 − β drops from .847 to .308 (69.2% Type II error rate!)",
                 "<b>Severe False Negative Risk:</b> Nearly 7 out of 10 times, a genuine medium improvement (f = .25) will produce p > .05 and be falsely dismissed as 'no effect'.",
-                "In RQ4, the Prompting × Archetype interaction has ηp² = .111 (f = .35). At N = 36 total (6/cell), power to detect this interaction drops to .44—we would have missed the persona moderation effect!",
+                "In RQ4, the Prompting × Archetype interaction has ηp² = .111 (f = .35). At N = 36 total (6/cell), power to detect this interaction drops to .44—missing the persona moderation effect!",
             ],
             [
                 "Failure Mode 2:\nLoose Significance α\n(Inflated Type I Error)",
@@ -944,7 +944,7 @@ def build_slides_part1(D, ctx):
                 "Assume ρ = .00 (between-subjects formula) or ρ = .90 (over-optimistic)",
                 "If ρ = .90 assumed: N_min = 7 dialogues (severely underpowered if true ρ = .50).\nIf between-subjects used: N = 159 dialogues × 3 = 477 calls.",
                 "<b>Miscalibrated Within-Subject Sensitivity:</b> Setting conservative ρ = .50 with a +18% buffer (N = 33 vs. N_min = 28) protects against sphericity loss (ε = 0.65–0.94).",
-                "In Refined RQ2, pacing error had Greenhouse–Geisser ε = 0.65. Because we buffered N from 28 to 33, even under ε = 0.65 our test achieved F(1.30, 41.70) = 7.10, p = .007!",
+                "In Refined RQ2, pacing error had Greenhouse–Geisser ε = 0.65. Buffering N from 28 to 33 ensured that even under ε = 0.65 the test achieved F(1.30, 41.70) = 7.10, p = .007!",
             ],
         ],
         col_widths=[1.8, 2.1, 2.2, 3.0, 3.5],
@@ -963,8 +963,8 @@ def build_slides_part1(D, ctx):
     s = D.content_slide(
         "Module 4: Ground-Up Statistical Methodology",
         "Domain Parameter Choices: Why Decay λ_d = 0.15 and Prefix Horizon M = 9?",
-        "Mathematical justification and sensitivity proof for our trajectory pooling and truncation parameters",
-        notes="Explain the other two lambda/horizon parameters in our paper: exponential turn decay lambda_d = 0.15 (Eq. 2) and truncation horizon M = 9 user messages.",
+        "Mathematical justification and sensitivity proof for trajectory pooling and truncation parameters",
+        notes="Explain the other two lambda/horizon parameters in the study: exponential turn decay lambda_d = 0.15 (Eq. 2) and truncation horizon M = 9 user messages.",
     )
     D.add_card(
         s, 0.35, 1.50, 6.15, 5.45,
@@ -979,7 +979,7 @@ def build_slides_part1(D, ctx):
             "<b>What Happens If λ<sub>d</sub> Is Chosen Poorly (Sensitivity Grid `step2b`):</b>",
             (1, "<b>If λ<sub>d</sub> = 0.0 (Uniform Mean):</b> Opening pleasantries dilute active negotiation constraints."),
             (1, "<b>If λ<sub>d</sub> ≥ 1.0 (Memoryless Last-Turn Only):</b> Forgets early trip constraints stated in Turn 2."),
-            (1, "<b>Empirical Check (`t_rq1_rep_matrix.csv`):</b> Testing R0 (λ<sub>d</sub>=0.15), R1 (user-only), and R2 (concatenated) confirmed that embedding pooling alone only reaches ARI = .25–.54, motivating our hybrid `Blocks` representation!"),
+            (1, "<b>Empirical Check (`t_rq1_rep_matrix.csv`):</b> Testing R0 (λ<sub>d</sub>=0.15), R1 (user-only), and R2 (concatenated) confirmed that embedding pooling alone only reaches ARI = .25–.54, motivating the hybrid `Blocks` representation!"),
         ],
         font_size=10.5,
     )
@@ -988,8 +988,8 @@ def build_slides_part1(D, ctx):
         title="2. Truncation Horizon M = 9 User Messages (`step2g` & `step2h`)",
         header_bg=TEAL,
         bullets=[
-            "<b>Why We Must Truncate Before the End of the Conversation:</b>",
-            (1, "If we cluster <i>whole conversations</i>, the final turns contain <i>'Great, book it!'</i> vs. <i>'Never mind, too expensive'</i>. The clusters then trivially reflect <b>session outcome</b> (Outcome Cramér's <i>V</i> = .29) rather than <b>how the customer shops</b>!"),
+            "<b>Why Truncation Before the End of the Conversation Is Required:</b>",
+            (1, "Clustering <i>whole conversations</i> includes final turns containing <i>'Great, book it!'</i> vs. <i>'Never mind, too expensive'</i>. The clusters then trivially reflect <b>session outcome</b> (Outcome Cramér's <i>V</i> = .29) rather than <b>how the customer shops</b>!"),
             "<b>What Happens Across Different Values of <i>M</i> (Table D5 Proof):</b>",
             (1, "<b><i>M</i> = 3 user messages:</b> Stability ARI = .57 (k=3); many explorers haven't finished stating initial preferences (held-out routing accuracy = 59.4%, κ = .359)."),
             (1, "<b><i>M</i> = 5 user messages:</b> Stability ARI = .84; held-out routing jumps to <b>70.1% (κ = .535)</b>—strong enough for mid-conversation RQ2 prompting!"),

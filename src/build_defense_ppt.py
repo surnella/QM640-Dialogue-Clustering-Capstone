@@ -26,7 +26,7 @@ PPT_OUT = os.path.join(OUT_DIR, "QM_640_Defense_Presentation_Sandeep_Surnella.pp
 
 def main():
     ctx = load_all_context()
-    deck = DefenseDeck(total_slides_est=47)
+    deck = DefenseDeck(total_slides_est=48)
     build_slides_part1(deck, ctx)
     build_slides_part2(deck, ctx)
     deck.save(PPT_OUT)
