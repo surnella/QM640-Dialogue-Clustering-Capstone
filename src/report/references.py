@@ -1,11 +1,11 @@
 """
-APA 7 reference list for the interim report.
+APA 7 reference list for the QM640 Final Report (30 standardized sources).
 
 One pattern per source type, applied consistently:
   Journal:      Author, A. A., & Author, B. B. (Year). Title in sentence case. <i>Journal Name, Vol</i>(Issue), pages. https://doi.org/...
   Proceedings:  Author, A. A. (Year). Title in sentence case. In <i>Proceedings title</i> (pp. x–y). Publisher. https://doi.org/...
-  Preprint:     Author, A. A. (Year). <i>Title in sentence case</i> (arXiv:xxxx.xxxxx). arXiv. https://doi.org/10.48550/arXiv.xxxx.xxxxx
-  Book:         Author, A. A. (Year). <i>Title in sentence case</i> (ed.). Publisher. https://doi.org/...
+  Preprint:     Author, A. A. (Year). <i>Title in sentence case</i> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.xxxx.xxxxx
+  Book:         Author, A. A. (Year). <i>Title in sentence case</i> (2nd ed.). Publisher. https://doi.org/...
 Every entry is cited in the text and every in-text citation appears here.
 """
 
@@ -21,7 +21,7 @@ REFERENCES = [
     "Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., "
     "Wu, J., Winter, C., . . . Amodei, D. (2020). Language models are few-shot learners. In <i>Advances in Neural "
     "Information Processing Systems</i> (Vol. 33, pp. 1877–1901). Curran Associates. "
-    "https://doi.org/10.48550/arXiv.2005.14165",
+    "https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html",
 
     "Budzianowski, P., Wen, T.-H., Tseng, B.-H., Casanueva, I., Ultes, S., Ramadan, O., & Gašić, M. (2018). MultiWOZ: "
     "A large-scale multi-domain Wizard-of-Oz dataset for task-oriented dialogue modelling. In <i>Proceedings of the "
@@ -66,7 +66,7 @@ REFERENCES = [
 
     "Ivanov, S., & Webster, C. (2019). Conceptual framework of the use of robots, artificial intelligence and service "
     "automation in travel, tourism, and hospitality companies. In <i>Robots, artificial intelligence, and service "
-    "automation in travel, tourism and hospitality</i> (pp. 7–37). Emerald Publishing Limited. "
+    "automation in travel, tourism and hospitality</i> (pp. 7–37). Emerald Publishing. "
     "https://doi.org/10.1108/978-1-78756-687-320191001",
 
     "Jannach, D., Manzoor, A., Cai, W., & Chen, L. (2021). A survey on conversational recommender systems. <i>ACM "
@@ -78,7 +78,7 @@ REFERENCES = [
     "Lee, J., Chen, F., Dua, S., Cer, D., Shanbhogue, M., Naim, I., Hernández Ábrego, G., Li, Z., Chen, K., "
     "Schechter Vera, H., Ren, X., Zhang, S., Salz, D., Boratko, M., Han, J., Chen, B., Huang, S., Rao, V., "
     "Suganthan, P., . . . Duerig, T. (2025). <i>Gemini embedding: Generalizable embeddings from Gemini</i> "
-    "(arXiv:2503.07891). arXiv. https://doi.org/10.48550/arXiv.2503.07891",
+    "[Preprint]. arXiv. https://doi.org/10.48550/arXiv.2503.07891",
 
     "Liu, J., Shen, D., Zhang, Y., Dolan, B., Carin, L., & Chen, W. (2022). What makes good in-context examples for "
     "GPT-3? In <i>Proceedings of Deep Learning Inside Out (DeeLIO 2022): The 3rd Workshop on Knowledge Extraction and "
@@ -88,8 +88,9 @@ REFERENCES = [
     "McInnes, L., Healy, J., & Astels, S. (2017). hdbscan: Hierarchical density based clustering. <i>Journal of Open "
     "Source Software, 2</i>(11), Article 205. https://doi.org/10.21105/joss.00205",
 
-    "McInnes, L., Healy, J., & Melville, J. (2018). <i>UMAP: Uniform manifold approximation and projection for "
-    "dimension reduction</i> (arXiv:1802.03426). arXiv. https://doi.org/10.48550/arXiv.1802.03426",
+    "McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform manifold approximation and projection for "
+    "dimension reduction. <i>Journal of Open Source Software, 3</i>(29), Article 861. "
+    "https://doi.org/10.21105/joss.00861",
 
     "Melián-González, S., Gutiérrez-Taño, D., & Bulchand-Gidumal, J. (2021). Predicting the intentions to use "
     "chatbots for travel and tourism. <i>Current Issues in Tourism, 24</i>(2), 192–210. "
@@ -124,7 +125,7 @@ REFERENCES = [
     "https://doi.org/10.1145/1978942.1978963",
 
     "Yao, S., Shinn, N., Razavi, P., & Narasimhan, K. (2024). <i>τ-bench: A benchmark for tool-agent-user interaction "
-    "in real-world domains</i> (arXiv:2406.12045). arXiv. https://doi.org/10.48550/arXiv.2406.12045",
+    "in real-world domains</i> [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2406.12045",
 
     "Zang, X., Rastogi, A., Sunkara, S., Gupta, R., Zhang, J., & Chen, J. (2020). MultiWOZ 2.2: A dialogue dataset "
     "with additional annotation corrections and state tracking baselines. In <i>Proceedings of the 2nd Workshop on "

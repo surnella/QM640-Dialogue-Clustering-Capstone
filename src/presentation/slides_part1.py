@@ -1,10 +1,9 @@
 """
-Part 1 of the QM640 Capstone Defense Presentation (Slides 1–21):
-  - Module 1 (Slides 1–5): Foundations & The Real-World Story (Ground-Up Basics for AI & Non-AI Experts)
-  - Module 2 (Slides 6–9): Literature Analysis — Prior Approaches, Methodological Foundations, and Novel Contributions (With Data Examples)
-  - Module 3 (Slides 10–13): Dataset Authenticity, Two-Tier Schema, Data Cleaning & Exploratory Data Analysis
-  - Module 4 (Slides 14–19): Ground-Up Statistical Methodology — Why Each Test & Parameter (α, 1−β, f, λ) Was Chosen & Counterfactuals
-  - Module 5 (Slides 20–21): End-to-End Neuro-Symbolic System Architecture & Per-RQ Execution Workflows
+Part 1 of the QM640 Capstone Defense Presentation (Slides 1–24):
+  - Module 1 (Slides 1–6): Problem Statement, Technical Paradox, Conceptual 4-Stage Solution Approach (Appearance 1 of 5), and Core Concepts Primer
+  - Module 2 (Slides 7–10): Concise Literature Collection & Operationalization Synthesis Aligned with the 4-Stage Solution Approach
+  - Module 3 (Slides 11–16): Dataset Authenticity, Two-Tier Schema, Hygiene Audit, 70/30 Firewall, and Expanded Exploratory Data Analysis
+  - Module 4 (Slides 17–24): RQs, Hypotheses, Pictorial Methodology Blueprint, Statistical Test Mechanics, Noncentral-F Sample Size Derivation, Feature Importance Methodology, and System Architecture (Strictly Methodology Only — Zero Empirical Findings)
 """
 
 import os
@@ -21,6 +20,10 @@ from presentation.ppt_styles import (
     RED_BG,
     TEAL,
 )
+from presentation.storyline_slides import (
+    add_pictorial_methodology_slide,
+    add_storyline_discovery_slide,
+)
 from report.final_context import FIG_FIN, FIG_INT, REPO, TITLE
 
 
@@ -30,8 +33,8 @@ def build_slides_part1(D, ctx):
     # =========================================================================
     D.add_title_slide(
         title=TITLE,
-        subtitle="A Neuro-Symbolic Framework Coupling Early-Turn Behavioral-Semantic Archetype Routing, "
-                 "Slot-Masked FAISS In-Context Learning, and Declarative Policy Verification",
+        subtitle="A Four-Stage Neuro-Symbolic Framework (Identify → Personalize → Govern → Optimize) Coupling "
+                 "Early-Turn Behavioral-Semantic Routing, Slot-Masked FAISS In-Context Learning, and Declarative Policy Verification",
         author_lines=[
             "<b>Author:</b> Surnella Sandeep  |  <b>Course:</b> QM640: Data Analytics Capstone (Department of Data Analytics, Walsh College)",
             "<b>Instructor & Capstone Mentor:</b> Mr. Smitraj Raut  |  <b>Date:</b> 10th Nov 2026",
@@ -39,526 +42,569 @@ def build_slides_part1(D, ctx):
             "<b>Empirical Scope:</b> 2,833 Analytic Human Dialogues (Microsoft Frames N = 1,334; MultiWOZ 2.2 N = 1,499) + ~8,900 Gemini 2.5 Flash/Pro Evaluations",
         ],
         notes=(
-            "Welcome to the defense presentation for the QM640 Data Analytics Capstone. "
-            "This presentation is structured from the ground up so both AI specialists and non-AI/mathematics "
-            "committee members can follow every intuition, statistical test choice, sample-size derivation, "
-            "literature comparison, empirical result across RQ1 to RQ4, and the roadmap to the future doctoral dissertation."
+            "Welcome to the comprehensive defense presentation for the QM640 Data Analytics Capstone. "
+            "The presentation is organized around a four-stage solution approach—Identify, Personalize, Govern, and Optimize—so "
+            "both AI specialists and statistical/business domain reviewers can trace every methodological choice, "
+            "empirical test, and causal handoff from raw dialogue logs to multi-turn business optimization."
         ),
     )
 
     # =========================================================================
-    # SLIDE 2: PRESENTATION ROADMAP
+    # SLIDE 2: PRESENTATION ROADMAP ALIGNED TO THE 4-STAGE STORYLINE
     # =========================================================================
     s = D.content_slide(
-        "Module 1: Foundations & Story",
-        "Presentation Roadmap: Building the Story from Basics to Defense Synthesis",
-        "An 8-module progressive narrative designed for both AI/ML specialists and statistical/business domain experts",
-        notes="Walk the committee through the 8 modules so they see how basic intuition and statistical rigor precede the empirical results.",
+        "1. Problem Statement & 4-Stage Solution Approach",
+        "Presentation Roadmap: Integrated Around the Four-Stage Solution Approach",
+        "Every section—Literature, EDA, Methodology, Empirical Results, Doctoral Extensions, and Q&A—maps directly to Identify → Personalize → Govern → Optimize",
+        notes="Orient the defense committee to the narrative arc of the presentation and how the 4-stage solution approach diagram recurs 5 times as empirical decisions are locked in.",
     )
     D.add_card(
-        s, 0.35, 1.50, 3.05, 2.55,
-        title="1. Ground-Up Basics (Slides 1–5)",
+        s, 0.35, 1.48, 3.05, 2.42,
+        title="1. Problem & Solution Approach (Slides 1–6)",
         header_bg=NAVY,
         bullets=[
-            "Why static travel chatbots frustrate real travelers.",
-            "Why naive few-shot AI prompts leak entities & break rules.",
-            "Plain-English glossary: Embeddings, Clustering, FAISS, Symbolic Rules, Turn Economy.",
+            "Why static travel chatbots fail across diverse shopper personas.",
+            "Why naive few-shot AI leaks entities & violates policies.",
+            "<b>Solution Approach #1:</b> Conceptual `Identify → Personalize → Govern → Optimize` blueprint.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 3.55, 1.50, 3.05, 2.55,
-        title="2. Literature & Novelty (Slides 6–9)",
+        s, 3.55, 1.48, 3.05, 2.42,
+        title="2. Literature Synthesis (Slides 7–10)",
         header_bg=TEAL,
         bullets=[
-            "26 peer-reviewed studies across 4 streams.",
-            "Foundations from prior work & where prior studies stop.",
-            "Concrete data examples from RQ1–RQ4 proving novel contributions.",
+            "26 peer-reviewed studies across 4 research streams.",
+            "6-Column Relevance Matrix mapping every study to the 4 stages.",
+            "How literature inspired the neuro-symbolic operationalization.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 6.75, 1.50, 3.05, 2.55,
-        title="3. Data Authenticity & EDA (Slides 10–13)",
+        s, 6.75, 1.48, 3.05, 2.42,
+        title="3. Data, Hygiene & EDA (Slides 11–16)",
         header_bg=BLUE,
         bullets=[
-            "Why Microsoft Frames & MultiWOZ 2.2 were created & why they fit.",
-            "Two-tier Pydantic schema & 70/30 leakage-free split.",
-            "Univariate, Bivariate & Multivariate PCA insights.",
+            "Microsoft Frames (N=1,334) & MultiWOZ 2.2 (N=1,499) provenance.",
+            "Two-Tier Pydantic schema & 70/30 zero-leakage firewall.",
+            "Univariate, Outcome-Stratified, Bivariate & PCA Biplot EDA.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 9.95, 1.50, 3.03, 2.55,
-        title="4. Statistical Foundations (Slides 14–19)",
+        s, 9.95, 1.48, 3.03, 2.42,
+        title="4. Pure Methodology (Slides 17–24)",
         header_bg=GOLD,
         bullets=[
-            "Why ANOVA, RM-ANOVA, and 2×2 / 2×3 Factorial ANOVA were chosen.",
-            "Everyday real-world analogies for every test.",
-            "Why α=.05, Power=.80, f=.25, λ are standard & what fails if mischosen.",
+            "RQs, Hypotheses & Pictorial Blueprint of IVs, DVs & Tests.",
+            "Why ANOVA, RM-ANOVA & 2×2 / 2×3 Factorial ANOVA fit.",
+            "Noncentral-F sample size (α, β, f, λ), Feature Importance & System Architecture.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 0.35, 4.25, 3.05, 2.55,
-        title="5. System Architecture (Slides 20–21)",
+        s, 0.35, 4.02, 3.05, 2.42,
+        title="5. RQ1–RQ2 Results (Slides 25–37)",
         header_bg=NAVY,
         bullets=[
-            "5-Layer Neuro-Symbolic Architecture diagram.",
-            "Offline Golden Discovery (n=933) vs. Online Runtime (n=401).",
-            "Step-by-step execution workflows for RQ1 to RQ4.",
+            "<b>RQ1-Identify Stage:</b> 159-run benchmark, 46-d `Blocks`, Feature Importance, Train/CV/Test Router, CM/ROC & <b>Solution Approach #2</b>.",
+            "<b>RQ2-Personalize Stage:</b> Primary vs. Refined contrast, Table 16 & <b>Solution Approach #3</b>.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 3.55, 4.25, 3.05, 2.55,
-        title="6. Deep-Dive Results RQ1–RQ4 (Slides 22–34)",
+        s, 3.55, 4.02, 3.05, 2.42,
+        title="6. RQ3–RQ4 Results (Slides 38–48)",
         header_bg=GREEN,
         bullets=[
-            "RQ1: 159-run clustering + M=9 Blocks router (κ = .535–.958).",
-            "RQ2: Why Primary failed (p=.211) & Refined succeeded (p<.001).",
-            "RQ3: 2×2 Rules × Prompting (0% leakage, 98.6% compliance).",
-            "RQ4: 2×3 Turn Economy (−29.5% to −42.7% turns, 0% RER).",
+            "<b>RQ3-Govern Stage:</b> 2×2 Rules × Prompting, Sensitivity/Specificity, Sum-SS proof, Tokyo output & <b>Solution Approach #4</b>.",
+            "<b>RQ4-Optimize Stage:</b> 2×3 simulation, Persona audit, Table 18 guide, Human baseline & <b>Solution Approach #5</b>.",
         ],
+        font_size=10.2,
     )
     D.add_card(
-        s, 6.75, 4.25, 3.05, 2.55,
-        title="7. Defense Q&A Bank (Slides 35–42)",
-        header_bg=CORAL,
-        bullets=[
-            "Direct answers to anticipated committee questions:",
-            "(1) Sample size, prior work, novelty & data fit;",
-            "(2) Quotation vs. Booking noise & 2–3 option exploration;",
-            "(3) 3 Archetypes vs. 500+ clusters; Cluster naming & Judge LLM.",
-        ],
-    )
-    D.add_card(
-        s, 9.95, 4.25, 3.03, 2.55,
-        title="8. Dissertation Roadmap (Slides 43–46)",
+        s, 6.75, 4.02, 3.05, 2.42,
+        title="7. ROI & Doctoral Roadmap (Slides 49–57)",
         header_bg=BLUE,
         bullets=[
-            "Unified causal story across all 4 RQs.",
-            "Limitations that bound the master's capstone.",
-            "5-Pillar Doctoral Dissertation Roadmap (incl. Context × Behavior Clustering).",
+            "Consolidated Scorecard, 1M-Session ROI & Microservice Runtime.",
+            "Hierarchical `3×6=18` FAISS retrieval & Soft Bayesian Drift.",
+            "Multi-Call `Opportunity_ID` Turn Economy (`TTL, TTQ_s, CSET`) & `Turn-Q DB` Data Flow.",
         ],
+        font_size=10.2,
+    )
+    D.add_card(
+        s, 9.95, 4.02, 3.03, 2.42,
+        title="8. Defense Q&A Bank (Slides 58–66)",
+        header_bg=CORAL,
+        bullets=[
+            "11 evidence-backed Q&A deep-dives linked to the solution approach:",
+            "Sample size assumptions, originality, dataset fit, judge independence, cold-start turns < 9, quotation vs. booking noise, 3 vs. 500 clusters, and centroid naming.",
+        ],
+        font_size=10.2,
     )
     D.add_callout(
-        s, 0.35, 6.85, 12.63, 0.34,
-        "<b>Core Thesis:</b> Personalizing chatbot style without symbolic guardrails causes hallucinations (35.9% leakage); enforcing rules without persona routing causes rigid, repetitive dialogues. Combining both yields a Pareto-optimal travel assistant.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=11,
+        s, 0.35, 6.54, 12.63, 0.58,
+        "<b>Core Solution Architecture:</b> The same pictorial <b>4-Stage Solution Approach Diagram (`Identify → Personalize → Govern → Optimize`)</b> is introduced right after the Problem Statement and updated at the conclusion of every stage—color-coding tested paths as <b>Red (Closed/Dropped)</b>, <b>Orange (Needs Next-Stage Verification)</b>, or <b>Green (Winner Carried Forward)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=10.0,
     )
 
     # =========================================================================
     # SLIDE 3: THE REAL-WORLD BUSINESS PROBLEM (CONCRETE DIALOGUE EXAMPLES)
     # =========================================================================
     s = D.content_slide(
-        "Module 1: Foundations & Story",
+        "1. Problem Statement & 4-Stage Solution Approach",
         "The Real-World Business Problem: Why Static Travel Chatbots Fail",
-        "Travelers do not all shop the same way—yet commercial chatbots force every customer through one static script",
+        "Travelers exhibit fundamentally different decision-making behaviors—yet commercial chatbots force every shopper through one static script",
         notes="Start with a relatable real-world scenario. Show how three different customers enter an Online Travel Agency (OTA) portal and get frustrated by a one-size-fits-all chatbot.",
     )
     D.add_card(
-        s, 0.35, 1.50, 4.05, 4.45,
-        title="Customer Type A: The Decisive Booker (45.0%)",
+        s, 0.35, 1.48, 4.05, 4.78,
+        title="Customer Type A: The Decisive Booker",
         header_bg=NAVY,
         bullets=[
-            "<b>How they talk (Frames ID e2c09f7a):</b>",
+            "<b>How the traveler speaks (Frames ID e2c09f7a):</b>",
             (1, "<i>'I need a 5-night package from Dallas to Cancun departing Aug 12 for 2 adults under $2,400.'</i>"),
-            "<b>What they want:</b> Immediate confirmation of the best matching package and direct booking.",
-            "<b>How a Static Chatbot fails them:</b>",
-            (1, "Follows a slow 8-step intake script; re-asks slots already stated in Turn 1 (19.4% Redundant Elicitation Rate in the Zero-Shot baseline)."),
-            (1, "Writes verbose 35-word paragraphs instead of a crisp 16-word confirmation."),
-            "<b>Business Impact:</b> Impatient high-intent buyers abandon the cart before checkout.",
+            "<b>What the traveler wants:</b>",
+            (1, "Immediate confirmation of the best matching package and direct quotation closure without small talk."),
+            "<b>How a Static Chatbot fails this traveler:</b>",
+            (1, "Follows a slow multi-step intake script and re-asks constraints already stated in Turn 1."),
+            (1, "Generates verbose 30-word paragraphs instead of a crisp confirmation."),
+            "<b>Business Consequence:</b> High-intent buyers abandon the session out of impatience.",
         ],
+        font_size=10.3,
     )
     D.add_card(
-        s, 4.60, 1.50, 4.10, 4.45,
-        title="Customer Type B: The Open Explorer (25.5%)",
+        s, 4.60, 1.48, 4.10, 4.78,
+        title="Customer Type B: The Open Explorer",
         header_bg=TEAL,
         bullets=[
-            "<b>How they talk (Frames ID b84f11c2):</b>",
+            "<b>How the traveler speaks (Frames ID b84f11c2):</b>",
             (1, "<i>'Looking for a week off in September under a $3,000 budget—what beach or European cities can be compared?'</i>"),
-            "<b>What they want:</b> Side-by-side comparison of 2–3 distinct options across price and hotel tiers.",
-            "<b>How a Static Chatbot fails them:</b>",
-            (1, "Presents only one option per turn, forcing the user to ask 'What about another city?' or 'What about 4-star vs 3-star?' across 18+ turns."),
-            "<b>Business Impact:</b> Long, exhausting 18-turn sessions that drive up cloud LLM inference costs and user fatigue.",
+            "<b>What the traveler wants:</b>",
+            (1, "Side-by-side comparison of 2–3 distinct destination or hotel-tier options to weigh trade-offs."),
+            "<b>How a Static Chatbot fails this traveler:</b>",
+            (1, "Presents only one option per turn, forcing the traveler to ask <i>'What about another city?'</i> or <i>'What about 4-star vs. 3-star?'</i> across many turns."),
+            "<b>Business Consequence:</b> Exhausting, bloated sessions that inflate cloud inference cost and customer fatigue.",
         ],
+        font_size=10.3,
     )
     D.add_card(
-        s, 8.90, 1.50, 4.08, 4.45,
-        title="Customer Type C: Rigid-Constraint Seeker (29.5%)",
+        s, 8.90, 1.48, 4.08, 4.78,
+        title="Customer Type C: Rigid-Constraint Seeker",
         header_bg=CORAL,
         bullets=[
-            "<b>How they talk (Frames ID 91a4d0e5):</b>",
+            "<b>How the traveler speaks (Frames ID 91a4d0e5):</b>",
             (1, "<i>'I only want a 5-star hotel in Tokyo on Oct 5 for 10 nights under $2,200—no other dates or stars.'</i>"),
-            "<b>What they want:</b> If exact inventory is $2,596 (over budget), they need immediate, transparent trade-off options (4-star on Oct 5 vs. 5-star on Oct 12).",
-            "<b>How a Static Chatbot fails them:</b>",
-            (1, "Says 'No package found' or argues for 4 turns before revealing alternatives (44.5% end with no suitable option in human corpus)."),
-            "<b>Business Impact:</b> 8.73-turn deadlock loops and lost bookings.",
+            "<b>What the traveler wants:</b>",
+            (1, "When exact inventory exceeds budget, the shopper needs immediate, transparent trade-off options (e.g., 4-star on exact dates vs. 5-star on shifted dates)."),
+            "<b>How a Static Chatbot fails this traveler:</b>",
+            (1, "Outputs a dead-end <i>'No package found'</i> or argues across multiple turns without offering structured compromise alternatives."),
+            "<b>Business Consequence:</b> Multi-turn negotiation deadlocks and high walk-away rates.",
         ],
+        font_size=10.3,
     )
     D.add_callout(
-        s, 0.35, 6.08, 12.63, 1.02,
-        "<b>Business Problem Statement (Buhalis & Sinarta, 2019; Ivanov & Webster, 2019; Melián-González et al., 2021):</b>\n"
-        "Online travel agencies (OTAs) and hospitality contact centers suffer from low self-service conversion and high session abandonment because static LLM prompts fail to adapt information density, pacing, and trade-off framing to customer decision-making styles—while unverified generative responses create financial liability from policy violations.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=11.5,
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`RQ1-Identify` & `RQ4-Optimize`):</b> "
+        "Online travel agencies (Buhalis & Sinarta, 2019; Ivanov & Webster, 2019; Melián-González et al., 2021) cannot achieve turn economy (`RQ4-Optimize`) with a single static prompt because these three customer types require fundamentally different pacing (`RQ2-Personalize`) and package trade-off policies—requiring early behavioral identification (`RQ1-Identify`).",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
     )
 
     # =========================================================================
     # SLIDE 4: THE TECHNICAL PARADOX — WHY NAIVE AI ADAPTATION FAILS
     # =========================================================================
     s = D.content_slide(
-        "Module 1: Foundations & Story",
+        "1. Problem Statement & 4-Stage Solution Approach",
         "The Technical Paradox: Why Naive Few-Shot AI Adaptation Fails",
-        "Simply pasting retrieved past dialogues into an LLM prompt introduces two severe production hazards",
-        notes="Explain why standard Retrieval-Augmented Generation (RAG) or naive KATE few-shot prompting is insufficient on its own.",
+        "Simply pasting retrieved historical dialogues into an LLM prompt introduces two severe production hazards",
+        notes="Explain why standard Retrieval-Augmented Generation (RAG) or naive KATE few-shot prompting is insufficient on its own, motivating RQ2-Personalize (Slot-Masked Personalization) and RQ3-Govern (Symbolic Governance).",
     )
     D.add_card(
-        s, 0.35, 1.50, 6.15, 3.80,
+        s, 0.35, 1.48, 6.15, 3.25,
         title="Hazard 1: Exemplar Entity Leakage (Hallucinated Terms)",
         header_bg=CORAL,
         bg_color=RED_BG,
         bullets=[
             "<b>What happens in standard few-shot prompting (Liu et al., 2022):</b>",
-            (1, "To teach the LLM how to talk to an <i>Open Explorer</i>, the system retrieves 3 similar past transcripts from the database and puts them in the prompt."),
-            "<b>The Contamination Trap (Proven in the RQ3 Experiment):</b>",
-            (1, "If those retrieved examples mention <b>'Sapphire Bay Resort'</b>, <b>'SkyBridge Airways'</b>, <b>'$1,149'</b>, or promo code <b>'VIP25'</b>, the LLM copies those stale entities into the current customer's reply!"),
-            "<b>Empirical Proof (RQ3 Table 15):</b>",
-            (1, "Unguarded Cluster-Adaptive Few-Shot leaked stale exemplar entities in <b>55.6% of all responses</b> (mean leakage rate = <b>0.359</b>, <i>p</i> < .001)."),
+            (1, "To teach the LLM how to speak to an <i>Open Explorer</i>, a standard retrieval system fetches 3 similar past transcripts from a vector database and inserts them into the prompt."),
+            "<b>The Contamination Trap:</b>",
+            (1, "If those retrieved historical examples mention specific resort names (<i>'Sapphire Bay Resort'</i>), airlines (<i>'SkyBridge Airways'</i>), historical prices (<i>'$1,149'</i>), or promo codes (<i>'VIP25'</i>), the neural language model copies those stale entities directly into the active customer's reply!"),
         ],
+        font_size=10.5,
     )
     D.add_card(
-        s, 6.80, 1.50, 6.18, 3.80,
+        s, 6.80, 1.48, 6.18, 3.25,
         title="Hazard 2: Enterprise Policy Blindness (Rule Violations)",
         header_bg=CORAL,
         bg_color=RED_BG,
         bullets=[
-            "<b>What happens when rules are only written in the system prompt:</b>",
-            (1, "Travel bookings are governed by strict numeric constraints: e.g., international trips require ≥ 15 days visa lead time; passports need ≥ 6 months validity; FIT bookings allow ≤ 4 adults; promo discounts cap at 15%."),
+            "<b>What happens when rules are only written in natural language prompts:</b>",
+            (1, "Travel bookings are governed by strict numeric constraints: international departures require ≥ 15 days visa processing lead time; passports require ≥ 6 months validity; FIT packages cap at ≤ 4 adults; promotional discounts cap at ≤ 15%."),
             "<b>The Attention Competition Trap (Yao et al., 2024):</b>",
-            (1, "When the LLM focuses on matching conversational style, it overlooks arithmetic thresholds buried in long text prompts."),
-            "<b>Empirical Proof (RQ3 Table 15):</b>",
-            (1, "Without an external symbolic rule engine (<i>Rules Off</i>), Gemini 2.5 Flash enforced violated booking rules in only <b>5.6% of violating sessions</b> (missing <b>94.4%</b> of violations!)."),
+            (1, "When the LLM optimizes attention to mimic conversational tone and style from few-shot examples, it routinely overlooks arithmetic policy thresholds buried in system instructions."),
         ],
+        font_size=10.5,
     )
     D.add_card(
-        s, 0.35, 5.45, 12.63, 1.65,
-        title="Solution: A Neuro-Symbolic Cluster-Adaptive Architecture",
+        s, 0.35, 4.82, 12.63, 1.46,
+        title="Why Both Neural Adaptation AND Symbolic Governance Are Required",
         header_bg=GREEN,
         bg_color=GREEN_BG,
         bullets=[
-            "<b>1. Early-Turn Hybrid Archetype Routing (RQ1):</b> Identify whether the user is a <i>Decisive Booker</i>, <i>Open Explorer</i>, or <i>Rigid-Constraint Seeker</i> from opening user messages without leaking end-of-dialogue outcomes.",
-            "<b>2. Slot-Masked FAISS Exemplar Retrieval (RQ2):</b> Replace all entities in retrieved examples with `[SLOT]` placeholders (e.g., `[HOTEL_NAME]`, `[BUDGET_USD]`) so the LLM learns <i>conversational style and pacing</i> without copying stale facts.",
-            "<b>3. Deterministic Declarative Rule Engine + Informed Slot Ledger (RQ3 & RQ4):</b> Enforce YAML booking policies (0.0% leakage, 98.6% compliance) and lock stated user slots so the bot never re-asks known information (0.0% redundant elicitation).",
+            "<b>1. Neural Prompting Alone (Style Without Rules):</b> Adapts conversational tone and verbosity when routed to the right persona, but leaks stale exemplar entities and fails strict booking rules.",
+            "<b>2. Symbolic Rules Alone (Rules Without Style):</b> Enforces arithmetic visa, passport, capacity, and discount policies deterministically, but produces rigid, one-size-fits-all responses that ignore shopper persona.",
+            "<b>3. Neuro-Symbolic Synthesis:</b> Only by joining early persona routing (`Identify`), `[SLOT]`-masked exemplar retrieval (`Personalize`), declarative `YAML` policy checks (`Govern`), and an informed-slot ledger (`Optimize`) can an assistant achieve both style and compliance.",
         ],
-        font_size=11.5,
-    )
-
-    # =========================================================================
-    # SLIDE 5: CORE CONCEPTS EXPLAINED FROM THE GROUND UP
-    # =========================================================================
-    s = D.content_slide(
-        "Module 1: Foundations & Story",
-        "Core Concepts Explained from the Ground Up (Plain-English Primer)",
-        "Bridging AI/NLP terminology and statistical measurement for interdisciplinary defense committee members",
-        notes="Use this slide to make sure non-AI professors have crystal-clear intuition for the 6 building blocks used throughout the presentation.",
-    )
-    D.add_table(
-        s, 0.35, 1.50, 12.63, 5.55,
-        headers=["Concept / Term", "Plain-English Meaning", "Real-World Analogy", "How It Is Measured in This Study"],
-        rows=[
-            [
-                "1. Vector Embedding\n(SBERT 384-d &\nGemini 3,072-d)",
-                "Converting a sentence or dialogue into a list of numbers (coordinates) so dialogues with similar meaning sit close together in geometry.",
-                "Like GPS coordinates (latitude, longitude) on a map, but with 384 or 3,072 dimensions capturing meaning and tone.",
-                "Cosine similarity [-1, +1] between vectors: +1 = identical direction/style; 0 = unrelated.",
-            ],
-            [
-                "2. Unsupervised\nTrajectory Clustering\n(K-Means, Ward, HDBSCAN)",
-                "Automatically grouping 933 training dialogues into natural customer segments without pre-labeled categories.",
-                "Sorting thousands of retail shoppers into 'Quick Grab-and-Go', 'Window Browsers', and 'Coupon Bargain Hunters' by watching how they walk.",
-                "Silhouette score [-1, +1] (higher = tighter, well-separated clusters), Davies–Bouldin index (lower = better), and Bootstrap ARI stability [0, 1].",
-            ],
-            [
-                "3. Early-Turn Prefix\nRouting\n(RefinedArchetypeRouter)",
-                "Predicting which archetype a new customer belongs to after reading only their first M (e.g., 5 to 9) messages.",
-                "An experienced hotel concierge recognizing a guest's style within the first 60 seconds of conversation.",
-                "Out-of-sample Routing Accuracy (%) and chance-corrected Cohen's Kappa (κ) on 401 held-out test dialogues.",
-            ],
-            [
-                "4. Slot-Masked FAISS\nFew-Shot Prompting",
-                "Retrieving the 3 closest past dialogues from the customer's archetype with hotel/price names masked as [SLOT], showing them to the LLM as style templates.",
-                "Giving a new sales associate 3 redacted scripts showing *how* to structure an answer without letting them quote last week's prices.",
-                "Style Convergence Cosine (similarity to human wizard style) and Pacing Calibration Error (|generated words − target archetype words|).",
-            ],
-            [
-                "5. Neuro-Symbolic\nGuardrail\n(Declarative Rule Engine)",
-                "Combining a neural LLM (for fluent language) with deterministic code rules (if/then YAML policies) that audit facts before & after generation.",
-                "An architect designing a creative building (Neural LLM) checked by a structural engineer's building-code calculator (Symbolic Engine).",
-                "Rule Adherence Rate (RAR), Exemplar Entity Leakage Rate (ELR), and Factual Slot Coverage F1 [0, 1].",
-            ],
-            [
-                "6. Turn Economy &\nRedundant Elicitation\nRate (RER)",
-                "How many back-and-forth turns it takes to reach a successful booking, and how often the bot wastes turns re-asking already-stated facts.",
-                "Closing a travel booking in 5 focused turns instead of 9 repetitive turns asking 'Where are you flying from?' twice.",
-                "Turns to Goal Completion (TGC, raw & log-transformed) and RER = redundant slot questions / total agent turns.",
-            ],
-        ],
-        col_widths=[1.8, 3.3, 3.5, 4.0],
-        font_size=10.5,
-        align_left_cols=(0, 1, 2, 3),
-    )
-
-    # =========================================================================
-    # SLIDE 6: LITERATURE STREAM 1 & 2 (BUSINESS VALUE & DIALOGUE CORPORA)
-    # =========================================================================
-    s = D.content_slide(
-        "Module 2: Literature Analysis & Uniqueness",
-        "Literature Review (Part 1): Hospitality AI Value & Task-Oriented Corpora",
-        "Prior business and corpus findings, methodological foundations, and remaining research gaps",
-        notes="Directly addresses Committee Question 2 & 3 on prior literature in business hospitality and dialogue datasets.",
-    )
-    D.add_card(
-        s, 0.35, 1.50, 6.15, 5.45,
-        title="Stream 1: Travel & Hospitality AI Business Value",
-        header_bg=NAVY,
-        bullets=[
-            "<b>What Prior Papers Tried & Found:</b>",
-            (1, "<b>Buhalis & Sinarta (2019)</b> introduced real-time 'nowness' co-creation in tourism: travelers expect instant, personalized itinerary synthesis."),
-            (1, "<b>Ivanov & Webster (2019)</b> established the ROI framework for hospitality automation: chatbots create net economic value only when they resolve complex consultative queries without human escalation."),
-            (1, "<b>Melián-González et al. (2021)</b> surveyed <i>N</i> = 1,476 consumers and proved that perceived interaction efficiency and task fit drive chatbot adoption."),
-            (1, "<b>Jannach et al. (2021) & Inaba et al. (2022)</b> showed qualitatively that travelers exhibit heterogeneous initiative and constraint rigidity."),
-            "<b>Application of Prior Foundations:</b>",
-            (1, "Operationalizes qualitative constructs—<i>decisiveness, exploration breadth, constraint rigidity, and interaction effort</i>—into 16 quantitative behavioral variables and multi-turn turn-economy metrics."),
-            "<b>Novel Contribution (With Empirical Proof):</b>",
-            (1, "Prior tourism papers relied on <i>post-hoc user surveys</i>. This study instruments actual LLM turn economy, proving a <b>35.8% reduction in turns (7.93 → 5.09 turns, p < .001)</b> and <b>0.0% redundant questions</b>."),
-        ],
-        font_size=11,
-    )
-    D.add_card(
-        s, 6.80, 1.50, 6.18, 5.45,
-        title="Stream 2: Task-Oriented Dialogue Corpora (Frames & MultiWOZ)",
-        header_bg=TEAL,
-        bullets=[
-            "<b>What Prior Papers Tried & Found:</b>",
-            (1, "<b>El Asri et al. (2017) [Microsoft Frames]</b> collected 1,369 human–human Wizard-of-Oz vacation package negotiations to study non-linear <i>frame-switching</i> (comparing multiple flight+hotel packages under budget ceilings)."),
-            (1, "<b>Budzianowski et al. (2018) & Zang et al. (2020) [MultiWOZ 2.2]</b> created a 10,438-dialogue benchmark for supervised slot-filling across city services (hotel, train, attraction, taxi, restaurant)."),
-            "<b>Application of Prior Foundations:</b>",
-            (1, "Uses Frames (<i>N</i> = 1,334 analytic) as the primary consultative travel testbed and MultiWOZ 2.2 (<i>N</i> = 1,499) as an external structural transfer benchmark."),
-            "<b>Novel Contribution (With Empirical Proof):</b>",
-            (1, "Both corpora were built for <i>supervised slot state tracking</i>, treating all users as uniform. Neither clustered user decision-making archetypes nor audited policy compliance."),
-            (1, "Cross-corpus evaluation in RQ1 proves that Frames negotiation archetypes do not transfer trivially to simple MultiWOZ slot-filling (centroid cosine <b>.467 vs. .269, t = 28.08, p < .001</b>), demonstrating that consultative travel requires a dedicated archetype taxonomy."),
-        ],
-        font_size=11,
-    )
-
-    # =========================================================================
-    # SLIDE 7: LITERATURE STREAM 3 & 4 (CLUSTERING, ICL & GUARDRAILS)
-    # =========================================================================
-    s = D.content_slide(
-        "Module 2: Literature Analysis & Uniqueness",
-        "Literature Review (Part 2): Representation Learning, FAISS ICL & Guardrails",
-        "Integrating vector geometry, dynamic in-context learning, and programmable rails while overcoming baseline failure modes",
-        notes="Continue literature synthesis covering SBERT/Gemini embeddings, KATE k-NN prompting, and NeMo/Tau-bench guardrails.",
-    )
-    D.add_card(
-        s, 0.35, 1.50, 6.15, 5.45,
-        title="Stream 3: Embeddings & Unsupervised Clustering",
-        header_bg=BLUE,
-        bullets=[
-            "<b>What Prior Papers Tried & Found:</b>",
-            (1, "<b>Reimers & Gurevych (2019) [Sentence-BERT]</b> and <b>Lee et al. (2025) [Gemini Embeddings]</b> showed that bi-encoder transformers map text into cosine spaces suitable for clustering."),
-            (1, "<b>McInnes et al. (2017, 2018) [HDBSCAN & UMAP]</b> and <b>Hennig (2007) [Bootstrap ARI]</b> established density clustering and resampling stability."),
-            (1, "<b>Gilardi et al. (2023)</b> proved zero-temp LLMs achieve high annotation reliability."),
-            "<b>What Failed When Applied Directly (Interim Diagnostic Finding):</b>",
-            (1, "Clustering whole-dialogue embeddings directly (as in standard studies) captured <i>end-of-dialogue outcomes</i> and <i>wizard identity</i> (Cramér's <i>V</i> = .45) rather than user behavior, yielding poor early-turn routing (<b>κ = .24</b>) and a null RQ2 prompting result (<b>p = .211</b>)!"),
-            "<b>Methodological Innovation (RQ1 Breakthrough):</b>",
-            (1, "Combining <b>truncated opening user prefixes (first M = 9 user messages)</b> with a <b>16-field LLM behavioral profile (`Blocks`)</b> raised bootstrap stability to <b>ARI = .89 (.87 in ablation)</b> and out-of-sample prefix routing to <b>κ = .535 (m=5) and κ = .958 (m=9 boundary consistency)</b>."),
-        ],
-        font_size=11,
-    )
-    D.add_card(
-        s, 6.80, 1.50, 6.18, 5.45,
-        title="Stream 4: Dynamic Few-Shot Retrieval & Symbolic Guardrails",
-        header_bg=GOLD,
-        bullets=[
-            "<b>What Prior Papers Tried & Found:</b>",
-            (1, "<b>Brown et al. (2020)</b> & <b>Liu et al. (2022) [KATE]</b> showed that retrieving nearest-neighbor in-context examples via <b>FAISS (Johnson et al., 2021)</b> beats random static examples on single-turn NLP tasks."),
-            (1, "<b>Rebedea et al. (2023) [NeMo Guardrails]</b> & <b>Yao et al. (2024) [τ-bench]</b> showed that prompt-only LLMs violate domain rules over 50% of the time."),
-            "<b>Where Prior Papers Stopped:</b>",
-            (1, "KATE retrieves from one <i>unpartitioned global pool</i> with raw unmasked entities. NeMo and τ-bench test safety rails in isolation without studying how rails interact with dynamic style prompting."),
-            "<b>Methodological Innovation (RQ2 & RQ3 Breakthrough):</b>",
-            (1, "Combining <b>archetype-partitioned FAISS sub-indices (`[SLOT]`-masked) + archetype pacing directives</b> boosts de-lexicalized SBERT style convergence over static few-shot by <b>+31.8% (.597 vs. .453, p < .001, d_z = 0.74)</b>."),
-            (1, "In RQ3, a <b>significant 2 × 2 interaction (F = 34.82, p < .001)</b> demonstrates that the declarative governance layer eliminates the <b>35.9% entity leakage</b> of unguarded few-shot prompting down to <b>0.0% detected</b>."),
-        ],
-        font_size=11,
-    )
-
-    # =========================================================================
-    # SLIDE 8: LITERATURE SYNTHESIS MATRIX WITH DATA-BACKED EXAMPLES
-    # =========================================================================
-    s = D.content_slide(
-        "Module 2: Literature Analysis & Uniqueness",
-        "Literature Synthesis Matrix: Prior Approaches vs. Empirical Findings",
-        "Concrete examples from RQ1–RQ4 data illustrating what prior methods miss and what the proposed framework resolves",
-        notes="Walk through this table row-by-row during the defense to show mastery of the literature and concrete empirical evidence.",
-    )
-    D.add_table(
-        s, 0.35, 1.50, 12.63, 5.55,
-        headers=["Prior Literature Benchmark", "What Prior Paper Did", "Limitation When Applied to Travel Dialogues", "Methodological Addition", "Concrete Empirical Proof (RQ1–RQ4)"],
-        rows=[
-            [
-                "Whole-Text Embedding Clustering\n(Reimers & Gurevych, 2019;\nMcInnes et al., 2017)",
-                "Clustered full documents using SBERT / HDBSCAN.",
-                "HDBSCAN discards 39.1% (MiniLM) / 35.8% (Gemini) of dialogues as noise; full-dialogue vectors leak end-of-session outcomes.",
-                "Prefix-truncated (M=9 user msgs) hybrid Blocks (PCA-20 Gemini + 16 LLM behavioral ratings) with K-Means (k=3, 100% coverage).",
-                "RQ1: HDBSCAN failed in 53/53 default runs. The M=9 Blocks router achieved ARI = .89 (.87 ablation) and raised held-out routing from κ = .24 (39.4%) to κ = .535 (70.1% at m=5) and κ = .958 (97.3% at m=9).",
-            ],
-            [
-                "Global k-NN Few-Shot (KATE)\n(Liu et al., 2022;\nBrown et al., 2020)",
-                "Retrieved k nearest examples from one global pool without persona routing.",
-                "Static/unrouted examples mismatch user pacing; coarse routing (κ=.24) fails to improve style.",
-                "Archetype-partitioned FAISS sub-indices + archetype pacing directives routed via Blocks.",
-                "RQ2: Coarse Primary RQ2 failed (F = 1.61, p = .211). Refined RQ2 succeeded (F = 9.79, p < .001, ηp² = .234): style cosine rose from .453 (Static) to .597, and word pacing error fell from 10.12w to 3.87w.",
-            ],
-            [
-                "Unmasked In-Context Examples\n(Standard RAG / Few-Shot)",
-                "Inserted raw historical text examples directly into the LLM prompt.",
-                "LLM copies stale hotel names, prices, and promo codes from examples into the active user session.",
-                "Regex/Schema [SLOT] masking in FAISS exemplars + post-generation entity leakage sanitizer.",
-                "RQ3: Unguarded Cluster-Adaptive leaked stale entities ('Sapphire Bay Resort', '$1,149', 'VIP25') in 55.6% of cases (ELR = .359). Rules Active × Cluster-Adaptive reduced leakage to 0.0% (Interaction F = 34.82, p < .001).",
-            ],
-            [
-                "Prompt-Only Policy Instructions\n(Yao et al., 2024 τ-bench;\nRebedea et al., 2023)",
-                "Evaluated LLM adherence to domain rules stated only in natural language prompts.",
-                "LLMs ignore numeric visa, passport, adult-cap, and discount thresholds when optimizing for conversational tone.",
-                "Deterministic YAML RuleEngine (5 Tier-2 rules) executing pre-generation checks & post-generation verification.",
-                "RQ3: Under Rules Off, Gemini 2.5 Flash enforced policy violations in only 5.6% of violating sessions. Activating RuleEngine raised violation enforcement to 98.6% (F = 43.92, p < .001) and Slot F1 from .485 to .952.",
-            ],
-            [
-                "Static Sequential Slot-Filling\n(Budzianowski et al., 2018;\nInaba et al., 2022)",
-                "Used a single dialogue policy across all users without tracking informed slots.",
-                "Re-asks already stated constraints and causes 8.7-turn deadlocks for Rigid-Constraint Seekers.",
-                "Verified Informed Slot Ledger + Archetype-Specific Turn-Economy Policy (bundle vs. compare vs. proactive trade-off).",
-                "RQ4: Cut turns to booking by −42.7% for Rigid-Constraint Seekers (8.73 → 5.00 turns, d = −3.40), −34.2% for Decisive Bookers (7.60 → 5.00), and −29.5% for Open Explorers (7.47 → 5.27), while cutting RER from .109 to .000.",
-            ],
-        ],
-        col_widths=[1.8, 1.9, 2.3, 2.5, 4.1],
         font_size=9.8,
-        align_left_cols=(0, 1, 2, 3, 4),
-        highlight_rows=(0, 1, 2, 3, 4),
-    )
-
-    # =========================================================================
-    # SLIDE 9: THE FOUR LINKED RESEARCH QUESTIONS (CAUSAL CHAIN)
-    # =========================================================================
-    s = D.content_slide(
-        "Module 2: Literature Analysis & Uniqueness",
-        "How the Four Research Questions Form One Integrated Causal Chain",
-        "Each research question solves a specific bottleneck and feeds its validated output directly into the next stage",
-        notes="Show the committee that RQ1, RQ2, RQ3, and RQ4 are not four separate mini-studies—they are four sequential layers of one engineering and scientific argument.",
-    )
-    D.add_table(
-        s, 0.35, 1.50, 12.63, 4.45,
-        headers=["RQ", "Research Question", "Manipulated IV (X)", "Measured DV (Y)", "Hypotheses (H0 vs. Ha)", "Why This Step Is Essential in the Story"],
-        rows=[
-            [
-                "RQ1\n(Discovery &\nRouting)",
-                "Which clustering algorithm best separates travel trajectories, and which early-routable user archetypes emerge?",
-                "X1: Algorithm (K-Means, Ward, HDBSCAN) × Prefix Horizon M ∈ {3,5,7,9,whole} × Representation",
-                "Y1: Cosine Silhouette, Davies–Bouldin, Bootstrap ARI Stability, Out-of-Sample Routing κ",
-                "H01: μ_Sil equal across algorithms.\nHa1: Algorithms differ (p<.05) & prefix Blocks yield stable (ARI≥.60), routable archetypes.",
-                "Without stable, early-routable user archetypes (free of outcome leakage), downstream adaptive prompting cannot know which persona to target.",
-            ],
-            [
-                "RQ2\n(Style &\nPacing)",
-                "Does cluster-adaptive few-shot prompting improve style convergence and pacing calibration over static and zero-shot?",
-                "X2: Prompting Strategy (Zero-Shot, Static Few-Shot k=3, Cluster-Adaptive Few-Shot k=3)",
-                "Y2: De-lexicalized SBERT Style Cosine, Gemini 3,072-d Cosine, BERTScore F1, Pacing Word Error",
-                "H02: μ_style equal across 3 conditions.\nHa2: Cluster-Adaptive > Static & Zero-Shot on refined archetypes.",
-                "Tests whether routing to an archetype's FAISS sub-index actually makes the LLM mirror human consultant style and verbosity for that persona.",
-            ],
-            [
-                "RQ3\n(Safety &\nCompliance)",
-                "How do a declarative rule engine and cluster-adaptive prompting interact to govern compliance, leakage, and slot F1?",
-                "X3: 2 × 2 Factorial: Rules Mode (Off vs. Active) × Prompting (Zero-Shot vs. Cluster-Adaptive)",
-                "Y3: Rule Adherence Rate (RAR)\nY4: Exemplar Leakage (ELR)\nY5: Slot F1 & Style Cosine",
-                "H03: No main or interaction effects.\nHa3: Active rules raise RAR & Slot F1 and eliminate few-shot leakage (Interaction p<.05).",
-                "Proves that adaptive style prompting is unsafe on its own (35.9% leakage) and requires symbolic rule verification to be enterprise-ready.",
-            ],
-            [
-                "RQ4\n(Multi-Turn\nEfficiency)",
-                "Does cluster-adaptive prompting with an informed-slot ledger reduce turns to booking and redundant questions across archetypes?",
-                "X4: 2 × 3 Factorial: Prompting (Zero-Shot vs. Cluster-Adaptive) × Refined Archetype (DB, OE, RCS)",
-                "Y6: Log Turns to Goal Completion (ln TGC), Raw Turns, Redundant Elicitation Rate (RER)",
-                "H04: No main or interaction effects.\nHa4: Cluster-Adaptive cuts log turns & RER with a significant Prompt × Archetype interaction.",
-                "Demonstrates end-to-end business value: fewer turns to booking, zero repetitive slot questions, and tailored trade-off resolution.",
-            ],
-        ],
-        col_widths=[1.1, 2.3, 2.2, 2.1, 2.3, 2.6],
-        font_size=10,
-        align_left_cols=(0, 1, 2, 3, 4, 5),
     )
     D.add_callout(
-        s, 0.35, 6.10, 12.63, 0.98,
-        "<b>Key Narrative Link:</b> RQ1 discovers <i>who</i> the traveler is in the first 5–9 messages → RQ2 proves the assistant can match <i>how</i> to speak to them → RQ3 guarantees the assistant never <i>hallucinates or breaks booking rules</i> while adapting style → RQ4 proves this closes bookings in <i>29.5% to 42.7% fewer turns</i>.",
-        bg_color=GREEN_BG, border_color=GREEN, font_size=11.5,
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`RQ2-Personalize` → `RQ3-Govern`):</b> "
+        "This technical paradox defines the central tension of the solution approach: <b>RQ2-Personalize</b> tests whether persona clustering improves LLM style, while <b>RQ3-Govern</b> tests whether combining declarative symbolic rules with `[SLOT]`-masked adaptive prompting resolves entity leakage and policy blindness.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
     )
 
     # =========================================================================
-    # SLIDE 10: DATASET AUTHENTICITY, ORIGIN & FIT FOR PURPOSE (DEFENSE Q4)
+    # SLIDE 5: STORYLINE APPEARANCE #1 — CONCEPTUAL 4-STAGE STORYLINE (IMMEDIATELY AFTER PROBLEM STATEMENT)
+    # =========================================================================
+    add_storyline_discovery_slide(D, stage_step=0)
+
+    # =========================================================================
+    # SLIDE 6: CORE CONCEPTS EXPLAINED FROM THE GROUND UP
     # =========================================================================
     s = D.content_slide(
-        "Module 3: Data Authenticity, Schema & EDA",
-        "Dataset Authenticity, Origin, and Fit for Purpose (Defense Question #4)",
-        "Why Microsoft Frames and MultiWOZ 2.2 were created, why they are gold-standard human corpora, and how they fit the study",
-        notes="This slide directly answers Defense Question 4: What is the authenticity of the datasets, why were they created, and how do they fit the research?",
+        "1. Problem Statement & 4-Stage Solution Approach",
+        "Core Concepts Explained from the Ground Up (Plain-English Primer)",
+        "Bridging AI/NLP terminology and statistical measurement across all four stages of the solution approach",
+        notes="Use this slide to make sure interdisciplinary committee members have crystal-clear intuition for the 6 building blocks mapped across RQ1-Identify to RQ4-Optimize.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 4.80,
+        headers=["Solution Stage & Concept", "Plain-English Meaning", "Real-World Analogy", "How It Is Operationalized in This Study"],
+        rows=[
+            [
+                "RQ1-Identify Stage:\nVector Embedding\n(SBERT 384-d & Gemini 3,072-d)",
+                "Converting a sentence or dialogue prefix into a list of coordinates so similar meanings and behaviors sit close together in geometry.",
+                "Like GPS coordinates (latitude, longitude) on a map, extended to 384 or 3,072 dimensions capturing meaning and tone.",
+                "Cosine similarity [-1, +1] between vectors: +1 = identical direction/style; 0 = orthogonal/unrelated.",
+            ],
+            [
+                "RQ1-Identify Stage:\nUnsupervised Clustering\n(K-Means, Ward, HDBSCAN)",
+                "Automatically grouping training dialogues into natural customer behavior segments without pre-labeled categories.",
+                "Sorting retail shoppers into 'Quick Grab-and-Go', 'Window Browsers', and 'Strict Budget Hunters' by watching how they shop.",
+                "Cosine Silhouette [-1, +1] (higher = tighter separation), Davies–Bouldin (lower = better), and Bootstrap ARI stability [0, 1].",
+            ],
+            [
+                "RQ1 → RQ2 Handoff:\nEarly-Turn Prefix Routing\n(RefinedArchetypeRouter)",
+                "Predicting which behavioral archetype a new customer belongs to after reading only their opening M (e.g., 5 to 9) messages.",
+                "An experienced hotel concierge recognizing a guest's decision style within the first 60 seconds of conversation.",
+                "Out-of-sample Routing Accuracy (%), Macro-F1, Multiclass ROC-AUC, and chance-corrected Cohen's Kappa (κ).",
+            ],
+            [
+                "RQ2-Personalize Stage:\nSlot-Masked FAISS\nFew-Shot Prompting",
+                "Retrieving the 3 closest past dialogues from the matched archetype's FAISS index with entities masked as [SLOT] to guide LLM style.",
+                "Giving a sales associate 3 redacted scripts showing *how* to structure an answer without letting them quote last week's prices.",
+                "De-lexicalized SBERT Style Convergence Cosine and Pacing Calibration Error (|generated words − target archetype words|).",
+            ],
+            [
+                "RQ3-Govern Stage:\nNeuro-Symbolic Guardrail\n(Declarative Rule Engine)",
+                "Combining a neural LLM (for fluent language) with deterministic code rules (YAML policies) that verify constraints pre- & post-generation.",
+                "An architect designing a creative building (Neural LLM) checked by a structural engineer's building-code calculator (Symbolic Engine).",
+                "Rule Adherence Rate (RAR: Violation Sensitivity & Compliant Specificity), Exemplar Leakage Rate (ELR), and Factual Slot F1 [0, 1].",
+            ],
+            [
+                "RQ4-Optimize Stage:\nTurn Economy & Redundant\nElicitation Rate (RER)",
+                "How many back-and-forth turns are needed to reach an agreed package quotation, and how often the agent wastes turns re-asking stated facts.",
+                "Closing a travel quotation in 5 focused turns instead of 9 repetitive turns asking 'Where are you flying from?' twice.",
+                "Turns to Goal Completion (TGC, raw & natural-log transformed ln TGC) and RER = redundant slot questions / total assistant turns.",
+            ],
+        ],
+        col_widths=[2.0, 3.2, 3.4, 4.0],
+        font_size=9.5,
+        align_left_cols=(0, 1, 2, 3),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment:</b> These six concepts map one-to-one onto the 4-stage cascade: <b>Embeddings, Clustering & Prefix Routing</b> power `RQ1-Identify Stage` → <b>Slot-Masked FAISS Retrieval</b> powers `RQ2-Personalize Stage` → <b>Declarative YAML Rule Verification</b> powers `RQ3-Govern Stage` → <b>Turn Economy & Zero-RER Slot Ledgers</b> power `RQ4-Optimize Stage`.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 7: LITERATURE REVIEW (PART 1): STREAMS 1 & 2 LINKED TO THE STORYLINE
+    # =========================================================================
+    s = D.content_slide(
+        "2. Literature Collection & Synthesis Aligned with Solution Approach",
+        "Literature Synthesis (Part 1): Hospitality AI Value & Task-Oriented Corpora",
+        "Streams 1 & 2: How prior tourism ROI research and human Wizard-of-Oz corpora inspired RQ1-Identify Stage and RQ4-Optimize Stage",
+        notes="Now that the audience understands the 4-stage big picture, show how Literature Streams 1 and 2 inspired RQ1-Identify Stage and RQ4-Optimize Stage.",
     )
     D.add_card(
-        s, 0.35, 1.50, 6.15, 3.85,
+        s, 0.35, 1.48, 6.15, 4.78,
+        title="Stream 1: Hospitality AI Value & Turn Economy → RQ4-Optimize & RQ1-Identify",
+        header_bg=NAVY,
+        bullets=[
+            "<b>Prior Literature Foundations:</b>",
+            (1, "<b>Buhalis & Sinarta (2019):</b> Framed real-time 'nowness' co-creation in smart tourism—travelers expect rapid, context-aware itinerary synthesis."),
+            (1, "<b>Ivanov & Webster (2019):</b> Established the economic ROI model for hospitality AI: automation yields net value only when resolving consultative queries without human escalation."),
+            (1, "<b>Melián-González et al. (2021):</b> Surveyed <i>N</i> = 1,476 consumers and showed perceived interaction efficiency and task fit drive chatbot adoption."),
+            (1, "<b>Jannach et al. (2021) & Inaba et al. (2022):</b> Documented qualitatively that travelers vary widely in initiative, exploration breadth, and constraint rigidity."),
+            "<b>Gap in Prior Work & Solution Approach Operationalization:</b>",
+            (1, "Prior tourism studies relied on <i>post-hoc perception surveys</i> rather than programmatic dialogue policies."),
+            (1, "<b>Inspiration for RQ1-Identify & RQ4-Optimize:</b> Translate qualitative shopper traits into a <b>16-field quantitative behavioral codebook (`RQ1-Identify`)</b> and instrument direct conversational efficiency metrics—<b>Turns to Goal Completion (`ln TGC`) and Redundant Elicitation Rate (`RER`) (`RQ4-Optimize`)</b>."),
+        ],
+        font_size=9.8,
+    )
+    D.add_card(
+        s, 6.80, 1.48, 6.18, 4.78,
+        title="Stream 2: Task-Oriented Dialogue Corpora → RQ1-Identify & RQ4-Optimize",
+        header_bg=TEAL,
+        bullets=[
+            "<b>Prior Literature Foundations:</b>",
+            (1, "<b>El Asri et al. (2017) [Microsoft Frames]:</b> Collected 1,369 human–human Wizard-of-Oz vacation package negotiations (19,986 turns) to study non-linear <i>frame-switching</i> across flight+hotel bundles under budget ceilings."),
+            (1, "<b>Budzianowski et al. (2018) & Zang et al. (2020) [MultiWOZ 2.2]:</b> Built a 10,438-dialogue benchmark for supervised multi-domain slot-filling across local city services."),
+            (1, "<b>Walker et al. (1997) [PARADISE] & Deriu et al. (2021):</b> Established decoupling dialogue-internal task success (agreed quotation) from exogenous checkout noise."),
+            "<b>Gap in Prior Work & Solution Approach Operationalization:</b>",
+            (1, "Both Frames and MultiWOZ were modeled with <i>uniform supervised state trackers</i> that treat all speakers identically and ignore enterprise policy rules."),
+            (1, "<b>Inspiration for RQ1-Identify & RQ4-Optimize:</b> Use Microsoft Frames (<i>N</i> = 1,334 analytic) to discover latent shopper negotiation archetypes (`RQ1-Identify`), use MultiWOZ (<i>N</i> = 1,499) as an external domain-transfer control, and ground closed-loop turn-economy simulations (`RQ4-Optimize`)."),
+        ],
+        font_size=9.8,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Foundation (Streams 1 & 2 → RQ1-Identify & RQ4-Optimize):</b> "
+        "Stream 1 provides the <b>behavioral constructs</b> (`decisiveness, exploration, rigidity` → `RQ1-Identify`) and <b>business efficiency criteria</b> (`turn economy & non-redundancy` → `RQ4-Optimize`), while Stream 2 provides the <b>authentic human negotiation trajectories</b> (`Microsoft Frames`) required to discover and test those stages.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 8: LITERATURE REVIEW (PART 2): STREAMS 3 & 4 LINKED TO THE STORYLINE
+    # =========================================================================
+    s = D.content_slide(
+        "2. Literature Collection & Synthesis Aligned with Solution Approach",
+        "Literature Synthesis (Part 2): Representation Learning, FAISS ICL & Guardrails",
+        "Streams 3 & 4: How embedding geometry, k-NN in-context learning, and programmable rails inspired RQ1-Identify, RQ2-Personalize, and RQ3-Govern",
+        notes="Show how Literature Stream 3 inspired RQ1-Identify Stage and Stream 4 inspired RQ2-Personalize Stage and RQ3-Govern Stage.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 6.15, 4.78,
+        title="Stream 3: Embeddings, Clustering & LLM Coding → RQ1-Identify Stage",
+        header_bg=BLUE,
+        bullets=[
+            "<b>Prior Literature Foundations:</b>",
+            (1, "<b>Reimers & Gurevych (2019) [SBERT]</b> & <b>Lee et al. (2025) [Gemini Embeddings]:</b> Bi-encoder transformers map text into metric cosine spaces suitable for clustering."),
+            (1, "<b>McInnes et al. (2017, 2018) [HDBSCAN & UMAP]</b> & <b>Hennig (2007) [Bootstrap ARI]:</b> Density clustering and bootstrap cluster stability (`ARI ≥ .60`)."),
+            (1, "<b>Gilardi et al. (2023):</b> Zero-temperature LLMs achieve high inter-coder reliability on structured behavioral annotation tasks."),
+            "<b>Where Prior Methods Stop & Solution Approach Operationalization:</b>",
+            (1, "Standard clustering studies embed <i>entire documents</i>. In multi-turn dialogues, whole-chat embeddings mix customer and agent turns and leak end-of-session outcomes (`Booked` vs. `No Option`), making early-turn routing fail!"),
+            (1, "<b>Inspiration for RQ1-Identify Stage:</b> Truncate transcripts to the <b>opening M user messages</b> and fuse <b>PCA-20 Gemini prefix embeddings with Gilardi-style zero-temp LLM behavioral ratings (`46-d Blocks`)</b> plus an L1 logistic prefix router."),
+        ],
+        font_size=9.8,
+    )
+    D.add_card(
+        s, 6.80, 1.48, 6.18, 4.78,
+        title="Stream 4: Dynamic FAISS ICL & Symbolic Rails → RQ2-Personalize & RQ3-Govern",
+        header_bg=GOLD,
+        bullets=[
+            "<b>Prior Literature Foundations:</b>",
+            (1, "<b>Brown et al. (2020) [Few-Shot ICL]</b>, <b>Liu et al. (2022) [KATE]</b> & <b>Johnson et al. (2021) [FAISS]:</b> Retrieving nearest-neighbor in-context exemplars via FAISS outperforms static prompts on single-turn NLP benchmarks."),
+            (1, "<b>Rebedea et al. (2023) [NeMo Guardrails]</b>, <b>Yao et al. (2024) [τ-bench]</b> & <b>Acikgoz et al. (2025) [TD-EVAL]:</b> Prompt-only LLMs fail domain policy rules in >50% of multi-turn tool/booking interactions."),
+            "<b>Where Prior Methods Stop & Solution Approach Operationalization:</b>",
+            (1, "KATE retrieves from one <i>unpartitioned global pool</i> with raw unmasked entities (causing entity leakage). NeMo and τ-bench evaluate guardrails without dynamic persona style routing."),
+            (1, "<b>Inspiration for RQ2-Personalize Stage & RQ3-Govern Stage:</b> Partition FAISS into <b>persona-specific `[SLOT]`-masked sub-indices (`RQ2-Personalize`)</b> and cross them factorially with a <b>deterministic `YAML` Rule Engine (`RQ3-Govern`)</b>."),
+        ],
+        font_size=9.8,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Foundation (Streams 3 & 4 → RQ1-Identify, RQ2-Personalize & RQ3-Govern):</b> "
+        "Stream 3 inspires the <b>prefix-truncated hybrid `Blocks` clustering & router (`RQ1-Identify`)</b>; Stream 4's KATE/FAISS inspires <b>persona-partitioned exemplar prompting (`RQ2-Personalize`)</b>, while τ-bench and NeMo Guardrails inspire <b>symbolic `YAML` policy verification and `[SLOT]` sanitization (`RQ3-Govern`)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 9: 6-COLUMN LITERATURE RELEVANCE & STORYLINE OPERATIONALIZATION MATRIX (TABLE 2)
+    # =========================================================================
+    s = D.content_slide(
+        "2. Literature Collection & Synthesis Aligned with Solution Approach",
+        "Literature Relevance Matrix Mapped to the Four-Stage Solution Approach (Table 2)",
+        "Mapping all 26 peer-reviewed sources across Streams 1–4 to their target solution stage and operationalized architecture component",
+        notes="Walk through Table 2 from the Final Report, showing how every literature stream maps directly to Identify, Personalize, Govern, and Optimize.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 4.80,
+        headers=[
+            "Literature Stream & Representative Sources (26 Total)",
+            "Core Prior Contribution",
+            "Limitation When Applied Directly to Travel AI",
+            "Solution Stage Mapped",
+            "Inspiration & Operationalization in This Study",
+        ],
+        rows=[
+            [
+                "Stream 1: Hospitality AI & Buyer Behavior\nBuhalis & Sinarta (2019); Ivanov & Webster (2019); Melián-González et al. (2021); Jannach et al. (2021); Inaba et al. (2022)",
+                "Real-time tourism co-creation, automation ROI models, and qualitative buyer initiative/flexibility traits.",
+                "Relied on post-hoc surveys; did not build early-turn persona routers or measure turn-level slot redundancy.",
+                "RQ1-Identify Stage\n&\nRQ4-Optimize Stage",
+                "Operationalized qualitative traits into the 16-field `UserBehaviour` schema (`RQ1-Identify`) and defined `Turns to Goal Completion (ln TGC)` & `RER` (`RQ4-Optimize`).",
+            ],
+            [
+                "Stream 2: Task-Oriented Dialogue Corpora\nEl Asri et al. (2017) [Frames]; Budzianowski et al. (2018); Zang et al. (2020) [MultiWOZ 2.2]; Walker et al. (1997) [PARADISE]",
+                "Human Wizard-of-Oz travel package negotiations (`Frames`) and multi-domain slot tracking (`MultiWOZ`).",
+                "Treated all travelers as one uniform population; lacked Tier-2 enterprise policy slots and persona routing.",
+                "RQ1-Identify Stage\n&\nRQ4-Optimize Stage",
+                "Used `Frames (N=1,334)` for archetype discovery & simulation seeding, `MultiWOZ (N=1,499)` for cross-corpus transfer (`RQ1-Identify`), and PARADISE quotation closure (`RQ4-Optimize`).",
+            ],
+            [
+                "Stream 3: Embeddings, Clustering & LLM Coding\nReimers & Gurevych (2019) [SBERT]; Lee et al. (2025) [Gemini]; McInnes et al. (2017) [HDBSCAN]; Hennig (2007); Gilardi et al. (2023)",
+                "Bi-encoder vector geometry, density/centroid clustering, bootstrap ARI stability, and zero-temp LLM annotation.",
+                "Whole-dialogue embeddings confound wizard identity & end-of-chat outcomes; HDBSCAN drops >35% of speakers as noise.",
+                "RQ1-Identify Stage",
+                "Designed prefix-truncated (`M=9` user msgs) `46-d Blocks` (`PCA-20 Gemini + 13 LLM scales`), `K-Means (k=3, 100% cov.)`, and the L1 `RefinedArchetypeRouter`.",
+            ],
+            [
+                "Stream 4a: Dynamic In-Context Learning\nBrown et al. (2020) [GPT-3 ICL]; Liu et al. (2022) [KATE]; Johnson et al. (2021) [FAISS]; Zhang et al. (2020) [BERTScore]",
+                "Nearest-neighbor FAISS exemplar retrieval improves single-turn semantic accuracy over random few-shot.",
+                "Global unrouted pool ignores persona pacing; raw exemplars leak stale hotel, airline, and price entities.",
+                "RQ2-Personalize Stage",
+                "Partitioned FAISS into `k=3` persona sub-indices (`IndexFlatIP(46)`) with `[SLOT]` placeholder masking and persona word-pacing directives.",
+            ],
+            [
+                "Stream 4b: Dialogue Guardrails & Statistical Design\nRebedea et al. (2023) [NeMo]; Yao et al. (2024) [τ-bench]; Acikgoz et al. (2025); Cohen (1988); Wobbrock et al. (2011) [ART]",
+                "Programmable rails, policy failure benchmarks, noncentral-F power analysis, and non-parametric factorial ANOVA.",
+                "Tested safety rails in isolation without measuring how symbolic verification interacts with persona few-shot style.",
+                "RQ3-Govern Stage\n&\nRQ4-Optimize Stage",
+                "Built the deterministic `YAML` `RuleEngine` (`5 rules` + entity sanitizer) for the `2×2` RQ3-Govern governance test and the `Verified Informed Slot Ledger` for RQ4-Optimize.",
+            ],
+        ],
+        col_widths=[2.6, 2.2, 2.4, 1.5, 3.9],
+        font_size=9.1,
+        align_left_cols=(0, 1, 2, 4),
+        highlight_rows=(0, 1, 2, 3, 4),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Synthesis:</b> No single prior stream solves consultative travel AI alone. The 4-stage solution approach is the direct operational synthesis of all four streams—joining <b>Stream 3 clustering (`Identify`)</b> + <b>Stream 4a FAISS ICL (`Personalize`)</b> + <b>Stream 4b symbolic guardrails (`Govern`)</b> + <b>Streams 1–2 turn-economy evaluation (`Optimize`)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 10: OPERATIONALIZATION SYNTHESIS — HOW LITERATURE BUILT THE 4-STAGE CASCADE
+    # =========================================================================
+    s = D.content_slide(
+        "2. Literature Collection & Synthesis Aligned with Solution Approach",
+        "Operationalization Synthesis: From Isolated Papers to a 4-Stage Cascade",
+        "How specific methodological inspirations and failure modes in the literature shaped each stage's design and handoff",
+        notes="Summarize the 4-paragraph literature operationalization synthesis added to Section 2.5 of the Final Report.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 6.15, 2.32,
+        title="1. Operationalizing RQ1-Identify Stage from Streams 1–3",
+        header_bg=NAVY,
+        bullets=[
+            "<b>Literature Inspiration:</b> Qualitative shopper typologies (Jannach et al., 2021; Inaba et al., 2022) + bi-encoder embeddings (Reimers & Gurevych, 2019; Lee et al., 2025) + zero-temperature LLM coding (Gilardi et al., 2023) + bootstrap stability (Hennig, 2007).",
+            "<b>Operational Adaptation in This Approach:</b> Standard document clustering embeds the whole transcript, which confounds who the shopper is with how the session ended (`outcome`). RQ1-Identify operationalizes <b>prefix-truncated (`M=9` user messages) hybrid `46-d Blocks` clustering</b> and a supervised L1 router so persona identification happens <i>early enough</i> to guide live generation.",
+        ],
+        font_size=9.4,
+    )
+    D.add_card(
+        s, 6.80, 1.48, 6.18, 2.32,
+        title="2. Operationalizing RQ2-Personalize Stage from Stream 4a",
+        header_bg=TEAL,
+        bullets=[
+            "<b>Literature Inspiration:</b> Few-shot in-context learning (Brown et al., 2020) + KATE nearest-neighbor example selection (Liu et al., 2022) + exact inner-product FAISS indexing (Johnson et al., 2021).",
+            "<b>Operational Adaptation in This Approach:</b> KATE retrieves from one undifferentiated global pool for single-turn tasks. RQ2-Personalize operationalizes <b>archetype-partitioned FAISS sub-indices (`1 per RQ1-Identify cluster`) paired with persona word-pacing directives</b>—and tests the causal hypothesis that KATE-style retrieval only improves style when RQ1-Identify prefix routing is coherent.",
+        ],
+        font_size=9.4,
+    )
+    D.add_card(
+        s, 0.35, 3.92, 6.15, 2.32,
+        title="3. Operationalizing RQ3-Govern Stage from Stream 4b",
+        header_bg=CORAL,
+        bullets=[
+            "<b>Literature Inspiration:</b> NeMo Guardrails (Rebedea et al., 2023) + τ-bench policy compliance failures (Yao et al., 2024) + TD-EVAL multi-dimensional auditing (Acikgoz et al., 2025).",
+            "<b>Operational Adaptation in This Approach:</b> Prior benchmarks showed that prompt-only LLMs fail domain rules, but did not test how guardrails interact with few-shot style adaptation. RQ3-Govern operationalizes a <b>`2 × 2` factorial crossing (`Rules Off/Active × Zero-Shot/Cluster-Adaptive`)</b> using `[SLOT]` exemplar masking, 5 declarative `YAML` rules, and post-generation sanitization.",
+        ],
+        font_size=9.4,
+    )
+    D.add_card(
+        s, 6.80, 3.92, 6.18, 2.32,
+        title="4. Operationalizing RQ4-Optimize Stage from Streams 1, 2 & 4b",
+        header_bg=GREEN,
+        bullets=[
+            "<b>Literature Inspiration:</b> Hospitality automation ROI (Ivanov & Webster, 2019; Melián-González et al., 2021) + PARADISE task-resolution decoupling (Walker et al., 1997) + Frames package trade-offs (El Asri et al., 2017).",
+            "<b>Operational Adaptation in This Approach:</b> RQ4-Optimize cascades the validated outputs of RQ1-Identify to RQ3-Govern (`Blocks` Router + `[SLOT]` FAISS + Active `RuleEngine`) and adds a <b>Verified Informed Slot Ledger</b> and <b>persona-specific package framing (`1-Opt Confirm / 3-Opt Compare / Dual Trade-Off`)</b> to compress multi-turn negotiations.",
+        ],
+        font_size=9.4,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Setting the Stage for Dataset & Exploratory Data Analysis (Next Section):</b> "
+        "Before executing this 4-stage operational blueprint, the human dialogue corpora (`Microsoft Frames` and `MultiWOZ 2.2`) must be audited for data hygiene, partitioned behind a strict <b>70/30 zero-leakage firewall</b>, and explored across univariate, bivariate, and multivariate dimensions.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 11: DATASET AUTHENTICITY, ORIGIN & FIT FOR PURPOSE
+    # =========================================================================
+    s = D.content_slide(
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "Dataset Authenticity, Provenance, and Fit for Purpose",
+        "Why Microsoft Frames (N = 1,334 analytic) and MultiWOZ 2.2 (N = 1,499 analytic) were created and how they anchor the 4-stage solution approach",
+        notes="Explain the provenance and authenticity of Microsoft Frames and MultiWOZ 2.2, and how structural dataset boundaries are transparently bridged.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 6.15, 3.20,
         title="Primary Corpus: Microsoft Frames (El Asri et al., 2017)",
         header_bg=NAVY,
         bullets=[
-            "<b>Who Created It & How:</b> Created by Maluuba / Microsoft Research using 12 human participants (85 user–wizard pairs) over 20 days in a Wizard-of-Oz setup backed by a real database of flights and hotels.",
-            "<b>Why It Was Created:</b> Existing datasets only handled simple slot-filling. Microsoft created Frames (1,369 human–human dialogues; 19,986 turns) to study <b>decision-making, budget trade-offs, and frame-switching</b> across multiple vacation packages.",
-            "<b>Fit for Research Objectives:</b>",
-            (1, "Contains genuine human behavioral diversity: decisive buyers, multi-city explorers, and rigid budget/star negotiators."),
-            (1, "Rich ground-truth annotations: 20+ dialogue act types (`inform`, `offer`, `switch_frame`, `request_compare`), slot–value histories, wizard task success (74.2%), and user satisfaction ratings."),
+            "<b>Origin & Collection Protocol:</b> Collected by Maluuba / Microsoft Research across 12 human participants (85 user–wizard pairs) over 20 days in a Wizard-of-Oz environment connected to a database of flights and hotels.",
+            "<b>Why It Was Created:</b> Standard corpora only tested linear slot-filling. Frames (1,369 raw dialogues; 19,986 turns) was specifically designed to capture <b>multi-turn consultative vacation package negotiation, budget ceilings, and non-linear frame-switching</b>.",
+            "<b>Fit for the Solution Approach:</b> Contains authentic human behavioral heterogeneity—decisive buyers, multi-city explorers, and strict budget/star negotiators—plus 20+ dialogue act types (`inform`, `offer`, `switch_frame`).",
         ],
-        font_size=10.8,
+        font_size=9.8,
     )
     D.add_card(
-        s, 6.80, 1.50, 6.18, 3.85,
+        s, 6.80, 1.48, 6.18, 3.20,
         title="Comparison Corpus: MultiWOZ 2.2 (Zang et al., 2020)",
         header_bg=TEAL,
         bullets=[
-            "<b>Who Created It & How:</b> Collected at the University of Cambridge (Budzianowski et al., 2018) via crowd-sourced human tourists and clerks (10,438 dialogues), with schema-guided slot annotations cleaned by Google Research in v2.2 (Zang et al., 2020).",
-            "<b>Why It Was Created:</b> Standard benchmark for multi-domain dialogue state tracking (hotel, train, attraction, taxi, restaurant).",
-            "<b>Purpose of the Seeded Sample (N = 1,500 raw; 1,499 analytic):</b>",
-            (1, "Provides an external structural benchmark in EDA (comparing turn distributions and verbosity)."),
-            (1, "Tests <b>cross-corpus domain specificity</b> in RQ1: because MultiWOZ lacks flight routing and multi-package price negotiation, projecting MultiWOZ onto Frames centroids tests whether the discovered archetypes are genuinely consultative vs. generic."),
+            "<b>Origin & Collection Protocol:</b> Created at the University of Cambridge (Budzianowski et al., 2018; 10,438 dialogues) via crowd-sourced tourists and clerks, with Google-verified slot annotations in v2.2 (Zang et al., 2020).",
+            "<b>Why It Was Created:</b> Gold-standard benchmark for supervised multi-domain Dialogue State Tracking (hotel, train, attraction, taxi, restaurant).",
+            "<b>Role of the Seeded Sample (`N = 1,500 raw → 1,499 analytic`):</b> Serves as an external structural contrast in EDA and tests <b>cross-corpus domain specificity in RQ1-Identify Stage</b>—verifying whether consultative package negotiation archetypes are distinct from transactional city slot-filling.",
         ],
-        font_size=10.8,
+        font_size=9.8,
     )
     D.add_card(
-        s, 0.35, 5.50, 12.63, 1.60,
-        title="Bridging Public Dataset Boundaries Without Compromising Authenticity",
+        s, 0.35, 4.78, 12.63, 1.50,
+        title="Transparently Bridging Two Public Corpus Boundaries (`RQ3-Govern` & `RQ4-Optimize`)",
         header_bg=GOLD,
         bg_color=CALLOUT_BG,
         bullets=[
-            "<b>Gap 1 (Zero Tier-2 Enterprise Policy Slots in Public Corpora):</b> Auditing all 1,334 Frames dialogues (Appendix Table E4) proved that 0.0% of public dialogues record visa windows, passport validity months, or promo discount caps (only `budget_amount` is observed in 78.5%). <b>Solution:</b> In RQ3, real held-out Frames dialogues (preserving authentic user language and Tier-1 trip constraints) were paired with a seeded (`seed=42`) experimental injector to attach controlled Tier-2 policy states (50% violating, 50% compliant).",
-            "<b>Gap 2 (Static Logs Cannot React to New Agent Replies in RQ4):</b> Static corpus transcripts have fixed wizard replies. <b>Solution:</b> In RQ4, a persona-conditioned user simulator was grounded in the exact Tier-1 constraints of 90 held-out Frames dialogues and verified for persona fidelity via an independent `gemini-2.5-pro` judge (<b>95.6% accuracy, κ = .933</b>).",
+            "<b>Boundary 1 — Zero Tier-2 Enterprise Policy Slots in Public Corpora (Appendix Table E4):</b> Programmatic audit of all 1,334 Frames dialogues confirmed that 0.0% record visa lead windows, passport expiry months, or promo discount percentages (only `budget_amount` is observed in 78.5%). <b>RQ3-Govern Solution:</b> Authentic held-out Frames user prefixes are preserved and paired with a deterministic, seeded (`seed=42`) experimental injector attaching controlled Tier-2 states (50% violating, 50% compliant).",
+            "<b>Boundary 2 — Static Transcripts Cannot React to New Agent Policies in Multi-Turn Loops:</b> Corpus logs have fixed historical wizard replies. <b>RQ4-Optimize Solution:</b> Closed-loop simulations are grounded in the exact Tier-1 trip goals of 180 held-out Frames seeds and validated via blind `gemini-2.5-pro` persona auditing.",
         ],
-        font_size=10.5,
+        font_size=9.4,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Data Foundation → RQ1-Identify to RQ4-Optimize`):</b> "
+        "Microsoft Frames supplies the authentic human trajectories for <b>RQ1-Identify clustering</b> and <b>RQ2-Personalize FAISS exemplar indexing</b>, while its held-out test partition (`D_test = 401`) anchors the controlled <b>RQ3-Govern policy experiment</b> and <b>RQ4-Optimize closed-loop simulations</b>.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.5,
     )
 
     # =========================================================================
-    # SLIDE 11: TWO-TIER SCHEMA, DATA CLEANING & ZERO-LEAKAGE PARTITIONING
+    # SLIDE 12: TWO-TIER SCHEMA, DATA CLEANING AUDIT & 70/30 FIREWALL
     # =========================================================================
     s = D.content_slide(
-        "Module 3: Data Authenticity, Schema & EDA",
-        "Two-Tier Canonical Schema, Data Cleaning Audit & Leakage Prevention",
-        "Strict programmatic data hygiene (src/canonical_schema.py & step1_prepare_data.py) before any modeling",
-        notes="Walk through the two-tier Pydantic schema, the cleaning audit table (Table 5), and how the 70/30 golden/test split prevents data leakage.",
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "Two-Tier Canonical Schema, Data Hygiene Audit & 70/30 Firewall",
+        "Programmatic validation (`src/canonical_schema.py` & Table 5) and strict separation of Golden Discovery (n = 933) vs. Held-Out Test (n = 401)",
+        notes="Walk through the Two-Tier Pydantic Schema, Table 5 cleaning audit, and the stratified 70/30 split firewall.",
     )
     D.add_card(
-        s, 0.35, 1.50, 5.20, 3.60,
-        title="Two-Tier Pydantic Schema (src/canonical_schema.py)",
+        s, 0.35, 1.48, 5.20, 3.45,
+        title="Two-Tier Pydantic Schema (`src/canonical_schema.py`)",
         header_bg=NAVY,
         bullets=[
             "<b>Tier 1: Core Travel Booking Slots (9 Universal Fields)</b>",
@@ -573,96 +619,157 @@ def build_slides_part1(D, ctx):
             (1, "<i>package_type</i> & <i>traveler_count_adults</i> (> 4 FIT escalates)"),
             (1, "<i>discount_applied_percentage</i> (> 15% capped by manager rule)"),
         ],
-        font_size=10.5,
+        font_size=9.8,
     )
     D.add_table(
-        s, 5.75, 1.50, 7.23, 3.60,
-        headers=["Quality Audit Check", "Detection Rule", "Frames (1,369)", "MultiWOZ (1,500)", "Programmatic Treatment"],
+        s, 5.75, 1.48, 7.23, 3.45,
+        headers=["Quality Audit Check (Table 5)", "Detection Rule", "Frames (1,369)", "MultiWOZ (1,500)", "Programmatic Treatment"],
         rows=[
             ["Duplicate IDs / Empty turns", "Primary key / strip()", "0", "0", "Verified 100% unique & non-empty"],
             ["Exact duplicate text", "SHA-256 text hash", "1", "0", "Removed duplicate (`bf46892e...`)"],
             ["Aborted short dialogues", "total_turns < 3", "34", "1", "Excluded (need ≥ 3 turns for prefix routing)"],
-            ["Long-tail turn outliers", "> Q3 + 1.5 × IQR", "20 (>30.5t)", "21 (>24.0t)", "Retained (real negotiations); log-transformed in RQ4"],
+            ["Long-tail turn outliers", "> Q3 + 1.5 × IQR", "20 (>30.5t)", "21 (>24.0t)", "Retained (real negotiations); log-transformed in RQ4-Optimize"],
             ["Unobserved slot values", "Slot never stated", "See Table E1", "See Table E1", "Preserved as null (`None`); never imputed"],
             ["Entity leakage risk", "Regex slot/number match", "All exemplars", "All exemplars", "Masked with `[SLOT]` tokens in FAISS index"],
             ["Final Analytic Sample", "Locked post-cleaning", "1,334", "1,499", "Total N = 2,833 analytic dialogues"],
         ],
         col_widths=[1.5, 1.4, 0.9, 0.9, 2.5],
-        font_size=9.8,
+        font_size=9.2,
         align_left_cols=(0, 1, 4),
         highlight_rows=(6,),
     )
+    D.add_card(
+        s, 0.35, 5.02, 12.63, 1.26,
+        title="Stratified 70/30 Discovery-to-Evaluation Firewall (`seed = 42`)",
+        header_bg=GREEN,
+        bg_color=GREEN_BG,
+        bullets=[
+            "<b>70% Golden Discovery Partition (`D_gold`, n = 933; 74.3% wizard task success):</b> Exclusively used to fit all unsupervised clustering models (`K-Means, Ward, HDBSCAN`), the `PCA-20` projection matrix, the supervised L1 `RefinedArchetypeRouter`, and the 3 `[SLOT]`-masked FAISS `IndexFlatIP` exemplar sub-indices.",
+            "<b>30% Held-Out Test Partition (`D_test`, n = 401; 74.1% wizard task success):</b> Strictly isolated for out-of-sample prefix routing evaluation (`RQ1-Identify`), repeated-measures prompting (`RQ2-Personalize, N = 33`), `2 × 2` compliance testing (`RQ3-Govern, N = 144`), and `2 × 3` closed-loop simulations (`RQ4-Optimize, N = 180`).",
+        ],
+        font_size=9.5,
+    )
     D.add_callout(
-        s, 0.35, 5.28, 12.63, 1.80,
-        "<b>Guaranteeing Zero Data Leakage Between Discovery and Evaluation (Stratified 70/30 Split, Seed = 42):</b>\n"
-        "• The <b>1,334 analytic Frames dialogues</b> were partitioned once into a <b>70% Golden Discovery Set (D_gold, n = 933)</b> and a <b>30% Held-Out Test Set (D_test, n = 401)</b>, stratified on wizard task success (74.3% vs. 74.1%).\n"
-        "• <b>Strict Firewall:</b> Every clustering model, PCA projection matrix, L1 logistic prefix router, and FAISS exemplar index is fitted <b>exclusively on D_gold (n = 933)</b>. All out-of-sample routing (RQ1), repeated-measures prompting (RQ2, N = 33), 2 × 2 factorial compliance testing (RQ3, N = 144), and 2 × 3 multi-turn simulations (RQ4, N = 180) are evaluated <b>strictly on D_test (n = 401)</b>.",
-        bg_color=GREEN_BG, border_color=GREEN, font_size=11,
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Zero-Leakage Handoff Across RQ1-Identify to RQ4-Optimize`):</b> "
+        "Removing aborted `< 3`-turn fragments (`34` in Frames) guarantees every dialogue has a valid opening prefix for `RQ1-Identify`, while the <b>70/30 firewall</b> ensures that every `RQ1–RQ4` test statistic measures genuine out-of-sample generalization on `D_test (n = 401)`.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
     )
 
     # =========================================================================
-    # SLIDE 12: UNIVARIATE & BIVARIATE EXPLORATORY DATA ANALYSIS
+    # SLIDE 13: UNIVARIATE & OUTCOME-STRATIFIED EXPLORATORY DATA ANALYSIS (FIGURE 1 & TABLE 6)
     # =========================================================================
     s = D.content_slide(
-        "Module 3: Data Authenticity, Schema & EDA",
-        "Univariate and Bivariate Exploratory Data Analysis (Tables 6–7 & Figures 1–2)",
-        "Dialogue length is driven by slot revisions (r = .602) and package offers (r = .636), validating the negotiation constructs",
-        notes="Explain the univariate comparison between Frames and MultiWOZ (Figure 1) and the bivariate parametric/non-parametric correlations (Figure 2 & Table 7).",
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "Univariate & Session-Outcome Stratified EDA (Figure 1 & Table 6)",
+        "Distributional profiles across corpora, partitions, stated trip budgets, party composition, and session resolution outcomes",
+        notes="Walk through Figure 1 and Table 6 from the expanded EDA section of the Final Report, emphasizing the session outcome stratification and why outcome cannot be used as a clustering input.",
     )
     D.add_figure(
         s, os.path.join(FIG_INT, "fig_eda_turns.png"),
-        0.35, 1.50, 5.60, 2.55,
-        caption="Figure 1: Univariate Turn Distributions (Frames M=14.90, SD=6.74 vs. MultiWOZ M=13.52, SD=4.46)",
-    )
-    D.add_figure(
-        s, os.path.join(FIG_FIN, "fig_eda_bivariate.png"),
-        0.35, 4.15, 5.60, 2.95,
-        caption="Figure 2: Bivariate Turns vs. Slot Revisions & Archetype Negotiation Intensity",
+        0.35, 1.48, 5.50, 4.78,
+        caption="Figure 1: Turn-Count Distributions for Microsoft Frames (N = 1,334) vs. MultiWOZ 2.2 (N = 1,499)",
     )
     D.add_table(
-        s, 6.15, 1.50, 6.83, 3.10,
-        headers=["Bivariate Variable Pair (Frames N = 1,334)", "Pearson r (p)", "Spearman ρ (p)", "Analytical Interpretation"],
+        s, 6.00, 1.48, 6.98, 2.92,
+        headers=["Corpus / Stratum & Variable (Table 6)", "N", "Mean (SD)", "Median (IQR)", "Min–Max", "Skewness"],
         rows=[
-            ["Dialogue Turns × Slot Revisions", ".602 (< .001)", ".582 (< .001)", "Frequent constraint changes drive longer sessions"],
-            ["Dialogue Turns × Agent Package Offers", ".636 (< .001)", ".661 (< .001)", "Multi-package comparisons expand turn counts"],
-            ["Slot Revisions × Hesitation Markers", ".192 (< .001)", ".206 (< .001)", "User uncertainty accompanies constraint shifts"],
-            ["Slot Revisions × LLM Exploration Breadth", ".554 (< .001)", ".580 (< .001)", "Strong construct validity of LLM exploration rating"],
-            ["Dialogue Turns × LLM Decisiveness", "−.229 (< .001)", "−.222 (< .001)", "Decisive travelers finish bookings in fewer turns"],
-            ["User Words/Turn × Agent Words/Turn", "−.026 (.341)", ".014 (.618)", "Utterance verbosity is independent across speakers"],
+            ["Frames Total — Dialogue Turns", "1,334", "14.90 (6.74)", "15.0 (10.0)", "3–47", "+0.44"],
+            ["Frames Golden (`D_gold`) / Test (`D_test`) Turns", "933 / 401", "14.94 / 14.81", "15.0 / 14.0", "3–45 / 3–47", "+0.40 / +0.52"],
+            ["MultiWOZ 2.2 — Dialogue Turns", "1,499", "13.52 (4.46)", "14.0 (6.0)", "4–34", "+0.37"],
+            ["Frames — Slot Revisions / Agent Offers", "1,334", "2.62 / 1.88", "2.0 / 1.0", "0–12 / 0–13", "+0.82 / +1.67"],
+            ["Frames — Stated Trip Budget (USD)", "1,047", "$3,142 ($2,418)", "$2,500 ($2,300)", "$200–$18,000", "+2.14"],
+            ["Outcome 1: Booked (65.6% of Frames)", "875", "15.61 (6.42) t", "2.81 rev | 2.19 off", "Decisiveness: 3.62", "Expl: 2.38"],
+            ["Outcome 2: No Suitable Option (28.1%)", "375", "13.18 (7.15) t", "2.14 rev | 1.18 off", "Decisiveness: 2.89", "Expl: 1.94"],
+            ["Outcome 3: Undecided / Exploring (6.2%)", "84", "15.22 (6.88) t", "2.79 rev | 1.77 off", "Decisiveness: 2.41", "Expl: 3.12"],
         ],
-        col_widths=[2.3, 1.0, 1.0, 2.5],
-        font_size=9.5,
-        align_left_cols=(0, 3),
-        highlight_rows=(0, 1, 3, 4),
+        col_widths=[2.35, 0.68, 1.05, 1.05, 1.00, 0.85],
+        font_size=8.4,
+        align_left_cols=(0,),
+        highlight_rows=(0, 5, 6, 7),
     )
     D.add_card(
-        s, 6.15, 4.75, 6.83, 2.35,
-        title="Key Takeaways from Univariate & Bivariate EDA",
+        s, 6.00, 4.50, 6.98, 1.76,
+        title="Key Analytical Insights from Univariate & Outcome-Stratified EDA",
         header_bg=NAVY,
         bullets=[
-            "<b>Reporting Both Pearson <i>r</i> and Spearman ρ:</b> Turn counts and revision counts are right-skewed; reporting linear Pearson <i>r</i> alongside rank-based Spearman ρ proves correlations are not artifacts of tail outliers.",
-            "<b>Frames vs. MultiWOZ Dispersion:</b> Frames has 51% wider turn dispersion (<i>SD</i> = 6.74 vs. 4.46, range 3–47 turns) because consultative vacation negotiation involves iterative trade-offs.",
-            "<b>Golden vs. Held-Out Balance:</b> Golden (<i>M</i> = 14.94 turns) and Held-Out (<i>M</i> = 14.81 turns) partitions are statistically indistinguishable, confirming an unbiased split.",
+            "<b>1. Consultative Dispersion & Party Mix:</b> Frames exhibits 51% wider turn dispersion than MultiWOZ (`SD = 6.74 vs. 4.46`) across diverse party types (`38.4% Solo/Couple, 25.0% Family with Children, 36.6% Multi-Adult Group`) and right-skewed budgets (`Skew = +2.14`).",
+            "<b>2. Golden vs. Held-Out Partition Balance:</b> `D_gold (14.94t)` and `D_test (14.81t)` are statistically indistinguishable (`Welch t = 0.32, p = .748`), confirming an unbiased 70/30 split.",
+            "<b>3. Crucial Outcome Asymmetry:</b> `No Suitable Option` sessions are shorter (`13.18t vs. 15.61t Booked, F = 17.42, p < .001`) with 46% fewer package offers (`1.18 vs. 2.19`) because rigid budget/star conflicts terminate early when unresolved.",
         ],
-        font_size=10.5,
+        font_size=8.9,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Why EDA Dictates RQ1-Identify Truncation & RQ4-Optimize Log-Turns`):</b> "
+        "Because session resolution (`Booked` vs. `No Suitable Option`) strongly alters total turns (`F = 17.42, p < .001`), clustering whole dialogues in `RQ1-Identify` would leak end-of-chat outcomes (<b>Red path</b>)—requiring <b>prefix truncation (`M = 9`) and excluding `outcome` (`Field 14`) from clustering</b>! Meanwhile, right-skewed turn/offer counts motivate `ln(Turns)` in `RQ4-Optimize`.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.2,
     )
 
     # =========================================================================
-    # SLIDE 13: MULTIVARIATE EDA — SPEARMAN MATRIX & PCA BIPLOT
+    # SLIDE 14: BIVARIATE PARAMETRIC & NON-PARAMETRIC EDA (FIGURE 2 & TABLE 7)
     # =========================================================================
     s = D.content_slide(
-        "Module 3: Data Authenticity, Schema & EDA",
-        "Multivariate EDA: Correlation Structure & Principal Component Biplot (Figure 3)",
-        "Ten structural and behavioral variables span three orthogonal dimensions explaining 68.6% of total variance",
-        notes="Explain how Figure 3 (Panel A Spearman heatmap and Panel B PCA biplot) shows that travel behavior forms a continuous 3D manifold structured around Exploration, Decisiveness, and Verbosity.",
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "Bivariate Parametric (Pearson r) & Non-Parametric (Spearman ρ) EDA",
+        "Figure 2 & Table 7: Validating negotiation constructs and discovering speaker verbosity independence across N = 1,334 Frames dialogues",
+        notes="Walk through Figure 2 and Table 7, explaining why both Pearson r and Spearman rho are reported and how every bivariate relationship informs the 4-stage solution approach.",
+    )
+    D.add_figure(
+        s, os.path.join(FIG_FIN, "fig_eda_bivariate.png"),
+        0.35, 1.48, 5.55, 4.78,
+        caption="Figure 2: Bivariate Turns vs. Slot Revisions (Panel A) & Archetype Negotiation Intensity (Panel B)",
+    )
+    D.add_table(
+        s, 6.05, 1.48, 6.93, 2.85,
+        headers=["Bivariate Variable Pair (Frames N = 1,334, Table 7)", "Pearson r (p)", "Spearman ρ (p)", "Solution Stage Implication"],
+        rows=[
+            ["Dialogue Turns × Slot Revisions", ".602 (< .001)", ".582 (< .001)", "Iterative constraint changes drive turn inflation (RQ4-Optimize)"],
+            ["Dialogue Turns × Agent Package Offers", ".636 (< .001)", ".661 (< .001)", "Sequential 1-by-1 package quoting expands turns (RQ4-Optimize)"],
+            ["Slot Revisions × Hesitation Markers", ".192 (< .001)", ".206 (< .001)", "Linguistic uncertainty tracks constraint shifts (RQ1-Identify)"],
+            ["Slot Revisions × LLM Exploration Breadth", ".554 (< .001)", ".580 (< .001)", "Strong criterion validity of LLM codebook (RQ1-Identify)"],
+            ["Dialogue Turns × LLM Decisiveness", "−.229 (< .001)", "−.222 (< .001)", "Decisive shoppers finish in fewer turns (RQ1-Identify & RQ4-Optimize)"],
+            ["User Words/Turn × Agent Words/Turn", "−.026 (.341)", ".014 (.618)", "Human wizards fail to mirror user verbosity! (RQ2-Personalize)"],
+        ],
+        col_widths=[2.35, 1.00, 1.00, 2.58],
+        font_size=8.8,
+        align_left_cols=(0, 3),
+        highlight_rows=(0, 1, 3, 5),
+    )
+    D.add_card(
+        s, 6.05, 4.45, 6.93, 1.81,
+        title="Three Analytical Conclusions from Bivariate EDA",
+        header_bg=TEAL,
+        bullets=[
+            "<b>1. Concordance of Parametric (`r`) and Rank (`ρ`) Correlations:</b> Close agreement between linear Pearson `r` and rank-based Spearman `ρ` across all pairs confirms that relationships are structural and not artifacts of long-tail turn outliers.",
+            "<b>2. Construct Validity of LLM Behavioral Ratings:</b> Zero-temperature LLM ratings of `exploration_breadth` (`ρ = .580`) and `decisiveness` (`ρ = −.222`) strongly track ground-truth human slot revisions and turn counts.",
+            "<b>3. Speaker Verbosity Independence (`r = −.026, p = .341`):</b> Utterance length is completely uncorrelated between traveler and human wizard (`M = 12.69 vs. 19.65 words/turn`), proving that unguided responses do not naturally calibrate to user pacing.",
+        ],
+        font_size=8.9,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Bivariate EDA → RQ1-Identify, RQ2-Personalize & RQ4-Optimize`):</b> "
+        "Strong correlation between LLM ratings and ground-truth revisions (`ρ = .580`) validates the `RQ1-Identify` behavioral codebook; speaker verbosity independence (`r = −.026`) proves `RQ2-Personalize Stage` must inject explicit <b>persona word-pacing directives</b>; and revision/offer turn inflation (`r = .602/.636`) motivates `RQ4-Optimize` comparative & trade-off quoting.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.2,
+    )
+
+    # =========================================================================
+    # SLIDE 15: MULTIVARIATE EDA — SPEARMAN MATRIX & PCA BIPLOT (FIGURE 3)
+    # =========================================================================
+    s = D.content_slide(
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "Multivariate EDA: Correlation Structure & Principal Component Biplot",
+        "Figure 3: Ten structural and behavioral variables span three orthogonal dimensions explaining 68.6% of total variance",
+        notes="Explain Figure 3 (Panel A Spearman heatmap and Panel B PCA biplot) and how the continuous 3D manifold informs RQ1-Identify clustering.",
     )
     D.add_figure(
         s, os.path.join(FIG_FIN, "fig_eda_multivariate.png"),
-        0.35, 1.50, 7.45, 5.55,
+        0.35, 1.48, 7.35, 4.78,
         caption="Figure 3: Multivariate Spearman Rank Correlation Matrix (Panel A) & PCA Biplot by Refined Archetype (Panel B)",
     )
     D.add_table(
-        s, 7.95, 1.50, 5.03, 3.55,
+        s, 7.85, 1.48, 5.13, 3.05,
         headers=["Variable", "PC1 (40.8%)", "PC2 (17.2%)", "PC3 (10.6%)"],
         rows=[
             ["Total turns", "+.390", "+.014", "−.267"],
@@ -676,391 +783,562 @@ def build_slides_part1(D, ctx):
             ["Decisiveness", "−.162", "−.509", "+.039"],
             ["Revision tendency", "+.379", "+.127", "+.128"],
         ],
-        col_widths=[1.9, 1.0, 1.0, 1.0],
-        font_size=9.5,
+        col_widths=[2.0, 1.04, 1.04, 1.05],
+        font_size=8.8,
         align_left_cols=(0,),
         highlight_rows=(0, 1, 2, 7, 8),
     )
     D.add_card(
-        s, 7.95, 5.18, 5.03, 1.87,
-        title="How to Read the 3 Principal Components",
-        header_bg=TEAL,
+        s, 7.85, 4.62, 5.13, 1.64,
+        title="Interpreting the 3 Orthogonal Principal Components",
+        header_bg=NAVY,
         bullets=[
-            "<b>PC1 (40.8% var.) — Exploration vs. Rigidity:</b> Loaded on slot revisions (+.42), exploration breadth (+.39), and turns (+.39). Separates <i>Open Explorers</i> (right) from <i>Rigid-Constraint Seekers</i> (left).",
-            "<b>PC2 (17.2% var.) — Decisiveness & Price Focus:</b> Loaded on decisiveness (−.51) and price sensitivity (−.43). Separates <i>Decisive Bookers</i> (bottom) from explorers.",
-            "<b>PC3 (10.6% var.) — User Verbosity:</b> Isolates words per turn (+.89).",
+            "<b>PC1 (40.8% var.) — Exploration vs. Rigidity:</b> Loaded on slot revisions (`+.416`), exploration breadth (`+.392`), and turns (`+.390`). Separates <i>Open Explorers</i> from <i>Rigid-Constraint Seekers</i>.",
+            "<b>PC2 (17.2% var.) — Decisiveness & Price Focus:</b> Loaded on decisiveness (`−.509`) and price sensitivity (`−.426`). Isolates <i>Decisive Bookers</i>.",
+            "<b>PC3 (10.6% var.) — Utterance Verbosity:</b> Dominated by user words per turn (`+.893`).",
         ],
-        font_size=10,
+        font_size=8.8,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Multivariate Manifold Geometry → RQ1-Identify Clustering Choice`):</b> "
+        "Panel B of Figure 3 reveals that traveler behavior forms a <b>continuous, overlapping 3-dimensional manifold (`PC1–PC3 = 68.6% variance`)</b> rather than disjoint islands with empty density valleys—explaining why density-based `HDBSCAN` discards >35% of speakers as noise (<b>Red</b>) while centroid-based `K-Means (k = 3)` cleanly partitions the three directional poles (<b>Green</b>).",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.2,
     )
 
     # =========================================================================
-    # SLIDE 14: WHY EACH STATISTICAL TEST WAS CHOSEN + REAL-WORLD ANALOGIES
+    # SLIDE 16: EDA-TO-STORYLINE HANDOFF SUMMARY
     # =========================================================================
     s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "Why Each Statistical Test Was Chosen & Everyday Real-World Analogies",
-        "Requirement #1: Explaining the exact statistical test choice for RQ1–RQ4 with intuitive real-world parallels",
-        notes="Crucial slide for both math and non-AI professors: explains WHY One-Way ANOVA, Repeated-Measures ANOVA, 2x2 Factorial ANOVA, and 2x3 Factorial ANOVA are the exact right tools, using everyday analogies.",
+        "3. Dataset Provenance, Hygiene & Exploratory Data Analysis",
+        "EDA-to-Solution Handoff: How Exploratory Findings Shape RQ1-Identify to RQ4-Optimize",
+        "Synthesizing what Exploratory Data Analysis proves, what it rules out, and what design constraints it passes to the methodology",
+        notes="Bridge the completed EDA section directly to the RQs and Methodology section, showing how every EDA diagnostic informed a concrete design choice in RQ1-Identify to RQ4-Optimize.",
     )
     D.add_table(
-        s, 0.35, 1.50, 12.63, 5.55,
-        headers=["RQ & Experimental Structure", "Chosen Statistical Test", "Why This Exact Test Is Mathematically Required", "Classic Real-World Analogy (Where This Test Is Standard)", "Alignment With the Chatbot Scenario"],
+        s, 0.35, 1.48, 12.63, 4.78,
+        headers=[
+            "Exploratory Data Analysis Finding",
+            "Empirical EDA Metric (Tables 5–7, E4 & Figs. 1–3)",
+            "What Is Ruled Out / Dropped (Red Path ✗)",
+            "What Is Passed into the 4-Stage Solution Approach Design (Green Path ✓)",
+        ],
         rows=[
             [
-                "RQ1: Comparing 3 Clustering Algorithms across N = 159 independent runs\n(3 groups, 1 continuous DV: Silhouette)",
-                "One-Way Between-Subjects ANOVA\n+ Welch's ANOVA\n+ Kruskal–Wallis H\n+ Tukey HSD / Games–Howell",
-                "Comparing means of k = 3 independent groups at once. Running three separate t-tests would inflate Type I false-positive risk from 5% to 1 − (0.95)³ = 14.3%. Omnibus ANOVA controls α = .05 across all 3 algorithms.",
-                "<b>Clinical Trial Comparing 3 Blood-Pressure Drugs:</b>\n159 patients randomly assigned (53 per drug) to Drug A, Drug B, or Drug C; measure blood-pressure drop.",
-                "Each of the 159 subsample runs (53 K-Means, 53 Ward, 53 HDBSCAN) is an independent trial producing a continuous Silhouette score.",
+                "1. Aborted Fragments &\nPartition Balance",
+                "`34` Frames chats `< 3` turns removed;\n`D_gold (14.94t)` vs `D_test (14.81t)`, `p = .748`.",
+                "✗ Evaluating routing or prompting on uncleaned fragments or leaky in-sample data.",
+                "✓ <b>All Stages:</b> Strict <b>70/30 Firewall (`D_gold = 933` vs. `D_test = 401`)</b> ensures every test evaluates out-of-sample generalization.",
             ],
             [
-                "RQ2: Testing 3 Prompting Strategies on the SAME N = 33 held-out dialogues\n(Within-subjects design, 99 calls)",
-                "One-Way Repeated-Measures ANOVA\n(Greenhouse–Geisser ε correction)\n+ Friedman χ² Test\n+ Holm Paired t-tests",
-                "Every dialogue is tested under ALL 3 prompts (Zero-Shot, Static, Cluster-Adaptive). Repeated-Measures ANOVA subtracts out baseline dialogue-to-dialogue difficulty variance, isolating the pure within-dialogue effect of the prompt.",
-                "<b>Coffee Tasting Panel (Crossover Trial):</b>\nThe same 33 expert tasters rate Blend A, Blend B, and Blend C. Separating taster-level harshness makes the test much more sensitive.",
-                "Dialogues vary wildly in topic and difficulty. Evaluating all 3 prompts on the exact same 33 dialogue prefixes removes dialogue noise (ρ = .50).",
+                "2. Session Outcome\nConfounding (`Table 6`)",
+                "`Booked (65.6%, 15.61t)` vs. `No Option (28.1%, 13.18t)` vs. `Undecided (6.2%, 15.22t)`, `F = 17.42, p < .001`.",
+                "✗ Using whole-dialogue transcripts or `outcome` (`Field 14`) as clustering features.",
+                "✓ <b>RQ1-Identify Stage:</b> Truncate clustering inputs to <b>opening user prefixes (`M = 9`)</b> and hold out `Fields 14–16` strictly for post-hoc audit.",
             ],
             [
-                "RQ3: Crossing Rules Mode (Off vs. Active) × Prompting (Zero-Shot vs. Cluster-Adaptive)\n(N = 144, n = 36/cell)",
-                "2 × 2 Between-Subjects Factorial ANOVA\n+ HC3 Robust SE\n+ Aligned Rank Transform (ART) ANOVA",
-                "Two simultaneous independent variables (Rules Mode and Prompting Mode) are crossed. Only a 2 × 2 Factorial ANOVA can test (1) Main Effect of Rules, (2) Main Effect of Prompting, and (3) their INTERACTION (Rules × Prompting).",
-                "<b>Agricultural Crop Yield Trial (Fertilizer × Irrigation):</b>\nTesting whether Fertilizer only boosts yield when Irrigation is ALSO active (synergistic / protective interaction).",
-                "Cluster-Adaptive prompting leaks entities when Rules are Off (.359), but Rules Active eliminates that leakage (.000)—a classic protective interaction!",
+                "3. Continuous 3D Behavioral\nManifold (`Figure 3`)",
+                "`PC1 (40.8% Exploration)`, `PC2 (17.2% Decisiveness)`, `PC3 (10.6% Verbosity)` = `68.6%` variance.",
+                "✗ Assuming disjoint density islands where `HDBSCAN` can retain all speakers.",
+                "✓ <b>RQ1-Identify Stage:</b> Benchmark `K-Means (k=3)` vs. `Ward` vs. `HDBSCAN` and fuse `PCA-20` prefix embeddings with the 16-field LLM codebook (`46-d Blocks`).",
             ],
             [
-                "RQ4: Crossing Prompting (2 levels) × Traveler Archetype (3 levels)\n(N = 180, n = 30/cell)",
-                "2 × 3 Between-Subjects Factorial ANOVA on log(Turns) & RER\n+ HC3 + ART\n+ Welch Simple Contrasts",
-                "Tests whether the turn-saving benefit of Cluster-Adaptive prompting is uniform across all travelers or moderated by Traveler Archetype (2 × 3 Interaction), using log(Turns) to normalize right-skewed count data.",
-                "<b>Education Trial (Teaching Method × Student Learning Style):</b>\nTesting whether interactive tutoring vs. lecture helps Visual, Auditory, and Hands-On learners by different amounts.",
-                "All 3 archetypes benefit from adaptive prompting, but Rigid-Constraint Seekers gain the most (−42.7% vs. −29.5%), creating a 2 × 3 interaction.",
+                "4. Speaker Verbosity\nIndependence (`Table 7`)",
+                "User words/turn × Wizard words/turn:\n`r = −.026 (p = .341)`, `ρ = .014 (p = .618)`.",
+                "✗ Relying on zero-shot or unrouted prompts to naturally match user pacing.",
+                "✓ <b>RQ2-Personalize Stage:</b> Pair persona-partitioned FAISS exemplars with explicit <b>persona word-pacing directives</b> (`word_abs_err` metric).",
+            ],
+            [
+                "5. Zero Public Tier-2\nPolicy Slots (`Table E4`)",
+                "`0.0%` of 1,334 Frames chats log visa days, passport months, FIT cap, or promo % (`budget` = 78.5%).",
+                "✗ Testing enterprise policy compliance on unannotated raw corpus replies alone.",
+                "✓ <b>RQ3-Govern Stage:</b> Pair authentic `D_test` user prefixes with a seeded (`seed=42`) <b>Tier-2 policy injector</b> (`50% violating / 50% compliant`) across a `2 × 2` design.",
+            ],
+            [
+                "6. Right-Skewed Turns &\nNegotiation Loops (`Figs. 1–2`)",
+                "Turns × Revisions `r = .602`; Turns × Offers `r = .636`; positive skewness `+0.44` to `+1.67`.",
+                "✗ Sequential 1-option quoting & unlogged slot elicitation; testing raw turns alone.",
+                "✓ <b>RQ4-Optimize Stage:</b> Specify <b>`Y = ln(TGC)` alongside Raw Turns & `RER`</b>, and test the `Verified Informed Slot Ledger` + persona package policies (`2 × 3`).",
             ],
         ],
-        col_widths=[1.9, 1.9, 2.8, 3.0, 3.0],
-        font_size=9.8,
+        col_widths=[2.2, 2.8, 3.2, 4.43],
+        font_size=8.9,
+        align_left_cols=(0, 1, 2, 3),
+        highlight_rows=(0, 1, 2, 3, 4, 5),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Transition to Research Questions & Methodology (Next Section):</b> "
+        "Every design choice in the upcoming Methodology section (`Slides 17–24`) directly operationalizes these six EDA findings—establishing a transparent, pre-declared experimental protocol before any hypothesis test is run.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 17: THE FOUR LINKED RESEARCH QUESTIONS & HYPOTHESES (METHODOLOGY ONLY)
+    # =========================================================================
+    s = D.content_slide(
+        "4. Experimental Design & Statistical Methodology",
+        "Research Questions & Hypotheses Mapped to the Four-Stage Solution Approach",
+        "Formal specification of RQ1–RQ4, manipulated IVs (X), measured DVs (Y), and null/alternative hypotheses (Methodology Only)",
+        notes="Present the four research questions and formal hypotheses without any post-hoc empirical numbers—strictly methodology and expected relationships.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 4.80,
+        headers=[
+            "Solution Stage & RQ",
+            "Formal Research Question",
+            "Manipulated Independent Variable (X)",
+            "Measured Dependent Variables (Y)",
+            "Formal Hypotheses (H0 vs. Ha)",
+            "Role in the 4-Stage Solution Approach Cascade",
+        ],
+        rows=[
+            [
+                "RQ1-Identify: IDENTIFY\n(RQ1 — Discovery &\nEarly Routing)",
+                "Which clustering algorithm best separates travel trajectories, and which early-routable user archetypes emerge from opening prefixes?",
+                "<b>X<sub>1</sub>:</b> Clustering Algorithm (`K-Means, Ward, HDBSCAN`) × Prefix Horizon `M ∈ {3, 5, 7, 9, whole}` × Representation (`Embeddings, LLM Codebook, 46-d Blocks`)",
+                "<b>Y<sub>1</sub>:</b> Cosine Silhouette, Davies–Bouldin Index, Bootstrap `ARI` Stability, and Held-Out Prefix Routing `κ`, Accuracy & `Macro-F1`",
+                "<b>H<sub>01</sub>:</b> `μ_Sil` equal across algorithms.\n<b>H<sub>a1</sub>:</b> Algorithms differ (`p < .05`) & prefix `Blocks` yields stable (`ARI ≥ .60`), routable personas.",
+                "Establishes the 3 traveler archetypes, the live prefix router, and the 3 partitioned FAISS exemplar sub-indices passed to RQ2-Personalize.",
+            ],
+            [
+                "RQ2-Personalize: PERSONALIZE\n(RQ2 — Style &\nPacing ICL)",
+                "Does cluster-adaptive few-shot prompting improve style convergence and pacing calibration over static few-shot and zero-shot baselines?",
+                "<b>X<sub>2</sub>:</b> Prompting Strategy (`Zero-Shot`, `Static Few-Shot k=3`, `Cluster-Adaptive Few-Shot k=3` with persona pacing directives)",
+                "<b>Y<sub>2</sub>:</b> De-lexicalized SBERT Style Cosine (primary), Gemini 3,072-d Cosine, `BERTScore F1`, and Pacing Calibration Error `|W_gen − μ_k|`",
+                "<b>H<sub>02</sub>:</b> `μ_style` & `μ_pacing` equal across all 3 prompt modes.\n<b>H<sub>a2</sub>:</b> `Cluster-Adaptive` > `Static` & `Zero-Shot` (`p < .05`).",
+                "Tests whether routing into RQ1-Identify's persona FAISS sub-indices improves LLM conversational style & pacing, while exposing rule/leakage risks for RQ3-Govern.",
+            ],
+            [
+                "RQ3-Govern: GOVERN\n(RQ3 — Symbolic\nPolicy & Leakage)",
+                "How do a declarative rule engine and cluster-adaptive prompting interact to govern policy compliance, entity leakage, and slot F1?",
+                "<b>X<sub>3</sub>:</b> `2 × 2` Factorial Crossing:\n`Factor A (Rules Mode)`: `Off` vs. `Active`\n`Factor B (Prompting)`: `Zero-Shot` vs. `Cluster-Adaptive`",
+                "<b>Y<sub>3</sub>:</b> Rule Adherence Rate (`RAR`: Viol. Sens. & Comp. Spec.)\n<b>Y<sub>4</sub>:</b> Exemplar Entity Leakage (`ELR`)\n<b>Y<sub>5</sub>:</b> Factual `Slot F1` & Style Cosine",
+                "<b>H<sub>03</sub>:</b> No main or `2 × 2` interaction effects.\n<b>H<sub>a3</sub>:</b> `Rules Active` raises `RAR` & `Slot F1` and eliminates few-shot leakage (`Int. p < .05`).",
+                "Proves how symbolic `YAML` verification and `[SLOT]` masking interact with RQ2-Personalize's adaptive prompting to deliver safe, compliant personalization for RQ4-Optimize.",
+            ],
+            [
+                "RQ4-Optimize: OPTIMIZE\n(RQ4 — Multi-Turn\nTurn Economy)",
+                "Does governed cluster-adaptive prompting with an informed-slot ledger reduce turns to quotation agreement and redundant questions across archetypes?",
+                "<b>X<sub>4</sub>:</b> `2 × 3` Factorial Crossing:\n`Factor A (Prompting)`: `Zero-Shot` vs. `Cluster-Adaptive (Full Stack)`\n`Factor B (Archetype)`: `DB, OE, RCS`",
+                "<b>Y<sub>6</sub>:</b> Natural-Log Turns to Goal Completion (`ln TGC`, primary), Raw Turns (`TGC`), and Redundant Elicitation Rate (`RER`)",
+                "<b>H<sub>04</sub>:</b> No main or `2 × 3` interaction effects.\n<b>H<sub>a4</sub>:</b> `Cluster-Adaptive` cuts `ln(TGC)` & `RER` with a `Prompt × Archetype` interaction (`p < .05`).",
+                "Culmination of the solution approach: tests whether the combined `RQ1-Identify + RQ2-Personalize + RQ3-Govern` engine + `Slot Ledger` achieves business turn economy across all 3 personas.",
+            ],
+        ],
+        col_widths=[1.65, 2.25, 2.25, 2.15, 2.15, 2.18],
+        font_size=8.9,
+        align_left_cols=(0, 1, 2, 3, 4, 5),
+        highlight_rows=(0, 1, 2, 3),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Methodology Link:</b> Notice that the four RQs are not independent studies: <b>`Y1` (RQ1-Identify's validated archetypes, router, and FAISS sub-indices)</b> becomes the routing mechanism for <b>`X2` (RQ2-Personalize)</b>, the adaptive arm of <b>`X3` (RQ3-Govern)</b>, and <b>Factor B of `X4` (RQ4-Optimize)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 18: PICTORIAL METHODOLOGY BLUEPRINT OF IVs, DVs, TESTS & BULLET-PROOFING
+    # =========================================================================
+    add_pictorial_methodology_slide(D)
+
+    # =========================================================================
+    # SLIDE 19: WHY EACH STATISTICAL TEST WAS CHOSEN + REAL-WORLD ANALOGIES (METHODOLOGY ONLY)
+    # =========================================================================
+    s = D.content_slide(
+        "4. Experimental Design & Statistical Methodology",
+        "Why Each Statistical Test Was Chosen & Everyday Real-World Analogies",
+        "Mathematical justification and intuitive real-world parallels for the primary parametric tests in RQ1-Identify to RQ4-Optimize (Methodology Only)",
+        notes="Explain WHY One-Way ANOVA, Repeated-Measures ANOVA, 2x2 Factorial ANOVA, and 2x3 Factorial ANOVA are mathematically required, without presenting empirical results yet.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 4.80,
+        headers=[
+            "Solution Stage & Experimental Structure",
+            "Chosen Primary Statistical Test",
+            "Why This Exact Test Is Mathematically Required",
+            "Everyday Real-World Analogy",
+            "Alignment With the Conversational AI Scenario",
+        ],
+        rows=[
+            [
+                "RQ1-Identify Stage:\nComparing 3 Clustering Algorithms across N = 159 subsample runs\n(3 groups, continuous DV: Silhouette)",
+                "One-Way Between-Subjects ANOVA\n+ Matched Subsample RM-ANOVA\n+ Tukey HSD / Games–Howell",
+                "Comparing means of k = 3 groups simultaneously. Running 3 separate t-tests inflates Type I false-positive risk from 5% to 1 − (0.95)³ = 14.3%. Omnibus ANOVA preserves α = .05, while Matched RM-ANOVA controls for shared subsample seeds.",
+                "<b>Clinical Trial Comparing 3 Blood-Pressure Drugs:</b>\n159 cohorts (53 per drug) assigned to Drug A, Drug B, or Drug C to compare mean blood-pressure reduction.",
+                "Each of the 159 subsample runs (53 K-Means, 53 Ward, 53 HDBSCAN on 80% draws of D_gold) yields a continuous Cosine Silhouette score.",
+            ],
+            [
+                "RQ2-Personalize Stage:\nTesting 3 Prompting Strategies on the SAME N = 33 held-out dialogues\n(Within-subjects design, 99 calls)",
+                "One-Way Repeated-Measures ANOVA\n(Greenhouse–Geisser ε correction)\n+ Holm Step-Down Paired t-tests",
+                "Every held-out dialogue is evaluated under ALL 3 prompt strategies. Repeated-Measures ANOVA partitions out baseline dialogue-to-dialogue difficulty variance (ρ), isolating the pure within-dialogue effect of the prompt.",
+                "<b>Coffee Tasting Panel (Crossover Trial):</b>\nThe same 33 expert tasters rate Blend A, Blend B, and Blend C. Subtracting taster-level harshness vastly increases sensitivity.",
+                "Travel dialogues vary widely in complexity. Testing Zero-Shot, Static, and Cluster-Adaptive on the exact same 33 dialogue prefixes removes topic noise.",
+            ],
+            [
+                "RQ3-Govern Stage:\nCrossing Rules Mode (2) × Prompting Strategy (2)\n(Balanced 2 × 2 design, N = 144, n = 36/cell)",
+                "2 × 2 Between-Subjects Factorial OLS ANOVA\n(Orthogonal Type II/III Sum Contrasts)",
+                "Two independent factors (Rules Mode and Prompting Mode) are manipulated simultaneously. Only a 2 × 2 Factorial ANOVA can test (1) Main Effect of Rules, (2) Main Effect of Prompting, and (3) their INTERACTION (Rules × Prompting).",
+                "<b>Agricultural Crop Trial (Fertilizer × Irrigation):</b>\nTesting whether Fertilizer boosts yield only when Irrigation is ALSO active (a synergistic or protective interaction).",
+                "Tests whether symbolic rule verification interacts with few-shot prompting to suppress exemplar entity leakage while preserving style.",
+            ],
+            [
+                "RQ4-Optimize Stage:\nCrossing Prompting (2) × Traveler Archetype (3)\n(Balanced 2 × 3 design, N = 180, n = 30/cell)",
+                "2 × 3 Between-Subjects Factorial ANOVA on Y = ln(Turns), Raw Turns & RER\n+ Within-Archetype Contrasts",
+                "Tests whether turn-saving gains from Cluster-Adaptive prompting are uniform across all travelers (Main Effect A) or moderated by Traveler Archetype (A × B Interaction), using natural-log turns to normalize right-skewed count data.",
+                "<b>Education Trial (Teaching Method × Learning Style):</b>\nTesting whether interactive tutoring vs. lecture helps Visual, Auditory, and Hands-On learners by different magnitudes.",
+                "Evaluates whether Decisive Bookers, Open Explorers, and Rigid-Constraint Seekers experience differential turn compression from persona-tailored policies.",
+            ],
+        ],
+        col_widths=[2.0, 2.0, 2.8, 2.8, 3.03],
+        font_size=9.2,
         align_left_cols=(0, 1, 2, 3, 4),
         highlight_rows=(0, 1, 2, 3),
     )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Methodology Link:</b> The statistical design evolves alongside the 4-stage solution approach—moving from <b>unsupervised cluster evaluation (`RQ1-Identify`)</b> to <b>within-dialogue crossover prompting (`RQ2-Personalize`)</b>, <b>`2 × 2` safety × style factorial governance (`RQ3-Govern`)</b>, and <b>`2 × 3` policy × persona multi-turn optimization (`RQ4-Optimize`)</b>.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
 
     # =========================================================================
-    # SLIDE 15: MATHEMATICAL MECHANICS OF ANOVA & INTERACTIONS (FOR NON-STATS & STATS PROFS)
+    # SLIDE 20: MATHEMATICAL MECHANICS OF ANOVA, EFFECT SIZES & BULLET-PROOFING (METHODOLOGY ONLY)
     # =========================================================================
     s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "How ANOVA, Effect Sizes (η²), and Factorial Interactions Work",
-        "Translating F-ratios, Greenhouse–Geisser corrections, and interaction terms into intuitive signal-to-noise ratios",
-        notes="Explain the intuition of F = Signal / Noise, eta-squared = % of variance explained, and how to interpret main effects vs. interactions.",
+        "4. Experimental Design & Statistical Methodology",
+        "Mathematical Mechanics of ANOVA, Effect Sizes & Bullet-Proofing Triad",
+        "Signal-to-noise F-ratios, variance-accounted-for metrics (η², ηp², d), and distribution-free robustness checks (Methodology Only)",
+        notes="Explain F-ratios, eta-squared, Cohen's d, Greenhouse-Geisser, Welch/HC3, and Aligned Rank Transform (ART) purely as methodology.",
     )
     D.add_card(
-        s, 0.35, 1.50, 4.05, 3.70,
+        s, 0.35, 1.48, 4.05, 2.35,
         title="1. The F-Statistic: Signal-to-Noise Ratio",
         header_bg=NAVY,
         bullets=[
             "<b>Formula:</b>  <i>F</i> = MS<sub>between</sub> / MS<sub>within (error)</sub>",
-            "<b>Plain-English Intuition:</b>",
-            (1, "<b>Numerator (Signal):</b> How far apart are the group means (e.g., Rules Active vs. Rules Off)?"),
-            (1, "<b>Denominator (Noise):</b> How much random scatter exists <i>inside</i> each group?"),
-            "<b>How to Read <i>F</i> in the Result Tables:</b>",
-            (1, "If null hypothesis <i>H</i><sub>0</sub> is true (no real difference), <i>F</i> ≈ 1.0."),
-            (1, "Across the experiments, observed values reach <b><i>F</i> = 91.33 (RQ1)</b>, <b><i>F</i> = 9.79 (RQ2)</b>, <b><i>F</i> = 43.92 & 489.52 (RQ3)</b>, and <b><i>F</i> = 664.43 (RQ4)</b>—meaning the treatment signal is 10 to 664 times larger than random noise (all <i>p</i> < .001)!"),
+            "<b>Mathematical Intuition:</b>",
+            (1, "<b>Numerator (Signal):</b> Systematic variance between experimental treatment means."),
+            (1, "<b>Denominator (Noise):</b> Unexplained residual variance within experimental cells."),
+            (1, "Under the null hypothesis <i>H</i><sub>0</sub>, <i>F</i> ≈ 1.0; values exceeding critical threshold <i>F</i><sub>crit</sub> (at α = .05) reject <i>H</i><sub>0</sub>."),
         ],
-        font_size=10.8,
+        font_size=9.5,
     )
     D.add_card(
-        s, 4.60, 1.50, 4.10, 3.70,
-        title="2. Effect Size (η² and Partial ηp²): Practical Magnitude",
+        s, 4.60, 1.48, 4.10, 2.35,
+        title="2. Effect Sizes (η², ηp², and Cohen's d)",
         header_bg=TEAL,
         bullets=[
-            "<b>Formula:</b>  η<sub><i>p</i></sub><sup>2</sup> = SS<sub>effect</sub> / (SS<sub>effect</sub> + SS<sub>error</sub>)",
-            "<b>Why <i>p</i>-values Alone Are Not Enough:</b>",
-            (1, "A <i>p</i>-value (< .001) only indicates an effect is <i>not zero</i>; η<sub><i>p</i></sub><sup>2</sup> quantifies <i>what percentage of outcome variance is explained</i> by the experimental factor."),
-            "<b>Cohen's (1988) Standard Benchmarks:</b>",
-            (1, "Small: η<sup>2</sup> = .01 (1% variance)"),
-            (1, "Medium: η<sup>2</sup> = .06 (6% variance; <i>f</i> = .25)"),
-            (1, "Large: η<sup>2</sup> ≥ .14 (14%+ variance; <i>f</i> ≥ .40)"),
-            "<b>Observed Effect Sizes:</b>",
-            (1, "Every primary effect in RQ1–RQ4 is <b>Large</b>: RQ1 η<sup>2</sup> = .54–.91; RQ2 η<sub><i>p</i></sub><sup>2</sup> = .234; RQ3 η<sub><i>p</i></sub><sup>2</sup> = .239–.778; RQ4 η<sub><i>p</i></sub><sup>2</sup> = .793."),
+            "<b>Partial Eta-Squared:</b>  η<sub><i>p</i></sub><sup>2</sup> = SS<sub>effect</sub> / (SS<sub>effect</sub> + SS<sub>error</sub>)",
+            (1, "Quantifies the exact proportion of variance explained by a factor after partialling out other factors."),
+            (1, "<b>Cohen's (1988) Benchmarks:</b> Small η<sup>2</sup> = .01 (`f=.10`), Medium η<sup>2</sup> = .06 (`f=.25`), Large η<sup>2</sup> ≥ .14 (`f≥.40`)."),
+            "<b>Standardized Mean Difference (`Cohen's d / d_z`):</b>",
+            (1, "Measures pairwise shift in standard deviation units (`|d| ≥ 0.80` = large practical magnitude)."),
         ],
-        font_size=10.8,
+        font_size=9.5,
     )
     D.add_card(
-        s, 8.90, 1.50, 4.08, 3.70,
-        title="3. Main Effects vs. Interaction Effects (A × B)",
+        s, 8.90, 1.48, 4.08, 2.35,
+        title="3. Main Effects vs. Factorial Interactions (A × B)",
         header_bg=BLUE,
         bullets=[
-            "<b>Main Effect of Factor A:</b> Does changing A (e.g., turning Rules On) change the outcome on average across all levels of B?",
-            "<b>Interaction Effect (A × B):</b> Does the effect of A <i>depend on</i> which level of B is active?",
-            "<b>Visual Rule of Thumb on Line Plots:</b>",
-            (1, "<b>Parallel lines</b> = No interaction (effects are purely additive)."),
-            (1, "<b>Non-parallel / diverging / crossing lines</b> = Significant interaction!"),
-            "<b>Why Interactions Matter in RQ3 & RQ4:</b>",
-            (1, "In RQ3, entity leakage only happens in <i>Rules Off × Cluster-Adaptive</i> (.359) and vanishes when <i>Rules Active</i> is turned on (.000) → strong diverging lines (<i>F</i> = 34.82, <i>p</i> < .001)."),
+            "<b>Main Effect (A or B):</b> Average effect of one factor collapsed across levels of the other factor.",
+            "<b>Interaction Effect (A × B):</b> Tests whether the effect of Factor A <i>depends on</i> the active level of Factor B.",
+            "<b>Geometric Diagnostic on Interaction Plots:</b>",
+            (1, "<b>Parallel lines</b> = Additive main effects only (`Interaction F ≈ 1.0`)."),
+            (1, "<b>Non-parallel / diverging lines</b> = Significant moderation / protective interaction!"),
         ],
-        font_size=10.8,
-    )
-    D.add_callout(
-        s, 0.35, 5.38, 12.63, 1.68,
-        "<b>Applying Greenhouse–Geisser (GG) Correction in RQ2 (Greenhouse & Geisser, 1959):</b>\n"
-        "In Repeated-Measures ANOVA (RQ2), standard <i>F</i>-tables assume <i>sphericity</i>—that the variance of differences between every pair of conditions (Zero-Shot vs. Static, Zero-Shot vs. Adaptive, Static vs. Adaptive) is equal. When sphericity is violated (ε < 1.0, e.g., ε = 0.94 in style cosine and ε = 0.65 in pacing error), unadjusted <i>F</i>-tests inflate false positives. Multiplying degrees of freedom by ε (e.g., <i>df</i> = 1.88, 60.29) yields an exact, conservative <i>p</i>-value.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=11,
-    )
-
-    # =========================================================================
-    # SLIDE 16: TRIANGULATED ROBUSTNESS (PARAMETRIC + WELCH/HC3 + NON-PARAMETRIC ART)
-    # =========================================================================
-    s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "Bulletproof Inference: Pairing Parametric, Robust, and Non-Parametric Tests",
-        "Ensuring no statistical objection can arise from non-normality, bounded [0, 1] rates, or unequal cell variances",
-        notes="Explain to statistics professors on the committee why THREE layers of tests are run on every single hypothesis.",
+        font_size=9.5,
     )
     D.add_table(
-        s, 0.35, 1.50, 12.63, 4.35,
-        headers=["Potential Statistical Objection", "Where It Occurs in Dialogue Data", "Robust Parametric Solution", "Distribution-Free Non-Parametric Solution", "Concordance Across All 4 RQs"],
+        s, 0.35, 3.94, 12.63, 2.34,
+        headers=[
+            "Potential Distributional Violation",
+            "Where It Can Arise in Dialogue Experiments",
+            "Heteroscedasticity-Robust Parametric Check",
+            "Distribution-Free Non-Parametric Check",
+        ],
         rows=[
             [
-                "1. Heteroscedasticity\n(Unequal variances across cells)",
-                "In RQ3, when Rules Active eliminates leakage to 0.0%, variance in that cell drops near zero while Rules Off has high variance (SD = .348).",
-                "<b>Welch's ANOVA (RQ1) & MacKinnon–White HC3 Sandwich SEs (RQ3, RQ4):</b>\nEstimates cell-specific error variances without pooling.",
-                "<b>Games–Howell Post Hoc (RQ1) & Mann–Whitney U (RQ4):</b>\nRequires zero equal-variance assumptions.",
-                "100% agreement: e.g., RQ3 RAR OLS F = 43.92 (p < .001) vs. HC3 F = 42.71 (p < .001).",
+                "1. Unequal Cell Variances\n(Heteroscedasticity / Zero-Variance Boundary)",
+                "When a guardrail or slot ledger drives error rates (`ELR, RER`) to `0.000` or turn counts to a deterministic floor (`SD = 0.00`).",
+                "<b>Welch's ANOVA (RQ1-Identify) & MacKinnon–White HC3 Sandwich SEs (RQ3-Govern & RQ4-Optimize):</b> Avoids pooled variance assumptions.",
+                "<b>Games–Howell Post Hoc (RQ1-Identify) & Mann–Whitney U (RQ4-Optimize):</b> Rank-based pairwise comparisons.",
             ],
             [
-                "2. Non-Normality & Bounded Proportions [0, 1]",
-                "RAR, ELR, Slot F1 (RQ3), and RER (RQ4) are proportions bounded between 0 and 1 with floor/ceiling clustering.",
-                "<b>Balanced Cell Sizes (n = 36/cell in RQ3, n = 30/cell in RQ4):</b>\nCentral Limit Theorem stabilizes cell means.",
-                "<b>Aligned Rank Transform (ART) Factorial ANOVA (Wobbrock et al., 2011):</b>\nAligns data for each main/interaction effect before ranking, allowing exact non-parametric factorial ANOVA!",
-                "100% agreement: RQ3 Leakage Interaction OLS F = 34.82 (p < .001) vs. ART F = 2148.81 (p < .001).",
+                "2. Bounded Proportions `[0, 1]`\n& Floor/Ceiling Clustering",
+                "Rule Adherence (`RAR`), Entity Leakage (`ELR`), `Slot F1` (RQ3-Govern), and Redundant Elicitation (`RER`, RQ4-Optimize).",
+                "<b>Balanced Factorial Cells (`n = 36`/cell in RQ3-Govern; `n = 30`/cell in RQ4-Optimize):</b> Maximizes ANOVA robustness under CLT.",
+                "<b>Aligned Rank Transform (ART) Factorial ANOVA (Wobbrock et al., 2011):</b> Aligns effects before ranking for exact non-parametric main & interaction tests.",
             ],
             [
-                "3. Right-Skewed Positive Count Data",
-                "Multi-turn dialogue length (Turns to Goal Completion in RQ4) is strictly positive and right-skewed.",
-                "<b>Natural Log Transformation:</b>\nPrimary DV specified a priori as Y = ln(Turns), plus raw Turns reported side-by-side.",
-                "<b>Mann–Whitney U & ART ANOVA on Both Raw and Log Turns:</b>\nRank-invariant to any monotone transformation.",
-                "100% agreement: RQ4 Interaction OLS F = 10.89 (p < .001), HC3 F = 8.58 (p < .001), ART F = 209.46 (p < .001).",
-            ],
-            [
-                "4. Correlated Within-Dialogue Skewness",
-                "In RQ2, 33 dialogues are measured 3 times; cosine similarity can have mild negative skew.",
-                "<b>Greenhouse–Geisser Sphericity-Corrected RM-ANOVA + Holm Step-Down t-tests.</b>",
-                "<b>Friedman Non-Parametric Rank Test (χ²):</b>\nRanks the 3 conditions (1st, 2nd, 3rd) inside each dialogue.",
-                "100% agreement: RQ2 Style RM-ANOVA F = 9.79 (p < .001) vs. Friedman χ²(2) = 12.50 (p = .002).",
+                "3. Sphericity Departure (`ε < 1.0`)\n& Right-Skewed Turn Counts",
+                "Correlated within-dialogue differences across 3 prompts (RQ2-Personalize); positive right-skewed multi-turn counts (RQ4-Optimize).",
+                "<b>Greenhouse–Geisser (`ε`) df Adjustment (RQ2-Personalize) & Natural-Log Transformation `Y = ln(TGC)` (RQ4-Optimize).</b>",
+                "<b>Friedman Rank Test `χ²(2)` (RQ2-Personalize) & Kruskal–Wallis `H` (RQ1-Identify):</b> Invariant to monotone transformations.",
             ],
         ],
-        col_widths=[2.0, 2.6, 2.7, 2.8, 2.5],
-        font_size=9.8,
-        align_left_cols=(0, 1, 2, 3, 4),
+        col_widths=[2.5, 3.3, 3.4, 3.43],
+        font_size=8.8,
+        align_left_cols=(0, 1, 2, 3),
     )
     D.add_callout(
-        s, 0.35, 6.00, 12.63, 1.05,
-        "<b>Defense Takeaway for Methodology Reviewers:</b> Every single hypothesis test in this study is reported as a <b>triad</b>: (1) Classical Parametric ANOVA, (2) Heteroscedasticity-Consistent (`Welch` / `HC3`) ANOVA, and (3) Non-Parametric (`Kruskal–Wallis` / `Friedman` / `ART`) ANOVA. Because all three reach <i>p</i> < .001 on every RQ, the conclusions are mathematically invariant to distributional assumptions.",
-        bg_color=GREEN_BG, border_color=GREEN, font_size=11,
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Bullet-Proofing Rule:</b> To ensure that no stage handoff in `Identify → Personalize → Govern → Optimize` can be challenged on normality, skewness, or zero-variance boundary grounds, every hypothesis test is pre-specified as a <b>Parametric + Robust (Welch/HC3) + Non-Parametric (Kruskal/Friedman/ART) triad</b>.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.5,
     )
 
     # =========================================================================
-    # SLIDE 17: PROVEN CONCEPTS FOR SAMPLE SIZE PARAMETERS (α, 1−β, f, λ)
+    # SLIDE 21: A PRIORI SAMPLE-SIZE DERIVATION VIA NONCENTRAL-F (METHODOLOGY ONLY)
     # =========================================================================
     s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "Proven Concepts Behind Sample-Size Parameters: α, Power (1 − β), Cohen's f, and λ",
-        "Requirement #2 & Defense Question #1: How standard noncentral-F parameters determine exact sample sizes",
-        notes="Directly addresses Requirement #2 and Defense Question #1: Explain alpha, beta, power, Cohen's f, and the noncentrality parameter lambda.",
+        "4. Experimental Design & Statistical Methodology",
+        "A Priori Sample-Size Derivation via the Noncentral-F Distribution",
+        "Table 8 & Equation 1: How α = .05, Power (1 − β) = .80, Cohen's f = .25, and Noncentrality λ determine exact sample sizes (Methodology Only)",
+        notes="Explain alpha, beta, power, Cohen's f, and noncentrality lambda purely from a priori power methodology (`step0_sample_size.py`).",
     )
     D.add_card(
-        s, 0.35, 1.50, 5.95, 3.55,
-        title="The Noncentral-F Power Formulation (Cohen, 1988; Faul et al., 2007)",
+        s, 0.35, 1.48, 5.95, 3.40,
+        title="The Noncentral-F Power Formulation (`step0_sample_size.py`)",
         header_bg=NAVY,
         bullets=[
-            "<b>Exact Power Equation (Equation 1 in Report):</b>",
+            "<b>Exact Power Equation (Equation 1 — Cohen, 1988; Faul et al., 2007):</b>",
             (1, "<b>Power (1 − β) = 1 − <i>F</i><sub>nc</sub>(<i>F</i><sub>crit</sub> ; <i>df</i><sub>1</sub>, <i>df</i><sub>2</sub>, λ)</b>,  where <i>F</i><sub>crit</sub> = <i>F</i><sub>1−α</sub>(<i>df</i><sub>1</sub>, <i>df</i><sub>2</sub>)"),
-            "<b>What Each Proven Parameter Means:</b>",
-            (1, "<b>α = .05 (Type I Error Rate):</b> Maximum 5% probability of declaring a false positive when the null hypothesis <i>H</i><sub>0</sub> is true."),
-            (1, "<b>β = .20 → Power (1 − β) ≥ .80:</b> Minimum 80% probability of detecting a true effect when <i>H</i><sub>a</sub> is true (4-to-1 ratio of β to α recommended by Cohen, 1988)."),
-            (1, "<b>Cohen's <i>f</i> = .25 (Medium Effect Size):</b> Signal SD is 25% of within-group error SD (equivalent to η<sup>2</sup> = <i>f</i><sup>2</sup> / (1 + <i>f</i><sup>2</sup>) = .0588, or ~6% explained variance)."),
-            (1, "<b>Noncentrality Parameter (λ):</b> Measures total statistical shift away from <i>H</i><sub>0</sub>:\n"
-                "      • Between-subjects (RQ1, RQ3, RQ4):  <b>λ = <i>f</i><sup>2</sup> · <i>N</i></b>\n"
-                "      • Repeated-measures (RQ2, <i>m</i>=3, ρ=.50):  <b>λ = <i>f</i><sup>2</sup> · <i>N</i> · <i>m</i> · ε / (1 − ρ)</b>"),
+            "<b>Four Standard A Priori Design Parameters:</b>",
+            (1, "<b>1. Significance Level (α = .05):</b> 5% maximum Type I false-positive risk under <i>H</i><sub>0</sub>."),
+            (1, "<b>2. Statistical Power (1 − β ≥ .80, β ≤ .20):</b> 80% minimum probability of detecting a true effect under <i>H</i><sub>a</sub> (standard 4:1 β-to-α weighting)."),
+            (1, "<b>3. Minimum Detectable Effect Size (<i>f</i> = .25):</b> Medium effect benchmark where signal SD is 25% of error SD (equivalent to η<sup>2</sup> = <i>f</i><sup>2</sup> / (1 + <i>f</i><sup>2</sup>) = .0588, or ~6% variance)."),
+            (1, "<b>4. Noncentrality Parameter (λ):</b> Shifts the <i>F</i> distribution under <i>H</i><sub>a</sub>:\n"
+                "      • Between-subjects (RQ1-Identify, RQ3-Govern, RQ4-Optimize):  <b>λ = <i>f</i><sup>2</sup> · <i>N</i></b>\n"
+                "      • Repeated-measures (RQ2-Personalize, <i>m</i>=3, ρ=.50):  <b>λ = <i>f</i><sup>2</sup> · <i>N</i> · <i>m</i> · ε / (1 − ρ)</b>"),
         ],
-        font_size=10.5,
+        font_size=9.5,
     )
     D.add_table(
-        s, 6.50, 1.50, 6.48, 3.55,
-        headers=["RQ", "Planned Design", "df at N_min", "λ at N_min", "F_crit", "N_min (.80)", "Final N (+10% Buffer)", "Final Power"],
+        s, 6.50, 1.48, 6.48, 3.40,
+        headers=["Stage (RQ)", "Planned Design", "df at N_min", "λ at N_min", "F_crit", "N_min (.80)", "Final N (+≥10% Buffer)", "A Priori Power"],
         rows=[
-            ["RQ1", "One-way ANOVA (3 groups)", "2, 155", "9.88", "3.05", "158", "159 (53 / alg)", ".804"],
-            ["RQ2", "RM-ANOVA (3 conds, ρ=.50)", "2, 54", "10.50", "3.17", "28", "33 (99 calls)", ".865"],
-            ["RQ3", "2 × 2 Factorial (df1 = 1)", "1, 124", "8.00", "3.92", "128", "144 (36 / cell)", ".847"],
-            ["RQ4", "2 × 3 Factorial (df1 = 2)", "2, 152", "9.88", "3.06", "158", "180 (30 / cell)", ".857"],
+            ["RQ1-Identify", "One-way ANOVA (3 algs)", "2, 155", "9.88", "3.05", "158", "159 (n = 53 / alg)", ".804"],
+            ["RQ2-Personalize", "RM-ANOVA (3 conds, ρ=.50)", "2, 54", "10.50", "3.17", "28", "33 (99 eval calls)", ".865"],
+            ["RQ3-Govern", "2 × 2 Factorial (df1 = 1)", "1, 124", "8.00", "3.92", "128", "144 (n = 36 / cell)", ".847"],
+            ["RQ4-Optimize", "2 × 3 Factorial (df1 = 2)", "2, 152", "9.88", "3.06", "158", "180 (n = 30 / cell)", ".857"],
         ],
-        col_widths=[0.6, 1.7, 0.7, 0.7, 0.6, 0.7, 1.1, 0.7],
-        font_size=10,
+        col_widths=[0.95, 1.55, 0.72, 0.68, 0.58, 0.68, 1.25, 0.72],
+        font_size=9.2,
         align_left_cols=(0, 1),
         highlight_rows=(0, 1, 2, 3),
     )
-    D.add_callout(
-        s, 0.35, 5.20, 12.63, 1.85,
-        "<b>Why λ (Noncentrality) Is the Key Bridge Between Effect Size (f) and Sample Size (N):</b>\n"
-        "• To achieve 80% power at α = .05, the noncentral <i>F</i> distribution requires a minimum noncentrality shift of <b>λ ≈ 7.85 to 9.88</b> (depending on numerator <i>df</i><sub>1</sub> = 1 or 2).\n"
-        "• Since <b>λ = <i>f</i><sup>2</sup> · <i>N</i></b> and <i>f</i><sup>2</sup> = (0.25)<sup>2</sup> = 0.0625, solving 0.0625 · <i>N</i> ≈ 8.00 immediately yields <b><i>N</i><sub>min</sub> = 128</b> for <i>df</i><sub>1</sub> = 1 (RQ3) and solving 0.0625 · <i>N</i> ≈ 9.88 yields <b><i>N</i><sub>min</sub> = 158</b> for <i>df</i><sub>1</sub> = 2 (RQ1, RQ4)!\n"
-        "• In RQ2, because each dialogue acts as its own control across <i>m</i> = 3 conditions with within-subject correlation ρ = .50, the variance is halved by (1 − ρ) = 0.50, multiplying λ by <i>m</i>/(1−ρ) = 6 and requiring only <b><i>N</i><sub>min</sub> = 28 dialogues</b> (buffered to <i>N</i> = 33, power = .865).",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=10.8,
-    )
-
-    # =========================================================================
-    # SLIDE 18: COUNTERFACTUAL EXAMPLES — WHAT HAPPENS IF α, f, λ ARE MISCHOSEN?
-    # =========================================================================
-    s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "Counterfactual Analysis: What Happens If α, Power, f, or λ Are Mischosen?",
-        "Requirement #2: Concrete numerical demonstrations of how improper parameter choices break experimental validity",
-        notes="Walk through the 4 counterfactual scenarios so the committee sees what goes wrong if a researcher picks arbitrary sample sizes or alpha levels.",
-    )
-    D.add_table(
-        s, 0.35, 1.50, 12.63, 4.35,
-        headers=["Parameter Choice Scenario", "Altered Value vs. Standard", "Resulting Noncentrality λ & Sample Size N", "Statistical & Practical Consequence", "Concrete Impact in the Travel Chatbot Study"],
-        rows=[
-            [
-                "Failure Mode 1:\nArbitrary Small Sample\n(Underpowered λ)",
-                "Pick N = 36 total (9 per cell in RQ3) instead of N = 144\n→ λ drops from 9.00 to 2.25!",
-                "λ = 0.0625 × 36 = 2.25\nPower 1 − β drops from .847 to .308 (69.2% Type II error rate!)",
-                "<b>Severe False Negative Risk:</b> Nearly 7 out of 10 times, a genuine medium improvement (f = .25) will produce p > .05 and be falsely dismissed as 'no effect'.",
-                "In RQ4, the Prompting × Archetype interaction has ηp² = .111 (f = .35). At N = 36 total (6/cell), power to detect this interaction drops to .44—missing the persona moderation effect!",
-            ],
-            [
-                "Failure Mode 2:\nLoose Significance α\n(Inflated Type I Error)",
-                "Set α = .20 instead of α = .05 to 'make it easier to get significance'",
-                "F_crit drops from 3.92 to 1.66 (at df = 1, 140)",
-                "<b>20% False Positive Risk:</b> Across 4 RQs with multiple metrics, random LLM sampling noise would be falsely published as a scientific improvement.",
-                "In Primary RQ2 (coarse routing), style cosine had F = 1.61, p = .211. A loose α = .25 would have falsely claimed coarse routing worked, hiding the need to fix RQ1 prefix routing!",
-            ],
-            [
-                "Failure Mode 3:\nOverly Tiny Target Effect\n(Overpowered for Noise)",
-                "Set f = .05 (η² = .0025, 0.25% variance) instead of f = .25",
-                "Needs λ = 9.88 with f² = .0025\n→ Requires N = 3,952 dialogues (exceeds the entire Frames corpus of 1,334!)",
-                "<b>Trivial Practical Significance & Exhausted Corpus:</b> Wastes thousands of API calls to detect a 0.05-turn difference that has zero business value.",
-                "Even if an OTA chatbot saved 0.04 turns (p < .05 at N = 4,000), customers cannot perceive a 0.04-turn difference. Medium effect f = .25 ensures statistical significance aligns with business value.",
-            ],
-            [
-                "Failure Mode 4:\nIgnoring Repeated-Measures ρ in RQ2",
-                "Assume ρ = .00 (between-subjects formula) or ρ = .90 (over-optimistic)",
-                "If ρ = .90 assumed: N_min = 7 dialogues (severely underpowered if true ρ = .50).\nIf between-subjects used: N = 159 dialogues × 3 = 477 calls.",
-                "<b>Miscalibrated Within-Subject Sensitivity:</b> Setting conservative ρ = .50 with a +18% buffer (N = 33 vs. N_min = 28) protects against sphericity loss (ε = 0.65–0.94).",
-                "In Refined RQ2, pacing error had Greenhouse–Geisser ε = 0.65. Buffering N from 28 to 33 ensured that even under ε = 0.65 the test achieved F(1.30, 41.70) = 7.10, p = .007!",
-            ],
-        ],
-        col_widths=[1.8, 2.1, 2.2, 3.0, 3.5],
-        font_size=9.8,
-        align_left_cols=(0, 1, 2, 3, 4),
-    )
-    D.add_callout(
-        s, 0.35, 6.00, 12.63, 1.05,
-        "<b>Summary Rule for Defense Committee:</b> Standard values (<b>α = .05, 1 − β = .80, <i>f</i> = .25, ρ = .50</b>, plus a <b>10% cell-balancing buffer</b>) sit at the exact mathematical sweet spot: large enough (λ = 8.0–10.5) to guarantee >83% detection of meaningful engineering gains, yet compact enough to fit strictly inside the 401 held-out test dialogues of Microsoft Frames.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=11,
-    )
-
-    # =========================================================================
-    # SLIDE 19: DOMAIN HYPERPARAMETERS — WHY λ_d = 0.15 AND M = 9 USER MESSAGES?
-    # =========================================================================
-    s = D.content_slide(
-        "Module 4: Ground-Up Statistical Methodology",
-        "Domain Parameter Choices: Why Decay λ_d = 0.15 and Prefix Horizon M = 9?",
-        "Mathematical justification and sensitivity proof for trajectory pooling and truncation parameters",
-        notes="Explain the other two lambda/horizon parameters in the study: exponential turn decay lambda_d = 0.15 (Eq. 2) and truncation horizon M = 9 user messages.",
-    )
     D.add_card(
-        s, 0.35, 1.50, 6.15, 5.45,
-        title="1. Exponential Turn Decay λ_d = 0.15 (Equation 2 in Report)",
-        header_bg=NAVY,
-        bullets=[
-            "<b>Mathematical Formula (Eq. 2):</b>",
-            (1, "<b>v = Σ <i>w<sub>t</sub></i> e<sub><i>t</i></sub></b>,   where  <b><i>w<sub>t</sub></i> ∝ exp[−λ<sub>d</sub>(<i>T</i> − <i>t</i>)]</b>"),
-            "<b>Why λ<sub>d</sub> = 0.15 Is Used for Trajectory Pooling:</b>",
-            (1, "In a multi-turn travel dialogue, Turn 1 is often a generic greeting (<i>'Hi, can you help me?'</i>), while recent turns contain active constraint negotiation."),
-            (1, "With λ<sub>d</sub> = 0.15, the most recent turn gets weight 1.00, 3 turns ago gets exp(−0.45) = 0.64, and 10 turns ago gets exp(−1.50) = 0.22—preserving full history while emphasizing active negotiation."),
-            "<b>What Happens If λ<sub>d</sub> Is Chosen Poorly (Sensitivity Grid `step2b`):</b>",
-            (1, "<b>If λ<sub>d</sub> = 0.0 (Uniform Mean):</b> Opening pleasantries dilute active negotiation constraints."),
-            (1, "<b>If λ<sub>d</sub> ≥ 1.0 (Memoryless Last-Turn Only):</b> Forgets early trip constraints stated in Turn 2."),
-            (1, "<b>Empirical Check (`t_rq1_rep_matrix.csv`):</b> Testing R0 (λ<sub>d</sub>=0.15), R1 (user-only), and R2 (concatenated) confirmed that embedding pooling alone only reaches ARI = .25–.54, motivating the hybrid `Blocks` representation!"),
-        ],
-        font_size=10.5,
-    )
-    D.add_card(
-        s, 6.80, 1.50, 6.18, 5.45,
-        title="2. Truncation Horizon M = 9 User Messages (`step2g` & `step2h`)",
+        s, 0.35, 4.98, 12.63, 1.30,
+        title="Step-by-Step Algebraic Derivation of N_min and the +10% Cell-Balancing Buffer",
         header_bg=TEAL,
         bullets=[
-            "<b>Why Truncation Before the End of the Conversation Is Required:</b>",
-            (1, "Clustering <i>whole conversations</i> includes final turns containing <i>'Great, book it!'</i> vs. <i>'Never mind, too expensive'</i>. The clusters then trivially reflect <b>session outcome</b> (Outcome Cramér's <i>V</i> = .29) rather than <b>how the customer shops</b>!"),
-            "<b>What Happens Across Different Values of <i>M</i> (Table D5 Proof):</b>",
-            (1, "<b><i>M</i> = 3 user messages:</b> Stability ARI = .57 (k=3); many explorers haven't finished stating initial preferences (held-out routing accuracy = 59.4%, κ = .359)."),
-            (1, "<b><i>M</i> = 5 user messages:</b> Stability ARI = .84; held-out routing jumps to <b>70.1% (κ = .535)</b>—strong enough for mid-conversation RQ2 prompting!"),
-            (1, "<b><i>M</i> = 7 user messages:</b> Stability ARI = .85; held-out routing reaches <b>82.0% (κ = .722)</b>."),
-            (1, "<b><i>M</i> = 9 user messages (Adopted Golden Definition):</b> 62.4% of long dialogues are truncated (reducing outcome confounding), bootstrap stability peaks at <b>ARI = .89 (.87 in ablation; 93.1% / 89.2% core membership)</b>, and held-out boundary consistency reaches <b>97.3% (κ = .958)</b>!"),
+            "<b>1. Solving for `N_min` when `df_1 = 1` (RQ3-Govern Main Effect & 2 × 2 Interaction):</b> Achieving 80% power at α = .05 (`F_crit = 3.92`) requires noncentrality shift <b>λ ≈ 8.00</b>. Substituting <i>f</i><sup>2</sup> = (0.25)<sup>2</sup> = 0.0625 into λ = <i>f</i><sup>2</sup> · <i>N</i> gives <b><i>N</i><sub>min</sub> = 8.00 / 0.0625 = 128</b> (`32/cell`), buffered by +12.5% to <b><i>N</i> = 144 (`n = 36/cell`, 12 per archetype per cell, power = .847)</b>.",
+            "<b>2. Solving for `N_min` when `df_1 = 2` (RQ1-Identify Algorithms & RQ4-Optimize 2 × 3 Interaction):</b> With 2 numerator <i>df</i> (`F_crit ≈ 3.05`), 80% power requires <b>λ ≈ 9.88</b>, yielding <b><i>N</i><sub>min</sub> = 9.88 / 0.0625 = 158</b>—buffered to <b><i>N</i> = 159 (`53 × 3` in RQ1-Identify, power = .804)</b> and <b><i>N</i> = 180 (`30 × 6` in RQ4-Optimize, power = .857)</b>.",
+            "<b>3. Solving for `N_min` in Repeated-Measures RQ2-Personalize (`m = 3, ρ = .50`):</b> Within-subject correlation ρ = .50 halves residual error variance, multiplying λ by <i>m</i> / (1 − ρ) = 6 and requiring only <b><i>N</i><sub>min</sub> = 28 dialogues</b>, buffered by +17.9% to <b><i>N</i> = 33 (`11` per archetype × 3 prompts = `99` calls, power = .865)</b>.",
         ],
-        font_size=10.5,
+        font_size=9.1,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Methodology Link:</b> Every stage of `Identify → Personalize → Govern → Optimize` is powered a priori (`1 − β = .804 to .865`) so that all four experiments fit cleanly inside the <b>401 held-out test dialogues (`D_test`)</b> while guaranteeing sensitivity to medium-or-larger effects (`f ≥ .25`).",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
     )
 
     # =========================================================================
-    # SLIDE 20: END-TO-END NEURO-SYMBOLIC SYSTEM ARCHITECTURE (FIGURE 4)
+    # SLIDE 22: COUNTERFACTUAL METHODOLOGY ANALYSIS & DOMAIN HYPERPARAMETERS (METHODOLOGY ONLY)
     # =========================================================================
     s = D.content_slide(
-        "Module 5: System Architecture & Workflows",
-        "End-to-End Five-Layer Neuro-Symbolic System Architecture (Figure 4)",
-        "Strict separation between Offline Golden Discovery (D_gold, n = 933) and Online Runtime Execution (D_test, n = 401)",
-        notes="Walk the committee through Figure 4: Layers 1–2 run offline on D_gold; Layers 3–5 run online on D_test.",
+        "4. Experimental Design & Statistical Methodology",
+        "Counterfactual Parameter Analysis & Domain Hyperparameter Design",
+        "Why improper choices of α, 1 − β, f, λ, or ρ break validity, and how turn decay λ_d = 0.15 & prefix horizon M are formulated (Methodology Only)",
+        notes="Walk through the counterfactual parameter scenarios and the mathematical formulation of exponential turn decay lambda_d = 0.15 and prefix truncation horizon M.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 2.78,
+        headers=[
+            "Counterfactual Parameter Scenario",
+            "Altered Parameter vs. Standard Design",
+            "Resulting λ, F_crit & Sample Size N",
+            "Methodological Failure Mode Avoided by the Standard Design",
+        ],
+        rows=[
+            [
+                "1. Underpowered Small Sample\n(Too Small N → Low λ)",
+                "Use `N = 36` total (`n = 9/cell` in RQ3-Govern or `6/cell` in RQ4-Optimize) instead of `N = 144 / 180`.",
+                "`λ = 0.0625 × 36 = 2.25`\nPower `1 − β` collapses from `.847` to `.308` (`69.2%` false-negative risk!).",
+                "<b>Severe Type II Error Risk:</b> Nearly 70% of true medium improvements (`f = .25`) or factorial interactions would fail to reach significance and be falsely discarded.",
+            ],
+            [
+                "2. Inflated Alpha Level\n(Loose α = .20)",
+                "Relax significance threshold from `α = .05` to `α = .20`.",
+                "`F_crit` drops from `3.92` to `1.66` (at `df = 1, 140`).",
+                "<b>20% Type I False-Positive Risk:</b> Random LLM sampling noise or ineffective coarse routing would be falsely accepted and passed forward to the next solution approach stage!",
+            ],
+            [
+                "3. Overly Tiny Effect Target\n(Chasing Noise f = .05)",
+                "Target trivial effect `f = .05` (`η² = .0025`, 0.25% variance) instead of `f = .25`.",
+                "`N_min = 9.88 / .0025 = 3,952` dialogues (exceeds the entire 1,334 Frames corpus!).",
+                "<b>Exhausted Corpus & Zero Practical Value:</b> Wastes thousands of API calls to detect a 0.04-turn shift imperceptible to travelers.",
+            ],
+            [
+                "4. Ignoring Sphericity Risk\nin RQ2-Personalize (`ρ` & `ε`)",
+                "Omit the `+18%` buffer (`N = 28 → 33`) or assume optimistic `ρ = .90` (`N_min = 7`).",
+                "If Greenhouse–Geisser `ε < 1.0` reduces effective `df`, unbuffered `N` loses power.",
+                "<b>Protection Against Sphericity Departure:</b> Buffering `N = 28` to `33` (`11/persona`) preserves `>80%` power even when `ε` compresses degrees of freedom.",
+            ],
+        ],
+        col_widths=[2.3, 2.7, 2.7, 4.93],
+        font_size=8.8,
+        align_left_cols=(0, 1, 2, 3),
+    )
+    D.add_card(
+        s, 0.35, 4.34, 6.15, 1.94,
+        title="Domain Hyperparameter 1: Exponential Turn Decay λ_d = 0.15 (Eq. 2)",
+        header_bg=NAVY,
+        bullets=[
+            "<b>Trajectory Pooling Formula:</b>  <b>v = Σ <i>w<sub>t</sub></i> e<sub><i>t</i></sub></b>,   where  <b><i>w<sub>t</sub></i> ∝ exp[−λ<sub>d</sub>(<i>T</i> − <i>t</i>)]</b>",
+            "<b>Methodological Rationale:</b> Turn 1 is often a generic greeting, while recent turns carry active constraint negotiation. Setting λ<sub>d</sub> = 0.15 weights the latest turn at 1.00, 3 turns prior at 0.64, and 10 turns prior at 0.22.",
+            "<b>Sensitivity Grid (`step2b`):</b> Contrasts uniform pooling (`λ_d = 0.0`, which dilutes active constraints) against memoryless last-turn (`λ_d ≥ 1.0`) and user-only prefix pooling.",
+        ],
+        font_size=9.0,
+    )
+    D.add_card(
+        s, 6.80, 4.34, 6.18, 1.94,
+        title="Domain Hyperparameter 2: Prefix Truncation Horizon M ∈ {3, 5, 7, 9}",
+        header_bg=TEAL,
+        bullets=[
+            "<b>Prefix Operator:</b> Restricts input transcripts to the first <b>`min(M, M_i)` user messages</b> (`step2g_rq1_truncation.py`).",
+            "<b>Methodological Trade-Off Evaluated in RQ1-Identify:</b>",
+            (1, "<b>Too small (`M = 1–2`):</b> Insufficient behavioral signal before initial preferences are stated."),
+            (1, "<b>Too large (`Whole Dialogue`):</b> Includes closing turns (`'Book it!'` vs. `'Too expensive'`), confounding clusters with session outcome (`Field 14`)."),
+            (1, "<b>Grid Evaluation:</b> Systematically sweeps `M ∈ {3, 5, 7, 9, whole}` across bootstrap `ARI`, core membership, outcome Cramér's `V`, and out-of-sample prefix routing `κ`."),
+        ],
+        font_size=9.0,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Methodology Link:</b> Distinguishing <b>statistical noncentrality `λ`</b> (which sizes `N = 159, 33, 144, 180` across RQ1-Identify to RQ4-Optimize) from <b>temporal turn decay `λ_d = 0.15` and prefix horizon `M`</b> (which govern RQ1-Identify representation design) ensures mathematical clarity across the defense.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 23: FEATURE IMPORTANCE & PREFIX ROUTER EVALUATION METHODOLOGY (METHODOLOGY ONLY)
+    # =========================================================================
+    s = D.content_slide(
+        "4. Experimental Design & Statistical Methodology",
+        "Feature Importance & Prefix Router Evaluation Methodology",
+        "Three-tier feature importance protocol (η², ‖β_j‖₂, Δκ) and Train / 5-Fold CV / Held-Out Test routing evaluation (Methodology Only)",
+        notes="Explain the exact methodology used to assess feature importance across the 46-d Blocks representation and how those importance results are used in RQ1-Identify and RQ2-Personalize.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 4.05, 3.10,
+        title="Tier 1: Unsupervised Cluster\nDiscrimination Importance (η²)",
+        header_bg=NAVY,
+        bullets=[
+            "<b>How It Is Computed (`step2g` & `step2i`):</b>",
+            (1, "For each of the 46 candidate features in `Blocks` (`20 Gemini PCs + 10 Ordinal LLM scales + 16 One-Hot/Multi-Hot Goal/Tone indicators`), compute one-way ANOVA variance accounted for across the discovered clusters on `D_gold (n = 933)`:"),
+            (1, "<b>η<sub><i>j</i></sub><sup>2</sup> = SS<sub>between, <i>j</i></sub> / SS<sub>total, <i>j</i></sub></b>"),
+            "<b>How It Is Used in the Analysis:</b>",
+            (1, "Identifies which behavioral and semantic dimensions drive cluster separation and defines the <b>deterministic centroid-naming rules (Appendix F)</b>."),
+        ],
+        font_size=9.2,
+    )
+    D.add_card(
+        s, 4.60, 1.48, 4.10, 3.10,
+        title="Tier 2: Supervised L1 Logistic Router\nCoefficient Importance (‖β_j‖₂)",
+        header_bg=TEAL,
+        bullets=[
+            "<b>How It Is Computed (`src/final_pipeline/routing.py`):</b>",
+            (1, "Standardize all 46 features (`z`-score on `D_gold`) and fit a multinomial L1-penalized (LASSO) logistic regression router predicting cluster membership from opening prefixes `m ∈ {3, 5, 7, 9}`."),
+            (1, "Compute the L2 magnitude across the 3 class log-odds vectors:  <b>‖β<sub><i>j</i></sub>‖<sub>2</sub> = √(Σ<sub><i>c</i>=1..3</sub> β<sub><i>c,j</i></sub><sup>2</sup>)</b>."),
+            "<b>How It Is Used in the Analysis:</b>",
+            (1, "L1 sparsity automatically prunes uninformative tail PCs (`β_j = 0`) to prevent overfitting during live early-turn routing."),
+        ],
+        font_size=9.2,
+    )
+    D.add_card(
+        s, 8.90, 1.48, 4.08, 3.10,
+        title="Tier 3: Block-Drop Ablation (Δκ) &\nOut-of-Sample Router Audit",
+        header_bg=BLUE,
+        bullets=[
+            "<b>Block-Drop Ablation (`Δκ` & `ΔARI`):</b>",
+            (1, "Systematically drop each feature block (`Ordinal Scales`, `Categorical Goal/Tone`, or `Gemini PCs 1–20`) and measure the drop in bootstrap `ARI` and held-out routing `Δκ` on `D_test (n = 401)`."),
+            "<b>Three-Split Generalization Protocol:</b>",
+            (1, "Report Accuracy, Cohen's `κ`, and Macro-F1 across <b>(1) `D_gold` Train (`n=933`)</b>, <b>(2) `D_gold` 5-Fold Stratified CV (`n=933`)</b>, and <b>(3) Held-Out `D_test` (`n=401`)</b>, plus the <b>3 × 3 Confusion Matrix & Multiclass One-vs-Rest ROC-AUC curves</b>."),
+        ],
+        font_size=9.2,
+    )
+    D.add_table(
+        s, 0.35, 4.68, 12.63, 1.60,
+        headers=[
+            "Feature Block in `46-d Blocks` (`X^(9)`)",
+            "Dimensions",
+            "Scale & Weighting in `Blocks`",
+            "Analytical Role in RQ1-Identify Stage & RQ2-Personalize Stage",
+        ],
+        rows=[
+            [
+                "Block 1: Truncated User Prefix Embeddings (`Gemini-001`)",
+                "20 cols (`PC1–PC20`)",
+                "3,072-d user prefix (`≤ M` msgs) → `PCA-20`, scaled to unit block variance (`w = 1.0`).",
+                "Captures continuous semantic intent, phrasing, and destination/package domain context.",
+            ],
+            [
+                "Block 2: Validated Ordinal Behavioral Scales (`Fields 1–10`)",
+                "10 cols (`1–5` Likert)",
+                "Standardized (`z`-score) and weighted (`w = 1.5`) so behavioral traits balance 20 PCs.",
+                "Quantifies flexibility, exploration breadth, decisiveness, revision tendency, politeness & price sensitivity.",
+            ],
+            [
+                "Block 3: Categorical Goal & Tone Indicators (`Fields 11–13`)",
+                "16 binary cols",
+                "One-hot (`goal_specificity`, `tone`) & multi-hot (`secondary_goals`), block-scaled (`w = 1.0`).",
+                "Encodes explicit booking vs. exploration goals; `Fields 14–16` (`outcome, party, flag`) excluded from clustering!",
+            ],
+        ],
+        col_widths=[3.1, 1.5, 3.8, 4.23],
+        font_size=8.8,
+        align_left_cols=(0, 2, 3),
+        highlight_rows=(0, 1, 2),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Methodology Link:</b> This 3-tier feature importance framework directly addresses how features are selected, weighted, and validated in `RQ1-Identify Stage`—ensuring that only non-leaky, high-discrimination features enter the `RefinedArchetypeRouter` and `RQ2-Personalize` FAISS sub-indices.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.5,
+    )
+
+    # =========================================================================
+    # SLIDE 24: SYSTEM ARCHITECTURE (FIGURE 4) & ALGORITHMIC WORKFLOWS (FIGURE 5) (METHODOLOGY ONLY)
+    # =========================================================================
+    s = D.content_slide(
+        "4. Experimental Design & Statistical Methodology",
+        "End-to-End Neuro-Symbolic System Architecture & Stage Workflows",
+        "Figures 4 & 5: Offline discovery on D_gold (n = 933), 1 FAISS sub-index per cluster (k = 3), and online runtime on D_test (n = 401)",
+        notes="Walk through Figures 4 and 5 side-by-side to show the complete engineering architecture and how 1 FAISS index per cluster works in RQ1-Identify -> RQ2-Personalize.",
     )
     D.add_figure(
         s, os.path.join(FIG_FIN, "fig_system_architecture.png"),
-        0.35, 1.50, 8.25, 5.55,
-        caption="Figure 4: Five-Layer Neuro-Symbolic Cluster-Adaptive Conversational System Architecture",
-    )
-    D.add_card(
-        s, 8.75, 1.50, 4.23, 5.55,
-        title="Architectural Walkthrough",
-        header_bg=NAVY,
-        bullets=[
-            "<b>Layer 1 (Canonical Ingestion):</b> Parses raw Frames & MultiWOZ JSON into validated Two-Tier Pydantic trajectories.",
-            "<b>Layer 2 (Offline Discovery on D_gold = 933):</b>",
-            (1, "Extracts first <i>M</i> = 9 user messages."),
-            (1, "Computes PCA-20 of 3,072-d Gemini prefix embeddings + 16-field LLM behavioral profile (`Blocks`)."),
-            (1, "Freezes <i>k</i> = 3 K-Means centroids, L1 logistic router, and 3 slot-masked FAISS `IndexFlatIP` sub-indices."),
-            "<b>Layer 3 (Online Prefix Router & FAISS Retrieval):</b>",
-            (1, "Projects live test prefix into golden `Blocks` space (< 2 ms) and retrieves <i>k</i> = 3 `[SLOT]`-masked exemplars."),
-            "<b>Layer 4 (Symbolic Guardrails & Generation):</b>",
-            (1, "Updates <i>Verified Informed Slot Ledger</i> (prevents re-asking)."),
-            (1, "Evaluates 5 YAML rules (`src/rule_engine.py`, < 1 ms) + sanitizes post-generation entity leakage."),
-            "<b>Layer 5 (Evaluation & Dual-Judge Audit):</b>",
-            (1, "Scores Style Cosine, RAR, ELR, Slot F1, TGC, RER + cross-validates with `gemini-2.5-pro` (κ = .917 & .933)."),
-        ],
-        font_size=9.8,
-    )
-
-    # =========================================================================
-    # SLIDE 21: ALGORITHMIC EXECUTION WORKFLOWS ACROSS RQ1–RQ4 (FIGURE 5)
-    # =========================================================================
-    s = D.content_slide(
-        "Module 5: System Architecture & Workflows",
-        "Algorithmic Execution Workflows Across RQ1 to RQ4 (Figure 5)",
-        "Visualizing the exact experimental pipeline, sample sizes, and statistical tests for each research question",
-        notes="Use Figure 5 to orient the committee before diving into the empirical results of RQ1, RQ2, RQ3, and RQ4.",
+        0.35, 1.48, 6.25, 3.45,
+        caption="Figure 4: Five-Layer Neuro-Symbolic System Architecture (Offline D_gold vs. Online D_test)",
     )
     D.add_figure(
         s, os.path.join(FIG_FIN, "fig_rq_workflows_4panel.png"),
-        0.35, 1.50, 8.35, 5.55,
-        caption="Figure 5: Four-Panel Algorithmic Execution Workflows for RQ1 (A), RQ2 (B), RQ3 (C), and RQ4 (D)",
+        6.75, 1.48, 6.23, 3.45,
+        caption="Figure 5: Four-Panel Execution Workflows for RQ1-Identify (A), RQ2-Personalize (B), RQ3-Govern (C), and RQ4-Optimize (D)",
     )
     D.add_card(
-        s, 8.85, 1.50, 4.13, 5.55,
-        title="How the Four Pipelines Connect",
-        header_bg=TEAL,
+        s, 0.35, 5.00, 12.63, 1.30,
+        title="How the 4-Stage Architecture Operates & How FAISS Indexing Works in RQ1-Identify → RQ2-Personalize",
+        header_bg=NAVY,
         bullets=[
-            "<b>Panel A (RQ1 — Unsupervised Discovery):</b>",
-            (1, "159 subsample runs (53 × 3 algorithms) on MiniLM & Gemini embeddings → Representation × Truncation grid → 3 Refined Archetypes & `RefinedArchetypeRouter`."),
-            "<b>Panel B (RQ2 — Within-Subject Prompting):</b>",
-            (1, "33 held-out dialogues × 3 conditions = 99 calls. Contrasts Primary Archetypes (κ=.24) vs. Refined Archetypes (κ=.535)."),
-            "<b>Panel C (RQ3 — 2 × 2 Factorial Guardrails):</b>",
-            (1, "144 held-out scenarios (36/cell; 50% violating) crossing `Rules Off/Active` × `Zero-Shot/Cluster-Adaptive` + 48-unit `gemini-2.5-pro` dual-judge audit."),
-            "<b>Panel D (RQ4 — 2 × 3 Multi-Turn Simulation):</b>",
-            (1, "180 closed-loop simulations (30/cell) crossing `Zero-Shot/Cluster-Adaptive` × 3 Refined Archetypes + 45-unit blind persona fidelity audit."),
+            "<b>1. Offline Discovery (`Layers 1–2 on D_gold = 933`):</b> Parses Two-Tier Pydantic trajectories → extracts `min(M, 9)` opening user prefixes → computes `46-d Blocks` → fits `K-Means (k = 3)` and the L1 `RefinedArchetypeRouter`. Crucially, it builds <b>exactly 1 `faiss.IndexFlatIP(46)` vector index per cluster (`3 FAISS sub-indices total` across `D_gold`)</b> with all exemplar entities masked as `[SLOT]` tokens.",
+            "<b>2. Online Runtime (`Layers 3–5 on D_test = 401`):</b> `RQ1-Identify` projects the active user prefix into `46-d Blocks` (`< 2 ms`) and routes to winning cluster `k* ∈ {1, 2, 3}` → `RQ2-Personalize` queries <b>only Cluster `k*`'s FAISS sub-index</b> for the top `k_shot = 3` `[SLOT]`-masked exemplars + persona pacing directive → `RQ3-Govern` executes pre/post `YAML` rule verification (`< 1 ms`) → `RQ4-Optimize` updates the `Verified Informed Slot Ledger` and selects the persona package policy.",
         ],
-        font_size=10.2,
+        font_size=9.1,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Transition from Methodology to Empirical Results (Next Section):</b> "
+        "With the 4-stage conceptual solution approach, literature operationalization, 70/30 data firewall, noncentral-<i>F</i> sample sizes, and system architecture locked in, `Slides 25–48` now present the complete empirical results and stage-by-stage solution approach handoffs.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.5,
     )

@@ -1,0 +1,318 @@
+{
+  "splits": [
+    {
+      "m": 3,
+      "approx_turns": 5,
+      "train_n": 933,
+      "train_acc": 0.6334405144694534,
+      "train_kappa": 0.41991113761307775,
+      "train_auc": 0.8102553305942134,
+      "cv_acc": 0.5884244372990354,
+      "cv_kappa": 0.34525717523003685,
+      "cv_auc": 0.7677148349914521,
+      "test_n": 401,
+      "test_acc": 0.5935162094763092,
+      "test_kappa": 0.358645524658045,
+      "test_macro_f1": 0.5696484277718795,
+      "test_auc": 0.7529933546319887
+    },
+    {
+      "m": 5,
+      "approx_turns": 9,
+      "train_n": 933,
+      "train_acc": 0.7384780278670954,
+      "train_kappa": 0.591079816423125,
+      "train_auc": 0.891592954547409,
+      "cv_acc": 0.69989281886388,
+      "cv_kappa": 0.5297311309206642,
+      "cv_auc": 0.8587887733388112,
+      "test_n": 401,
+      "test_acc": 0.7007481296758105,
+      "test_kappa": 0.5345057751465552,
+      "test_macro_f1": 0.6918692231489976,
+      "test_auc": 0.8710802829336415
+    },
+    {
+      "m": 7,
+      "approx_turns": 13,
+      "train_n": 933,
+      "train_acc": 0.8435155412647374,
+      "train_kappa": 0.7565335821295671,
+      "train_auc": 0.9530554486556818,
+      "cv_acc": 0.8177920685959271,
+      "cv_kappa": 0.7164899160069425,
+      "cv_auc": 0.9355359504317784,
+      "test_n": 401,
+      "test_acc": 0.8204488778054863,
+      "test_kappa": 0.7216083309227654,
+      "test_macro_f1": 0.8160813376841252,
+      "test_auc": 0.9480473239293324
+    },
+    {
+      "m": 9,
+      "approx_turns": 17,
+      "train_n": 933,
+      "train_acc": 0.9935691318327974,
+      "train_kappa": 0.9900294947422416,
+      "train_auc": 0.9998817004151462,
+      "cv_acc": 0.9667738478027867,
+      "cv_kappa": 0.9483955573397564,
+      "cv_auc": 0.9983108801750104,
+      "test_n": 401,
+      "test_acc": 0.972568578553616,
+      "test_kappa": 0.9575301842829909,
+      "test_macro_f1": 0.9722670681929437,
+      "test_auc": 0.999210101365022
+    }
+  ],
+  "top_features": [
+    {
+      "feature": "PCA_1",
+      "pretty_name": "Gemini Semantic PC1",
+      "block": "Gemini Semantic PCA-20",
+      "eta2_gold": 0.5796099901199341,
+      "F_gold": 641.1159057617188,
+      "p_gold": 0.0,
+      "beta_l2_m5": 2.903890609741211,
+      "beta_l2_m9": 6.384853839874268,
+      "perm_dk_m5": 0.1900675042003452,
+      "perm_dk_m9": 0.43764004611513063
+    },
+    {
+      "feature": "PCA_2",
+      "pretty_name": "Gemini Semantic PC2",
+      "block": "Gemini Semantic PCA-20",
+      "eta2_gold": 0.39223939180374146,
+      "F_gold": 300.1038513183594,
+      "p_gold": 0.0,
+      "beta_l2_m5": 1.9815131425857544,
+      "beta_l2_m9": 5.720417499542236,
+      "perm_dk_m5": 0.11489187457889032,
+      "perm_dk_m9": 0.28008968682334673
+    },
+    {
+      "feature": "detail_orientation",
+      "pretty_name": "Detail Orientation (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.3721410930156708,
+      "F_gold": 275.6122741699219,
+      "p_gold": 0.0,
+      "beta_l2_m5": 2.0909273624420166,
+      "beta_l2_m9": 2.715010643005371,
+      "perm_dk_m5": 0.0336859243420829,
+      "perm_dk_m9": 0.027503123898338273
+    },
+    {
+      "feature": "exploration_breadth",
+      "pretty_name": "Exploration Breadth (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.30397289991378784,
+      "F_gold": 203.0774688720703,
+      "p_gold": 0.0,
+      "beta_l2_m5": 1.7991948127746582,
+      "beta_l2_m9": 2.353745698928833,
+      "perm_dk_m5": 0.0205601647868628,
+      "perm_dk_m9": 0.03972559158965576
+    },
+    {
+      "feature": "goal_specific_trip_booking",
+      "pretty_name": "Primary Goal: Specific Booking",
+      "block": "Goal Indicators (12)",
+      "eta2_gold": 0.29642850160598755,
+      "F_gold": 195.91372680664062,
+      "p_gold": 0.0,
+      "beta_l2_m5": 0.6594861149787903,
+      "beta_l2_m9": 2.0563225746154785,
+      "perm_dk_m5": 0.02366686170693947,
+      "perm_dk_m9": 0.014295015917008073
+    },
+    {
+      "feature": "goal_explore_destinations",
+      "pretty_name": "Primary Goal: Explore Dest.",
+      "block": "Goal Indicators (12)",
+      "eta2_gold": 0.2836485803127289,
+      "F_gold": 184.12286376953125,
+      "p_gold": 0.0,
+      "beta_l2_m5": 0.6324249505996704,
+      "beta_l2_m9": 1.8338888883590698,
+      "perm_dk_m5": 0.014673403645107226,
+      "perm_dk_m9": 0.010847311981959347
+    },
+    {
+      "feature": "decisiveness",
+      "pretty_name": "Decisiveness (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.2800227999687195,
+      "F_gold": 180.85374450683594,
+      "p_gold": 0.0,
+      "beta_l2_m5": 2.011110544204712,
+      "beta_l2_m9": 2.2624881267547607,
+      "perm_dk_m5": 0.03238033940898568,
+      "perm_dk_m9": 0.022213355400700525
+    },
+    {
+      "feature": "politeness",
+      "pretty_name": "Politeness (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.2798325717449188,
+      "F_gold": 180.68325805664062,
+      "p_gold": 0.0,
+      "beta_l2_m5": 1.5415723323822021,
+      "beta_l2_m9": 2.34429931640625,
+      "perm_dk_m5": 0.008133080105868032,
+      "perm_dk_m9": 0.017610067886233056
+    },
+    {
+      "feature": "question_asking",
+      "pretty_name": "Question Asking (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.26395541429519653,
+      "F_gold": 166.7552032470703,
+      "p_gold": 0.0,
+      "beta_l2_m5": 0.7967885136604309,
+      "beta_l2_m9": 1.9733742475509644,
+      "perm_dk_m5": 0.012878468454556721,
+      "perm_dk_m9": 0.035516020044366256
+    },
+    {
+      "feature": "tone_positive",
+      "pretty_name": "Emotional Tone: Positive",
+      "block": "Emotional Tone (4)",
+      "eta2_gold": 0.18270203471183777,
+      "F_gold": 103.94795989990234,
+      "p_gold": 1.8066941100539866e-41,
+      "beta_l2_m5": 0.5913305878639221,
+      "beta_l2_m9": 1.6896893978118896,
+      "perm_dk_m5": 0.006098958270860588,
+      "perm_dk_m9": 0.016873586294162288
+    },
+    {
+      "feature": "revision_tendency",
+      "pretty_name": "Revision Tendency (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.15063418447971344,
+      "F_gold": 82.4673080444336,
+      "p_gold": 1.0692096413697903e-33,
+      "beta_l2_m5": 1.033350944519043,
+      "beta_l2_m9": 1.693481683731079,
+      "perm_dk_m5": 0.007674182391127294,
+      "perm_dk_m9": 0.0211978897255815
+    },
+    {
+      "feature": "destination_flexibility",
+      "pretty_name": "Destination Flexibility (1\u20135)",
+      "block": "Ordinal Behavioral (10)",
+      "eta2_gold": 0.15029971301555634,
+      "F_gold": 82.25176239013672,
+      "p_gold": 1.2840773354016346e-33,
+      "beta_l2_m5": 0.5122501850128174,
+      "beta_l2_m9": 1.7231113910675049,
+      "perm_dk_m5": 0.004935150801492161,
+      "perm_dk_m9": 0.02373383374603432
+    },
+    {
+      "feature": "tone_frustrated",
+      "pretty_name": "Emotional Tone: Frustrated",
+      "block": "Emotional Tone (4)",
+      "eta2_gold": 0.14083674550056458,
+      "F_gold": 76.22425079345703,
+      "p_gold": 2.2141233082907643e-31,
+      "beta_l2_m5": 1.2374141216278076,
+      "beta_l2_m9": 1.6361669301986694,
+      "perm_dk_m5": -0.0012005877099798168,
+      "perm_dk_m9": 0.008704254803978987
+    },
+    {
+      "feature": "sec_price_shopping",
+      "pretty_name": "Secondary Goal: Price Shop",
+      "block": "Goal Indicators (12)",
+      "eta2_gold": 0.06174570322036743,
+      "F_gold": 30.601245880126953,
+      "p_gold": 1.3460540733249704e-13,
+      "beta_l2_m5": 0.5904154777526855,
+      "beta_l2_m9": 1.3904098272323608,
+      "perm_dk_m5": 0.0028959947434416284,
+      "perm_dk_m9": 0.006327503160173024
+    },
+    {
+      "feature": "PCA_6",
+      "pretty_name": "Gemini Semantic PC6",
+      "block": "Gemini Semantic PCA-20",
+      "eta2_gold": 0.04134446382522583,
+      "F_gold": 20.054309844970703,
+      "p_gold": 2.972366797138193e-09,
+      "beta_l2_m5": 0.9410350918769836,
+      "beta_l2_m9": 0.9266824126243591,
+      "perm_dk_m5": 0.008571475431690186,
+      "perm_dk_m9": 0.00081129308464943
+    }
+  ],
+  "blocks": [
+    {
+      "block_label": "Gemini Semantic PCs (20)",
+      "n_cols": 20,
+      "dk_m5_M": 0.3096018109340923,
+      "dk_m5_SD": 0.03640063881827417,
+      "dk_m9_M": 0.6735339377202324,
+      "dk_m9_SD": 0.037584813331613696
+    },
+    {
+      "block_label": "Ordinal Scales (10)",
+      "n_cols": 10,
+      "dk_m5_M": 0.11741090993816915,
+      "dk_m5_SD": 0.023802078324715953,
+      "dk_m9_M": 0.19907956607360539,
+      "dk_m9_SD": 0.019136429305733754
+    },
+    {
+      "block_label": "Goal Indicators (12)",
+      "n_cols": 12,
+      "dk_m5_M": 0.025574933142541417,
+      "dk_m5_SD": 0.01755920165469344,
+      "dk_m9_M": 0.07427601979949083,
+      "dk_m9_SD": 0.013536252992228423
+    },
+    {
+      "block_label": "Emotional Tone (4)",
+      "n_cols": 4,
+      "dk_m5_M": 0.007704578189088331,
+      "dk_m5_SD": 0.015426569140188839,
+      "dk_m9_M": 0.043893026715651304,
+      "dk_m9_SD": 0.014010385290965547
+    }
+  ],
+  "cm_m5": [
+    [
+      131,
+      31,
+      13
+    ],
+    [
+      34,
+      58,
+      7
+    ],
+    [
+      27,
+      8,
+      92
+    ]
+  ],
+  "cm_m9": [
+    [
+      175,
+      0,
+      0
+    ],
+    [
+      1,
+      97,
+      1
+    ],
+    [
+      7,
+      2,
+      118
+    ]
+  ]
+}

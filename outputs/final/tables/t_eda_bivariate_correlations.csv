@@ -6,3 +6,5 @@ Slot Revisions vs. Exploration Breadth Rating,revisions_count,exploration_breadt
 Total Turns vs. User Decisiveness Rating,total_turns,decisiveness,-0.3103814923777554,3.5086774484771185e-31,-0.28891000175779064,4.627547307918641e-27
 User Words/Turn vs. Information Up Front Rating,mean_user_words,information_upfront,0.15765274995898745,7.083100723068261e-09,0.20556754324171714,3.3968889329815087e-14
 Agent Offers vs. Destination Flexibility Rating,agent_offers,destination_flexibility,0.32412847829173497,5.261930736762903e-34,0.357516729486451,1.6919502420087853e-41
+Question-Asking Rating vs. Total Turns,question_asking,total_turns,0.5579543572087584,5.1860752498292e-110,0.6026968932759896,1.0120310298165955e-132
+User Decisiveness Rating vs. Package Booking Indicator,decisiveness,booked_binary,0.39820698498171614,6.312204989522167e-52,0.39886498997785974,4.160318141740948e-52

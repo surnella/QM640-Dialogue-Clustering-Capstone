@@ -146,6 +146,11 @@ def load_all_context():
     ctx["eda_ext"] = J_fin("eda_summary_ext.json")
     ctx["t_biv"] = T_fin("t_eda_bivariate_correlations.csv")
     ctx["t_mv"] = T_fin("t_eda_multivariate_loadings.csv")
+    ctx["t_out"] = T_fin("t_eda_outcome_comparisons.csv")
+    ctx["t_fi"] = T_fin("t_feature_importance.csv")
+    ctx["t_blk"] = T_fin("t_block_importance.csv")
+    ctx["t_split"] = T_fin("t_router_train_cv_test.csv").set_index("m")
+    ctx["fi_diag"] = J_fin("feature_and_router_diagnostics.json")
 
     # Additional derived statistics
     fa = pd.read_csv(os.path.join(WORK_INT, "frames_archetypes.csv"))

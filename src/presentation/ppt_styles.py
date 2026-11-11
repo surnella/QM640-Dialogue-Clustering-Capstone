@@ -428,6 +428,265 @@ class DefenseDeck:
             p.alignment = PP_ALIGN.CENTER
             _add_formatted_runs(p, caption, font_size=9.5, color=MUTED, italic=True)
 
+    def add_storyline_state_slide(
+        self,
+        module_label,
+        title,
+        subtitle,
+        stages_data,
+        handoff_arrows,
+        bottom_callout,
+        notes="",
+    ):
+        """
+        Render the recurring 4-Stage Solution Approach (`Identify -> Personalize -> Govern -> Optimize`)
+        using native Microsoft PowerPoint shapes:
+          - Stage containers: MSO_SHAPE.ROUNDED_RECTANGLE
+          - Candidate IVs / Paths / Conclusions inside each stage: MSO_SHAPE.ROUNDED_RECTANGLE (with rounded status badges)
+            color-coded:
+              * 'green': Winner carried forward to next stage
+              * 'orange': Partial / requires verification or augmentation in next stage
+              * 'red': Closed / dropped path (does not go to next stage)
+              * 'blue' / 'pending': Conceptual or upcoming stage
+          - Intra-stage & inter-stage connectors: MSO_SHAPE.DOWN_ARROW / MSO_SHAPE.RIGHT_ARROW with test labels.
+        """
+        s = self.content_slide(module_label, title, subtitle, notes=notes)
+
+        ORANGE_BDR = RGBColor(210, 120, 15)
+        ORANGE_BG = RGBColor(255, 244, 222)
+        PENDING_BDR = RGBColor(120, 140, 170)
+        PENDING_BG = RGBColor(238, 243, 250)
+
+        # Top Legend Bar (y = 1.41, h = 0.28)
+        legend_items = [
+            (0.24, 3.05, CARD_ALT, NAVY, NAVY, "STAGE CONTAINER", "4 Solution Stages (Identify → Optimize)"),
+            (3.37, 3.22, GREEN_BG, GREEN, GREEN, "✓ GREEN NODE", "Proven Winner → Carried to Next Stage"),
+            (6.67, 3.38, ORANGE_BG, ORANGE_BDR, ORANGE_BDR, "! ORANGE NODE", "Needs Next-Stage Guard / Verification"),
+            (10.13, 2.96, RED_BG, CORAL, CORAL, "✗ RED NODE", "Path Closed / Dropped"),
+        ]
+        for lx, lw, lbg, lhdr, lbdr, ltag, ldesc in legend_items:
+            lbox = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(lx), Inches(1.41), Inches(lw), Inches(0.27))
+            lbox.adjustments[0] = 0.15
+            lbox.fill.solid()
+            lbox.fill.fore_color.rgb = lbg
+            lbox.line.color.rgb = lbdr
+            lbox.line.width = Pt(1.1)
+
+            lbadge = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(lx + 0.04), Inches(1.43), Inches(1.22), Inches(0.23))
+            lbadge.adjustments[0] = 0.20
+            lbadge.fill.solid()
+            lbadge.fill.fore_color.rgb = lhdr
+            lbadge.line.fill.background()
+            p_lb = lbadge.text_frame.paragraphs[0]
+            p_lb.alignment = PP_ALIGN.CENTER
+            _add_formatted_runs(p_lb, ltag, font_size=6.8, color=WHITE, bold=True)
+
+            ltb = s.shapes.add_textbox(Inches(lx + 1.30), Inches(1.42), Inches(lw - 1.34), Inches(0.25))
+            ltb.text_frame.word_wrap = True
+            ltb.text_frame.margin_left = ltb.text_frame.margin_top = Inches(0)
+            p_ld = ltb.text_frame.paragraphs[0]
+            _add_formatted_runs(p_ld, ldesc, font_size=7.2, color=DARK, bold=True)
+
+        start_x = 0.24
+        col_w = 2.92
+        gap_w = 0.39
+        stage_top = 1.73
+        stage_h = 4.60
+
+        status_palette = {
+            "green": (GREEN_BG, GREEN, GREEN, "✓"),
+            "orange": (ORANGE_BG, ORANGE_BDR, ORANGE_BDR, "!"),
+            "red": (RED_BG, CORAL, CORAL, "✗"),
+            "blue": (PENDING_BG, BLUE, BLUE, "●"),
+            "pending": ( RGBColor(242, 245, 250), PENDING_BDR, PENDING_BDR, "○"),
+        }
+
+        for idx, st in enumerate(stages_data):
+            x = start_x + idx * (col_w + gap_w)
+            hdr_color = st.get("header_color", NAVY)
+            border_color = st.get("border_color", hdr_color)
+            bg_tint = st.get("bg_color", WHITE)
+
+            # Outer Stage Rectangle
+            rect = s.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(stage_top), Inches(col_w), Inches(stage_h)
+            )
+            rect.adjustments[0] = 0.02
+            rect.fill.solid()
+            rect.fill.fore_color.rgb = bg_tint
+            rect.line.color.rgb = border_color
+            rect.line.width = Pt(1.75)
+
+            # Stage Header Bar
+            hdr = s.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(stage_top), Inches(col_w), Inches(0.42)
+            )
+            hdr.adjustments[0] = 0.02
+            hdr.fill.solid()
+            hdr.fill.fore_color.rgb = hdr_color
+            hdr.line.fill.background()
+            tf_h = hdr.text_frame
+            tf_h.word_wrap = True
+            tf_h.margin_left = tf_h.margin_right = Inches(0.06)
+            tf_h.margin_top = tf_h.margin_bottom = Inches(0.02)
+            p_h1 = tf_h.paragraphs[0]
+            p_h1.alignment = PP_ALIGN.CENTER
+            _add_formatted_runs(p_h1, st["stage_title"], font_size=9.2, color=WHITE, bold=True)
+            if st.get("stage_subtitle"):
+                p_h2 = tf_h.add_paragraph()
+                p_h2.alignment = PP_ALIGN.CENTER
+                _add_formatted_runs(p_h2, st["stage_subtitle"], font_size=7.2, color=RGBColor(225, 238, 255), italic=True)
+
+            # Input / Objective Strip
+            in_box = s.shapes.add_shape(
+                MSO_SHAPE.RECTANGLE, Inches(x + 0.07), Inches(stage_top + 0.45), Inches(col_w - 0.14), Inches(0.44)
+            )
+            in_box.fill.solid()
+            in_box.fill.fore_color.rgb = CARD_ALT
+            in_box.line.color.rgb = BORDER_GRAY
+            in_box.line.width = Pt(0.8)
+            tf_in = in_box.text_frame
+            tf_in.word_wrap = True
+            tf_in.margin_left = tf_in.margin_right = Inches(0.05)
+            tf_in.margin_top = tf_in.margin_bottom = Inches(0.02)
+            p_in = tf_in.paragraphs[0]
+            _add_formatted_runs(p_in, st["input_text"], font_size=6.9, color=DARK)
+
+            # 3 Rounded-Rectangle Nodes inside the Stage Container
+            circles = st.get("circles", [])
+            connectors = st.get("connectors", [])
+            c_top_base = stage_top + 0.93
+            c_h = 0.86
+            conn_h = 0.17
+
+            for c_i, c_info in enumerate(circles[:3]):
+                cy = c_top_base + c_i * (c_h + conn_h)
+                c_state = c_info.get("status", "blue")
+                c_bg, c_bdr, c_badge_col, c_sym = status_palette.get(c_state, status_palette["blue"])
+
+                # Rounded-Rectangle Shape representing the tested IV / candidate path
+                rnode = s.shapes.add_shape(
+                    MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x + 0.07), Inches(cy), Inches(col_w - 0.14), Inches(c_h)
+                )
+                rnode.adjustments[0] = 0.12
+                rnode.fill.solid()
+                rnode.fill.fore_color.rgb = c_bg
+                rnode.line.color.rgb = c_bdr
+                rnode.line.width = Pt(1.5)
+
+                # Rounded-rectangle status badge on left side of the node
+                s_badge = s.shapes.add_shape(
+                    MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x + 0.13), Inches(cy + (c_h - 0.26) / 2.0), Inches(0.26), Inches(0.26)
+                )
+                s_badge.adjustments[0] = 0.22
+                s_badge.fill.solid()
+                s_badge.fill.fore_color.rgb = c_badge_col
+                s_badge.line.color.rgb = WHITE
+                s_badge.line.width = Pt(1.0)
+                p_sc = s_badge.text_frame.paragraphs[0]
+                p_sc.alignment = PP_ALIGN.CENTER
+                _add_formatted_runs(p_sc, c_sym, font_size=8.5, color=WHITE, bold=True)
+
+                # Text inside the rounded rectangle
+                tb_c = s.shapes.add_textbox(
+                    Inches(x + 0.43), Inches(cy + 0.03), Inches(col_w - 0.54), Inches(c_h - 0.06)
+                )
+                tf_c = tb_c.text_frame
+                tf_c.word_wrap = True
+                tf_c.vertical_anchor = MSO_ANCHOR.MIDDLE
+                tf_c.margin_left = tf_c.margin_right = Inches(0.02)
+                tf_c.margin_top = tf_c.margin_bottom = Inches(0.01)
+                p_ct = tf_c.paragraphs[0]
+                _add_formatted_runs(p_ct, c_info["title"], font_size=7.4, color=c_bdr, bold=True)
+                p_cd = tf_c.add_paragraph()
+                p_cd.space_before = Pt(1.0)
+                _add_formatted_runs(p_cd, c_info["body"], font_size=6.7, color=DARK)
+
+                # Intra-stage connector arrow to next circle
+                if c_i < len(circles[:3]) - 1:
+                    ay = cy + c_h + 0.01
+                    arr = s.shapes.add_shape(
+                        MSO_SHAPE.DOWN_ARROW, Inches(x + 0.42), Inches(ay), Inches(0.18), Inches(conn_h - 0.02)
+                    )
+                    arr.fill.solid()
+                    arr.fill.fore_color.rgb = hdr_color
+                    arr.line.fill.background()
+                    if c_i < len(connectors) and connectors[c_i]:
+                        tb_a = s.shapes.add_textbox(
+                            Inches(x + 0.63), Inches(ay - 0.01), Inches(col_w - 0.72), Inches(conn_h + 0.02)
+                        )
+                        tf_a = tb_a.text_frame
+                        tf_a.margin_left = tf_a.margin_top = Inches(0)
+                        p_a = tf_a.paragraphs[0]
+                        _add_formatted_runs(p_a, connectors[c_i], font_size=6.3, color=NAVY, bold=True)
+
+            # Bottom Stage Handoff Box inside the Stage Rectangle
+            out_y = stage_top + stage_h - 0.64
+            out_state = st.get("handoff_status", "green")
+            out_bg, out_bdr, _, _ = status_palette.get(out_state, status_palette["green"])
+            out_box = s.shapes.add_shape(
+                MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x + 0.07), Inches(out_y), Inches(col_w - 0.14), Inches(0.58)
+            )
+            out_box.adjustments[0] = 0.05
+            out_box.fill.solid()
+            out_box.fill.fore_color.rgb = out_bg
+            out_box.line.color.rgb = out_bdr
+            out_box.line.width = Pt(1.3)
+            tf_out = out_box.text_frame
+            tf_out.word_wrap = True
+            tf_out.margin_left = tf_out.margin_right = Inches(0.05)
+            tf_out.margin_top = tf_out.margin_bottom = Inches(0.02)
+            p_out = tf_out.paragraphs[0]
+            _add_formatted_runs(p_out, st["handoff_text"], font_size=6.7, color=DARK)
+
+            # Inter-Stage Horizontal Connector Arrow between Stage Rectangles
+            if idx < 3 and idx < len(handoff_arrows):
+                hx = x + col_w + 0.02
+                hw = gap_w - 0.04
+                h_info = handoff_arrows[idx]
+                h_col = GREEN if h_info.get("active", True) else PENDING_BDR
+                h_arr = s.shapes.add_shape(
+                    MSO_SHAPE.RIGHT_ARROW, Inches(hx), Inches(stage_top + 2.15), Inches(hw), Inches(0.28)
+                )
+                h_arr.fill.solid()
+                h_arr.fill.fore_color.rgb = h_col
+                h_arr.line.color.rgb = NAVY if h_info.get("active", True) else PENDING_BDR
+                h_arr.line.width = Pt(0.8)
+
+                tb_ht = s.shapes.add_textbox(
+                    Inches(hx - 0.03), Inches(stage_top + 1.48), Inches(hw + 0.06), Inches(0.64)
+                )
+                tf_ht = tb_ht.text_frame
+                tf_ht.word_wrap = True
+                tf_ht.margin_left = tf_ht.margin_right = tf_ht.margin_top = Inches(0)
+                p_ht = tf_ht.paragraphs[0]
+                p_ht.alignment = PP_ALIGN.CENTER
+                _add_formatted_runs(p_ht, h_info.get("top_label", ""), font_size=6.4, color=NAVY, bold=True)
+
+                tb_hb = s.shapes.add_textbox(
+                    Inches(hx - 0.03), Inches(stage_top + 2.47), Inches(hw + 0.06), Inches(0.95)
+                )
+                tf_hb = tb_hb.text_frame
+                tf_hb.word_wrap = True
+                tf_hb.margin_left = tf_hb.margin_right = tf_hb.margin_top = Inches(0)
+                p_hb = tf_hb.paragraphs[0]
+                p_hb.alignment = PP_ALIGN.CENTER
+                _add_formatted_runs(p_hb, h_info.get("bottom_label", ""), font_size=6.2, color=DARK)
+
+        # Bottom Storyline Takeaway Box
+        self.add_callout(
+            s,
+            0.24,
+            6.38,
+            12.85,
+            0.74,
+            bottom_callout,
+            bg_color=CALLOUT_BG,
+            border_color=GOLD,
+            font_size=8.8,
+        )
+        return s
+
     def save(self, path):
         os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
         self.prs.save(path)

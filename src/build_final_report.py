@@ -120,7 +120,7 @@ def main(docx_only=False):
     if missing:
         print("Headings not located in PDF:", missing)
 
-    # Compute Core Page Count (Abstract through end of Section 6, before References)
+    # Compute Core Page Count (Abstract through end of Section 7, before References)
     abs_idx = next(i for i, (_, t) in enumerate(entries) if t == "Abstract")
     intro_idx = next(i for i, (_, t) in enumerate(entries) if t == "Introduction")
     ref_idx = next(i for i, (_, t) in enumerate(entries) if t == "References")
@@ -129,13 +129,13 @@ def main(docx_only=False):
     p_intro = int(pages2[intro_idx])
     p_ref = int(pages2[ref_idx])
     p_app = int(pages2[app_idx])
-    print(f"Pagination Summary:")
+    print("Pagination Summary:")
     print(f"  - Abstract starts on page {p_abs}")
     print(f"  - Introduction starts on page {p_intro}")
     print(f"  - References starts on page {p_ref}")
     print(f"  - Appendix A starts on page {p_app}")
-    print(f"  - Core Report Pages (Abstract through Section 6, excl. Title, TOC, References, Appendices): {p_ref - p_abs} pages")
-    print(f"  - Core Body Pages (Introduction through Section 6): {p_ref - p_intro} pages")
+    print(f"  - Core Report Pages (Abstract through Section 7, excl. Title, TOC, References, Appendices): {p_ref - p_abs} pages")
+    print(f"  - Core Body Pages (Introduction through Section 7): {p_ref - p_intro} pages")
 
 
 if __name__ == "__main__":
