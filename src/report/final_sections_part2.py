@@ -217,8 +217,8 @@ def build_part2(D, ctx):
         "because front-loaded trip constraints distinguish <i>Decisive Bookers</i> before later turns unfold. Second, "
         "block-level permutation testing on held-out <i>D</i><sub>test</sub> (Table 13, bottom rows; Figure 6, Panel B) "
         "confirms synergistic complementarity: permuting the 20 Gemini PCs reduces held-out κ by .310 at <i>M</i> = 5 "
-        "(.674 at <i>M</i> = 9), while permuting the 10 ordinal behavioral scales reduces κ by .133 at <i>M</i> = 5 "
-        "(.197 at <i>M</i> = 9). Third, the held-out <i>M</i> = 5 confusion matrix (Figure 6, Panel C) achieves strong "
+        "(.674 at <i>M</i> = 9), while permuting the 10 ordinal behavioral scales reduces κ by .117 at <i>M</i> = 5 "
+        "(.199 at <i>M</i> = 9; combined behavioral blocks Δκ = .151 at <i>M</i> = 5 and .317 at <i>M</i> = 9). Third, the held-out <i>M</i> = 5 confusion matrix (Figure 6, Panel C) achieves strong "
         f"diagonal recall across <i>Decisive Booker</i> ({cm5[0][0]}/175 = 74.9%), <i>Rigid-Constraint Seeker</i> "
         f"({cm5[2][2]}/127 = 72.4%), and <i>Open Explorer</i> ({cm5[1][1]}/99 = 58.6%, where residual off-diagonal "
         "cases reflect explorers who have not yet switched frames by message 5; by <i>M</i> = 9, diagonal recall reaches "
@@ -229,7 +229,7 @@ def build_part2(D, ctx):
         "handoff (dropped vs. carried forward):</i></b> Because the three schema audit fields (<i>session_outcome</i>, "
         "<i>party_type</i>, and <i>is_unusual</i>) capture post-session outcomes or non-behavioral demographics rather "
         "than early conversational behavior, they are <b>dropped</b> from the clustering matrix, whereas both the 20-d "
-        "Gemini semantic prefix block (Δκ = .310) and the 26-d LLM behavioral block (Δκ = .215) prove essential under "
+        "Gemini semantic prefix block (Δκ = .310) and the 26-d LLM behavioral blocks (ordinal Δκ = .117, combined Δκ = .151 at <i>M</i> = 5; .317 at <i>M</i> = 9) prove essential under "
         "permutation testing and are <b>carried forward</b> together in the 46-d <i>Blocks</i> prefix router."
     )
     fi_top_rows = []
@@ -1339,3 +1339,182 @@ def build_part2(D, ctx):
         label="G1",
         split=True,
     )
+
+    # Appendix H
+    D.heading("Appendix H", 1, new_page=True)
+    D.heading("DVs — Calculation Methodology: Experimental Execution Protocols, Primary vs. Secondary Roles, and Statistical Rationale", 1, toc=False)
+    D.para(
+        "This appendix documents the end-to-end testing methodology and Dependent Variable (DV) calculation protocols "
+        "across Research Questions RQ1 through RQ4. Because each stage of the neuro-symbolic cascade evaluates a "
+        "distinct operational property—unsupervised persona discovery and prefix routing (RQ1), stylistic and pacing "
+        "alignment (RQ2), symbolic policy compliance and entity-leakage prevention (RQ3), and end-to-end conversational "
+        "turn economy (RQ4)—each research question employs a tailored conversational execution protocol (Table H1) and "
+        "a structured hierarchy of Primary and Secondary DVs matched to specific parametric, heteroscedasticity-robust, "
+        "and non-parametric statistical tests (Table H2)."
+    )
+    D.lead_para(
+        "Conversational execution protocols (offline prefix vs. 1-turn completion vs. multi-turn closed-loop simulation)",
+        "A critical methodological distinction governs what constitutes a dialogue test unit, where the conversation "
+        "starts and ends, and how many assistant turns are generated in each experiment (Table H1). In <b>RQ1-Identify</b>, "
+        "evaluation operates strictly offline on the customer's opening <i>M</i> ≤ 9 <i>USER</i> messages (with all "
+        "human <i>AGENT</i> utterances excluded to prevent wizard-identity confounding). In <b>RQ2-Personalize</b> and "
+        "<b>RQ3-Govern</b>, experiments use <i>Controlled Single-Turn Mid-Conversation Prefix Completion</i> rather than "
+        "free-running multi-turn loops: each test unit slices an authentic multi-turn conversation from held-out "
+        "<i>D</i><sub>test</sub> from Turn 1 up to a fixed mid-conversation user turn (Turns 1–9 in RQ2; Turns 5–9 in "
+        "RQ3 where core Tier-1 trip slots are stated) and instructs the assistant to generate <b>only the single "
+        "immediate next agent turn (1–3 sentences)</b>, after which evaluation terminates immediately. Generating a "
+        "single immediate turn in RQ2 and RQ3 is essential for two reasons: (a) <i>experimental isolation</i>—if "
+        "different prompting arms conversed over multiple subsequent turns, their dialogue histories would diverge, "
+        "destroying the matched-prefix control required for Repeated-Measures and 2 × 2 Factorial ANOVA; and (b) "
+        "<i>immediate transactional gatekeeping in RQ3</i>—when an active booking state contains a fatal or warning "
+        "policy violation (such as an international departure in 7 days violating the 15-day visa window or an 11-adult "
+        "party violating the 8-adult Free Independent Traveler [FIT] cap), an enterprise agent cannot defer compliance "
+        "to incremental future turns and must enforce the rule on that immediate response turn. Conversely, in "
+        "<b>RQ4-Optimize</b>, because turn economy (TGC) and Redundant Elicitation Rate (RER) are cumulative trajectory "
+        "outcomes, evaluation executes a <i>Full Multi-Turn Closed-Loop Simulation</i> starting at Turn 1 and "
+        "alternating customer and assistant turns until the customer simulator emits <i>[ACCEPT_BOOKING]</i> (or reaches "
+        "the 14-turn cap)."
+    )
+    D.lead_para(
+        "Primary vs. secondary DV hierarchy and parametric vs. non-parametric statistical rationale",
+        "Across all four research questions, DVs are classified along two orthogonal dimensions (Table H2): "
+        "(1) <i>Inferential Hierarchy (Primary vs. Secondary/Diagnostic DVs)</i>, where <b>Primary DVs</b> are the "
+        "pre-declared decision variables that formally test <i>H</i><sub>01</sub>–<i>H</i><sub>04</sub> using "
+        "model-independent (non-Gemini or deterministic Python) evaluators, and <b>Secondary DVs</b> measure "
+        "complementary facets (such as cluster scatter, token-level overlap, or same-family Gemini embedding cosine) "
+        "to confirm construct validity; and (2) <i>Distributional Assumptions (Parametric vs. Non-Parametric and "
+        "Zero-Variance Guards)</i>, where <b>Parametric ANOVAs</b> test group means under normality/homoscedasticity "
+        "while <b>Robust and Non-Parametric Tests</b> protect inference against three specific empirical realities in "
+        "conversational AI data: (a) <i>unequal variances across clustering families in RQ1</i> (Levene <i>p</i> < .001 "
+        "between HDBSCAN and <i>K</i>-Means), addressed via Welch's heteroscedastic ANOVA, Games–Howell post hoc tests, "
+        "and Kruskal–Wallis <i>H</i>; (b) <i>positive within-dialogue correlation across prompts in RQ2</i> (ρ ≈ .50 "
+        "when all 3 prompts answer the same 33 prefixes), addressed via One-Way Repeated-Measures ANOVA with "
+        "Greenhouse–Geisser (ε) sphericity correction, Holm–Bonferroni step-down paired <i>t</i>-tests (<i>d<sub>z</sub></i>), "
+        "and Friedman χ<sup>2</sup>(2); and (c) <i>exact zero-variance boundary floors (SD = 0.00) and count skewness in "
+        "RQ3 and RQ4</i>—because governed arms drive entity leakage (ELR) and redundant re-asking (RER) to exactly "
+        "0.0% (<i>SD</i> = 0.00) and hit the 5.00-turn protocol floor (<i>SD</i> = 0.00) in two RQ4 cells, classical "
+        "ordinary least squares (OLS) homoscedasticity is violated, necessitating MacKinnon–White HC3 sandwich standard "
+        "errors, Aligned Rank Transform (ART) non-parametric factorial ANOVA, and natural-log turn transformation (ln TGC)."
+    )
+    D.table(
+        "Experimental Testing Protocols Across RQ1–RQ4: Unit of Analysis, Turn Horizon, Start/End Conditions, and Model Independence",
+        [
+            "RQ & stage",
+            "Unit of analysis & sample (<i>N</i>)",
+            "Turn horizon (1-turn vs. multi-turn)",
+            "Start & end of conversation in test harness",
+            "Generator, encoder, & evaluator independence",
+        ],
+        [
+            [
+                "RQ1-Identify (<i>step2_rq1_*.py</i>, <i>routing.py</i>)",
+                "53 matched subsamples of <i>n</i> = 500 on <i>D</i><sub>gold</sub> (<i>N</i> = 159 runs); router tested on <i>D</i><sub>test</sub> (<i>n</i> = 401)",
+                "<b>Offline Opening User Prefix Only</b> (0 LLM replies generated)",
+                "<b>Start:</b> Customer Turn 1. <b>End:</b> Truncated after first <i>M</i> ∈ {3, 5, 7, 9} <i>USER</i> messages (all human <i>AGENT</i> turns excluded).",
+                "<b>Features:</b> Gemini 3,072-d PCA-20 + <i>gemini-2.5-flash</i> 13-field codebook. <b>Evaluators:</b> 100% deterministic math (Silhouette, DB, ARI, κ, Softmax OvR ROC-AUC).",
+            ],
+            [
+                "RQ2-Personalize (<i>step2_rq2_refined.py</i>)",
+                "<i>N</i> = 33 stratified held-out dialogues from <i>D</i><sub>test</sub> (11/archetype × 3 prompts = 99 runs)",
+                "<b>Single-Turn Prefix Completion</b> (Exactly 1 immediate Agent turn generated)",
+                "<b>Start:</b> Real archival Turns 1–9 (5 <i>USER</i> + 4 <i>AGENT</i> turns). <b>End:</b> Stops immediately after LLM generates <b>Turn 10 (1–3 sentences)</b>.",
+                "<b>Generator:</b> <i>gemini-2.5-flash</i>. <b>Primary Evaluators (Non-Gemini):</b> 384-d SBERT (<i>all-MiniLM-L6-v2</i>), <i>roberta-large</i> BERTScore, & exact word count. <b>Secondary:</b> Gemini 3,072-d cosine.",
+            ],
+            [
+                "RQ3-Govern (<i>step3_rq3_experiment.py</i>)",
+                "<i>N</i> = 144 evaluations (36 held-out prefixes × 4 factorial cells; 18 violating + 18 compliant per cell)",
+                "<b>Single-Turn Prefix Completion</b> (Exactly 1 immediate Agent turn generated)",
+                "<b>Start:</b> Real archival Turns 1 to <i>k</i> (<i>k</i> ∈ {5..9}, right after user states Tier-1 slots) + active Tier-1/Tier-2 state. <b>End:</b> Stops immediately after LLM generates <b>next 1 Agent turn</b>.",
+                "<b>Generator:</b> <i>gemini-2.5-flash</i> + Python YAML engine. <b>Evaluators:</b> Deterministic Python set/regex verifiers (ELR, Slot F<sub>1</sub>, <i>det_pass</i>) + Dual Judge (<i>gemini-2.5-flash</i> audited by <i>gemini-2.5-pro</i>, κ = .917).",
+            ],
+            [
+                "RQ4-Optimize (<i>step4_rq4_simulation.py</i>)",
+                "<i>N</i> = 180 distinct held-out seed dialogues (6 cells × <i>n</i> = 30 unique seeds/cell; 2 × 3 between-subjects)",
+                "<b>Full Multi-Turn Closed-Loop Simulation</b> (5 to 14 alternating turns)",
+                "<b>Start:</b> Turn 1 customer opening request seeded from <i>D</i><sub>test</sub>. <b>End:</b> Multi-turn loop continues until customer simulator outputs <b><i>[ACCEPT_BOOKING]</i></b> (min 5 turns, cap 14 turns).",
+                "<b>Simulator & Agent:</b> <i>gemini-2.5-flash</i> + Python Slot Ledger & Inventory DB. <b>Evaluators:</b> 100% deterministic turn counter (TGC, ln TGC) & regex re-ask detector (RER); blind <i>gemini-2.5-pro</i> persona audit (κ = .933).",
+            ],
+        ],
+        note="Single-turn prefix completion in RQ2 and RQ3 holds the conversation history identical across experimental arms and tests immediate policy enforcement on the exact turn a violation is active.",
+        widths=[1.05, 1.15, 1.10, 1.60, 1.60],
+        align=["l", "l", "l", "l", "l"],
+        label="H1",
+        split=True,
+    )
+    D.table(
+        "DVs — Calculation Methodology: Primary vs. Secondary Role, Statistical Rationale, and Step-by-Step Computation Across RQ1–RQ4",
+        [
+            "RQ & Dependent Variable (DV)",
+            "Test role (Primary vs. Secondary)",
+            "Why this DV & statistical test are necessary (Variance, ANOVA, & Zero-Floor Rationale)",
+            "Exact step-by-step calculation methodology & model family",
+        ],
+        [
+            [
+                "<b>RQ1:</b> Cosine Silhouette Score <i>s</i> ∈ [−1, 1]",
+                "<b>Primary DV</b> (Tests <i>H</i><sub>01</sub>)",
+                "Quantifies within-cluster cohesion vs. nearest-cluster separation. Because HDBSCAN and <i>K</i>-Means have unequal variance (Levene <i>p</i> < .001) and share 53 subsample seeds, One-Way ANOVA is paired with <b>Welch's <i>F</i></b>, <b>RM-ANOVA</b>, and non-parametric <b>Kruskal–Wallis <i>H</i> / Friedman χ<sup>2</sup></b>.",
+                "<b>100% Deterministic Math:</b> On each <i>n</i> = 500 subsample of <i>D</i><sub>gold</sub>, compute cosine distance <i>d</i>(<i>i,j</i>) = 1 − cos(<b>v</b><sub><i>i</i></sub>, <b>v</b><sub><i>j</i></sub>), mean intra-cluster distance <i>a</i>(<i>i</i>), and nearest-cluster distance <i>b</i>(<i>i</i>); average [<i>b</i>(<i>i</i>) − <i>a</i>(<i>i</i>)] / max{<i>a</i>(<i>i</i>), <i>b</i>(<i>i</i>)} across assigned points.",
+            ],
+            [
+                "<b>RQ1:</b> Davies–Bouldin (DB), Bootstrap ARI, Prefix κ, & Macro ROC-AUC",
+                "<b>Secondary & Diagnostic DVs</b>",
+                "Silhouette alone cannot verify partition stability across resamples or early Turn-5 routability. ARI verifies bootstrap stability (≥ .87); Cohen's κ and Macro OvR ROC-AUC verify that the L2 logistic router generalizes from <i>D</i><sub>gold</sub> to <i>D</i><sub>test</sub> without overfitting.",
+                "<b>100% Deterministic Math:</b> DB = mean max scatter-to-centroid separation ratio; ARI = chance-corrected pairwise agreement across 200 × 80% subsamples; κ and OvR ROC-AUC computed from L2 logistic router Softmax probabilities <i>P</i>(<i>y = c</i> | <b>x</b><sub><i>M</i></sub>) on held-out <i>D</i><sub>test</sub> (<i>n</i> = 401).",
+            ],
+            [
+                "<b>RQ2:</b> De-lexicalized SBERT Style Cosine (<i>all-MiniLM-L6-v2</i>)",
+                "<b>Primary DV</b> (Tests <i>H</i><sub>02</sub>)",
+                "Testing all 3 prompts on the same 33 prefixes induces within-dialogue correlation (ρ ≈ .50), requiring <b>One-Way RM-ANOVA</b> with <b>Greenhouse–Geisser ε</b>, <b>Holm paired <i>t</i>-tests (<i>d<sub>z</sub></i>)</b>, and non-parametric <b>Friedman χ<sup>2</sup>(2)</b>. Uses a <b>Non-Gemini encoder</b> so evaluation is 100% independent of the Gemini generator.",
+                "<b>Non-Gemini Neural Encoder (384-d SBERT):</b> Strip slot entities to <i>[SLOT]</i> in the generated Turn-10 reply and in all successful human <i>AGENT</i> replies of true archetype <i>k</i>* in <i>D</i><sub>gold</sub>; embed with <i>all-MiniLM-L6-v2</i>, average <i>D</i><sub>gold</sub> human agent vectors into centroid <b>c</b><sub><i>k</i>*</sub>, and compute cos(<b>e</b><sub>gen</sub>, <b>c</b><sub><i>k</i>*</sub>).",
+            ],
+            [
+                "<b>RQ2:</b> Pacing Word Error |<i>W</i><sub>gen</sub> − μ<sub><i>k</i>*</sub>| & Token BERTScore F<sub>1</sub>",
+                "<b>Co-Primary & Cluster-Free Secondary DVs</b>",
+                "Pacing Error tests whether persona directives curb LLM verbosity in exact words. <b>BERTScore F<sub>1</sub></b> provides a <b>100% cluster-free benchmark</b> (comparing directly to the exact archival human reply <i>A</i><sub>5</sub>) to prove results do not depend solely on centroid <b>c</b><sub><i>k</i>*</sub>.",
+                "<b>Deterministic Word Count & Non-Gemini <i>roberta-large</i>:</b> Count whitespace words <i>W</i><sub>gen</sub> and take absolute difference from golden human agent word mean μ<sub><i>k</i>*</sub> (13.8–16.2w). For BERTScore F<sub>1</sub>, compute contextual token precision/recall between generated reply and exact historical human turn <i>A</i><sub>5</sub> via <i>roberta-large</i>.",
+            ],
+            [
+                "<b>RQ2:</b> Gemini 3,072-d Style Cosine (<i>gemini-embedding-001</i>)",
+                "<b>Secondary Sensitivity DV</b>",
+                "Included strictly as a cross-architecture sensitivity check alongside primary SBERT cosine to demonstrate that stylistic convergence holds in both non-Gemini (384-d) and native Gemini (3,072-d) embedding spaces.",
+                "<b>Gemini Embedding Model (3,072-d):</b> Embed `[SLOT]`-de-lexicalized generated reply and golden human agent centroid <b>c</b><sub><i>k</i>*</sub> using <i>gemini-embedding-001</i> and compute L2-normalized dot product.",
+            ],
+            [
+                "<b>RQ3:</b> Rule Adherence Rate (RAR: Overall, Violation Sensitivity <i>n</i>=72, & Specificity <i>n</i>=72)",
+                "<b>Primary DV 1</b> (Tests <i>H</i><sub>03</sub>)",
+                "Evaluated via <b>2 × 2 Factorial OLS ANOVA</b> (Type II/III orthogonal sum contrasts). Because overall RAR blends 18 violating and 18 compliant dialogues/cell, a <b>Subgroup Split</b> is required to separate <i>Violation Enforcement Sensitivity</i> (5.6% → 98.6%) from <i>Compliant Specificity</i> (ceiling 100.0%, <i>SD</i> = 0.00), guarded by <b>HC3 SEs</b> and <b>ART ANOVA</b>.",
+                "<b>Deterministic Regex + Cross-Model Dual Judge:</b> On the single generated reply, evaluate whether all active triggered YAML rules in `rules_enterprise.yaml` are enforced without false blocking. Verified by `gemini-2.5-flash`, deterministic regex (`det_pass`, 93.1% agreement), and blind `gemini-2.5-pro` audit (<i>n</i> = 48, 95.8% agreement, κ = .917).",
+            ],
+            [
+                "<b>RQ3:</b> Exemplar Entity Leakage Rate (ELR ∈ [0, 1])",
+                "<b>Primary DV 2</b> (Tests <i>H</i><sub>03</sub>)",
+                "Measures hallucinated foreign hotels/prices copied from few-shot exemplars. Because `[SLOT]` masking + regex sanitization drives ELR to <b>exactly 0.000 (<i>SD</i> = 0.000)</b> in governed cells while unguarded adaptive leaks at .359, zero-cell variance violates classical OLS and requires <b>MacKinnon–White HC3</b> and <b>ART Factorial ANOVA</b>.",
+                "<b>100% Deterministic Python Set Verifier (`metrics.py`):</b> Extract surface entities <i>E</i><sub>resp</sub> from the generated reply, exemplar entities <i>E</i><sub>ex</sub> from retrieved exemplars, and valid customer entities <i>E</i><sub>diag</sub> from active dialogue state; compute |<i>E</i><sub>resp</sub> ∩ (<i>E</i><sub>ex</sub> \\ <i>E</i><sub>diag</sub>)| / max(1, |<i>E</i><sub>resp</sub>|).",
+            ],
+            [
+                "<b>RQ3:</b> Factual Slot Coverage F<sub>1</sub> & Secondary Style Cosine",
+                "<b>Primary DV 3 & Secondary Check</b>",
+                "Verifies that turning on deterministic YAML rules and `[SLOT]` masking does not degrade factual grounding of the customer's trip constraints (Slot F<sub>1</sub> = .952) or conversational warmth (Style Cosine).",
+                "<b>100% Deterministic Python Verifier & SBERT:</b> Compute harmonic mean of precision and recall over the customer's active Tier-1 booking slots grounded in the generated turn; compute SBERT cosine to <b>c</b><sub><i>k</i>*</sub>.",
+            ],
+            [
+                "<b>RQ4:</b> Log Turns to Agreement ln(TGC) & Raw Turns (TGC)",
+                "<b>Primary Parametric DV</b> (ln TGC) & <b>Co-Primary Operational DV</b> (Raw TGC)",
+                "Evaluated via <b>2 × 3 Between-Subjects Factorial ANOVA</b> across 180 distinct dialogues. Because raw multi-turn counts are right-skewed (up to 11 turns in Zero-Shot) and hit a <b>5.00-turn protocol floor (<i>SD</i> = 0.00)</b> in two Cluster-Adaptive cells, <b>ln(TGC)</b> stabilizes parametric ANOVA variance while <b>HC3 SEs</b>, <b>ART ANOVA</b>, and <b>Mann–Whitney <i>U</i></b> guard the zero-variance floor.",
+                "<b>100% Deterministic Turn Counter:</b> Count total alternating <i>USER</i> + <i>AGENT</i> turns from Turn 1 until the customer simulator outputs `[ACCEPT_BOOKING]` (minimum protocol floor = 5 turns: <i>U</i><sub>1</sub>, <i>A</i><sub>2</sub>, <i>U</i><sub>3</sub>, <i>A</i><sub>4</sub> quote, <i>U</i><sub>5</sub> accept); take natural logarithm ln(TGC).",
+            ],
+            [
+                "<b>RQ4:</b> Redundant Elicitation Rate (RER) & Qualification Completion",
+                "<b>Secondary Operational DVs</b>",
+                "Measures conversational friction from re-asking already-stated slots. Because the Verified Informed Slot Ledger drives RER from .109 to <b>exactly .000 (<i>SD</i> = .000)</b> across all 90 Cluster-Adaptive sessions, inference is verified via <b>HC3 Wald tests</b> and non-parametric <b>Mann–Whitney <i>U</i></b>.",
+                "<b>100% Deterministic Regex Slot-Ledger Audit:</b> At each assistant turn <i>t</i>, check via slot-question regexes whether the agent asks for any Tier-1 slot already recorded in `informed_slots` prior to turn <i>t</i>; divide redundant agent turns by total agent turns in the session.",
+            ],
+        ],
+        note="Primary DVs govern formal hypothesis rejection (<i>H</i><sub>01</sub>–<i>H</i><sub>04</sub>); Secondary DVs provide diagnostic, cluster-free, or cross-encoder verification. HC3 = MacKinnon–White heteroscedasticity-consistent standard errors; ART = Aligned Rank Transform.",
+        widths=[1.25, 0.90, 2.15, 2.20],
+        align=["l", "l", "l", "l"],
+        label="H2",
+        split=True,
+    )
+

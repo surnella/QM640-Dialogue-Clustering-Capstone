@@ -135,13 +135,13 @@ def build_slides_part1(D, ctx):
     )
     D.add_card(
         s, 9.95, 4.02, 3.03, 2.42,
-        title="8. Defense Q&A Bank (Slides 58–66)",
+        title="8. Defense Q&A Bank (Slides 58–72)",
         header_bg=CORAL,
         bullets=[
-            "11 evidence-backed Q&A deep-dives linked to the solution approach:",
-            "Sample size assumptions, originality, dataset fit, judge independence, cold-start turns < 9, quotation vs. booking noise, 3 vs. 500 clusters, and centroid naming.",
+            "17 evidence-backed Q&A and backup deep-dives:",
+            "Sample size assumptions, originality, dataset fit, judge independence, cold-start turns < 9, quotation vs. booking noise, 3 vs. 500 clusters, centroid naming, RQ4 closed-loop simulation trace, RQ2 centroid fairness, and DVs — Calculation Methodology (1-turn vs. multi-turn).",
         ],
-        font_size=10.2,
+        font_size=9.5,
     )
     D.add_callout(
         s, 0.35, 6.54, 12.63, 0.58,
@@ -668,7 +668,7 @@ def build_slides_part1(D, ctx):
     D.add_figure(
         s, os.path.join(FIG_INT, "fig_eda_turns.png"),
         0.35, 1.48, 5.50, 4.78,
-        caption="Figure 1: Turn-Count Distributions for Microsoft Frames (N = 1,334) vs. MultiWOZ 2.2 (N = 1,499)",
+        caption="Figure 1: Dialogue Length (A), Speaker Verbosity (B), Stated Trip Budget (C), & Outcome Dynamics (D)",
     )
     D.add_table(
         s, 6.00, 1.48, 6.98, 2.92,
@@ -678,7 +678,7 @@ def build_slides_part1(D, ctx):
             ["Frames Golden (`D_gold`) / Test (`D_test`) Turns", "933 / 401", "14.94 / 14.81", "15.0 / 14.0", "3–45 / 3–47", "+0.40 / +0.52"],
             ["MultiWOZ 2.2 — Dialogue Turns", "1,499", "13.52 (4.46)", "14.0 (6.0)", "4–34", "+0.37"],
             ["Frames — Slot Revisions / Agent Offers", "1,334", "2.62 / 1.88", "2.0 / 1.0", "0–12 / 0–13", "+0.82 / +1.67"],
-            ["Frames — Stated Trip Budget (USD)", "1,047", "$3,142 ($2,418)", "$2,500 ($2,300)", "$200–$18,000", "+2.14"],
+            ["Frames — Stated Trip Budget (USD, Panel C)", "693", "$5,338 ($5,468)", "$3,400 ($3,200)", "$100–$85,000", "+2.14"],
             ["Outcome 1: Booked (65.6% of Frames)", "875", "15.61 (6.42) t", "2.81 rev | 2.19 off", "Decisiveness: 3.62", "Expl: 2.38"],
             ["Outcome 2: No Suitable Option (28.1%)", "375", "13.18 (7.15) t", "2.14 rev | 1.18 off", "Decisiveness: 2.89", "Expl: 1.94"],
             ["Outcome 3: Undecided / Exploring (6.2%)", "84", "15.22 (6.88) t", "2.79 rev | 1.77 off", "Decisiveness: 2.41", "Expl: 3.12"],
@@ -686,24 +686,24 @@ def build_slides_part1(D, ctx):
         col_widths=[2.35, 0.68, 1.05, 1.05, 1.00, 0.85],
         font_size=8.4,
         align_left_cols=(0,),
-        highlight_rows=(0, 5, 6, 7),
+        highlight_rows=(0, 4, 5, 6, 7),
     )
     D.add_card(
         s, 6.00, 4.50, 6.98, 1.76,
         title="Key Analytical Insights from Univariate & Outcome-Stratified EDA",
         header_bg=NAVY,
         bullets=[
-            "<b>1. Consultative Dispersion & Party Mix:</b> Frames exhibits 51% wider turn dispersion than MultiWOZ (`SD = 6.74 vs. 4.46`) across diverse party types (`38.4% Solo/Couple, 25.0% Family with Children, 36.6% Multi-Adult Group`) and right-skewed budgets (`Skew = +2.14`).",
+            "<b>1. Consultative Dispersion & Right-Skewed Budgets (`Panel C`):</b> Frames exhibits 51% wider turn dispersion (`SD = 6.74 vs. 4.46`) and right-skewed stated numeric budgets (`n = 693, Median = $3,400 < Mean = $5,338, Skew = +2.14`).",
             "<b>2. Golden vs. Held-Out Partition Balance:</b> `D_gold (14.94t)` and `D_test (14.81t)` are statistically indistinguishable (`Welch t = 0.32, p = .748`), confirming an unbiased 70/30 split.",
-            "<b>3. Crucial Outcome Asymmetry:</b> `No Suitable Option` sessions are shorter (`13.18t vs. 15.61t Booked, F = 17.42, p < .001`) with 46% fewer package offers (`1.18 vs. 2.19`) because rigid budget/star conflicts terminate early when unresolved.",
+            "<b>3. Crucial Outcome Asymmetry (`Panel D`):</b> `No Suitable Option` sessions (`28.1%`) fail early (`10.2t`, `1.0` offer) when a tight `$3,400` median budget collides with 4-/5-star hotel prices.",
         ],
         font_size=8.9,
     )
     D.add_callout(
-        s, 0.35, 6.38, 12.63, 0.74,
-        "<b>Solution Approach Alignment (`Why EDA Dictates RQ1-Identify Truncation & RQ4-Optimize Log-Turns`):</b> "
-        "Because session resolution (`Booked` vs. `No Suitable Option`) strongly alters total turns (`F = 17.42, p < .001`), clustering whole dialogues in `RQ1-Identify` would leak end-of-chat outcomes (<b>Red path</b>)—requiring <b>prefix truncation (`M = 9`) and excluding `outcome` (`Field 14`) from clustering</b>! Meanwhile, right-skewed turn/offer counts motivate `ln(Turns)` in `RQ4-Optimize`.",
-        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.2,
+        s, 0.35, 6.32, 12.63, 0.80,
+        "<b>Solution Approach Alignment (`Panel C Budget & Panel D Outcome → RQ1-Identify, RQ3-Govern & RQ4-Optimize`):</b> "
+        "(1) <b>Panel C (`Stated Trip Budget, Median = $3,400 vs. Mean = $5,338`):</b> Explains why `price_sensitivity` separates `Rigid-Constraint Seekers` from `Open Explorers` in `RQ1-Identify`, grounds `Rule 5 (Min Budget)` in `RQ3-Govern`, and explains why `28.1%` of chats in <b>Panel D</b> fail with `No Option` when tight budgets collide with 5-star prices—directly motivating <b>Dual Trade-Off quoting in `RQ4-Optimize`</b>; (2) <b>Panel D Outcome Asymmetry (`F = 17.42, p < .001`):</b> Requires <b>prefix truncation (`M = 9`) and excluding `outcome` (`Field 14`)</b> in `RQ1-Identify` to prevent outcome leakage.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=8.5,
     )
 
     # =========================================================================

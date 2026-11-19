@@ -1142,7 +1142,7 @@ def build_slides_part3(D, ctx):
             [
                 "RQ1-Identify: IDENTIFY\n(Trajectory Clustering &\nEarly Prefix Routing)",
                 "Used <b>SBERT</b> (Reimers & Gurevych, 2019), <b>Gemini Embeddings</b> (Lee et al., 2025), <b>K-Means / Ward / HDBSCAN</b> (McInnes et al., 2017), <b>Bootstrap ARI</b> (Hennig, 2007), and <b>zero-temp LLM coding</b> (Gilardi et al., 2023).",
-                "<b>Original Contribution 1:</b> Proved whole-dialogue travel clustering is confounded by wizard identity (`V = .45`) and session outcome (`V = .29 → κ = .24`). Designed the <b>prefix-truncated (`M = 9`) `46-d Blocks` representation</b>, 3-tier feature importance (`η², ‖β‖₂, Δκ`), and L1 `RefinedArchetypeRouter` (`ARI = .89`, Test `κ = .535 to .958`, `ROC-AUC = .863 to .998`).",
+                "<b>Original Contribution 1:</b> Proved whole-dialogue travel clustering is confounded by wizard identity (`V = .45`) and session outcome (`V = .29 → κ = .24`). Designed the <b>prefix-truncated (`M = 9`) `46-d Blocks` representation</b>, 3-tier feature importance (`η², ‖β‖₂, Δκ`), and `RefinedArchetypeRouter` (`ARI = .89`, Test `κ = .535 to .958`, `ROC-AUC = .871 to .999`).",
             ],
             [
                 "RQ2-Personalize: PERSONALIZE\n(Archetype-Routed\nFAISS Few-Shot ICL)",
@@ -1252,7 +1252,7 @@ def build_slides_part3(D, ctx):
             (1, "Total turns average `14.90 (Mdn = 15.0)`: `96.0%` have `≥ 5` total turns (`≥ 3` user msgs) and `83.2%` have `≥ 9` total turns (`≥ 5` user msgs)."),
             "<b>Are Predictions Wrong When `M < 9`? No (`Table 12`):</b>",
             (1, "• <b>`m = 3` user msgs (`≈ 5` turns):</b> `59.4%` overall (`κ = .359`); <b>`87.5%` on short chats (`≤ 3` user msgs)</b>!"),
-            (1, "• <b>`m = 5` user msgs (`≈ 9` turns — RQ2-Personalize Runtime):</b> `70.1%` overall (`κ = .535, ROC-AUC = .863`); <b>`81.8%` on `≤ 5`-msg chats</b> & `67.8%` on `> 5`-msg chats—already strong enough to yield `p < .001` in RQ2-Personalize!"),
+            (1, "• <b>`m = 5` user msgs (`≈ 9` turns — RQ2-Personalize Runtime):</b> `70.1%` overall (`κ = .535, ROC-AUC = .871`); <b>`81.8%` on `≤ 5`-msg chats</b> & `67.8%` on `> 5`-msg chats—already strong enough to yield `p < .001` in RQ2-Personalize!"),
             (1, "• <b>`m = 7` user msgs (`≈ 13` turns):</b> `82.0%` overall (`κ = .722`); `93.2%` on `≤ 7`-msg chats."),
             (1, "• <b>`m = 9` user msgs (`min(M, 9)` cap):</b> `97.3%` overall (`κ = .958, ROC-AUC = .998`)."),
         ],
@@ -1518,7 +1518,558 @@ def build_slides_part3(D, ctx):
     )
 
     # =========================================================================
-    # SLIDE 66: CONCLUDING SUMMARY, REPRODUCIBILITY INVENTORY & OPEN FLOOR
+    # SLIDE 66: DEFENSE Q&A #12A (RQ4 BACKUP) — CLOSED-LOOP SIMULATION ORCHESTRATION
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #12A (RQ4-Optimize Backup): Closed-Loop Simulation Orchestration",
+        "Who runs the closed loop (`step4_rq4_simulation.py`), how Agent & Customer LLMs interact, and the post-hoc role of the Judge LLM",
+        notes="Explain the exact closed-loop orchestration in step4_rq4_simulation.py: deterministic Python loop controller, two gemini-2.5-flash participants (Agent & Customer Simulator), finite MAX_EXCHANGES=11 bound, and post-hoc-only blind Judge LLM (gemini-2.5-pro).",
+    )
+
+    def _add_loop_actor(left, top, width, height, hdr_col, bg_col, bdr_col, title_txt, body_lines):
+        card = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left), Inches(top), Inches(width), Inches(height))
+        card.adjustments[0] = 0.04
+        card.fill.solid()
+        card.fill.fore_color.rgb = bg_col
+        card.line.color.rgb = bdr_col
+        card.line.width = Pt(1.4)
+
+        hdr_h = 0.34
+        hdr = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(left), Inches(top), Inches(width), Inches(hdr_h))
+        hdr.adjustments[0] = 0.04
+        hdr.fill.solid()
+        hdr.fill.fore_color.rgb = hdr_col
+        hdr.line.fill.background()
+        tf_h = hdr.text_frame
+        tf_h.word_wrap = True
+        tf_h.vertical_anchor = MSO_ANCHOR.MIDDLE
+        tf_h.margin_left = tf_h.margin_right = Inches(0.05)
+        p_h = tf_h.paragraphs[0]
+        p_h.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p_h, title_txt, font_size=7.6, color=WHITE, bold=True)
+
+        tb = s.shapes.add_textbox(Inches(left + 0.05), Inches(top + hdr_h + 0.03), Inches(width - 0.10), Inches(height - hdr_h - 0.05))
+        tf = tb.text_frame
+        tf.word_wrap = True
+        tf.margin_left = tf.margin_right = Inches(0.02)
+        tf.margin_top = tf.margin_bottom = Inches(0.01)
+        for idx_l, ln in enumerate(body_lines):
+            p = tf.paragraphs[0] if idx_l == 0 else tf.add_paragraph()
+            p.space_after = Pt(1.5)
+            _add_formatted_runs(p, ln, font_size=7.1, color=DARK)
+
+    def _add_loop_arrow(left, top, width, label_top, label_bot, col=NAVY, two_way=False):
+        shp_type = MSO_SHAPE.LEFT_RIGHT_ARROW if two_way else MSO_SHAPE.RIGHT_ARROW
+        arr = s.shapes.add_shape(shp_type, Inches(left), Inches(top + 0.78), Inches(width), Inches(0.24))
+        arr.fill.solid()
+        arr.fill.fore_color.rgb = col
+        arr.line.fill.background()
+        tb1 = s.shapes.add_textbox(Inches(left - 0.08), Inches(top + 0.34), Inches(width + 0.16), Inches(0.42))
+        tf1 = tb1.text_frame
+        tf1.word_wrap = True
+        tf1.margin_left = tf1.margin_right = tf1.margin_top = tf1.margin_bottom = Inches(0)
+        p1 = tf1.paragraphs[0]
+        p1.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p1, label_top, font_size=6.5, color=col, bold=True)
+
+        tb2 = s.shapes.add_textbox(Inches(left - 0.08), Inches(top + 1.05), Inches(width + 0.16), Inches(0.55))
+        tf2 = tb2.text_frame
+        tf2.word_wrap = True
+        tf2.margin_left = tf2.margin_right = tf2.margin_top = tf2.margin_bottom = Inches(0)
+        p2 = tf2.paragraphs[0]
+        p2.alignment = PP_ALIGN.CENTER
+        _add_formatted_runs(p2, label_bot, font_size=6.3, color=DARK)
+
+    TOP_Y, BOX_H = 1.46, 2.15
+    _add_loop_actor(
+        0.35, TOP_Y, 2.20, BOX_H, NAVY, CARD_BG, NAVY,
+        "1. Python Loop Harness\n(simulate_single_dialogue)",
+        [
+            "• <b>Deterministic Controller:</b> Runs `for ex_idx in range(MAX_EXCHANGES = 11)` (max 23 turns, `seed = 42`).",
+            "• <b>Slot Tracking:</b> `detect_informed_slots()` updates `informed_slots` after every User turn.",
+            "• <b>RER Audit:</b> `detect_redundant_request()` flags any repeat slot question.",
+        ],
+    )
+    _add_loop_arrow(2.57, TOP_Y, 0.36, "Update\nSlots", "Track\nLedger", NAVY, two_way=False)
+    _add_loop_actor(
+        2.95, TOP_Y, 2.28, BOX_H, TEAL, CARD_ALT, TEAL,
+        "2. Upstream Cascade\n(RQ1–RQ3 Artifacts)",
+        [
+            "• <b>`RQ1-Identify`:</b> `RefinedArchetypeRouter` (`DB / OE / RCS`).",
+            "• <b>`RQ2-Personalize`:</b> `[SLOT]`-masked FAISS exemplars (`k = 3`).",
+            "• <b>`RQ3-Govern & RQ4`:</b> `Verified Informed Slot Ledger` + `Archetype Turn-Economy Policy`.",
+        ],
+    )
+    _add_loop_arrow(5.25, TOP_Y, 0.36, "Inject\nPolicy", "4-Option\nInventory", TEAL, two_way=False)
+    _add_loop_actor(
+        5.63, TOP_Y, 2.30, BOX_H, GREEN, GREEN_BG, GREEN,
+        "3. Travel Agent LLM\n(gemini-2.5-flash, T=0.2)",
+        [
+            "• <b>Arm 1 (`Zero-Shot`):</b> Step-by-step intake checklist; presents 1 package at a time (no ledger).",
+            "• <b>Arm 2 (`Cluster-Adaptive`):</b> Checks Slot Ledger (`0% RER`) + presents persona-matched quote (`Options A/B/C/D`).",
+        ],
+    )
+    _add_loop_arrow(7.95, TOP_Y, 0.42, "Live Turn\nExchange", "Turn 1..T\n(No Skips!)", CORAL, two_way=True)
+    _add_loop_actor(
+        8.39, TOP_Y, 2.30, BOX_H, BLUE, CARD_BG, BLUE,
+        "4. Customer Simulator LLM\n(gemini-2.5-flash, T=0.2)",
+        [
+            "• <b>Turn 1 Seed:</b> States `Origin, Dest, Date, Duration, Adults` (`Budget` withheld until asked).",
+            "• <b>Persona Rules:</b> Follows `USER_PERSONA_INSTRUCTIONS[arch]`.",
+            "• <b>Closure:</b> Outputs `[ACCEPT_BOOKING]` once budget + persona quote criteria are met.",
+        ],
+    )
+    _add_loop_arrow(10.71, TOP_Y, 0.36, "After Loop\nEnds Only", "n = 45\nBlind Audit", GOLD, two_way=False)
+    _add_loop_actor(
+        11.09, TOP_Y, 1.89, BOX_H, CORAL, RED_BG, GOLD,
+        "5. Blind Judge LLM\n(gemini-2.5-pro, T=0)",
+        [
+            "• <b>NOT in the Loop!</b> Never controls or stops the conversation.",
+            "• <b>Post-Hoc Audit Only:</b> Blindly classifies `n = 45` finished transcripts (`95.6%` acc., `κ = .933`).",
+        ],
+    )
+
+    D.add_card(
+        s, 0.35, 3.74, 4.05, 2.52,
+        title="Q1: Who Runs the Closed Loop?\n(Deterministic Python Harness — NOT Judge LLM)",
+        header_bg=NAVY,
+        bullets=[
+            "<b>Python Harness (`step4_rq4_simulation.py`):</b>",
+            (1, "Orchestrates the live alternating loop between the <b>Agent LLM</b> and the <b>Customer Simulator LLM</b> across all `N = 180` held-out test dialogues (`6 cells × 30`)."),
+            "<b>Exact Role of Judge LLM (`gemini-2.5-pro`):</b>",
+            (1, "The Judge LLM is <b>never</b> inside the loop. It runs <i>only after all 180 simulations finish</i> to verify that simulated customers faithfully enacted their assigned persona (`95.6%` accuracy vs. `33.3%` chance, `κ = .933`, `Table C3`)."),
+        ],
+        font_size=8.5,
+    )
+    D.add_card(
+        s, 4.60, 3.74, 4.10, 2.52,
+        title="Q2: Is the Loop Infinite & How Does It Stop?\n(Bounded at MAX_EXCHANGES = 11 + Dual Gate)",
+        header_bg=TEAL,
+        bullets=[
+            "<b>Hard Upper Cap (`MAX_EXCHANGES = 11`):</b>",
+            (1, "The loop is <b>finite</b> (capped at 11 agent–user exchanges = max 23 turns) so no dialogue can run indefinitely."),
+            "<b>Early Quotation Termination (`break` at Line 384):</b>",
+            (1, "After each customer reply, Python checks two mandatory conditions before terminating:"),
+            (2, "1. <b>Slot Gate:</b> `ex_idx >= 1 and 'budget_amount' in informed_slots` (all 6 trip slots, including budget, have been shared)."),
+            (2, "2. <b>Quotation Gate:</b> Customer outputs `[ACCEPT_BOOKING]` after receiving a package quotation that satisfies their persona criteria (`100%` of dialogues completed within 5–11 turns)."),
+        ],
+        font_size=8.5,
+    )
+    D.add_card(
+        s, 8.90, 3.74, 4.08, 2.52,
+        title="Q3: Does the Script Skip Customer Turns?\n(No — 100% Genuine Live LLM Interactions)",
+        header_bg=GREEN,
+        bg_color=GREEN_BG,
+        bullets=[
+            "<b>Zero Skipped or Deleted Turns:</b>",
+            (1, "The Python script <b>never</b> skips, truncates, or fast-forwards customer turns. Every turn counted in `total_turns` is a real LLM generation."),
+            "<b>Why Turn Economy Improves (`7.93 → 5.09 Turns, −35.8%`):</b>",
+            (1, "1. <b>`Verified Informed Slot Ledger`</b> prevents the Agent from wasting turns re-asking or re-confirming already-stated slots (`RER: .109 → .000`)."),
+            (1, "2. <b>`Archetype Turn-Economy Policy`</b> formats the Agent's Turn 4 package quote to match what that specific persona requires to accept in Turn 5 (`5.00–5.27 turns`)."),
+        ],
+        font_size=8.5,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Q&A #12A Takeaway`):</b> "
+        "The RQ4-Optimize closed loop is a 100% live, bounded multi-turn negotiation between the Agent LLM and Customer Simulator LLM—turn savings (`−29.5%` to `−42.7%`) emerge naturally from upstream `RQ1-Identify → RQ3-Govern` intelligence, never from skipping turns.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.2,
+    )
+
+    # =========================================================================
+    # SLIDE 67: DEFENSE Q&A #12B (RQ4 BACKUP) — SLOT FILLING, INVENTORY & QUOTATION ACCEPTANCE RULES
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #12B (RQ4-Optimize Backup): When Does the Customer Accept a Quote?",
+        "How slot completeness (`informed_slots`), the 4-option package inventory (`A/B/C/D`), and persona rules trigger `[ACCEPT_BOOKING]`",
+        notes="Walk through how slot filling and archetype-specific decision criteria work together in step4_rq4_simulation.py so the customer only accepts a quotation when both all slots are filled and their persona trade-off rules are satisfied.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 4.20, 4.78,
+        title="1. Slot-Filling Progression & 4-Option Package\nInventory (`build_inventory_for_goal`)",
+        header_bg=NAVY,
+        bullets=[
+            "<b>How Slots Fill Across Opening Turns:</b>",
+            (1, "• <b>Turn 1 (`USER` Opening):</b> Customer states 5 of 6 goal slots up front: `origin_city`, `destination_city`, `departure_date`, `duration_nights`, and `traveler_count_adults`. <b>`budget_amount` is withheld</b> until the Agent asks for it."),
+            (1, "• <b>Turn 2 (`AGENT`) → Turn 3 (`USER`):</b> When the Agent asks for budget/preferences, the Customer shares `budget_amount` (`$1,500–$2,600`), completing all 6 required slots in `informed_slots`."),
+            "<b>The 4 Package Options Available to Both Arms (Relative to Budget `B`):</b>",
+            (1, "• <b>`Option A (4★ Value Match — Exact Date)`:</b> `0.88 × B` (<b>Fits Budget ✓</b>)"),
+            (1, "• <b>`Option B (3.5★ Boutique w/ Breakfast — Exact Date)`:</b> `0.79 × B` (<b>Fits Budget ✓</b>)"),
+            (1, "• <b>`Option C (5★ Luxury Package — Exact Date)`:</b> `1.18 × B` (<b>OVER Budget by +18% ✗</b>)"),
+            (1, "• <b>`Option D (5★ Flexible-Date Deal — +2 Days Later)`:</b> `0.94 × B` (<b>Fits Budget ✓</b>)"),
+        ],
+        font_size=8.6,
+    )
+    D.add_card(
+        s, 4.70, 1.48, 8.28, 1.52,
+        title="2. How the `Cluster-Adaptive` Prompt Prevents Wasted Turns Before & During Quoting",
+        header_bg=TEAL,
+        bg_color=CARD_ALT,
+        bullets=[
+            (1, "• <b>Mechanism A — `Verified Informed Slot Ledger` (`Lines 328–334`):</b> Passed into every `Cluster-Adaptive` Agent turn: <i>'ALREADY PROVIDED: departure_date, destination_city, duration_nights, origin_city, traveler_count_adults | Remaining Uninformed Slots: budget_amount'</i> (Turn 2) → <i>'Remaining: NONE — present final package offer(s) for immediate booking'</i> (Turn 4). Eliminates redundant confirmation turns (`RER = .000`)."),
+            (1, "• <b>Mechanism B — `CLUSTER_ADAPTIVE_TURN_ECONOMY_POLICY` (`Lines 165–189`):</b> Uses the `RQ1-Identify` routed persona label (`DB / OE / RCS`) to structure the Turn 4 package quotation so it immediately satisfies the customer's exact `[ACCEPT_BOOKING]` rule below:"),
+        ],
+        font_size=8.4,
+    )
+    D.add_table(
+        s, 4.70, 3.08, 8.28, 3.18,
+        headers=[
+            "Customer Archetype\n(Routed by RQ1-Identify)",
+            "Customer Simulator Acceptance Rule\n(`USER_PERSONA_INSTRUCTIONS` → `[ACCEPT_BOOKING]`)",
+            "Why `Zero-Shot` Wastes Turns\n(Mean 7.93t | RER = .109)",
+            "How `Cluster-Adaptive` Closes Fast\n(Mean 5.09t | RER = .000)",
+        ],
+        rows=[
+            [
+                "Decisive Booker\n(n = 30/cell)\nHigh decisiveness (3.97/5)",
+                "If Agent asks 1 slot/confirmation question at a time without quoting a full package, answer only what was asked. <b>Accept (`[ACCEPT_BOOKING]`) as soon as budget is shared AND 1 complete within-budget package is quoted.</b>",
+                "Asks hotel star preference + re-confirms stated slots (<i>'Just to confirm... is that correct?'</i>, `13.6% RER`) before quoting (`7.60 turns`).",
+                "<b>Turn 2:</b> Asks ONLY for budget (`0% RER`).\n<b>Turn 4:</b> Immediately quotes `Option A (4★)` & `Option B (3.5★)` with exact prices → Customer accepts in <b>Turn 5 (`5.00t, −34.2%`)</b>.",
+            ],
+            [
+                "Open Explorer\n(n = 30/cell)\nHigh exploration (2.96/5)",
+                "Refuses to commit if shown only 1 package; asks <i>'What other package or hotel tier options are available?'</i> <b>Accept (`[ACCEPT_BOOKING]`) as soon as ≥ 2 distinct within-budget options (`A, B, or D`) have been presented.</b>",
+                "Presents only 1 option in Turn 4, forcing customer to ask for another option across Turns 5–7 (`7.47 turns`, `6.1% RER`).",
+                "<b>Turn 2:</b> Asks ONLY for budget.\n<b>Turn 4:</b> Presents a <b>side-by-side comparison of 3 options (`Options A, B, & D`) in a SINGLE turn</b> → Customer picks 1 in <b>Turn 5 (`5.27t, −29.5%`)</b>.",
+            ],
+            [
+                "Rigid-Constraint Seeker\n(n = 30/cell)\nLow flexibility (2.20/5)",
+                "Insists on <b>exact date + 5★ luxury under strict budget</b> (`Option C` is over budget!). If Agent flags `Option C` as over budget or offers only shifted `Option D` without `Option A`, pushes back. <b>Accepts once feasible `Option A (4★ exact date)` is offered.</b>",
+                "Re-confirms slots (`13.0% RER`), quotes over-budget `Option C` alone or `Option D` alone, triggering multi-turn pushback (`8.73 turns`).",
+                "<b>Turn 2:</b> Asks ONLY for budget.\n<b>Turn 4:</b> States `Option C (5★ exact)` exceeds budget AND <b>simultaneously quotes `Option A (4★ exact)` + `Option D (5★ +2d)`</b> → Customer accepts `Option A` in <b>Turn 5 (`5.00t, −42.7%`)</b>.",
+            ],
+        ],
+        col_widths=[1.55, 2.45, 2.05, 2.23],
+        font_size=7.6,
+        align_left_cols=(0, 1, 2, 3),
+        highlight_rows=(0, 1, 2),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Q&A #12B Takeaway`):</b> "
+        "The Agent never sends an unsolicited quote before slots are filled, and the Customer never accepts until both `budget_amount` is shared and their archetype's trade-off criteria are met—proving that persona-aware quoting drives the `29.5%–42.7%` turn reduction.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.2,
+    )
+
+    # =========================================================================
+    # SLIDE 68: DEFENSE Q&A #12C (RQ4 BACKUP) — CONCRETE TURN-BY-TURN TRANSCRIPT COMPARISON
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #12C (RQ4-Optimize Backup): Turn-by-Turn Transcript Trace (9 vs. 5 Turns)",
+        "Actual cached dialogues from `data/final/rq4_sim_full.jsonl` (`Rigid-Constraint Seeker`) showing where `Zero-Shot` wastes 4 extra turns",
+        notes="Walk through this side-by-side transcript from data/final/rq4_sim_full.jsonl turn by turn to show exactly how Turn 4 re-confirmation and Turn 6 single-option failure inflate Zero-Shot to 9 turns vs. 5 turns in Cluster-Adaptive.",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 4.82,
+        headers=[
+            "Turn & Speaker",
+            "`Zero-Shot` Baseline Transcript (9 Turns, RER = 0.250)\n[No Slot Ledger | Generic Step-by-Step Checklist Prompt]",
+            "`Cluster-Adaptive Few-Shot + Slot Ledger` (5 Turns, RER = 0.000)\n[Routed as `Rigid-Constraint Seeker` | Active Slot Ledger]",
+            "Orchestration & Turn-Economy Diagnostic\n(Why the Paths Diverge)",
+        ],
+        rows=[
+            [
+                "Turn 1\n[USER]",
+                "<i>'Hi, I am looking to book a 7 nights trip from Chicago to Hamburg departing August 18 for 2 adults.'</i>",
+                "<i>'Hi, I am looking to book a 7 nights trip from Toronto to Porto departing August 18 for 4 adults.'</i>",
+                "<b>5 Slots Informed Up Front:</b> `origin, dest, date, duration, adults` added to `informed_slots`. `budget_amount` is still missing.",
+            ],
+            [
+                "Turn 2\n[AGENT]",
+                "<i>'Great! ... could you please tell me your preferred hotel star rating and your budget for the trip?'</i>",
+                "<i>'What is your budget for this trip?'</i>",
+                "<b>Slot Ledger Precision:</b> `Cluster-Adaptive` sees only `budget_amount` is missing and asks a crisp 7-word question (`0% RER`).",
+            ],
+            [
+                "Turn 3\n[USER]",
+                "<i>'I want a 5-star luxury package. My budget is $1500.'</i>",
+                "<i>'My budget is $2600. I want a 5-star luxury package.'</i>",
+                "<b>All 6 Slots Now Filled:</b> `budget_amount` added to `informed_slots`. Customer states strict `5★ + exact date` constraint.",
+            ],
+            [
+                "Turn 4\n[AGENT]\n(Key Pivot!)",
+                "<b>[REDUNDANT RE-ASK ✗]:</b> <i>'Thank you... Just to confirm, you're looking for a 7-night trip from Chicago to Hamburg, departing on August 18th, for 2 adults, with a 5-star hotel preference, and a budget of $1500. Is that all correct?'</i>",
+                "<b>[PROACTIVE DUAL TRADE-OFF QUOTE ✓]:</b> <i>'Unfortunately, the Royal Palace Hotel (5-star) for Aug 18 is $3068, which exceeds your $2600 budget by $468. However, I can offer two alternatives within budget: <b>Option A (4-Star Value Match — Exact Date Aug 18): $2288</b>; <b>Option D (5-Star Flexible-Date — Aug 20): $2444</b>. Which would you prefer?'</i>",
+                "<b>Why `Cluster-Adaptive` Wins Here:</b>\n• `Zero-Shot` wastes Turn 4 re-confirming 5 known slots (`RER = 1/4 = .250`).\n• `Cluster-Adaptive` sees `Remaining Slots: NONE` and applies the `Rigid-Constraint Seeker` policy to resolve the `5★` budget conflict in one turn!",
+            ],
+            [
+                "Turn 5\n[USER]",
+                "<i>'Yes, that is correct.'</i> (Forced to answer redundant confirmation)",
+                "<b><i>'I will take Option A. [ACCEPT_BOOKING]'</i> → LOOP TERMINATES (5 Turns Total!)</b>",
+                "<b>`Cluster-Adaptive` Closes at Turn 5 (`−44.4%` turns):</b> Both `budget_amount` and feasible `Option A` are satisfied!",
+            ],
+            [
+                "Turn 6\n[AGENT]",
+                "<b>[SINGLE-OPTION BOTTLENECK ✗]:</b> <i>'Based on your preference for a 5-star package on Aug 18, I have <b>Option C: Royal Palace Hotel ($1770)</b>. Please note this exceeds your $1500 budget by $270. Would you like to consider this, or explore other options?'</i>",
+                "— (Session Already Completed in Turn 5)",
+                "<b>2nd Wasted Exchange in `Zero-Shot`:</b> Quotes over-budget `Option C` without offering feasible `Option A ($1320)` in the same turn.",
+            ],
+            [
+                "Turn 7 [USER]\nTurn 8 [AGENT]\nTurn 9 [USER]",
+                "<b>Turn 7 [USER]:</b> <i>'Is there a package on August 18 that fits my budget?'</i> (Pushback)\n<b>Turn 8 [AGENT]:</b> <i>'Yes, there are packages on Aug 18 within $1500... Would you consider a 4-star or 3.5-star option?'</i>\n<b>Turn 9 [USER]:</b> <i>'Yes, I will consider a 4-star option on August 18. [ACCEPT_BOOKING]'</i> → <b>LOOP TERMINATES (9 Turns)</b>",
+                "— (Session Already Completed in Turn 5)",
+                "<b>Net Result Across `N = 180` Dialogues:</b>\n• `Zero-Shot`: `8.73` turns (`RCS`), `7.93` overall, `RER = .109`.\n• `Cluster-Adaptive`: `5.00` turns (`RCS`, `−42.7%`), `5.09` overall (`−35.8%`), `RER = .000` (`p < .001`).",
+            ],
+        ],
+        col_widths=[1.25, 4.15, 4.15, 3.08],
+        font_size=7.4,
+        align_left_cols=(0, 1, 2, 3),
+        highlight_rows=(3, 4),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Q&A #12C Takeaway`):</b> "
+        "This side-by-side trace demonstrates visually why `RQ4-Optimize` requires every upstream stage: `RQ1-Identify` routes the `Rigid-Constraint Seeker`, `RQ2-Personalize` calibrates concise pacing, `RQ3-Govern` enforces rules without leakage, and `RQ4-Optimize`'s Slot Ledger + Dual Trade-Off Policy eliminates Turns 4–8.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.1,
+    )
+
+    # =========================================================================
+    # SLIDE 69: DEFENSE Q&A #13 — IS GRADING AGAINST ARCHETYPE CENTROID C_k* FAIR?
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #13: 'Is Grading Zero-Shot & Static Few-Shot Against Archetype Centroid c_k* Fair?'",
+        "Four methodological safeguards proving that RQ2-Personalize style/pacing evaluation is strictly non-circular, plus cluster-free ground-truth metrics",
+        notes="Use this backup slide if a committee member asks whether comparing Zero-Shot and Static Few-Shot against the Archetype Agent-Style Centroid c_k* is biased toward Cluster-Adaptive prompting.",
+    )
+    D.add_card(
+        s, 0.35, 1.48, 6.15, 4.78,
+        title="Four Safeguards Proving Centroid Evaluation Is 100% Fair & Non-Circular",
+        header_bg=NAVY,
+        bullets=[
+            "<b>Safeguard 1 — RQ1 Clustered `USER` Turns Only; `c_k*` Is Built from Human `AGENT` Turns:</b>",
+            (1, "• In `RQ1-Identify`, K-Means (`k = 3`) clustered <b>only the customer's (`USER:`) messages</b> (`step2g_rq1_truncation.py`). Human travel agent (`AGENT:`) replies were <b>100% excluded</b> from clustering!"),
+            (1, "• In `RQ2-Personalize`, the target centroid `c_k*` and word target `μ_k*` are computed from <b>real human travel agent (`AGENT:`) replies</b> in successful `D_gold` bookings (`step2_rq2_refined.py`), not from LLM outputs."),
+            "<b>Safeguard 2 — `Zero-Shot` & `Static` Receive the Exact Same 9-Turn Live Context (`U1..U5, A1..A4`):</b>",
+            (1, "• All 3 conditions read the exact same 5 customer messages (`U1..U5`) and 4 human agent replies (`A1..A4`)."),
+            (1, "• If an unguided LLM could infer customer persona and mirror wizard style naturally from context, `Zero-Shot` had `100%` of the chat history needed to match `c_k*` and `μ_k*`—yet it failed (`cos = .536`, `10.12w` error)."),
+            "<b>Safeguard 3 — Generation Uses Predicted `M = 5` (`k_hat`); Grading Uses True Held-Out `M = 9` (`k*`):</b>",
+            (1, "• At generation time, `Cluster-Adaptive` only sees the router's <b>predicted `M = 5` label `k_hat`</b> on unseen `D_test`, whereas grading scores all 3 prompts against the <b>true `M = 9` reference label `k*`</b>."),
+            "<b>Safeguard 4 — Non-Gemini Evaluators (`all-MiniLM-L6-v2` & Exact Word Count):</b>",
+            (1, "• Primary `style_cos` uses an independent 384-d SBERT encoder (`all-MiniLM-L6-v2`), and `|W_gen − μ_k*|` is exact deterministic word count."),
+        ],
+        font_size=8.6,
+    )
+    D.add_table(
+        s, 6.68, 1.48, 6.30, 2.88,
+        headers=[
+            "Evaluation Metric Across RQs",
+            "Uses Cluster Centroid?",
+            "What It Compares Against (Ruler)",
+            "Empirical Result (Cluster-Adaptive vs. Baselines)",
+        ],
+        rows=[
+            [
+                "RQ2 Primary:\nSBERT Style Cosine (`c_k*`)",
+                "Yes (`D_gold` Human\nAgent Turns)",
+                "Mean vector of human wizard replies to persona `k*` in `D_gold`",
+                "<b>`.603`</b> vs. `.459` Static (`+31.8%`) & `.536` Zero-Shot (`F = 9.79, p < .001`)",
+            ],
+            [
+                "RQ2 Primary:\nPacing Error `|W_gen − μ_k*|`",
+                "Yes (`D_gold` Human\nWord Mean)",
+                "Mean word count of human wizard replies to persona `k*` (`13.8–16.2w`)",
+                "<b>`3.87w` error</b> vs. `6.33w` Static & `10.12w` Zero-Shot (`F = 7.10, p = .002`)",
+            ],
+            [
+                "RQ2 Cluster-Free:\nContextual `BERTScore F1`",
+                "<b>NO (0% Cluster\nInvolvement)</b>",
+                "Exact historical human wizard sentence at Turn 10 (`A5`) of that chat",
+                "<b>`.415` (Highest)</b> vs. `.391` Zero-Shot & `.360` Static Few-Shot",
+            ],
+            [
+                "RQ3 Cluster-Free:\nFactual `Slot F1` & `RAR`",
+                "<b>NO (0% Cluster\nInvolvement)</b>",
+                "Customer's ground-truth trip slots & 5 deterministic `YAML` rules",
+                "<b>`Slot F1 = .952`</b> (`p < .001`), <b>`0.0%` leakage</b>, <b>`98.6%` viol. sens.</b>",
+            ],
+            [
+                "RQ4 Cluster-Free:\nTurns to Quote (`TGC`) & `RER`",
+                "<b>NO (0% Cluster\nInvolvement)</b>",
+                "Total turns until customer outputs `[ACCEPT_BOOKING]` & slot re-asks",
+                "<b>`5.09` vs. `7.93` turns (`−35.8%`, `p < .001`)</b>; <b>`RER = .000` vs. `.109`</b>",
+            ],
+        ],
+        col_widths=[1.48, 1.18, 1.74, 1.90],
+        font_size=8.0,
+        align_left_cols=(0, 1, 2, 3),
+        highlight_rows=(2, 3, 4),
+    )
+    D.add_card(
+        s, 6.68, 4.46, 6.30, 1.80,
+        title="20-Second Verbatim Defense Response if Asked About Centroid Fairness",
+        header_bg=GREEN,
+        bg_color=GREEN_BG,
+        bullets=[
+            "<i>'First, our clusters in RQ1 were formed exclusively on <b>customer (`USER`) messages</b>, whereas the target style centroid `c_k*` in RQ2 is built from <b>real human travel agent (`AGENT`) replies</b> in `D_gold`. Second, `Zero-Shot` and `Static Few-Shot` read the exact same 9-turn conversation prefix—so if they could adapt to the shopper's persona naturally from context, they would match `c_k*`. Third, to guarantee our conclusions never rest on a cluster centroid alone, we also evaluate <b>cluster-free `BERTScore F1`</b> against the exact single human reply in RQ2, <b>factual `Slot F1`</b> in RQ3, and <b>total `Turns to Quotation Agreement` (`−35.8%`)</b> in RQ4.'</i>",
+        ],
+        font_size=8.5,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Q&A #13 Takeaway`):</b> "
+        "Combining persona-centroid alignment (`style_cos`, `|W_gen − μ_k*|`) with completely cluster-free ground-truth benchmarks (`BERTScore F1`, `Slot F1`, `RAR`, `TGC`, `RER`) ensures that `Cluster-Adaptive` superiority is proven both stylistically and on hard task outcomes.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.1,
+    )
+
+    # =========================================================================
+    # SLIDE 70: DEFENSE Q&A #14A — RQ1–RQ4 TESTING PROTOCOLS (1-TURN VS. MULTI-TURN & MODEL INDEPENDENCE)
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #14A: RQ1–RQ4 Testing Protocols (1-Turn Prefix vs. Multi-Turn Loop)",
+        "Documented in Appendix H (Table H1): How each RQ defines a dialogue unit, start/end boundaries, and Gemini vs. non-Gemini models",
+        notes="Use this slide to explain why RQ2 and RQ3 evaluate a single immediate Agent turn at the end of a frozen conversation prefix, whereas RQ4 runs a full multi-turn closed-loop conversation until [ACCEPT_BOOKING].",
+    )
+    D.add_table(
+        s, 0.35, 1.46, 12.63, 3.12,
+        headers=[
+            "RQ & Stage",
+            "Unit of Analysis & Sample (N)",
+            "Turn Horizon (1-Turn vs. Multi-Turn)",
+            "Start & End of Conversation in Test Harness",
+            "Generator, Encoder & Evaluator Independence\n(Non-Gemini vs. Gemini vs. Deterministic)",
+        ],
+        rows=[
+            [
+                "RQ1-Identify\n(`step2_rq1_*.py`,\n`routing.py`)",
+                "53 subsamples of `n = 500` on `D_gold` (`N = 159`); router tested on `D_test` (`n = 401`)",
+                "<b>Offline Opening User Prefix Only</b>\n(`0` LLM replies generated)",
+                "• <b>Start:</b> Customer Turn 1.\n• <b>End:</b> Truncated after first `M ∈ {3, 5, 7, 9}` `USER:` messages (`AGENT:` turns excluded).",
+                "• <b>Features:</b> Gemini `PCA-20` + `gemini-2.5-flash` 13-field codebook.\n• <b>Evaluators:</b> <b>100% Deterministic Math</b> (`Silhouette`, `DB`, `ARI`, `κ`, `Softmax OvR ROC-AUC`).",
+            ],
+            [
+                "RQ2-Personalize\n(`step2_rq2_refined.py`)",
+                "`N = 33` held-out prefixes from `D_test` (`11/archetype × 3 prompts = 99` runs)",
+                "<b>Single-Turn Prefix Completion</b>\n(<b>Exactly 1 immediate Agent turn</b> generated)",
+                "• <b>Start:</b> Real archival Turns 1–9 (`U1..U5, A1..A4`).\n• <b>End:</b> Stops immediately after LLM generates <b>Turn 10 (`A5`, 1–3 sentences)</b>.",
+                "• <b>Generator:</b> `gemini-2.5-flash`.\n• <b>Primary Evaluators (Non-Gemini):</b> 384-d SBERT (`all-MiniLM-L6-v2`), `roberta-large` BERTScore, & exact word count.\n• <b>Secondary Check:</b> Gemini 3,072-d cosine.",
+            ],
+            [
+                "RQ3-Govern\n(`step3_rq3_experiment.py`)",
+                "`N = 144` evaluations (`36` held-out prefixes × `4` cells; `18` viol. + `18` comp./cell)",
+                "<b>Single-Turn Prefix Completion</b>\n(<b>Exactly 1 immediate Agent turn</b> generated)",
+                "• <b>Start:</b> Real archival Turns `1..k` (`k ∈ {5..9}`, after Tier-1 slots stated) + active Tier-1/Tier-2 state.\n• <b>End:</b> Stops immediately after LLM generates <b>next 1 Agent turn</b>.",
+                "• <b>Generator:</b> `gemini-2.5-flash` + Python `YAML` engine (`rules_enterprise.yaml`).\n• <b>Evaluators:</b> <b>Deterministic Python Set/Regex</b> (`ELR`, `Slot F1`, `det_pass`) + Dual Judge (`gemini-2.5-pro` audit, `κ = .917`).",
+            ],
+            [
+                "RQ4-Optimize\n(`step4_rq4_simulation.py`)",
+                "`N = 180` distinct seed dialogues (`6` cells × `n = 30` unique seeds/cell; `2 × 3`)",
+                "<b>Full Multi-Turn Closed-Loop Simulation</b>\n(`5 to 14` alternating turns)",
+                "• <b>Start:</b> Turn 1 customer opening request.\n• <b>End:</b> Multi-turn loop continues until customer simulator outputs <b>`[ACCEPT_BOOKING]`</b> (min 5, cap 14 turns).",
+                "• <b>Simulator & Agent:</b> `gemini-2.5-flash` + Python `Slot Ledger` & `Inventory DB`.\n• <b>Evaluators:</b> <b>100% Deterministic Turn Counter (`TGC`, `ln TGC`) & Regex (`RER`)</b>; blind `gemini-2.5-pro` persona audit (`κ = .933`).",
+            ],
+        ],
+        col_widths=[1.50, 1.85, 1.95, 3.45, 3.88],
+        font_size=7.6,
+        align_left_cols=(0, 1, 2, 3, 4),
+        highlight_rows=(1, 2, 3),
+    )
+    D.add_card(
+        s, 0.35, 4.68, 6.18, 1.60,
+        title="Why RQ2 & RQ3 Generate Exactly 1 Single Immediate Agent Turn",
+        header_bg=NAVY,
+        bullets=[
+            "<b>1. Matched-Prefix Experimental Control:</b> Slicing a frozen prefix (`Turns 1..k`) guarantees that all prompting/governance arms respond to the <b>exact same conversation history</b>. If allowed to run over multiple incremental turns, histories would diverge and invalidate RM-ANOVA / 2×2 ANOVA.",
+            "<b>2. Zero-Tolerance Transactional Gatekeeping (RQ3):</b> When a customer's active booking state triggers a fatal/warning rule (`7-day` international visa window, `11 > 8 FIT adults` capacity, or `25%` discount), an enterprise agent <b>must enforce that rule on the immediate response turn</b>—it cannot stay silent and hope to mention it 3 turns later!",
+        ],
+        font_size=8.2,
+    )
+    D.add_card(
+        s, 6.68, 4.68, 6.30, 1.60,
+        title="Why RQ4 Runs a Full Multi-Turn Closed-Loop Conversation",
+        header_bg=TEAL,
+        bullets=[
+            "<b>1. Cumulative Trajectory Outcomes (`TGC` & `RER`):</b> Conversational turn economy (`Turns to Quotation Agreement`) and `Redundant Elicitation Rate` (`RER`) emerge across multiple turns of slot elicitation and package trade-off negotiation.",
+            "<b>2. Identical Governance & Slot Ledger Across Every Turn:</b> In `RQ4-Optimize`, the Python `Verified Informed Slot Ledger` and persona package policies run on <b>every assistant turn</b> from `Turn 2` until the customer simulator verifies all 6 slots + persona trade-off rules and outputs <b>`[ACCEPT_BOOKING]`</b>.",
+        ],
+        font_size=8.2,
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Appendix H, Table H1`):</b> "
+        "Separating <b>Offline User-Prefix Routing (`RQ1`)</b>, <b>Controlled Single-Turn Prefix Completion (`RQ2` & `RQ3`)</b>, and <b>Full Multi-Turn Closed-Loop Simulation (`RQ4`)</b> gives us both surgical single-turn internal validity and end-to-end multi-turn operational realism.",
+        bg_color=CALLOUT_BG, border_color=GOLD, font_size=9.1,
+    )
+
+    # =========================================================================
+    # SLIDE 71: DEFENSE Q&A #14B — DVs: CALCULATION METHODOLOGY, PRIMARY VS. SECONDARY & STATISTICAL RATIONALE
+    # =========================================================================
+    s = D.content_slide(
+        "11. Anticipated Defense Committee Q&A Bank",
+        "Defense Q&A #14B: DVs — Calculation Methodology & Statistical Rationale",
+        "Documented in Appendix H (Table H2): Why each DV is needed (Primary vs. Secondary, ANOVA type, variance & zero-cell guards) and how it is calculated",
+        notes="Walk through this master table from Appendix H (Table H2) to explain why each DV is classified as Primary vs. Secondary, why specific parametric/non-parametric/HC3 tests are required, and how each metric is computed.",
+    )
+    D.add_table(
+        s, 0.35, 1.44, 12.63, 4.84,
+        headers=[
+            "RQ & Dependent Variable (DV)",
+            "Test Hierarchy\n(Primary vs. Secondary)",
+            "Why This DV & Statistical Test Are Necessary\n(ANOVA Type, Unequal Variance, Skewness, & Zero-Variance Cell Guards)",
+            "Exact Calculation Methodology & Evaluator Family\n(Non-Gemini vs. Gemini vs. Deterministic Python/Regex)",
+        ],
+        rows=[
+            [
+                "<b>RQ1:</b> Cosine Silhouette `s ∈ [−1, 1]`",
+                "<b>Primary DV</b>\n(Tests `H01`)",
+                "Measures cohesion vs. separation. Because `HDBSCAN` & `K-Means` have <b>unequal variances (`Levene p < .001`)</b> across 53 shared seeds, One-Way ANOVA is paired with <b>Welch's `F`</b>, <b>RM-ANOVA</b>, & non-parametric <b>Kruskal–Wallis `H` / Friedman `χ²`</b>.",
+                "<b>100% Deterministic Math:</b> On each `n = 500` subsample of `D_gold`, compute cosine distance `1 − cos(v_i, v_j)` and average `(b_i − a_i) / max(a_i, b_i)` across assigned points.",
+            ],
+            [
+                "<b>RQ1:</b> `Davies–Bouldin`, `ARI`, `Prefix κ` & `Macro ROC-AUC`",
+                "<b>Secondary & Diagnostic DVs</b>",
+                "Silhouette alone cannot prove resample stability or early Turn-5 routability. `ARI` checks bootstrap stability (`≥ .87`); `κ` & `OvR ROC-AUC` prove out-of-sample `D_test` generalization.",
+                "<b>100% Deterministic Math:</b> `DB` = scatter/separation ratio; `ARI` = 200 × 80% subsample stability; `κ` & `ROC-AUC` from L2 logistic router Softmax probabilities `P(y=c | x_M)` on `D_test`.",
+            ],
+            [
+                "<b>RQ2:</b> De-lexicalized SBERT Style Cosine (`c_k*`)",
+                "<b>Primary DV</b>\n(Tests `H02`)",
+                "Evaluating 3 prompts on the same 33 prefixes induces <b>within-dialogue correlation (`ρ ≈ .50`)</b> → requires <b>One-Way RM-ANOVA (`Greenhouse–Geisser ε`)</b>, <b>Holm paired `t` (`d_z`)</b>, & <b>Friedman `χ²(2)`</b>. Uses a <b>Non-Gemini encoder</b> for 0% generator bias.",
+                "<b>Non-Gemini Neural (`all-MiniLM-L6-v2` 384-d):</b> Mask entities to `[SLOT]` in generated Turn-10 reply and in `D_gold` human `AGENT` turns of persona `k*`; compute `cos(e_gen, c_k*)`.",
+            ],
+            [
+                "<b>RQ2:</b> Pacing Error `|W_gen − μ_k*|` & `BERTScore F1`",
+                "<b>Co-Primary & Cluster-Free Secondary</b>",
+                "Pacing Error tests verbosity control in exact words. `BERTScore F1` provides a <b>100% cluster-free check</b> against exact archival human turn `A5`. Gemini 3,072-d cosine is a <b>Secondary sensitivity check</b>.",
+                "<b>Deterministic Word Count & Non-Gemini `roberta-large`:</b> `|W_gen − μ_k*|` vs. `D_gold` human word norm (`13.8–16.2w`); `BERTScore F1` token alignment vs. exact historical human reply `A5`.",
+            ],
+            [
+                "<b>RQ3:</b> Rule Adherence Rate (`RAR`: Viol. Sens. `n=72` & Spec. `n=72`)",
+                "<b>Primary DV 1</b>\n(Tests `H03`)",
+                "Tested via <b>2×2 Factorial OLS ANOVA</b> (Type II/III `Sum` contrasts). Overall `RAR` blends 18 violating + 18 compliant chats/cell → <b>Subgroup Split</b> isolates `Violation Sensitivity (5.6% → 98.6%)` from ceiling `Specificity (100%, SD = 0.00)`.",
+                "<b>Deterministic Regex + Dual Judge:</b> Checks if active triggered `YAML` rules (`rules_enterprise.yaml`) are enforced on the single turn (`det_pass` regex + `gemini-2.5-flash` audited by `gemini-2.5-pro`, `κ = .917`).",
+            ],
+            [
+                "<b>RQ3:</b> Entity Leakage (`ELR`) & Factual `Slot F1`",
+                "<b>Primary DVs 2 & 3</b>\n(Tests `H03`) + Style Check",
+                "Governed cells hit an <b>exact zero-variance boundary floor (`ELR = 0.000, SD = 0.000`)</b> while unguarded adaptive leaks at `.359` → violates OLS homoscedasticity, requiring <b>MacKinnon–White `HC3` SEs</b> & non-parametric <b>`ART` Factorial ANOVA</b>.",
+                "<b>100% Deterministic Python Set Verifiers (`metrics.py`):</b> `ELR = |E_resp ∩ (E_ex \\ E_diag)| / max(1, |E_resp|)`; `Slot F1` = harmonic mean of precision & recall over active Tier-1 customer slots.",
+            ],
+            [
+                "<b>RQ4:</b> Log Turns `ln(TGC)`, Raw Turns `TGC` & `RER`",
+                "<b>Primary Parametric (`ln TGC`), Co-Primary (`TGC`) & Sec. (`RER`)</b>",
+                "Tested via <b>2×3 Between-Subjects ANOVA</b> (`N = 180`). Because turn counts are right-skewed and two adaptive cells hit the <b>5.00-turn floor (`SD = 0.00`)</b> and <b>`RER = .000 (SD = .000)`</b>, `ln(TGC)` stabilizes variance while <b>`HC3` SEs</b>, <b>`ART` ANOVA</b> & <b>Mann–Whitney `U`</b> guard zero-variance cells.",
+                "<b>100% Deterministic Turn Counter & Regex:</b> Count alternating `USER + AGENT` turns until `[ACCEPT_BOOKING]` (`min = 5`), take `ln(TGC)`, and divide agent turns re-asking known `informed_slots` by total agent turns (`RER`).",
+            ],
+        ],
+        col_widths=[2.05, 1.55, 4.68, 4.35],
+        font_size=7.3,
+        align_left_cols=(0, 1, 2, 3),
+        highlight_rows=(2, 4, 5, 6),
+    )
+    D.add_callout(
+        s, 0.35, 6.38, 12.63, 0.74,
+        "<b>Solution Approach Alignment (`Appendix H, Table H2`):</b> "
+        "Every RQ pairs a <b>model-independent Primary DV</b> (`Silhouette`, `SBERT Cosine`, `RAR/ELR/Slot F1`, `ln TGC`) with <b>cluster-free/cross-encoder Secondary DVs</b> and <b>zero-variance/skewness statistical guards (`Welch`, `Greenhouse–Geisser`, `HC3`, `ART`)</b>.",
+        bg_color=GREEN_BG, border_color=GREEN, font_size=9.1,
+    )
+
+    # =========================================================================
+    # SLIDE 72: CONCLUDING SUMMARY, REPRODUCIBILITY INVENTORY & OPEN FLOOR
     # =========================================================================
     s = D.content_slide(
         "11. Concluding Summary & Defense Open Floor",
@@ -1532,7 +2083,7 @@ def build_slides_part3(D, ctx):
         header_bg=NAVY,
         bullets=[
             "<b>1. RQ1-IDENTIFY ( Early Archetype Routing):</b>",
-            (1, "Truncating to opening user messages (`M = 9`) and fusing `PCA-20` Gemini embeddings with 13 validated LLM behavioral fields (`46-d Blocks`, `η² = .322–.524`) yields 3 stable personas (<b>`ARI = .89 / .87`</b>), 3 partitioned FAISS sub-indices, and held-out prefix routing of <b>`κ = .535 (M=5, ROC-AUC = .863)` to `κ = .958 (M=9, 97.3%, ROC-AUC = .998)`</b>."),
+            (1, "Truncating to opening user messages (`M = 9`) and fusing `PCA-20` Gemini embeddings with 13 validated LLM behavioral fields (`46-d Blocks`, `η² = .150–.580`) yields 3 stable personas (<b>`ARI = .89 / .87`</b>), 3 partitioned FAISS sub-indices, and held-out prefix routing of <b>`κ = .535 (M=5, ROC-AUC = .871)` to `κ = .958 (M=9, 97.3%, ROC-AUC = .999)`</b>."),
             "<b>2. RQ2-PERSONALIZE ( Style & Pacing ICL):</b>",
             (1, "Contrasting Primary (`p = .211` Null) vs. Refined (`F = 9.79, p < .001, ηp² = .234`) archetypes proves that `[SLOT]`-masked FAISS retrieval + pacing directives lift style convergence (`+31.8%` over static, `d_z = 0.74`) and cut pacing error to <b>`3.87 words (p = .007)`</b>."),
             "<b>3. RQ3-GOVERN ( Symbolic Policy & Leakage Guard):</b>",
@@ -1549,7 +2100,7 @@ def build_slides_part3(D, ctx):
         bullets=[
             f"<b>GitHub Repository:</b> {REPO}",
             "<b>Complete Final Deliverable Suite (`final/`):</b>",
-            (1, "<b>1. Comprehensive Defense Deck (`QM_640_Defense_Presentation_Sandeep_Surnella.pptx` — 66 Slides):</b> Full 1+ hour defense presentation aligned to the 4-stage solution approach (`Identify → Personalize → Govern → Optimize`), with 5 progressive solution approach diagrams, complete table/figure walkthroughs, doctoral roadmap, and 11 Q&A deep-dives."),
+            (1, "<b>1. Comprehensive Defense Deck (`QM_640_Defense_Presentation_Sandeep_Surnella.pptx` — 72 Slides):</b> Full 1+ hour defense presentation aligned to the 4-stage solution approach (`Identify → Personalize → Govern → Optimize`), with 5 progressive solution approach diagrams, complete table/figure walkthroughs, doctoral roadmap, and 17 Q&A/backup deep-dives."),
             (1, "<b>2. 15-Minute Executive Defense Deck (`QM_640_Defense_Presentation_15Min_Sandeep_Surnella.pptx` — 28 Slides):</b> Condensed executive narrative."),
             (1, "<b>3. Text-to-ANOVA Methodology Reference (`QM_640_RQ_Text_to_ANOVA_Methodology_Reference.pptx` — 19 Slides):</b> Step-by-step mathematical derivations from raw text to noncentral-<i>F</i> power curves."),
             (1, "<b>4. Final Report (`QM_640_Final_Report_Sandeep_Surnella.docx` & `.pdf`):</b> Complete APA 7 manuscript, 5 executed notebooks, and 100% cached JSONL outputs (`seed = 42`)."),

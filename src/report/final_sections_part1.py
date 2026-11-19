@@ -972,7 +972,8 @@ def build_part1(D, ctx, toc_pages=None):
     D.para(
         "These feature importance results are used directly in four analytical decisions: (a) <i>representation pruning "
         "and block weighting (RQ1-Identify stage)</i>, confirming that both the Gemini semantic block (Δκ = .310 at <i>M</i> = 5; "
-        ".674 at <i>M</i> = 9) and the LLM behavioral block (Δκ = .215 at <i>M</i> = 5; .394 at <i>M</i> = 9) are "
+        ".674 at <i>M</i> = 9) and the LLM behavioral blocks (ordinal Δκ = .117 at <i>M</i> = 5, .199 at <i>M</i> = 9; "
+        "combined behavioral Δκ = .151 at <i>M</i> = 5, .317 at <i>M</i> = 9) are "
         "essential while excluding the three outcome/party audit fields prevents target leakage; (b) <i>deterministic "
         "cluster naming (RQ1-Identify stage, Appendix F)</i>, where the top orthogonal behavioral features (<i>exploration_breadth</i> / "
         "<i>destination_flexibility</i>, η<sup>2</sup> = .304/.150, and <i>decisiveness</i>, η<sup>2</sup> = .280) define "
@@ -981,7 +982,8 @@ def build_part1(D, ctx, toc_pages=None):
         "evaluations verify that high-importance features generalize without overfitting; and (d) <i>persona policy and "
         "simulator design (RQ2-Personalize & RQ4-Optimize stages)</i>, where the highest-η<sup>2</sup> features per cluster parameterize the "
         "assistant's pacing directives and the RQ4 blind persona validation rubric. Tables 9 and 10 define the five "
-        "declarative YAML policy rules and all evaluation metrics."
+        "declarative YAML policy rules and all evaluation metrics (see Appendix H, Tables H1 and H2 for the complete "
+        "DVs — Calculation Methodology, 1-turn vs. multi-turn execution protocols, and parametric/non-parametric rationale)."
     )
     D.table(
         "Declarative Enterprise Policy Rules Evaluated in RQ3",
@@ -1012,7 +1014,7 @@ def build_part1(D, ctx, toc_pages=None):
             ["Slot coverage F<sub>1</sub>", "2 · Precision · Recall / (Precision + Recall) over active state slots", "3", "Proportion [0, 1] of active booking slots grounded in generated response"],
             ["Turns to goal & RER", "TGC = total turns (user + assistant) to [ACCEPT_BOOKING] (min = 5); RER = <i>A</i><sub>red</sub> / <i>A</i><sub>tot</sub>", "4", "Lower total/log conversational turns and lower RER indicate superior turn economy"],
         ],
-        note="Parametric ANOVAs are paired with Welch/HC3 robust tests and non-parametric (Kruskal–Wallis, Friedman, Mann–Whitney, ART; Wobbrock et al., 2011) checks.",
+        note="Parametric ANOVAs are paired with Welch/HC3 robust tests and non-parametric (Kruskal–Wallis, Friedman, Mann–Whitney, ART; Wobbrock et al., 2011) checks (complete DVs — Calculation Methodology in Appendix H, Tables H1 and H2).",
         widths=[1.45, 2.85, 0.50, 1.70],
         align=["l", "l", "c", "l"],
         split=True,

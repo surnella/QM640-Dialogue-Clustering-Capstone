@@ -29,8 +29,8 @@ TABLE_PT = 10
 _BACKTICK = re.compile(r"`([^`]+)`")
 _TAG = re.compile(r"(</?(?:i|b|sub|sup|code)>)")
 _URL = re.compile(r"(https?://[^\s<>]+[^\s<>.,;:)\]])")
-_NUM = r"[A-G]?\d+"
-_ANUM = r"[A-G]"
+_NUM = r"[A-H]?\d+"
+_ANUM = r"[A-H]"
 _XREF = re.compile(
     rf"\b(?:(Tables?|Figures?)\s+({_NUM}(?:(?:,\s+and\s+|,\s+|\s+and\s+|–){_NUM})*)|(Appendi(?:x|ces))\s+({_ANUM}(?:(?:,\s+and\s+|,\s+|\s+and\s+|–){_ANUM})*))(?!\w)"
 )
@@ -321,7 +321,7 @@ class APADoc:
         _fmt(p, align=WD_ALIGN_PARAGRAPH.CENTER if level == 1 else WD_ALIGN_PARAGRAPH.LEFT, keep_next=True)
         p.paragraph_format.page_break_before = new_page
         clean = re.sub(r"`([^`]+)`", r"<i>\1</i>", text)
-        m_app = re.fullmatch(r"Appendix\s+([A-G])", clean) if level == 1 else None
+        m_app = re.fullmatch(r"Appendix\s+([A-H])", clean) if level == 1 else None
         if m_app:
             _caption_label(p, "Appendix", m_app.group(1))
         else:

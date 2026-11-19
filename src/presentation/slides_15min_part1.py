@@ -820,7 +820,7 @@ def build_slides_15min_part1(D, ctx):
         s, 0.35, 1.48, 12.63, 4.42,
         headers=["Schema Field Group & Behavioral Attribute (All 16 Fields)", "Archetype 1: Decisive Booker", "Archetype 2: Open Explorer", "Archetype 3: Rigid-Constraint Seeker", "Downstream Prompting & Policy Action (RQ2–RQ4)"],
         rows=[
-            ["Golden (n=933) / Held-Out (n=401) Share", "420 (45.0%) / 165 (41.1%)", "238 (25.5%) / 140 (34.9%)", "275 (29.5%) / 96 (23.9%)", "Balanced partition (smallest cluster = 25.5% > 20% rule)"],
+            ["Golden (n=933) / Held-Out (n=401) Share", "420 (45.0%) / 175 (43.6%)", "238 (25.5%) / 99 (24.7%)", "275 (29.5%) / 127 (31.7%)", "Balanced partition (smallest cluster = 25.5% > 20% rule)"],
             ["Total Turns M (SD) / User Turns M", "14.96 (6.08) / 7.90", "17.99 (6.65) / 9.48", "10.64 (5.68) / 5.79", "Explorers converse 69% longer than Rigid-Constraint Seekers"],
             ["Fields 1–2 (ORD): Dest. / Date Flexibility", "2.54 / 2.57 (Moderate)", "3.49 / 2.77 (Open dest./dates)", "2.20 / 2.18 (Fixed city & dates)", "Offer multi-city alternatives only to Open Explorers"],
             ["Fields 3–4 (ORD): Exploration / Decisiveness", "1.97 (Focused) / 3.97 (Decisive)", "2.96 (Broad) / 2.58 (Deliberative)", "1.59 (Narrow) / 3.23 (Firm)", "Present 2–3 side-by-side options to Open Explorers"],
